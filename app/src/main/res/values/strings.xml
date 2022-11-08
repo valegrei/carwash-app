@@ -9,5 +9,24 @@
     <string name="login_enter">Ingresar</string>
     <string name="login_no_account">¿No tiene una cuenta?</string>
     <string name="login_register">Registrarse</string>
-    <string name="login_app_version">V%d</string>
+    <string name="login_app_version">V %s</string>
+    <!--    Register-->
+    <string name="register_label">Registro</string>
+    <string name="register_email">Correo</string>
+    <string name="register_password">Contraseña</string>
+    <string name="register_repeat_password">Repita contraseña</string>
+    <string name="register_next">Registrar</string>
+    <!--    Recover-->
+    <string name="recover_label">Olvidé mi Clave</string>
+    <string name="recover_msg">Ingrese la dirección de correo con la que te registraste y enseguida te enviaremos un correo con un código para restablecer tu contraseña.</string>
+    <string name="recover_email">Correo</string>
+    <string name="recover_send_code">Enviar Código</string>
+    <!--    New Pass-->
+    <string name="new_pass_label">Nueva Clave</string>
+    <string name="new_pass_msg">Ingrese el código enviado al correo e ingrese su nueva clave.</string>
+    <string name="new_pass_code">Código</string>
+    <string name="new_pass_password">Contraseña</string>
+    <string name="new_pass_repeat_password">Repita contraseña</string>
+    <string name="new_passr_next">Cambiar Clave</string>
+
 </resources>

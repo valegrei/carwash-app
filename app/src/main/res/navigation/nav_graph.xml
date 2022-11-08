@@ -25,12 +25,12 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="pe.com.valegrei.carwashapp.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/register_label"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/recoverFragment"
         android:name="pe.com.valegrei.carwashapp.RecoverFragment"
-        android:label="fragment_recover"
+        android:label="@string/recover_label"
         tools:layout="@layout/fragment_recover" >
         <action
             android:id="@+id/action_recoverFragment_to_newPasswordFragment"
@@ -39,6 +39,6 @@
     <fragment
         android:id="@+id/newPasswordFragment"
         android:name="pe.com.valegrei.carwashapp.NewPasswordFragment"
-        android:label="fragment_new_password"
+        android:label="@string/new_pass_label"
         tools:layout="@layout/fragment_new_password" />
 </navigation>
