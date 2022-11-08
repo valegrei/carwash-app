@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">CarwashApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    Login-->
+    <string name="login_email">Correo</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_forgot_pass">Olvidó su clave</string>
+    <string name="login_enter">Ingresar</string>
+    <string name="login_no_account">¿No tiene una cuenta?</string>
+    <string name="login_register">Registrarse</string>
+    <string name="login_app_version">V%d</string>
 </resources>
