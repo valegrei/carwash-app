@@ -28,5 +28,6 @@
     <string name="new_pass_password">Contraseña</string>
     <string name="new_pass_repeat_password">Repita contraseña</string>
     <string name="new_passr_next">Cambiar Clave</string>
+    <string name="banner">Banner</string>
 
 </resources>

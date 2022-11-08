@@ -27,10 +27,8 @@ class LoginFragment : Fragment() {
     }
 
     fun showVersion() {
-        val version: String = BuildConfig.VERSION_NAME
         binding.apply {
             loginFragment = this@LoginFragment
-            versionName = version
         }
     }
 

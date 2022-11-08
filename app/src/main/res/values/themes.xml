@@ -31,4 +31,17 @@
 <!--        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.CarwashApp.WhiteTitledBar" parent="Theme.CarwashApp">
+        <item name="android:textColorSecondary">@color/md_theme_dark_onSurface</item>
+        <item name="titleTextColor">@color/md_theme_dark_onSurface</item>
+        <item name="subtitleTextColor">@color/md_theme_dark_onSurface</item>
+    </style>
+
+    <style name="Theme.CarwashApp.BlackTitledBar" parent="Theme.CarwashApp">
+        <item name="android:textColorSecondary">@color/md_theme_light_onSurface</item>
+        <item name="titleTextColor">@color/md_theme_light_onSurface</item>
+        <item name="subtitleTextColor">@color/md_theme_light_onSurface</item>
+    </style>
+
 </resources>
