@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reserve_list"
+            android:icon="@drawable/ic_baseline_checklist_24"
+            android:title="@string/menu_reserve_list" />
+        <item
+            android:id="@+id/nav_my_data"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:title="@string/menu_my_data" />
+        <item
+            android:id="@+id/nav_my_places"
+            android:icon="@drawable/ic_baseline_place_24"
+            android:title="@string/menu_my_places" />
+        <item
+            android:id="@+id/nav_my_services"
+            android:icon="@drawable/ic_baseline_home_repair_service_24"
+            android:title="@string/menu_my_services" />
+        <item
+            android:id="@+id/nav_my_schedules"
+            android:icon="@drawable/ic_baseline_schedule_24"
+            android:title="@string/menu_my_schedules" />
+    </group>
+</menu>

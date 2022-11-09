@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_dis"
+    app:startDestination="@+id/nav_reserve_list">
+
+    <fragment
+        android:id="@+id/nav_reserve_list"
+        android:name="pe.com.valegrei.carwashapp.ui.reserve_list.ReserveListFragment"
+        android:label="@string/menu_reserve_list"
+        tools:layout="@layout/fragment_reserve_list" />
+
+    <fragment
+        android:id="@+id/nav_my_data"
+        android:name="pe.com.valegrei.carwashapp.ui.my_data.MyDataFragment"
+        android:label="@string/menu_my_data"
+        tools:layout="@layout/fragment_my_data" />
+
+    <fragment
+        android:id="@+id/nav_my_places"
+        android:name="pe.com.valegrei.carwashapp.ui.my_places.MyPlacesFragment"
+        android:label="@string/menu_my_places"
+        tools:layout="@layout/fragment_my_places" />
+    <fragment
+        android:id="@+id/nav_my_services"
+        android:name="pe.com.valegrei.carwashapp.ui.my_services.MyServicesFragment"
+        android:label="@string/menu_my_services"
+        tools:layout="@layout/fragment_my_services" />
+    <fragment
+        android:id="@+id/nav_my_schedules"
+        android:name="pe.com.valegrei.carwashapp.ui.my_schedules.MySchedulesFragment"
+        android:label="@string/menu_my_schedules"
+        tools:layout="@layout/fragment_my_schedules" />
+
+</navigation>

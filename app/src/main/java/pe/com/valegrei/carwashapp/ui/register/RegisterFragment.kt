@@ -1,4 +1,4 @@
-package pe.com.valegrei.carwashapp
+package pe.com.valegrei.carwashapp.ui.register
 
 import android.os.Bundle
 import android.view.LayoutInflater

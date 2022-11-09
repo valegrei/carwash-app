@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">CarwashApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    Login-->
+    <string name="banner">Banner</string>
     <string name="login_email">Correo</string>
     <string name="login_password">Contraseña</string>
     <string name="login_forgot_pass">Olvidó su clave</string>
@@ -28,6 +28,23 @@
     <string name="new_pass_password">Contraseña</string>
     <string name="new_pass_repeat_password">Repita contraseña</string>
     <string name="new_passr_next">Cambiar Clave</string>
-    <string name="banner">Banner</string>
+
+    <!--    Distribuidor-->
+    <!--    Nav Dis-->
+    <string name="title_activity_main_dis">MainDisActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Lavado de Carros Santa Rosa</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <!--    Menu Nav Dis-->
+    <string name="menu_reserve_list">Lista de Reservas</string>
+    <string name="menu_my_data">Mis Datos</string>
+    <string name="menu_my_places">Mis Locales</string>
+    <string name="menu_my_services">Mis Servicios</string>
+    <string name="menu_my_schedules">Mis Horarios</string>
+    <!--    Item Reserve List-->
+    <string name="user_photo">Foto de usuario</string>
 
 </resources>

@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginFragment">
+    tools:context=".ui.login.LoginFragment">
 
     <data>
 
         <variable
             name="loginFragment"
-            type="pe.com.valegrei.carwashapp.LoginFragment" />
+            type="pe.com.valegrei.carwashapp.ui.login.LoginFragment" />
     </data>
 
     <ScrollView
@@ -95,6 +95,7 @@
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->loginFragment.goMain()}"
                     android:text="@string/login_enter" />
 
                 <LinearLayout

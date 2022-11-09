@@ -6,13 +6,8 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="pe.com.valegrei.carwashapp.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
-    <fragment
         android:id="@+id/loginFragment"
-        android:name="pe.com.valegrei.carwashapp.LoginFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -24,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="pe.com.valegrei.carwashapp.RegisterFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.register.RegisterFragment"
         android:label="@string/register_label"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/recoverFragment"
-        android:name="pe.com.valegrei.carwashapp.RecoverFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.recover.RecoverFragment"
         android:label="@string/recover_label"
         tools:layout="@layout/fragment_recover" >
         <action
@@ -38,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPasswordFragment"
-        android:name="pe.com.valegrei.carwashapp.NewPasswordFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.new_password.NewPasswordFragment"
         android:label="@string/new_pass_label"
         tools:layout="@layout/fragment_new_password" />
 </navigation>

@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RegisterFragment">
+    tools:context=".ui.register.RegisterFragment">
 
     <data>
 
         <variable
             name="registerFragment"
-            type="pe.com.valegrei.carwashapp.RegisterFragment" />
+            type="pe.com.valegrei.carwashapp.ui.register.RegisterFragment" />
     </data>
 
     <ScrollView

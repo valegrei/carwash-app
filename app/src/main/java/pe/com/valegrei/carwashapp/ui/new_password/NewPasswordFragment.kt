@@ -1,4 +1,4 @@
-package pe.com.valegrei.carwashapp
+package pe.com.valegrei.carwashapp.ui.new_password
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import pe.com.valegrei.carwashapp.databinding.FragmentRecoverBinding
+import pe.com.valegrei.carwashapp.databinding.FragmentNewPasswordBinding
 
-class RecoverFragment : Fragment() {
-    private var _binding: FragmentRecoverBinding? = null
+class NewPasswordFragment : Fragment() {
+    private var _binding: FragmentNewPasswordBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,7 +19,7 @@ class RecoverFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentRecoverBinding.inflate(inflater, container, false)
+        _binding = FragmentNewPasswordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -27,15 +27,11 @@ class RecoverFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        //Configura Toolbar con Navigation Component
+
         binding.apply {
             toolbar.setupWithNavController(navController, appBarConfiguration)
-            recoverFragment = this@RecoverFragment
+            newPassFragment = this@NewPasswordFragment
         }
-    }
-
-    fun goNewPass() {
-        findNavController().navigate(R.id.action_recoverFragment_to_newPasswordFragment)
     }
 
     override fun onDestroyView() {

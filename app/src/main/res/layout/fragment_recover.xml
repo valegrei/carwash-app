@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RecoverFragment">
+    tools:context=".ui.recover.RecoverFragment">
 
     <data>
 
         <variable
             name="recoverFragment"
-            type="pe.com.valegrei.carwashapp.RecoverFragment" />
+            type="pe.com.valegrei.carwashapp.ui.recover.RecoverFragment" />
     </data>
 
     <ScrollView
