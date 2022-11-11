@@ -6,22 +6,25 @@ import androidx.recyclerview.widget.RecyclerView
 import pe.com.valegrei.carwashapp.databinding.ItemReserveListBinding
 import pe.com.valegrei.carwashapp.model.Reserva
 
-class ReserveListAdapter(private val dataSet: Array<Reserva>) :
+class ReserveListAdapter(
+    private val dataSet: Array<Reserva>,
+    private var listener: OnInteractionListener
+) :
     RecyclerView.Adapter<ReserveListAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(private val binding: ItemReserveListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: Reserva) {
+    class ViewHolder(private val binding: ItemReserveListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindData(data: Reserva, listener: OnInteractionListener) {
             binding.apply {
                 tvClient.text = data.client
                 tvVehicle.text = data.vehicle
                 tvPlace.text = data.place
-                cardview.setOnClickListener {  }
+                cardview.setOnClickListener { listener.onClick(data) }
             }
-
         }
     }
 
@@ -36,13 +39,13 @@ class ReserveListAdapter(private val dataSet: Array<Reserva>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.bindData(dataSet[position])
+        holder.bindData(dataSet[position], listener)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    interface OnInteractionListener{
+    interface OnInteractionListener {
         fun onClick(item: Reserva)
     }
 }

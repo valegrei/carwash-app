@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.ui.new_password
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import pe.com.valegrei.carwashapp.MainDisActivity
 import pe.com.valegrei.carwashapp.databinding.FragmentNewPasswordBinding
 
 class NewPasswordFragment : Fragment() {
@@ -34,6 +36,10 @@ class NewPasswordFragment : Fragment() {
         }
     }
 
+    fun goMain(){
+        val intent = Intent(context, MainDisActivity::class.java)
+        startActivity(intent)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
