@@ -9,7 +9,11 @@
         android:id="@+id/nav_reserve_list"
         android:name="pe.com.valegrei.carwashapp.ui.reserve_list.ReserveListFragment"
         android:label="@string/menu_reserve_list"
-        tools:layout="@layout/fragment_reserve_list" />
+        tools:layout="@layout/fragment_reserve_list" >
+        <action
+            android:id="@+id/action_nav_reserve_list_to_serviceDetailsFragment"
+            app:destination="@id/serviceDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_my_data"
@@ -27,10 +31,16 @@
         android:name="pe.com.valegrei.carwashapp.ui.my_services.MyServicesFragment"
         android:label="@string/menu_my_services"
         tools:layout="@layout/fragment_my_services" />
+
     <fragment
         android:id="@+id/nav_my_schedules"
         android:name="pe.com.valegrei.carwashapp.ui.my_schedules.MySchedulesFragment"
         android:label="@string/menu_my_schedules"
         tools:layout="@layout/fragment_my_schedules" />
+    <fragment
+        android:id="@+id/serviceDetailsFragment"
+        android:name="pe.com.valegrei.carwashapp.ServiceDetailsFragment"
+        android:label="fragment_service_details"
+        tools:layout="@layout/fragment_service_details" />
 
 </navigation>

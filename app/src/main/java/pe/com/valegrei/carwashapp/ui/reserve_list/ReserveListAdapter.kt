@@ -19,7 +19,9 @@ class ReserveListAdapter(private val dataSet: Array<Reserva>) :
                 tvClient.text = data.client
                 tvVehicle.text = data.vehicle
                 tvPlace.text = data.place
+                cardview.setOnClickListener {  }
             }
+
         }
     }
 
@@ -39,4 +41,8 @@ class ReserveListAdapter(private val dataSet: Array<Reserva>) :
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+    interface OnInteractionListener{
+        fun onClick(item: Reserva)
+    }
 }

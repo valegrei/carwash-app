@@ -1,7 +1,6 @@
 package pe.com.valegrei.carwashapp
 
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -32,17 +31,21 @@ class MainDisActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_reserve_list, R.id.nav_my_places, R.id.nav_my_data
+                R.id.nav_reserve_list,
+                R.id.nav_my_data,
+                R.id.nav_my_places,
+                R.id.nav_my_services,
+                R.id.nav_my_schedules
             ), drawerLayout
         )
+
+        //Limpio subtitulos al cambiar de fragment
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            binding.appBarMainDis.toolbar.subtitle = null
+        }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_dis, menu)
-        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
