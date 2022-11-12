@@ -68,4 +68,8 @@
     <color name="md_theme_dark_surfaceTint">#A0CAFF</color>
     <color name="md_theme_dark_outlineVariant">#43474E</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <!--    State Colors-->
+    <color name="service_state_attended">#008A00</color>
+    <color name="service_state_pending">#FFD500</color>
+    <color name="service_state_canceled">#757575</color>
 </resources>

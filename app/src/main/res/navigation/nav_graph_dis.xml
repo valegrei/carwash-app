@@ -39,8 +39,8 @@
         tools:layout="@layout/fragment_my_schedules" />
     <fragment
         android:id="@+id/serviceDetailsFragment"
-        android:name="pe.com.valegrei.carwashapp.ServiceDetailsFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.reserve_details.ReserveDetailsFragment"
         android:label="fragment_service_details"
-        tools:layout="@layout/fragment_service_details" />
+        tools:layout="@layout/fragment_reserve_details" />
 
 </navigation>
