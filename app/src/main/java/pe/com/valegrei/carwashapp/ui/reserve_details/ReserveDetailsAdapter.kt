@@ -30,12 +30,23 @@ class ReserveDetailsAdapter(
                 tvServiceSchedule.text = data.schedule
                 tvServicePrice.text = String.format("S/ %.2f", data.price)
                 var stateColor = 0
+                var stateName = 0
                 when (data.state) {
-                    SERVICE_STATE_ATTENDED -> stateColor = R.color.service_state_attended
-                    SERVICE_STATE_PENDING -> stateColor = R.color.service_state_pending
-                    SERVICE_STATE_CANCELED -> stateColor = R.color.service_state_canceled
+                    SERVICE_STATE_ATTENDED -> {
+                        stateColor = R.color.service_state_attended
+                        stateName = R.string.service_state_attended
+                    }
+                    SERVICE_STATE_PENDING -> {
+                        stateColor = R.color.service_state_pending
+                        stateName = R.string.service_state_pending
+                    }
+                    SERVICE_STATE_CANCELED -> {
+                        stateColor = R.color.service_state_canceled
+                        stateName = R.string.service_state_canceled
+                    }
                 }
                 lyState.setBackgroundColor(context.getColor(stateColor))
+                tvServiceState.setText(stateName)
                 cardview.setOnClickListener { listener.onClick(data) }
             }
         }

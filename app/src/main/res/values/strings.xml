@@ -49,6 +49,8 @@
     <string name="action_search">Buscar</string>
     <!--    Reserve Details-->
     <string name="foto_car_descr">Foto de vehiculo</string>
+    <string name="service_title">Servicios</string>
+    <string name="reserve_details">Detalle de Reserva</string>
     <string name="service_state_attended">Atendido</string>
     <string name="service_state_pending">Pendiente</string>
     <string name="service_state_canceled">Cancelado</string>

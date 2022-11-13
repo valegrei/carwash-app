@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_reserve_list" >
         <action
             android:id="@+id/action_nav_reserve_list_to_serviceDetailsFragment"
-            app:destination="@id/serviceDetailsFragment" />
+            app:destination="@id/nav_reserve_details" />
     </fragment>
 
     <fragment
@@ -38,9 +38,9 @@
         android:label="@string/menu_my_schedules"
         tools:layout="@layout/fragment_my_schedules" />
     <fragment
-        android:id="@+id/serviceDetailsFragment"
+        android:id="@+id/nav_reserve_details"
         android:name="pe.com.valegrei.carwashapp.ui.reserve_details.ReserveDetailsFragment"
-        android:label="fragment_service_details"
+        android:label="@string/reserve_details"
         tools:layout="@layout/fragment_reserve_details" />
 
 </navigation>

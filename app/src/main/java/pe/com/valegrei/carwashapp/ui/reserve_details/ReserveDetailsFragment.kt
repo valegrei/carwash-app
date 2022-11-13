@@ -27,14 +27,24 @@ class ReserveDetailsFragment : Fragment(), ReserveDetailsAdapter.OnInteractionLi
         super.onViewCreated(view, savedInstanceState)
         val reserveDetailsViewModel =
             ViewModelProvider(this)[ReserveDetailsViewModel::class.java]
+        reserveDetailsViewModel.reservaItems.observe(viewLifecycleOwner){
+            binding.tvClient.text = it.client
+            binding.tvVehicle.text = it.vehicle
+            binding.tvPlace.text = it.place
+        }
         reserveDetailsViewModel.reserveDetails.observe(viewLifecycleOwner) {
             binding.rvReserveDetail.adapter = ReserveDetailsAdapter(requireContext(), it, this)
         }
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onClick(item: Servicio) {
-        TODO("Not yet implemented")
+
     }
 
 }

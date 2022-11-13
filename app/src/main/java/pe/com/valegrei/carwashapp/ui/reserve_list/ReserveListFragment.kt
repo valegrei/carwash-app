@@ -40,6 +40,7 @@ class ReserveListFragment : Fragment(), MenuProvider, ReserveListAdapter.OnInter
         val reserveListViewModel =
             ViewModelProvider(this)[ReserveListViewModel::class.java]
 
+        //Adapter de RV
         reserveListViewModel.reserveList.observe(viewLifecycleOwner) {
             binding.rvReserveList.adapter = ReserveListAdapter(it, this)
         }

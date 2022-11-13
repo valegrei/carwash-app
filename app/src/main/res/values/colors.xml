@@ -70,6 +70,6 @@
     <color name="md_theme_dark_scrim">#000000</color>
     <!--    State Colors-->
     <color name="service_state_attended">#008A00</color>
-    <color name="service_state_pending">#FFD500</color>
+    <color name="service_state_pending">#AE9100</color>
     <color name="service_state_canceled">#757575</color>
 </resources>
