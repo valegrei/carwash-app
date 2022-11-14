@@ -7,13 +7,12 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import pe.com.valegrei.carwashapp.R
-import pe.com.valegrei.carwashapp.databinding.FragmentMyDataBinding
+import pe.com.valegrei.carwashapp.databinding.FragmentMyDataEditBinding
 
-class MyDataFragment : Fragment(), MenuProvider {
+class MyDataEditFragment : Fragment(), MenuProvider {
 
-    private var _binding: FragmentMyDataBinding? = null
+    private var _binding: FragmentMyDataEditBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,18 +24,17 @@ class MyDataFragment : Fragment(), MenuProvider {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMyDataBinding.inflate(inflater, container, false)
+        _binding = FragmentMyDataEditBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            myDataFragment = this@MyDataFragment
+            myDataFragment = this@MyDataEditFragment
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
         }
-
         //Configura el menu del fragment
         (requireActivity() as MenuHost).addMenuProvider(
             this,
@@ -51,14 +49,10 @@ class MyDataFragment : Fragment(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.edit_menu, menu)
+        menuInflater.inflate(R.menu.save_menu, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.action_edit) {
-            findNavController().navigate(R.id.action_nav_my_data_to_nav_my_data_edit)
-            return true
-        }
         return false
     }
 }

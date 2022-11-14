@@ -72,4 +72,7 @@
     <color name="service_state_attended">#008A00</color>
     <color name="service_state_pending">#AE9100</color>
     <color name="service_state_canceled">#757575</color>
+<!--    filters-->
+    <color name="filter_no_editing">#0000</color>
+    <color name="filter_editing">#80000000</color>
 </resources>

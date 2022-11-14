@@ -5,7 +5,6 @@
     tools:context=".ui.register.RegisterFragment">
 
     <data>
-
         <variable
             name="registerFragment"
             type="pe.com.valegrei.carwashapp.ui.register.RegisterFragment" />

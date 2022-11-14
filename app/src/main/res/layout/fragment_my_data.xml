@@ -1,22 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.my_data.MyDataFragment">
 
-    <TextView
-        android:id="@+id/text_slideshow"
+    <data>
+
+        <variable
+            name="myDataFragment"
+            type="pe.com.valegrei.carwashapp.ui.my_data.MyDataFragment" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.my_data.MyDataViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/my_data_dis_logo"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/car" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_show_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_razon_social"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:id="@+id/tv_razon_social"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.accountData.razonSocial}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="Lavados de Carros Santa Rosa" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_ruc"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:id="@+id/tv_ruc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.accountData.ruc}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="10709582864" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_cellphone"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:id="@+id/tv_cellphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.accountData.telefono}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="925416855" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_whatsapp"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:id="@+id/tv_whatsapp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.accountData.whatsapp}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="958412963" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_email"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.accountData.email}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="example@gmail.com" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

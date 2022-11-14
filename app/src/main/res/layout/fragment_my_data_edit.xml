@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.my_data.MyDataFragment">
+
+    <data>
+
+        <variable
+            name="myDataFragment"
+            type="pe.com.valegrei.carwashapp.ui.my_data.MyDataEditFragment" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.my_data.MyDataViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/my_data_dis_logo"
+                    android:foreground="@color/filter_editing"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/car" />
+
+                <ImageView
+                    android:id="@+id/ic_change_photo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/my_data_change_logo"
+                    app:srcCompat="@drawable/ic_outline_add_a_photo_24" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_edit_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_razon_social"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_razon_social"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/my_data_razon_social"
+                        android:inputType="text"
+                        android:text="@{viewModel.accountData.razonSocial}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="Lavados de Carros Santa Rosa" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_ruc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_ruc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/my_data_ruc"
+                        android:inputType="number"
+                        android:text="@{viewModel.accountData.ruc}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="10709582864" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_cellphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_cellphone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/my_data_cellphone"
+                        android:inputType="phone"
+                        android:text="@{viewModel.accountData.telefono}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="925416855" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_whatsapp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_whatsapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/my_data_whatsapp"
+                        android:inputType="phone"
+                        android:text="@{viewModel.accountData.whatsapp}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="958412963" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tf_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/my_data_email"
+                        android:inputType="textEmailAddress"
+                        android:text="@{viewModel.accountData.email}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="example@gmail.com" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

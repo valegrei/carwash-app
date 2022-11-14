@@ -54,4 +54,16 @@
     <string name="service_state_attended">Atendido</string>
     <string name="service_state_pending">Pendiente</string>
     <string name="service_state_canceled">Cancelado</string>
+    <!--    My data-->
+    <string name="my_data_title">Mis Datos</string>
+    <string name="my_data_edit_title">Editar Mis Datos</string>
+    <string name="my_data_dis_logo">Logo Distribuidor</string>
+    <string name="my_data_change_logo">Cambiar Logo</string>
+    <string name="my_data_razon_social">Razon Social</string>
+    <string name="my_data_ruc">RUC</string>
+    <string name="my_data_cellphone">Número Celular</string>
+    <string name="my_data_whatsapp">Número de Whatsapp</string>
+    <string name="my_data_email">Email</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_save">Guardar</string>
 </resources>
