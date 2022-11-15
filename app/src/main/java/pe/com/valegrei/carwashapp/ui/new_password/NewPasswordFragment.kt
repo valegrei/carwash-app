@@ -6,9 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import pe.com.valegrei.carwashapp.MainDisActivity
 import pe.com.valegrei.carwashapp.databinding.FragmentNewPasswordBinding
 
@@ -27,19 +24,16 @@ class NewPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
         binding.apply {
-            toolbar.setupWithNavController(navController, appBarConfiguration)
             newPassFragment = this@NewPasswordFragment
         }
     }
 
-    fun goMain(){
+    fun goMain() {
         val intent = Intent(context, MainDisActivity::class.java)
         startActivity(intent)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -40,7 +40,7 @@ class MainDisActivity : AppCompatActivity() {
         )
 
         //Limpio subtitulos al cambiar de fragment
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, _, _ ->
             binding.appBarMainDis.toolbar.subtitle = null
         }
 
