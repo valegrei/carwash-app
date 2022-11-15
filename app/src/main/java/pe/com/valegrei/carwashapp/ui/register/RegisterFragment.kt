@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import pe.com.valegrei.carwashapp.MainDisActivity
 import pe.com.valegrei.carwashapp.databinding.FragmentRegisterBinding
 
@@ -24,9 +25,13 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
+
         //Configura Toolbar con Navigation Component
         binding.apply {
             registerFragment = this@RegisterFragment
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = registerViewModel
         }
     }
 

@@ -5,10 +5,13 @@
     tools:context=".ui.register.RegisterFragment">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="registerFragment"
             type="pe.com.valegrei.carwashapp.ui.register.RegisterFragment" />
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.register.RegisterViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -90,13 +93,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:checked="@{viewModel.isDistrib()}"
+                android:onClick="@{() -> viewModel.setIsDistrib(!viewModel.isDistrib)}"
                 android:text="@string/register_check_dis" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="@{viewModel.isDistrib() ? View.VISIBLE : View.GONE}">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_razon_social"
