@@ -18,7 +18,9 @@
             style="?attr/collapsingToolbarLayoutLargeStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
+            app:collapsedTitleTextColor="@color/white"
             app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextColor="@color/white"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
             <ImageView

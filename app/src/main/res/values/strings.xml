@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CarwashApp</string>
+    <string name="app_name">Car Wash</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    Login-->
     <string name="login_label">Iniciar Sesión</string>
