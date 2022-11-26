@@ -1,6 +1,7 @@
 package pe.com.valegrei.carwashapp
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -21,6 +22,9 @@ class MainDisActivity : AppCompatActivity() {
 
         binding = ActivityMainDisBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
 
         setSupportActionBar(binding.appBarMainDis.toolbar)
 

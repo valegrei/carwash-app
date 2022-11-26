@@ -8,6 +8,8 @@
     <dimen name="large_margin">64dp</dimen>
     <dimen name="medium_margin">48dp</dimen>
     <dimen name="extra_large_margin">96dp</dimen>
+    <dimen name="mid_margin">24dp</dimen>
     <dimen name="small_margin">16dp</dimen>
+    <dimen name="min_margin">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 </resources>

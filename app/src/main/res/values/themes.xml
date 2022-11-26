@@ -1,35 +1,11 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.CarwashApp" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">@color/md_theme_light_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
-        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/md_theme_light_secondary</item>
-        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
-        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
-        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
-        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
-        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
-        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
-        <item name="colorError">@color/md_theme_light_error</item>
-        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
-        <item name="colorOnError">@color/md_theme_light_onError</item>
-        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
-        <item name="android:colorBackground">@color/md_theme_light_background</item>
-        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
-        <item name="colorSurface">@color/md_theme_light_surface</item>
-        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
-<!--        <item name="colorOnSurface">@color/white</item>-->
-        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
-        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
-        <item name="colorOutline">@color/md_theme_light_outline</item>
-        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
-        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
-        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
-        <item name="android:windowTranslucentStatus">true</item>
-
+    <style name="Theme.CarwashApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/lightblue</item>
+        <item name="colorPrimaryDark">@color/aquamarina</item>
+        <item name="colorAccent">@color/blue</item>
+        <!-- You can customize it by changing statusBarColor. -->
+        <item name="android:statusBarColor">@color/aquamarina</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -38,10 +14,54 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.CarwashApp.NoActionBarNoStatusBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
     <style name="Theme.CarwashApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="Theme.CarwashApp.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar"/>
+
+    <style name="Theme.CarwashApp.Toolbar" parent="Theme.AppCompat.Light.DarkActionBar" />
 
     <style name="Theme.CarwashApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TextAppearance.CarwashApp.LogoTitle" parent="TextAppearance.AppCompat.Headline">
+        <item name="fontFamily">@font/opensans_bold</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
+    <style name="TextAppearance.CarwashApp.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="fontFamily">@font/opensans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.0125</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.LabelWhite" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/opensans_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01785714</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme.CarwashApp.RoundButton" parent="Widget.MaterialComponents.Button">
+        <item name="background">@drawable/rounded_button_states</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/opensans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
 </resources>

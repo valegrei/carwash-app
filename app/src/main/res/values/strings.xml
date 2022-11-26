@@ -2,14 +2,14 @@
     <string name="app_name">Car Wash</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    Login-->
-    <string name="login_label">Iniciar Sesión</string>
+    <string name="login_label">Ingreso</string>
     <string name="banner">Banner</string>
     <string name="login_email">Correo</string>
     <string name="login_password">Contraseña</string>
-    <string name="login_forgot_pass">Olvidó su clave</string>
-    <string name="login_enter">Ingresar</string>
+    <string name="login_forgot_pass">¿Olvidaste tu constraseña?</string>
+    <string name="login_enter">Log in</string>
     <string name="login_no_account">¿No tiene una cuenta?</string>
-    <string name="login_register">Registrarse</string>
+    <string name="login_register">Crea una cuenta</string>
     <string name="login_app_version">V %s</string>
     <!--    Register-->
     <string name="register_label">Registro</string>
@@ -62,6 +62,9 @@
     <string name="my_data_dis_logo">Logo Distribuidor</string>
     <string name="my_data_change_logo">Cambiar Logo</string>
     <string name="my_data_razon_social">Razon Social</string>
+    <string name="my_data_nombres">Nombres</string>
+    <string name="my_data_ape_pat">Apellido Paterno</string>
+    <string name="my_data_ape_mat">Apellido Materno</string>
     <string name="my_data_ruc">RUC</string>
     <string name="my_data_cellphone">Número Celular</string>
     <string name="my_data_whatsapp">Número de Whatsapp</string>

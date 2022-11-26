@@ -13,51 +13,82 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/ly_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/large_margin"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/guideline4">
+            android:paddingHorizontal="@dimen/medium_margin"
+            android:paddingTop="@dimen/large_margin">
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/banner"
+                app:srcCompat="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/min_margin"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LogoTitle" />
+
+            <TextView
+                android:layout_marginTop="@dimen/mid_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recover_label"
+                android:textAppearance="@style/TextAppearance.CarwashApp.Title" />
+
+
+            <TextView
+                android:layout_marginTop="@dimen/small_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/recover_msg"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/recover_msg" />
+                android:layout_marginTop="@dimen/small_margin"
+                android:labelFor="@id/edt_username"
+                android:text="@string/login_email"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite"
+                tools:ignore="TextContrastCheck" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tf_username"
+            <EditText
+                android:id="@+id/edt_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin"
-                app:startIconContentDescription="@string/recover_email"
-                app:startIconDrawable="@drawable/ic_outline_account_circle_24">
+                android:layout_marginTop="@dimen/min_margin"
+                android:autofillHints="emailAddress"
+                android:background="@drawable/rounded_edittext_states"
+                android:ems="10"
+                android:fontFamily="@font/opensans_regular"
+                android:inputType="textEmailAddress"
+                tools:hint="example@mail.com"
+                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/recover_email"
-                    android:inputType="textEmailAddress"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="example@gmail.com" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_send_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/mid_margin"
                 android:layout_marginTop="@dimen/small_margin"
+                android:background="@drawable/rounded_button_states"
+                android:fontFamily="@font/opensans_semibold"
                 android:onClick="@{()->recoverFragment.goNewPass()}"
-                android:text="@string/recover_send_code" />
+                android:text="@string/recover_send_code"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
