@@ -3,11 +3,13 @@ package pe.com.valegrei.carwashapp.ui.my_places
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import pe.com.valegrei.carwashapp.model.Local
+import pe.com.valegrei.carwashapp.model.Reserva
 
 class MyPlacesViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+    private val _localList = MutableLiveData<Array<Local>>().apply {
+        value = Local.dataSet
     }
-    val text: LiveData<String> = _text
+    val localList: LiveData<Array<Local>> = _localList
 }

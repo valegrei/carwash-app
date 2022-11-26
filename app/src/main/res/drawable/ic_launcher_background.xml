@@ -3,22 +3,23 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="96"
-    android:viewportHeight="96">
-    <path
-        android:pathData="M-1.93,-1.04h101.41v99.48h-101.41z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:startX="48.772"
-                android:startY="98.435"
-                android:endX="48.772"
-                android:endY="-16.624"
-                android:type="linear">
-                <item android:offset="0" android:color="#FF35B2F1"/>
-                <item android:offset="0.276" android:color="#FF2BABE5"/>
-                <item android:offset="0.77" android:color="#FF1099C6"/>
-                <item android:offset="1" android:color="#FF028FB5"/>
-            </gradient>
-        </aapt:attr>
-    </path>
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <group android:scaleX="1.125"
+      android:scaleY="1.125">
+      <path
+          android:pathData="M-1.93,-1.04h101.41v99.48h-101.41z">
+          <aapt:attr name="android:fillColor">
+              <gradient
+                  android:startX="48.772"
+                  android:startY="98.435"
+                  android:endX="48.772"
+                  android:endY="-16.624"
+                  android:type="linear">
+                  <item android:offset="0" android:color="#72289f"/>
+                  <item android:offset="1" android:color="#5c1c86"/>
+              </gradient>
+          </aapt:attr>
+      </path>
+  </group>
 </vector>

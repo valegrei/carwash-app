@@ -11,9 +11,9 @@
     <color name="filter_no_editing">#0000</color>
     <color name="filter_editing">#80000000</color>
 
-    <color name="blue">#3b5dda</color>
-    <color name="blue2">#4166ED</color>
-    <color name="lightblue">#35b0ee</color>
-    <color name="aquamarina">#1097c1</color>
+    <color name="green_light">#75CFB6</color>
+    <color name="green">#6CD3B6</color>
+    <color name="purple_dark">#5c1c86</color>
+    <color name="purple">#72289f</color>
     <color name="shadow">#4D575757</color>
 </resources>

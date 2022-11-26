@@ -1,11 +1,11 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.CarwashApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/lightblue</item>
-        <item name="colorPrimaryDark">@color/aquamarina</item>
-        <item name="colorAccent">@color/blue</item>
+        <item name="colorPrimary">@color/purple_dark</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/green_light</item>
         <!-- You can customize it by changing statusBarColor. -->
-        <item name="android:statusBarColor">@color/aquamarina</item>
+        <item name="android:statusBarColor">@color/purple</item>
         <!-- Customize your theme here. -->
     </style>
 
