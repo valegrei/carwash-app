@@ -9,21 +9,26 @@
         <variable
             name="loginFragment"
             type="pe.com.valegrei.carwashapp.ui.login.LoginFragment" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.viewmodels.LoginViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
-        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_background">
+        android:background="@drawable/gradient_background"
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/ly_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="false"
+            android:orientation="vertical"
             android:paddingHorizontal="@dimen/medium_margin"
-            android:paddingTop="@dimen/large_margin"
-            android:orientation="vertical">
+            android:paddingTop="@dimen/large_margin">
 
             <ImageView
                 android:layout_width="110dp"
@@ -41,9 +46,9 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LogoTitle" />
 
             <TextView
-                android:layout_marginTop="@dimen/mid_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mid_margin"
                 android:text="@string/login_label"
                 android:textAppearance="@style/TextAppearance.CarwashApp.Title" />
 
@@ -66,6 +71,7 @@
                 android:ems="10"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="textEmailAddress"
+                android:text="@={viewModel.correo}"
                 tools:hint="example@mail.com"
                 tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
@@ -89,15 +95,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:focusable="false"
                     android:onClick="@{() -> loginFragment.goRecoverPass()}"
                     android:text="@string/login_forgot_pass"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelAccent"
                     android:textStyle="bold"
                     tools:ignore="TextContrastCheck" />
             </LinearLayout>
 
             <EditText
-                android:fontFamily="@font/opensans_regular"
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,21 +111,31 @@
                 android:autofillHints="password"
                 android:background="@drawable/rounded_edittext_states"
                 android:ems="10"
+                android:fontFamily="@font/opensans_regular"
                 android:inputType="textPassword"
+                android:text="@={viewModel.clave}"
                 tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck"
                 tools:text="123456789" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/min_margin"
+                android:text="@{viewModel.errMsg}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                tools:text="Contraseña Inválida" />
+
             <androidx.appcompat.widget.AppCompatButton
-                android:background="@drawable/rounded_button_states"
-                android:textColor="@color/white"
-                android:fontFamily="@font/opensans_semibold"
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/mid_margin"
-                android:onClick="@{()->loginFragment.goMain()}"
+                android:layout_marginTop="@dimen/min_margin"
+                android:background="@drawable/rounded_button_states"
+                android:fontFamily="@font/opensans_semibold"
+                android:onClick="@{()->loginFragment.login()}"
                 android:text="@string/login_enter"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -142,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> loginFragment.goRegister()}"
                     android:text="@string/login_register"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelAccent"
                     android:textStyle="bold"
                     tools:ignore="TextContrastCheck" />
             </LinearLayout>

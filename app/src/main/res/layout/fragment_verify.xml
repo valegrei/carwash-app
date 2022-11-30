@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.verify.VerifyFragment">
+
+    <data>
+
+        <variable
+            name="verifyFragment"
+            type="pe.com.valegrei.carwashapp.ui.verify.VerifyFragment" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.verify.VerifyViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/ly_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/medium_margin"
+            android:paddingTop="@dimen/large_margin">
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/banner"
+                app:srcCompat="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/min_margin"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LogoTitle" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mid_margin"
+                android:text="@string/verify_label"
+                android:textAppearance="@style/TextAppearance.CarwashApp.Title" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:text="@{@string/verify_msg(viewModel.correo)}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:labelFor="@id/edt_code"
+                android:text="@string/verify_code"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite"
+                tools:ignore="TextContrastCheck" />
+
+            <EditText
+                android:id="@+id/edt_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/min_margin"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext_states"
+                android:ems="10"
+                android:fontFamily="@font/opensans_regular"
+                android:inputType="number"
+                android:text="@={viewModel.codigo}"
+                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/min_margin"
+                android:text="@{viewModel.errMsg}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                tools:text="Código inválido" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_verify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/min_margin"
+                android:background="@drawable/rounded_button_states"
+                android:fontFamily="@font/opensans_semibold"
+                android:onClick="@{()->verifyFragment.verificar()}"
+                android:text="@string/verify_next"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/btn_send_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="@dimen/mid_margin"
+                android:onClick="@{() -> verifyFragment.enviarCodigo()}"
+                android:text="@string/verify_send_code"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelAccent"
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

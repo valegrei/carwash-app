@@ -39,7 +39,7 @@
                     android:contentDescription="@string/my_data_dis_logo"
                     android:foreground="@color/filter_editing"
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/car" />
+                    app:srcCompat="@drawable/logo" />
 
                 <ImageView
                     android:id="@+id/ic_change_photo"

@@ -58,7 +58,7 @@
         tools:layout="@layout/fragment_my_data_edit" />
     <fragment
         android:id="@+id/addPlaceFragment"
-        android:name="pe.com.valegrei.carwashapp.AddPlaceFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.add_place_fragment.AddPlaceFragment"
         android:label="@string/new_place"
         tools:layout="@layout/fragment_add_place" />
 

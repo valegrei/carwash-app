@@ -16,12 +16,19 @@
         <action
             android:id="@+id/action_loginFragment_to_recoverFragment"
             app:destination="@id/recoverFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_verifyFragment"
+            app:destination="@id/verifyFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="pe.com.valegrei.carwashapp.ui.register.RegisterFragment"
         android:label="@string/register_label"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_verifyFragment"
+            app:destination="@id/verifyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recoverFragment"
         android:name="pe.com.valegrei.carwashapp.ui.recover.RecoverFragment"
@@ -36,4 +43,16 @@
         android:name="pe.com.valegrei.carwashapp.ui.new_password.NewPasswordFragment"
         android:label="@string/new_pass_label"
         tools:layout="@layout/fragment_new_password" />
+    <fragment
+        android:id="@+id/verifyFragment"
+        android:name="pe.com.valegrei.carwashapp.VerifyFragment"
+        android:label="fragment_verify"
+        tools:layout="@layout/fragment_verify" >
+        <argument
+            android:name="idUsuario"
+            app:argType="integer" />
+        <argument
+            android:name="correo"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -1,25 +1,22 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.CarwashApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryDark">@color/purple</item>
-        <item name="colorAccent">@color/green_light</item>
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryVariant">@color/purple</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/green_light</item>
+        <item name="colorSecondaryVariant">@color/green_light</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- You can customize it by changing statusBarColor. -->
-        <item name="android:statusBarColor">@color/purple</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Theme.CarwashApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.CarwashApp.NoActionBarNoStatusBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="Theme.CarwashApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -56,6 +53,18 @@
         <item name="android:letterSpacing">0.01785714</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.LabelError" parent="TextAppearance.CarwashApp.LabelWhite">
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.LabelPrimary" parent="TextAppearance.CarwashApp.LabelWhite">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.LabelAccent" parent="TextAppearance.CarwashApp.LabelWhite">
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
     <style name="Theme.CarwashApp.RoundButton" parent="Widget.MaterialComponents.Button">

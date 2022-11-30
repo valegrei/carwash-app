@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="error">#FFBF00</color>
     <color name="grey">#E6E6E6</color>
     <!--    State Colors-->
     <color name="service_state_attended">#008A00</color>
@@ -11,9 +12,9 @@
     <color name="filter_no_editing">#0000</color>
     <color name="filter_editing">#80000000</color>
 
-    <color name="green_light">#75CFB6</color>
-    <color name="green">#6CD3B6</color>
+    <color name="green_light">#10cbb4</color>
+    <color name="green">#00a691</color>
     <color name="purple_dark">#5c1c86</color>
-    <color name="purple">#72289f</color>
+    <color name="purple">#742384</color>
     <color name="shadow">#4D575757</color>
 </resources>

@@ -6,7 +6,7 @@
     <string name="banner">Banner</string>
     <string name="login_email">Correo</string>
     <string name="login_password">Contraseña</string>
-    <string name="login_forgot_pass">¿Olvidaste tu constraseña?</string>
+    <string name="login_forgot_pass">¿Olvidaste tu contraseña?</string>
     <string name="login_enter">Log in</string>
     <string name="login_no_account">¿No tiene una cuenta?</string>
     <string name="login_register">Crea una cuenta</string>
@@ -30,6 +30,12 @@
     <string name="new_pass_password">Contraseña</string>
     <string name="new_pass_repeat_password">Repita contraseña</string>
     <string name="new_passr_next">Cambiar Clave</string>
+    <!--    Verify -->
+    <string name="verify_label">Verificar Correo</string>
+    <string name="verify_msg">Se envió un código de verificación al correo %s. Ingréselo para autenticar su correo.</string>
+    <string name="verify_code">Código</string>
+    <string name="verify_send_code">Solicitar nuevo código</string>
+    <string name="verify_next">Verificar</string>
 
     <!--    Distribuidor-->
     <!--    Nav Dis-->
@@ -115,4 +121,5 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="loading">Cargando</string>
 </resources>
