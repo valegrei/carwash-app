@@ -1,18 +1,21 @@
 package pe.com.valegrei.carwashapp.ui.register
 
-import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import pe.com.valegrei.carwashapp.MainDisActivity
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import pe.com.valegrei.carwashapp.databinding.FragmentRegisterBinding
+import pe.com.valegrei.carwashapp.ui.util.ProgressDialog
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,23 +28,50 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val registerViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
 
         //Configura Toolbar con Navigation Component
         binding.apply {
-            registerFragment = this@RegisterFragment
             lifecycleOwner = viewLifecycleOwner
             viewModel = registerViewModel
         }
+
+        registerViewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
+                Status.LOADING -> showLoading()
+                Status.ERROR -> hideLoading()
+                Status.SUCCESS -> goVerify()
+                else -> {}
+            }
+        }
     }
 
-    fun goMain() {
-        val intent = Intent(context, MainDisActivity::class.java)
-        startActivity(intent)
+    private fun goVerify() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            registerViewModel.clear()
+            progressDialog.dismiss()
+            val action = RegisterFragmentDirections
+                .actionRegisterFragmentToVerifyFragment(
+                    registerViewModel.usuario.value?.id!!,
+                    registerViewModel.usuario.value?.correo!!
+                )
+            findNavController().navigate(action)
+        }, 500)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    var progressDialog = ProgressDialog()
+
+    fun showLoading() {
+        progressDialog.show(childFragmentManager, "progressDialog")
+    }
+
+    fun hideLoading() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            progressDialog.dismiss()
+        }, 500)
     }
 }

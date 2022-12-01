@@ -9,10 +9,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="registerFragment"
-            type="pe.com.valegrei.carwashapp.ui.register.RegisterFragment" />
-
-        <variable
             name="viewModel"
             type="pe.com.valegrei.carwashapp.ui.register.RegisterViewModel" />
     </data>
@@ -53,13 +49,30 @@
                 android:text="@string/register_label"
                 android:textAppearance="@style/TextAppearance.CarwashApp.Title" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
-                android:labelFor="@id/edt_username"
-                android:text="@string/register_email"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/edt_username"
+                    android:text="@string/register_email"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@id/edt_username"
+                    android:text="@{viewModel.errCorreo}"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                    tools:text="Error" />
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/edt_username"
@@ -71,17 +84,34 @@
                 android:ems="10"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="textEmailAddress"
+                android:text="@={viewModel.correo}"
                 tools:ignore="TextContrastCheck"
                 tools:text="example@gmail.com" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/min_margin"
-                android:labelFor="@id/edt_password"
-                android:text="@string/new_pass_password"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/edt_password"
+                    android:text="@string/register_password"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@id/edt_username"
+                    android:text="@{viewModel.errClave}"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                    tools:text="Error" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/edt_password"
@@ -93,17 +123,34 @@
                 android:ems="10"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="textPassword"
+                android:text="@={viewModel.clave}"
                 tools:ignore="TextContrastCheck"
                 tools:text="123456789" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/min_margin"
-                android:labelFor="@id/edt_repeat_password"
-                android:text="@string/new_pass_repeat_password"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:labelFor="@id/edt_repeat_password"
+                    android:text="@string/register_repeat_password"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@id/edt_username"
+                    android:text="@{viewModel.errRepClave}"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                    tools:text="Error" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/edt_repeat_password"
@@ -115,6 +162,7 @@
                 android:ems="10"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="textPassword"
+                android:text="@={viewModel.repClave}"
                 tools:ignore="TextContrastCheck"
                 tools:text="123456789" />
 
@@ -134,12 +182,29 @@
                 android:orientation="vertical"
                 android:visibility="@{viewModel.isDistrib() ? View.VISIBLE : View.GONE}">
 
-                <TextView
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:labelFor="@id/edt_razon_social"
-                    android:text="@string/my_data_razon_social"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/edt_razon_social"
+                        android:text="@string/register_razon_social"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:labelFor="@id/edt_username"
+                        android:text="@{viewModel.errRazSoc}"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        tools:text="Error" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edt_razon_social"
@@ -151,17 +216,33 @@
                     android:ems="10"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="text"
+                    android:text="@={viewModel.razSoc}"
                     tools:ignore="TextContrastCheck"
                     tools:text="Lavados de Carros Santa Rosa" />
 
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/min_margin"
-                    android:labelFor="@id/edt_ruc"
-                    android:text="@string/my_data_ruc"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/edt_ruc"
+                        android:text="@string/register_ruc"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:labelFor="@id/edt_username"
+                        android:text="@{viewModel.errNroDoc}"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        tools:text="Error" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edt_ruc"
@@ -173,17 +254,34 @@
                     android:ems="10"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="number"
+                    android:text="@={viewModel.nroDoc}"
                     tools:ignore="TextContrastCheck"
                     tools:text="10709582864" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/min_margin"
-                    android:labelFor="@id/edt_cellphone"
-                    android:text="@string/my_data_cellphone"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/edt_cellphone"
+                        android:text="@string/register_cellphone"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:labelFor="@id/edt_username"
+                        android:text="@{viewModel.errNroCel1}"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        tools:text="Error" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edt_cellphone"
@@ -195,17 +293,33 @@
                     android:ems="10"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="phone"
+                    android:text="@={viewModel.nroCel1}"
                     tools:ignore="TextContrastCheck"
                     tools:text="925416855" />
 
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/min_margin"
-                    android:labelFor="@id/edt_whatsapp"
-                    android:text="@string/my_data_whatsapp"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:labelFor="@id/edt_whatsapp"
+                        android:text="@string/register_whatsapp"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:labelFor="@id/edt_username"
+                        android:text="@{viewModel.errNroCel2}"
+                        android:textAlignment="textEnd"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        tools:text="Error" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edt_whatsapp"
@@ -217,21 +331,31 @@
                     android:ems="10"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="phone"
+                    android:text="@={viewModel.nroCel2}"
                     tools:ignore="TextContrastCheck"
                     tools:text="958412963" />
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/min_margin"
+                android:text="@{viewModel.errMsg}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                tools:text="Contraseña Inválida" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginTop="@dimen/min_margin"
                 android:layout_marginBottom="@dimen/medium_margin"
                 android:background="@drawable/rounded_button_states"
                 android:fontFamily="@font/opensans_semibold"
-                android:onClick="@{()->registerFragment.goMain()}"
+                android:onClick="@{()->viewModel.registrar()}"
                 android:text="@string/register_next"
+                android:textAllCaps="false"
                 android:textColor="@color/white" />
 
         </LinearLayout>

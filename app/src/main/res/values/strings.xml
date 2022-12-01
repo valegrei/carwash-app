@@ -13,11 +13,15 @@
     <string name="login_app_version">V %s</string>
     <!--    Register-->
     <string name="register_label">Registro</string>
-    <string name="register_email">Correo</string>
-    <string name="register_password">Contraseña</string>
-    <string name="register_repeat_password">Repita contraseña</string>
+    <string name="register_email">Correo*</string>
+    <string name="register_password">Contraseña*</string>
+    <string name="register_repeat_password">Repita contraseña*</string>
     <string name="register_check_dis">Registrarse como distribuidor</string>
     <string name="register_next">Registrar</string>
+    <string name="register_razon_social">Razon Social*</string>
+    <string name="register_ruc">RUC*</string>
+    <string name="register_cellphone">Número Celular</string>
+    <string name="register_whatsapp">Número de Whatsapp</string>
     <!--    Recover-->
     <string name="recover_label">Olvidé mi Clave</string>
     <string name="recover_msg">Ingrese la dirección de correo con la que te registraste y enseguida te enviaremos un correo con un código para restablecer tu contraseña.</string>
@@ -25,16 +29,17 @@
     <string name="recover_send_code">Enviar Código</string>
     <!--    New Pass-->
     <string name="new_pass_label">Nueva Clave</string>
-    <string name="new_pass_msg">Ingrese el código enviado al correo e ingrese su nueva clave.</string>
+    <string name="new_pass_msg">Ingrese el código enviado al correo %s e ingrese su nueva clave.</string>
     <string name="new_pass_code">Código</string>
     <string name="new_pass_password">Contraseña</string>
     <string name="new_pass_repeat_password">Repita contraseña</string>
     <string name="new_passr_next">Cambiar Clave</string>
     <!--    Verify -->
     <string name="verify_label">Verificar Correo</string>
-    <string name="verify_msg">Se envió un código de verificación al correo %s. Ingréselo para autenticar su correo.</string>
+    <string name="verify_msg">Ingrese el código de verificación que se le envió a su correo %s para confirmarlo. Si no lo recibió solicite uno nuevo haciendo click abajo.</string>
     <string name="verify_code">Código</string>
     <string name="verify_send_code">Solicitar nuevo código</string>
+    <string name="verify_sent_code">Nuevo código enviado</string>
     <string name="verify_next">Verificar</string>
 
     <!--    Distribuidor-->

@@ -1,21 +1,20 @@
-package pe.com.valegrei.carwashapp.viewmodels
+package pe.com.valegrei.carwashapp.ui.login
 
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
-import pe.com.valegrei.carwashapp.database.sesion.SesionDao
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
-import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import pe.com.valegrei.carwashapp.network.request.ReqLogin
 
-enum class Status { LOADING, ERROR, SUCCESS, VERIFICAR }
+enum class Status { LOADING, ERROR, SUCCESS, VERIFICAR, CLEARED }
 
-class LoginViewModel(private val sesionDao: SesionDao, private val usuarioDao: UsuarioDao) :
+class LoginViewModel(private val sesionData: SesionData) :
     ViewModel() {
     private var _usuario = MutableLiveData<Usuario>()
     val usuario: LiveData<Usuario> = _usuario
@@ -52,6 +51,13 @@ class LoginViewModel(private val sesionDao: SesionDao, private val usuarioDao: U
             return false
         }
         return true
+    }
+
+    fun clear() {
+        /*correo.value = ""
+        clave.value = ""
+        _errMsg.value = ""*/
+        _status.value = Status.CLEARED
     }
 
     fun login() {
@@ -92,19 +98,17 @@ class LoginViewModel(private val sesionDao: SesionDao, private val usuarioDao: U
         }
     }
 
-    fun guardarSesionUsuario(usuario: Usuario, exp: String, jwt: String) {
-        usuarioDao.insertUsuario(usuario)
-        sesionDao.insertSesion(Sesion(usuario.id!!, exp, jwt, true))
-    }
+    fun guardarSesionUsuario(usuario: Usuario, exp: String, jwt: String) =
+        sesionData.saveSesion(Sesion(exp, jwt, usuario, true))
 }
 
 class LoginViewModelFactory(
-    private val sesionDao: SesionDao, private val usuarioDao: UsuarioDao
+    private val sesionData: SesionData
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return LoginViewModel(sesionDao, usuarioDao) as T
+            return LoginViewModel(sesionData) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

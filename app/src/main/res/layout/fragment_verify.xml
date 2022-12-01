@@ -7,10 +7,6 @@
     <data>
 
         <variable
-            name="verifyFragment"
-            type="pe.com.valegrei.carwashapp.ui.verify.VerifyFragment" />
-
-        <variable
             name="viewModel"
             type="pe.com.valegrei.carwashapp.ui.verify.VerifyViewModel" />
     </data>
@@ -22,7 +18,7 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/ly_login"
+            android:id="@+id/ly_verify"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -96,7 +92,7 @@
                 android:layout_marginTop="@dimen/min_margin"
                 android:background="@drawable/rounded_button_states"
                 android:fontFamily="@font/opensans_semibold"
-                android:onClick="@{()->verifyFragment.verificar()}"
+                android:onClick="@{()->viewModel.verificar()}"
                 android:text="@string/verify_next"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
@@ -107,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginVertical="@dimen/mid_margin"
-                android:onClick="@{() -> verifyFragment.enviarCodigo()}"
+                android:onClick="@{() -> viewModel.enviarCodigo()}"
                 android:text="@string/verify_send_code"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelAccent"
                 android:textStyle="bold"

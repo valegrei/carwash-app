@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.viewmodels.LoginViewModel" />
+            type="pe.com.valegrei.carwashapp.ui.login.LoginViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

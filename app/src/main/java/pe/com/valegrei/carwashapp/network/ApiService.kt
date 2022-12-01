@@ -42,7 +42,7 @@ interface ApiService {
     suspend fun iniciarSesion(@Body reqLogin: ReqLogin): RespLogin
 
     @POST("auth/signup")
-    suspend fun registrar(@Body nuevoUsuario: Usuario): Response
+    suspend fun registrar(@Body nuevoUsuario: Usuario): RespLogin
 
     @POST("auth/verify")
     suspend fun verificarCorreo(@Body reqVerificarCorreo: ReqVerificarCorreo): RespLogin
@@ -54,7 +54,7 @@ interface ApiService {
     suspend fun solicitarCodigoNuevaClave(@Body reqCorreo: ReqCorreo): Response
 
     @POST("auth/renew")
-    suspend fun cambiarClave(@Body reqCambiarClave: ReqCambiarClave): Response
+    suspend fun cambiarClave(@Body reqCambiarClave: ReqCambiarClave): RespLogin
 
     /* Rutas de REST Api */
 }

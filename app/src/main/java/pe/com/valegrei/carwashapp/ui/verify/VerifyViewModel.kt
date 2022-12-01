@@ -4,23 +4,24 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
-import pe.com.valegrei.carwashapp.database.sesion.SesionDao
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
-import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import pe.com.valegrei.carwashapp.network.request.ReqId
 import pe.com.valegrei.carwashapp.network.request.ReqVerificarCorreo
 
-enum class Status { LOADING, ERROR, GO_MAIN, REQ_CODE }
+enum class Status { LOADING, ERROR, GO_MAIN, SENT_CODE, NORMAL, CLEARED }
 
-class VerifyViewModel(private val sesionDao: SesionDao, private val usuarioDao: UsuarioDao) :
+class VerifyViewModel(private val sesionData: SesionData) :
     ViewModel() {
 
     private val TAG = VerifyViewModel::class.simpleName
-    var idUsuario = MutableLiveData<Int>()
-    var correo = MutableLiveData<String>()
+    private var _idUsuario = MutableLiveData<Int>()
+    private var _correo = MutableLiveData<String>()
+    val idUsuario: LiveData<Int> = _idUsuario
+    val correo: LiveData<String> = _correo
     var codigo = MutableLiveData<String>()
     private var _errMsg = MutableLiveData<String>()
     val errMsg: LiveData<String> = _errMsg
@@ -33,10 +34,13 @@ class VerifyViewModel(private val sesionDao: SesionDao, private val usuarioDao: 
         codigo.value = ""
     }
 
-    fun guardarSesionUsuario(usuario: Usuario, exp: String, jwt: String) {
-        usuarioDao.insertUsuario(usuario)
-        sesionDao.insertSesion(Sesion(usuario.id!!, exp, jwt, true))
+    fun cargarDatos(idUsuario: Int, correo: String) {
+        _idUsuario.value = idUsuario
+        _correo.value = correo
     }
+
+    fun guardarSesionUsuario(usuario: Usuario, exp: String, jwt: String) =
+        sesionData.saveSesion(Sesion(exp, jwt, usuario, true))
 
     fun validar(codigo: String): Boolean {
         if (codigo.isEmpty()) {
@@ -44,6 +48,15 @@ class VerifyViewModel(private val sesionDao: SesionDao, private val usuarioDao: 
             return false
         }
         return true
+    }
+
+    fun clearDialogs() {
+        _status.value = Status.NORMAL
+    }
+
+    fun clear() {
+        //codigo.value = ""
+        _status.value = Status.CLEARED
     }
 
     fun verificar() {
@@ -74,11 +87,8 @@ class VerifyViewModel(private val sesionDao: SesionDao, private val usuarioDao: 
         viewModelScope.launch(exceptionHandler) {
             _errMsg.value = ""
             _status.value = Status.LOADING
-            val resp = Api.retrofitService.solicitarCodigoVerificacion(
-                ReqId(idUsuario.value!!)
-            )
-
-            _status.value = Status.REQ_CODE
+            Api.retrofitService.solicitarCodigoVerificacion(ReqId(idUsuario.value!!))
+            _status.value = Status.SENT_CODE
         }
     }
 
@@ -96,12 +106,12 @@ class VerifyViewModel(private val sesionDao: SesionDao, private val usuarioDao: 
 
 
 class VerifyViewModelFactory(
-    private val sesionDao: SesionDao, private val usuarioDao: UsuarioDao
+    private val sesionData: SesionData
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(VerifyViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return VerifyViewModel(sesionDao, usuarioDao) as T
+            return VerifyViewModel(sesionData) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
