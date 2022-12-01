@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import pe.com.valegrei.carwashapp.MainAdminActivity
 import pe.com.valegrei.carwashapp.MainDisActivity
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentNewPasswordBinding
@@ -47,7 +48,9 @@ class NewPasswordFragment : Fragment() {
                 when (it) {
                     Status.LOADING -> showLoading()
                     Status.ERROR -> hideLoading()
-                    Status.GO_MAIN -> goMain()
+                    Status.GO_ADMIN -> goAdmin()
+                    Status.GO_CLIENT -> goClient()
+                    Status.GO_DISTR -> goDistr()
                     Status.VERIFICAR -> goVerify()
                     else -> {}
                 }
@@ -55,12 +58,28 @@ class NewPasswordFragment : Fragment() {
         }
     }
 
-    private fun goMain() {
+    private fun goAdmin() {
         Handler(Looper.getMainLooper()).postDelayed({
-            newPasswordViewModel.clear()
+            progressDialog.dismiss()
+            val intent = Intent(context, MainAdminActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }, 500)
+    }
+    private fun goClient() {
+        Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()
             val intent = Intent(context, MainDisActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
+        }, 500)
+    }
+    private fun goDistr() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            progressDialog.dismiss()
+            val intent = Intent(context, MainDisActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }, 500)
     }
 

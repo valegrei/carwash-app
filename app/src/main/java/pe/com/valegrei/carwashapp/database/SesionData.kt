@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
+import java.util.*
 
 private const val PREF_NAME = "sesion_data"
 private const val SESION_EXP_KEY = "sesion_exp"
@@ -33,10 +34,16 @@ class SesionData(context: Context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
+    fun closeSesion(){
+        val editor = pref.edit()
+        editor.putBoolean(SESION_ESTADO_KEY, false)
+        editor.apply()
+    }
+
     fun saveSesion(sesion: Sesion) {
         val editor = pref.edit()
         //guardando datos sesion
-        editor.putString(SESION_EXP_KEY, sesion.fechaExpira)
+        editor.putLong(SESION_EXP_KEY, sesion.fechaExpira.time)
         editor.putString(SESION_TOKEN_KEY, sesion.tokenAuth)
         editor.putBoolean(SESION_ESTADO_KEY, sesion.estado)
         //guardando datos de usuario
@@ -64,7 +71,7 @@ class SesionData(context: Context) {
         if (!logueado)
             return null
         return Sesion(
-            pref.getString(SESION_EXP_KEY, "")!!,
+            Date(pref.getLong(SESION_EXP_KEY, 0)),
             pref.getString(SESION_TOKEN_KEY, "")!!,
             Usuario(
                 pref.getInt(USU_ID_KEY, 0),

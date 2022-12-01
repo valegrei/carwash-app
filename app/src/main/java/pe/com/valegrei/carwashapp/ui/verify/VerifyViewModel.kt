@@ -6,13 +6,15 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
+import pe.com.valegrei.carwashapp.database.usuario.TipoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import pe.com.valegrei.carwashapp.network.request.ReqId
 import pe.com.valegrei.carwashapp.network.request.ReqVerificarCorreo
+import java.util.*
 
-enum class Status { LOADING, ERROR, GO_MAIN, SENT_CODE, NORMAL, CLEARED }
+enum class Status { LOADING, ERROR, GO_ADMIN, GO_CLIENT, GO_DISTR, SENT_CODE, NORMAL, CLEARED }
 
 class VerifyViewModel(private val sesionData: SesionData) :
     ViewModel() {
@@ -39,7 +41,7 @@ class VerifyViewModel(private val sesionData: SesionData) :
         _correo.value = correo
     }
 
-    fun guardarSesionUsuario(usuario: Usuario, exp: String, jwt: String) =
+    fun guardarSesionUsuario(usuario: Usuario, exp: Date, jwt: String) =
         sesionData.saveSesion(Sesion(exp, jwt, usuario, true))
 
     fun validar(codigo: String): Boolean {
@@ -79,7 +81,20 @@ class VerifyViewModel(private val sesionData: SesionData) :
 
             //procede a guardar
             guardarSesionUsuario(resp.data.usuario, resp.data.exp!!, resp.data.jwt!!)
-            _status.value = Status.GO_MAIN
+            verificarSesion(resp.data.usuario)
+        }
+    }
+
+
+    fun verificarSesion(usuario: Usuario) {
+        when (usuario.idTipoUsuario) {
+            TipoUsuario.ADMIN.id -> _status.value = Status.GO_ADMIN
+            TipoUsuario.CLIENTE.id -> _status.value = Status.GO_CLIENT
+            TipoUsuario.DISTR.id -> {
+                if (usuario.distAct) _status.value = Status.GO_DISTR
+                else _status.value = Status.GO_CLIENT
+            }
+            else -> {}
         }
     }
 

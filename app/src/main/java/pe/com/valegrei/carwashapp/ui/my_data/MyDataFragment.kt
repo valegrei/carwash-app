@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import pe.com.valegrei.carwashapp.MainViewModel
+import pe.com.valegrei.carwashapp.MainViewModelFactory
 import pe.com.valegrei.carwashapp.R
+import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentMyDataBinding
 
 class MyDataFragment : Fragment(), MenuProvider {
@@ -19,6 +22,9 @@ class MyDataFragment : Fragment(), MenuProvider {
     // onDestroyView.
     private val binding get() = _binding!!
     private val sharedViewModel: MyDataViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(SesionData(requireContext()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +41,7 @@ class MyDataFragment : Fragment(), MenuProvider {
             myDataFragment = this@MyDataFragment
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
+            mainViewModel = this@MyDataFragment.mainViewModel
         }
 
         //Configura el menu del fragment

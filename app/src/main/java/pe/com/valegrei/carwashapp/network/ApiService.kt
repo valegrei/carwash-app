@@ -2,6 +2,7 @@ package pe.com.valegrei.carwashapp.network
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.network.request.*
@@ -15,6 +16,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.Date
 
 private const val BASE_URL = "http://192.168.100.9:3000"
 
@@ -23,6 +25,7 @@ private const val BASE_URL = "http://192.168.100.9:3000"
  */
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
+    .add(Date::class.java, Rfc3339DateJsonAdapter())
     .build()
 
 /**

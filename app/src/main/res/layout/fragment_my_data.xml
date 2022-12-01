@@ -13,6 +13,9 @@
         <variable
             name="viewModel"
             type="pe.com.valegrei.carwashapp.ui.my_data.MyDataViewModel" />
+        <variable
+            name="mainViewModel"
+            type="pe.com.valegrei.carwashapp.MainViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -123,6 +126,13 @@
                     android:text="@{viewModel.accountData.email}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     tools:text="example@gmail.com" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:onClick="@{()->mainViewModel.cerrarSesion()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cerrar Sesión" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

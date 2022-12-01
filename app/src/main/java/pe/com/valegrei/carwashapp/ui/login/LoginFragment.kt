@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import pe.com.valegrei.carwashapp.MainAdminActivity
 import pe.com.valegrei.carwashapp.MainDisActivity
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
@@ -44,7 +45,9 @@ class LoginFragment : Fragment() {
             when (it) {
                 Status.LOADING -> showLoading()
                 Status.ERROR -> hideLoading()
-                Status.SUCCESS -> goMain()
+                Status.GO_ADMIN -> goAdmin()
+                Status.GO_CLIENT -> goClient()
+                Status.GO_DISTR -> goDistr()
                 Status.VERIFICAR -> goVerify()
                 else -> {}
             }
@@ -75,12 +78,28 @@ class LoginFragment : Fragment() {
         }, 500)
     }
 
-    private fun goMain() {
+    private fun goAdmin() {
         Handler(Looper.getMainLooper()).postDelayed({
-            loginViewModel.clear()
+            progressDialog.dismiss()
+            val intent = Intent(context, MainAdminActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }, 500)
+    }
+    private fun goClient() {
+        Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()
             val intent = Intent(context, MainDisActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
+        }, 500)
+    }
+    private fun goDistr() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            progressDialog.dismiss()
+            val intent = Intent(context, MainDisActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }, 500)
     }
 
