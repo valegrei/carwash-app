@@ -12,9 +12,6 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.my_data.MyDataViewModel" />
-        <variable
-            name="mainViewModel"
             type="pe.com.valegrei.carwashapp.MainViewModel" />
     </data>
 
@@ -63,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.accountData.razonSocial}"
+                    android:text="@{viewModel.sesion.usuario.razonSocial}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     tools:text="Lavados de Carros Santa Rosa" />
 
@@ -78,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.accountData.ruc}"
+                    android:text="@{viewModel.sesion.usuario.nroDocumento}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     tools:text="10709582864" />
 
@@ -93,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.accountData.telefono}"
+                    android:text="@{viewModel.sesion.usuario.nroCel1}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     tools:text="925416855" />
 
@@ -108,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.accountData.whatsapp}"
+                    android:text="@{viewModel.sesion.usuario.nroCel2}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     tools:text="958412963" />
 
@@ -123,15 +120,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@{viewModel.accountData.email}"
+                    android:text="@{viewModel.sesion.usuario.correo}"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                     tools:text="example@gmail.com" />
 
                 <Button
                     android:id="@+id/button"
-                    android:onClick="@{()->mainViewModel.cerrarSesion()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.cerrarSesion()}"
                     android:text="Cerrar Sesión" />
             </LinearLayout>
         </LinearLayout>

@@ -19,6 +19,8 @@ import java.net.UnknownHostException
 import java.util.Date
 
 private const val BASE_URL = "http://192.168.100.9:3000"
+//private const val BASE_URL = "http://192.168.100.9"
+//private const val BASE_URL = "https://www.carwashperuapp.com/"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.

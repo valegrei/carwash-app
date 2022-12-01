@@ -4,15 +4,15 @@
     <item>
         <shape android:shape="rectangle">
             <size
-                android:width="240dp"
-                android:height="240dp" />
+                android:width="108dp"
+                android:height="108dp" />
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>
     <item
         android:gravity="center"
-        android:width="160dp"
-        android:height="160dp"
+        android:width="72dp"
+        android:height="72dp"
         android:drawable="@drawable/logo">
     </item>
 </layer-list>

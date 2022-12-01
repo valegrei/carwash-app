@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.my_data.MyDataViewModel" />
+            type="pe.com.valegrei.carwashapp.MainViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -71,7 +71,7 @@
                         android:ems="10"
                         android:hint="@string/my_data_razon_social"
                         android:inputType="text"
-                        android:text="@{viewModel.accountData.razonSocial}"
+                        android:text=""
                         tools:ignore="TextContrastCheck"
                         tools:text="Lavados de Carros Santa Rosa" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -90,7 +90,7 @@
                         android:ems="10"
                         android:hint="@string/my_data_ruc"
                         android:inputType="number"
-                        android:text="@{viewModel.accountData.ruc}"
+                        android:text=""
                         tools:ignore="TextContrastCheck"
                         tools:text="10709582864" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -109,7 +109,7 @@
                         android:ems="10"
                         android:hint="@string/my_data_cellphone"
                         android:inputType="phone"
-                        android:text="@{viewModel.accountData.telefono}"
+                        android:text=""
                         tools:ignore="TextContrastCheck"
                         tools:text="925416855" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -128,7 +128,7 @@
                         android:ems="10"
                         android:hint="@string/my_data_whatsapp"
                         android:inputType="phone"
-                        android:text="@{viewModel.accountData.whatsapp}"
+                        android:text=""
                         tools:ignore="TextContrastCheck"
                         tools:text="958412963" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -147,7 +147,7 @@
                         android:ems="10"
                         android:hint="@string/my_data_email"
                         android:inputType="textEmailAddress"
-                        android:text="@{viewModel.accountData.email}"
+                        android:text=""
                         tools:ignore="TextContrastCheck"
                         tools:text="example@gmail.com" />
                 </com.google.android.material.textfield.TextInputLayout>

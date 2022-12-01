@@ -5,18 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pe.com.valegrei.carwashapp.database.SesionData
+import pe.com.valegrei.carwashapp.database.sesion.Sesion
 
-enum class SesionStatus { NORMAL, CLOSED}
+enum class SesionStatus { NORMAL, CLOSED }
 
 class MainViewModel(private val sesionData: SesionData) : ViewModel() {
     private var _sesionStatus = MutableLiveData<SesionStatus>()
     val sesionStatus: LiveData<SesionStatus> = _sesionStatus
+    private var _sesion = MutableLiveData<Sesion>()
+    val sesion: LiveData<Sesion> = _sesion
 
     init {
         _sesionStatus.value = SesionStatus.NORMAL
+        _sesion.value = sesionData.getCurrentSesion()
     }
 
-    fun cerrarSesion(){
+    fun cerrarSesion() {
         sesionData.closeSesion()
         _sesionStatus.value = SesionStatus.CLOSED
     }

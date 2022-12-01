@@ -21,7 +21,7 @@ class MyDataFragment : Fragment(), MenuProvider {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val sharedViewModel: MyDataViewModel by activityViewModels()
+    //private val sharedViewModel: MyDataViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(SesionData(requireContext()))
     }
@@ -40,8 +40,7 @@ class MyDataFragment : Fragment(), MenuProvider {
         binding.apply {
             myDataFragment = this@MyDataFragment
             lifecycleOwner = viewLifecycleOwner
-            viewModel = sharedViewModel
-            mainViewModel = this@MyDataFragment.mainViewModel
+            viewModel = mainViewModel
         }
 
         //Configura el menu del fragment
@@ -63,7 +62,7 @@ class MyDataFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.action_edit) {
-            findNavController().navigate(R.id.action_nav_my_data_to_nav_my_data_edit)
+            //findNavController().navigate(R.id.action_nav_my_data_to_nav_my_data_edit)
             return true
         }
         return false

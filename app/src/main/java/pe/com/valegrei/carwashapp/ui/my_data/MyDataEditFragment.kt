@@ -7,7 +7,10 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import pe.com.valegrei.carwashapp.MainViewModel
+import pe.com.valegrei.carwashapp.MainViewModelFactory
 import pe.com.valegrei.carwashapp.R
+import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentMyDataEditBinding
 
 class MyDataEditFragment : Fragment(), MenuProvider {
@@ -17,7 +20,9 @@ class MyDataEditFragment : Fragment(), MenuProvider {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val sharedViewModel: MyDataViewModel by activityViewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(SesionData(requireContext()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
