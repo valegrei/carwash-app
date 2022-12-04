@@ -28,9 +28,6 @@ class MainDisActivity : AppCompatActivity() {
         binding = ActivityMainDisBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
-
         setSupportActionBar(binding.appBarMainDis.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout

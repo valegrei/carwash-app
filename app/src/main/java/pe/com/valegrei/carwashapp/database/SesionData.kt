@@ -26,6 +26,7 @@ private const val USU_ID_TIPO_KEY = "usu_id_tipo"
 private const val USU_ID_TIPO_DOC_KEY = "usu_id_tipo_doc"
 private const val USU_CREATED_AT_KEY = "usu_created_at"
 private const val USU_UPDATED_AT_KEY = "usu_updated_at"
+private const val SINCRO_USUARIOS = "sincro_usuarios"
 
 class SesionData(context: Context) {
     private var pref: SharedPreferences
@@ -34,7 +35,7 @@ class SesionData(context: Context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    fun closeSesion(){
+    fun closeSesion() {
         val editor = pref.edit()
         editor.putBoolean(SESION_ESTADO_KEY, false)
         editor.apply()
@@ -61,8 +62,8 @@ class SesionData(context: Context) {
         editor.putBoolean(USU_ESTADO_KEY, sesion.usuario.estado)
         editor.putInt(USU_ID_TIPO_KEY, sesion.usuario.idTipoUsuario)
         editor.putInt(USU_ID_TIPO_DOC_KEY, sesion.usuario.idTipoDocumento)
-        editor.putString(USU_CREATED_AT_KEY, sesion.usuario.createdAt)
-        editor.putString(USU_UPDATED_AT_KEY, sesion.usuario.updatedAt)
+        editor.putLong(USU_CREATED_AT_KEY, sesion.usuario.createdAt?.time!!)
+        editor.putLong(USU_UPDATED_AT_KEY, sesion.usuario.updatedAt?.time!!)
         editor.apply()
     }
 
@@ -89,10 +90,20 @@ class SesionData(context: Context) {
                 pref.getBoolean(USU_ESTADO_KEY, false),
                 pref.getInt(USU_ID_TIPO_KEY, 0),
                 pref.getInt(USU_ID_TIPO_DOC_KEY, 0),
-                pref.getString(USU_CREATED_AT_KEY, ""),
-                pref.getString(USU_UPDATED_AT_KEY, "")
+                Date(pref.getLong(USU_CREATED_AT_KEY, 0)),
+                Date(pref.getLong(USU_UPDATED_AT_KEY, 0))
             ),
             true
         )
+    }
+
+    fun saveLastSincroUsuarios(lastSincro: Date) {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_USUARIOS, lastSincro.time)
+        edit.apply()
+    }
+
+    fun getLastSincroUsuarios(): Date {
+        return Date(pref.getLong(SINCRO_USUARIOS, 0))
     }
 }

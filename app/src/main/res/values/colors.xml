@@ -17,4 +17,5 @@
     <color name="purple_dark">#5c1c86</color>
     <color name="purple">#742384</color>
     <color name="shadow">#4D575757</color>
+    <color name="bg_color">#EBECEF</color>
 </resources>

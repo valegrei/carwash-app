@@ -10,11 +10,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import pe.com.valegrei.carwashapp.database.SesionData
-import pe.com.valegrei.carwashapp.databinding.ActivityMainBinding
+import pe.com.valegrei.carwashapp.databinding.ActivityMainAdminBinding
 
 class MainAdminActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainAdminBinding
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(SesionData(this))
     }
@@ -22,17 +22,18 @@ class MainAdminActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
+        setSupportActionBar(binding.toolbar)
+        val navView: BottomNavigationView = binding.lyContent.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_my_data
+                R.id.navigation_distrib, R.id.navigation_users, R.id.navigation_announcement, R.id.navigation_account
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

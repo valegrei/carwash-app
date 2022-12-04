@@ -6,17 +6,14 @@ import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.network.request.*
-import pe.com.valegrei.carwashapp.network.response.RespError
-import pe.com.valegrei.carwashapp.network.response.RespLogin
-import pe.com.valegrei.carwashapp.network.response.Response
+import pe.com.valegrei.carwashapp.network.response.*
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.util.Date
+import java.util.*
 
 private const val BASE_URL = "http://192.168.100.9:3000"
 //private const val BASE_URL = "http://192.168.100.9"
@@ -38,9 +35,6 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-/**
- * A public interface that exposes the [getPhotos] method
- */
 interface ApiService {
     /* Rutas de Autorizacion */
     @POST("auth/login")
@@ -62,6 +56,49 @@ interface ApiService {
     suspend fun cambiarClave(@Body reqCambiarClave: ReqCambiarClave): RespLogin
 
     /* Rutas de REST Api */
+    /* Usuarios */
+    @GET("api/usuarios")
+    suspend fun obtenerUsuarios(
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespUsuarios
+
+    @GET("api/usuarios/{id}")
+    suspend fun obtenerUsuario(
+        @Path("id") idUsuario: Int,
+        @Header("Authorization") authToken: String
+    ): RespUsuario
+
+    @PUT("api/usuarios/{id}")
+    suspend fun actualizarUsuario(
+        @Path("id") idUsuario: Int,
+        @Body usuario: Usuario,
+        @Header("Authorization") authToken: String
+    ): RespUsuario
+
+    @PUT("api/usuarios/{id}/estado")
+    suspend fun habilitarUsuario(
+        @Path("id") idUsuario: Int,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @DELETE("api/usuarios/{id}/estado")
+    suspend fun deshabilitarUsuario(
+        @Path("id") idUsuario: Int,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @PUT("api/usuarios/{id}/tipo")
+    suspend fun cambiarTipoUsuario(
+        @Path("id") idUsuario: Int,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @PUT("api/usuarios/{id}/dist")
+    suspend fun habilitarDistribuidor(
+        @Path("id") idUsuario: Int,
+        @Header("Authorization") authToken: String
+    ): Response
 }
 
 /**
@@ -82,7 +119,7 @@ fun extractExceptionMessage(exception: HttpException): RespError? {
         errorBody()?.let {
             val errorJson = it.string()
             return if (!errorJson.contains("{"))
-                RespError(message = errorJson)
+                RespError(errorJson)
             else
                 adapter.fromJson(errorJson)
         }
@@ -96,16 +133,16 @@ fun extractExceptionMessage(exception: HttpException): RespError? {
 fun Throwable.handleThrowable(): RespError {
     return when (this) {
         is UnknownHostException ->
-            RespError(message = "Servidor no encontrado")
+            RespError("Servidor no encontrado")
         is HttpException ->
-            extractExceptionMessage(exception = this)!!
+            extractExceptionMessage(this)!!
         is SocketTimeoutException ->
-            RespError(message = "Revisar conexión a Internet")
+            RespError("Revisar conexión a Internet")
         else -> {
             if (this.message != null)
-                RespError(message = this.message!!)
+                RespError(this.message!!)
             else
-                RespError(message = "Error Desconocido")
+                RespError("Error Desconocido")
         }
     }
 }

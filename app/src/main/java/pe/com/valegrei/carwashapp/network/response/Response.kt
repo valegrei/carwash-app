@@ -1,6 +1,7 @@
 package pe.com.valegrei.carwashapp.network.response
 
 import com.squareup.moshi.Json
+import java.util.Date
 
 open class Response(
     @Json(name = "statusCode")
@@ -10,5 +11,5 @@ open class Response(
     @Json(name = "message")
     val message: String,
     @Json(name = "timeStamp")
-    val timeStamp: String,
+    val timeStamp: Date,
 )

@@ -67,6 +67,11 @@
         <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
+    <style name="TextAppearance.CarwashApp.LabelPrimarySemibold" parent="TextAppearance.CarwashApp.LabelPrimary">
+        <item name="fontFamily">@font/opensans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
     <style name="Theme.CarwashApp.RoundButton" parent="Widget.MaterialComponents.Button">
         <item name="background">@drawable/rounded_button_states</item>
         <item name="android:textColor">@color/white</item>

@@ -8,4 +8,6 @@ data class Sesion(
     var tokenAuth: String,
     var usuario: Usuario,
     var estado: Boolean,
-)
+){
+    fun getTokenBearer() = "Bearer $tokenAuth"
+}

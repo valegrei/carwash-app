@@ -3,28 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_distrib">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="pe.com.valegrei.carwashapp.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_distrib"
+        android:name="pe.com.valegrei.carwashapp.ui.distribs.DistribsFragment"
+        android:label="@string/title_distrib"
+        tools:layout="@layout/fragment_distribs" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="pe.com.valegrei.carwashapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_users"
+        android:name="pe.com.valegrei.carwashapp.ui.users.UsersFragment"
+        android:label="@string/title_usuarios"
+        tools:layout="@layout/fragment_users" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="pe.com.valegrei.carwashapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_announcement"
+        android:name="pe.com.valegrei.carwashapp.ui.announcement.AnnouncementFragment"
+        android:label="@string/title_publicidad"
+        tools:layout="@layout/fragment_announcement" />
     <fragment
         android:id="@+id/navigation_my_data"
         android:name="pe.com.valegrei.carwashapp.ui.my_data.MyDataFragment"
         android:label="@string/my_data_title"
         tools:layout="@layout/fragment_my_data" />
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="pe.com.valegrei.carwashapp.ui.account.AccountFragment"
+        android:label="@string/title_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>
