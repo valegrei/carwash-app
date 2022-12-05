@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="tipoUsuario"
+            type="pe.com.valegrei.carwashapp.database.usuario.TipoUsuario" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.users.UsersViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color"
+        android:orientation="vertical">
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/small_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedUsu.getNroDocFormateado()}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="DNI: 70917786" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedUsu.getNombreORazSocial()}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                tools:text="Victor Alegre" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{@string/btnsh_correo(viewModel.selectedUsu.correo)}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Correo: valegrei@outlook.com" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/min_margin"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@string/btnsh_actions" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/min_margin"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@string/btnsh_change_type" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="@{viewModel.selectedUsu.idTipoUsuario == tipoUsuario.ADMIN.id}"
+                    android:fontFamily="@font/opensans_regular"
+                    android:onClick="@{() -> viewModel.cambiarTipoUsuario(tipoUsuario.ADMIN.id)}"
+                    android:text="@string/btnsh_type_admin" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="@{viewModel.selectedUsu.idTipoUsuario == tipoUsuario.CLIENTE.id}"
+                    android:fontFamily="@font/opensans_regular"
+                    android:onClick="@{() -> viewModel.cambiarTipoUsuario(tipoUsuario.CLIENTE.id)}"
+                    android:text="@string/btnsh_type_client" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="@{viewModel.selectedUsu.idTipoUsuario == tipoUsuario.DISTR.id}"
+                    android:fontFamily="@font/opensans_regular"
+                    android:onClick="@{() -> viewModel.cambiarTipoUsuario(tipoUsuario.DISTR.id)}"
+                    android:text="@string/btnsh_type_distrib" />
+            </RadioGroup>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="@{viewModel.selectedUsu.estado}"
+                android:onClick="@{()-> viewModel.cambiarEstadoUsuario()}"
+                android:text="@string/btnsh_enable_user"
+                android:theme="@style/ThemeOverlay.CarwashApp.Switch" />
+
+            <Button
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="@{()->viewModel.guardarCambios()}"
+                android:text="@string/btnsh_save"
+                android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                app:icon="@drawable/ic_baseline_save_24" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

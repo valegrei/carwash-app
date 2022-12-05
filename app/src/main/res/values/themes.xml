@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CarwashApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.CarwashApp" parent="Theme.Material3.Light">
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryVariant">@color/purple</item>
@@ -11,6 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- You can customize it by changing statusBarColor. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
     </style>
 
@@ -72,13 +73,6 @@
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
-    <style name="Theme.CarwashApp.RoundButton" parent="Widget.MaterialComponents.Button">
-        <item name="background">@drawable/rounded_button_states</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="fontFamily">@font/opensans_semibold</item>
-        <item name="android:fontFamily">@font/opensans_semibold</item>
-    </style>
-
     <style name="Theme.CarwashApp.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
         <item name="windowSplashScreenBackground">@color/purple</item>
@@ -92,5 +86,16 @@
         <!-- Set the theme of the Activity that directly follows your splash screen. -->
         <!-- Required -->
         <item name="postSplashScreenTheme">@style/Theme.CarwashApp.NoActionBar</item>
+    </style>
+
+    <style name="ThemeOverlay.CarwashApp.Switch" parent="">
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="ThemeOverlay.CarwashApp.Button" parent="">
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="fontFamily">@font/opensans_semibold</item>
     </style>
 </resources>

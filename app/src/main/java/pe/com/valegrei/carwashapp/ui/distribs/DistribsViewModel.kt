@@ -6,10 +6,12 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.database.SesionData
+import pe.com.valegrei.carwashapp.database.sesion.Sesion
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
+import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR, NORMAL }
 
@@ -24,6 +26,19 @@ class DistribsViewModel(
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
 
+    private var _selectedDistrib = MutableLiveData<Usuario>()
+    val selectedDistrib : LiveData<Usuario> = _selectedDistrib
+
+    fun cambiarActivacionDistrib(){
+        val usuario = selectedDistrib.value
+        usuario?.distAct = !usuario?.distAct!!
+        _selectedDistrib.value = usuario!!
+    }
+
+    fun setSelectedDistrib(distrib: Usuario){
+        _selectedDistrib.value = distrib.copy()
+    }
+
     fun cargarDistribuidores(): Flow<List<Usuario>>  = usuarioDao.obtenerDistribuidores()
 
     fun descargarDistribuidores() {
@@ -31,12 +46,30 @@ class DistribsViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroUsuarios()
-            val res = Api.retrofitService.obtenerUsuarios(lastSincro,sesion?.getTokenBearer()!!)
-            val usuarios = res.data.usuarios
-            if(usuarios.isNotEmpty()){
-                usuarioDao.guardarUsuarios(usuarios)
-            }
-            sesionData.saveLastSincroUsuarios(res.timeStamp)
+            descargarDistribuidores(sesion, lastSincro)
+            _status.value = Status.SUCCESS
+        }
+    }
+
+    private suspend fun descargarDistribuidores(sesion: Sesion?, lastSincro: Date){
+        val res = Api.retrofitService.obtenerUsuarios(lastSincro,sesion?.getTokenBearer()!!)
+        val usuarios = res.data.usuarios
+        if(usuarios.isNotEmpty()){
+            usuarioDao.guardarUsuarios(usuarios)
+        }
+        sesionData.saveLastSincroUsuarios(res.timeStamp)
+    }
+
+    fun guardarCambios(){
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val lastSincro = sesionData.getLastSincroUsuarios()
+            val distrib = selectedDistrib.value
+            //guarda lo cambiado
+            Api.retrofitService.modificarUsuario(distrib?.id!!,distrib, sesion?.getTokenBearer()!!)
+            //Trae los cambios
+            descargarDistribuidores(sesion, lastSincro)
             _status.value = Status.SUCCESS
         }
     }

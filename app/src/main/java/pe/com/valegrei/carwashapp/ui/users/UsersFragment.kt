@@ -5,21 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
+import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.databinding.FragmentUsersBinding
-import pe.com.valegrei.carwashapp.ui.distribs.Status
 
 class UsersFragment : Fragment() {
 
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: UsersViewModel by viewModels {
+    private val viewModel: UsersViewModel by activityViewModels {
         UsersViewModelFactory(
             SesionData(requireContext()),
             (activity?.application as CarwashApplication).database.usuarioDao()
@@ -38,7 +38,8 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val usuariosAdapter = UsersListAdapter {
-            //TODO implementar interaccion
+            viewModel.setSelectedUsu(it)
+            UsersBottomSheedDialog().show(childFragmentManager, UsersBottomSheedDialog.TAG)
         }
 
         binding.rvUsers.adapter = usuariosAdapter

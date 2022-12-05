@@ -345,18 +345,15 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
                 tools:text="Contraseña Inválida" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/min_margin"
                 android:layout_marginBottom="@dimen/medium_margin"
-                android:background="@drawable/rounded_button_states"
-                android:fontFamily="@font/opensans_semibold"
                 android:onClick="@{()->viewModel.registrar()}"
                 android:text="@string/register_next"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:theme="@style/ThemeOverlay.CarwashApp.Button" />
 
         </LinearLayout>
 

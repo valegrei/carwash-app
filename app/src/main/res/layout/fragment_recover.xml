@@ -72,9 +72,9 @@
                 android:autofillHints="emailAddress"
                 android:background="@drawable/rounded_edittext_states"
                 android:ems="10"
-                android:text="@={viewModel.correo}"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="textEmailAddress"
+                android:text="@={viewModel.correo}"
                 tools:hint="example@mail.com"
                 tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
@@ -86,18 +86,15 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
                 tools:text="Correo Inválido" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_send_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/mid_margin"
                 android:layout_marginTop="@dimen/min_margin"
-                android:background="@drawable/rounded_button_states"
-                android:fontFamily="@font/opensans_semibold"
+                android:layout_marginBottom="@dimen/mid_margin"
                 android:onClick="@{()->viewModel.solicitarCodigo()}"
                 android:text="@string/recover_send_code"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:theme="@style/ThemeOverlay.CarwashApp.Button" />
 
         </LinearLayout>
 

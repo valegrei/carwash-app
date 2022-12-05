@@ -81,14 +81,31 @@ data class Usuario(
     )
 
     fun getNombreCompleto(): String {
-        return nombres + apellidoPaterno + apellidoMaterno
+        return "$nombres $apellidoPaterno $apellidoMaterno"
     }
 
     fun getCorreoNombres(): String {
-        return "${correo}\n${getNombreCompleto()}".trim()
+        return "${correo}\n${getNombreORazSocial()}".trim()
     }
 
-    fun getRucRazSocial(): String{
+    fun getNombreORazSocial(): String{
+        return when(idTipoUsuario){
+            TipoUsuario.DISTR.id -> razonSocial?:""
+            else -> getNombreCompleto()
+        }
+    }
+
+    fun getRucRazSocial(): String {
         return "${nroDocumento}\n${razonSocial}"
     }
+
+    fun getNroDocFormateado(): String {
+        return when (idTipoDocumento) {
+            TipoDocumento.DNI.id -> "${TipoDocumento.DNI.nombre}: $nroDocumento"
+            TipoDocumento.RUC.id -> "${TipoDocumento.RUC.nombre}: $nroDocumento"
+            TipoDocumento.CEXT.id -> "${TipoDocumento.CEXT.nombre}: $nroDocumento"
+            else -> ""
+        }
+    }
+
 }

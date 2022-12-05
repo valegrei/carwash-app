@@ -141,4 +141,15 @@
     <string name="title_usuarios">Usuarios</string>
     <string name="title_publicidad">Anuncios</string>
     <string name="title_account">Cuenta</string>
+
+    <string name="btnsh_ruc">RUC: %s</string>
+    <string name="btnsh_correo">Correo: %s</string>
+    <string name="btnsh_actions">Acciones:</string>
+    <string name="btnsh_enable_distr">Desactivar/Activar distribuidor</string>
+    <string name="btnsh_enable_user">Desactivar/Activar usuario</string>
+    <string name="btnsh_change_type">Cambiar tipo de usuario</string>
+    <string name="btnsh_type_admin">Administrador</string>
+    <string name="btnsh_type_client">Cliente</string>
+    <string name="btnsh_type_distrib">Distribuidor</string>
+    <string name="btnsh_save">Guardar cambios</string>
 </resources>

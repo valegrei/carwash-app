@@ -125,17 +125,14 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
                 tools:text="Contraseña Inválida" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/min_margin"
-                android:background="@drawable/rounded_button_states"
-                android:fontFamily="@font/opensans_semibold"
                 android:onClick="@{()->loginFragment.login()}"
                 android:text="@string/login_enter"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:theme="@style/ThemeOverlay.CarwashApp.Button" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

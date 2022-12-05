@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
@@ -19,7 +18,7 @@ class DistribsFragment : Fragment() {
     private var _binding: FragmentDistribsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: DistribsViewModel by viewModels {
+    private val viewModel: DistribsViewModel by activityViewModels {
         DistribsViewModelFactory(
             SesionData(requireContext()),
             (activity?.application as CarwashApplication).database.usuarioDao()
@@ -37,15 +36,16 @@ class DistribsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val distribAdapter =DistribsListAdapter{
-            //TODO implementar interaccion
+        val distribAdapter = DistribsListAdapter {
+            viewModel.setSelectedDistrib(it)
+            DistribsBottomSheedDialog().show(childFragmentManager, DistribsBottomSheedDialog.TAG)
         }
 
         binding.rvDistrib.adapter = distribAdapter
 
         //Actualiza la vista en tiempo real
         lifecycle.coroutineScope.launch {
-            viewModel.cargarDistribuidores().collect(){
+            viewModel.cargarDistribuidores().collect() {
                 distribAdapter.submitList(it)
             }
         }
@@ -56,8 +56,8 @@ class DistribsFragment : Fragment() {
             viewModel.descargarDistribuidores()
         }
 
-        viewModel.status.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
                 Status.LOADING -> binding.swipeDistrib.isRefreshing = true
                 else -> binding.swipeDistrib.isRefreshing = false
             }

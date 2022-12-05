@@ -57,7 +57,7 @@ interface ApiService {
 
     /* Rutas de REST Api */
     /* Usuarios */
-    @GET("api/usuarios")
+    @GET("api/admin/usuarios")
     suspend fun obtenerUsuarios(
         @Query("lastSincro") lastSincro: Date,
         @Header("Authorization") authToken: String
@@ -76,29 +76,13 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): RespUsuario
 
-    @PUT("api/usuarios/{id}/estado")
-    suspend fun habilitarUsuario(
+    @PUT("api/admin/usuarios/{id}")
+    suspend fun modificarUsuario(
         @Path("id") idUsuario: Int,
+        @Body usuario: Usuario,
         @Header("Authorization") authToken: String
     ): Response
 
-    @DELETE("api/usuarios/{id}/estado")
-    suspend fun deshabilitarUsuario(
-        @Path("id") idUsuario: Int,
-        @Header("Authorization") authToken: String
-    ): Response
-
-    @PUT("api/usuarios/{id}/tipo")
-    suspend fun cambiarTipoUsuario(
-        @Path("id") idUsuario: Int,
-        @Header("Authorization") authToken: String
-    ): Response
-
-    @PUT("api/usuarios/{id}/dist")
-    suspend fun habilitarDistribuidor(
-        @Path("id") idUsuario: Int,
-        @Header("Authorization") authToken: String
-    ): Response
 }
 
 /**

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.distribs.DistribsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_color"
+        android:orientation="vertical">
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/small_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedDistrib.getNroDocFormateado()}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="RUC: 20902342124" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedDistrib.razonSocial}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                tools:text="Lavados de autos Santa Rosa" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{@string/btnsh_correo(viewModel.selectedDistrib.correo)}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Correo: valegrei@outlook.com" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/min_margin"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/small_margin"
+            android:paddingBottom="@dimen/small_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@string/btnsh_actions" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="@{viewModel.selectedDistrib.distAct}"
+                android:onClick="@{()->viewModel.cambiarActivacionDistrib()}"
+                android:text="@string/btnsh_enable_distr"
+                android:theme="@style/ThemeOverlay.CarwashApp.Switch" />
+
+            <Button
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="@{()->viewModel.guardarCambios()}"
+                android:text="@string/btnsh_save"
+                android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                app:icon="@drawable/ic_baseline_save_24" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

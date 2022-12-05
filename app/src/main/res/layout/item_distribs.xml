@@ -15,8 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/min_margin"
-        android:background="@color/white"
         android:clickable="true"
+        app:cardBackgroundColor="@color/white"
+        style="?attr/materialCardViewElevatedStyle"
         android:focusable="true"
         app:cardCornerRadius="@dimen/small_margin">
 
