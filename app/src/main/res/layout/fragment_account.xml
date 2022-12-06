@@ -1,13 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.account.AccountFragment">
 
-    <TextView
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="pe.com.valegrei.carwashapp.database.usuario.TipoUsuario" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.MainViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@color/bg_color"
+        android:fillViewport="true">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/ly_portrait"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/my_data_dis_logo"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/logo" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_show_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ly_portrait">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_nombres"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.nombres}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
+                    tools:text="Víctor Augusto" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_ape_pat"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.apellidoPaterno}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
+                    tools:text="Alegre" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_ape_mat"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.apellidoMaterno}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
+                    tools:text="Ibáñez" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_razon_social"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.razonSocial}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
+                    tools:text="Lavados de Carros Santa Rosa" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.sesion.usuario.getNombreDoc()}"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    tools:text="RUC" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.nroDocumento}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="10709582864" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_cellphone"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.nroCel1}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="925416855" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_whatsapp"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.nroCel2}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="958412963" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_email"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.correo}"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    tools:text="example@gmail.com" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginHorizontal="@dimen/small_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:onClick="@{()->viewModel.cerrarSesion()}"
+                android:text="Cerrar Sesión"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ly_show_data" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

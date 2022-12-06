@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
+import pe.com.valegrei.carwashapp.database.usuario.TipoDocumento
+import pe.com.valegrei.carwashapp.database.usuario.TipoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 import pe.com.valegrei.carwashapp.network.Api
@@ -36,6 +38,11 @@ class UsersViewModel(
     fun cambiarTipoUsuario(idtipoUsuario: Int) {
         val usuario = selectedUsu.value
         usuario?.idTipoUsuario = idtipoUsuario
+        when(idtipoUsuario){
+            TipoUsuario.DISTR.id -> usuario?.idTipoDocumento = TipoDocumento.RUC.id
+            else -> usuario?.idTipoDocumento = TipoDocumento.DNI.id
+        }
+        usuario?.nroDocumento = ""
         _selectedUsu.value = usuario!!
     }
 

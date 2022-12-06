@@ -55,7 +55,7 @@ class RegisterFragment : Fragment() {
                     registerViewModel.usuario.value?.correo!!
                 )
             findNavController().navigate(action)
-        }, 500)
+        }, 200)
     }
 
     override fun onDestroyView() {

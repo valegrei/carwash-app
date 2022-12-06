@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +15,7 @@ import pe.com.valegrei.carwashapp.databinding.ActivityMainAdminBinding
 
 class MainAdminActivity : AppCompatActivity() {
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainAdminBinding
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(SesionData(this))
@@ -28,10 +30,10 @@ class MainAdminActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         val navView: BottomNavigationView = binding.lyContent.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navController = findNavController(R.id.nav_host_fragment_activity_main_admin)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_distrib, R.id.navigation_users, R.id.navigation_announcement, R.id.navigation_account
             )
@@ -45,6 +47,11 @@ class MainAdminActivity : AppCompatActivity() {
                 else -> {}
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main_admin)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     fun goLogin(){

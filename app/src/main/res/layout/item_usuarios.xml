@@ -34,9 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@{usuario.getCorreoNombres()}"
+                android:text="@{usuario.correo}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
-                tools:text="valegrei@outlook.com\nVictor Alegre Ibañez" />
+                tools:text="valegrei@outlook.com" />
 
             <ImageView
                 checkStatus="@{usuario.estado}"

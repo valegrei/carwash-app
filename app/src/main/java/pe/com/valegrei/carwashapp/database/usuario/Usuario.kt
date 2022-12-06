@@ -81,29 +81,53 @@ data class Usuario(
     )
 
     fun getNombreCompleto(): String {
-        return "$nombres $apellidoPaterno $apellidoMaterno"
+        val nombres = "${nombres?:""} ${apellidoPaterno?:""} ${apellidoMaterno?:""}"
+        if(nombres.trim().isEmpty())
+            return "(Nombre incompleto)"
+        return nombres
     }
 
     fun getCorreoNombres(): String {
         return "${correo}\n${getNombreORazSocial()}".trim()
     }
 
+    fun getRazSocial(): String{
+        if((razonSocial?:"").isEmpty())
+            return "(Raz. Social incompleto)"
+        return razonSocial!!
+    }
+
     fun getNombreORazSocial(): String{
         return when(idTipoUsuario){
-            TipoUsuario.DISTR.id -> razonSocial?:""
+            TipoUsuario.DISTR.id -> getRazSocial()
             else -> getNombreCompleto()
         }
     }
 
     fun getRucRazSocial(): String {
-        return "${nroDocumento}\n${razonSocial}"
+        return "${getNroDoc()}\n${getRazSocial()}\n$correo"
+    }
+
+    fun getNroDoc(): String{
+        if((nroDocumento?:"").isEmpty())
+            return "(Doc. incompleto)"
+        return nroDocumento!!
+    }
+
+    fun getNombreDoc(): String{
+        return when(idTipoDocumento){
+            TipoDocumento.DNI.id -> TipoDocumento.DNI.nombre
+            TipoDocumento.RUC.id -> TipoDocumento.RUC.nombre
+            TipoDocumento.CEXT.id -> TipoDocumento.CEXT.nombre
+            else -> ""
+        }
     }
 
     fun getNroDocFormateado(): String {
         return when (idTipoDocumento) {
-            TipoDocumento.DNI.id -> "${TipoDocumento.DNI.nombre}: $nroDocumento"
-            TipoDocumento.RUC.id -> "${TipoDocumento.RUC.nombre}: $nroDocumento"
-            TipoDocumento.CEXT.id -> "${TipoDocumento.CEXT.nombre}: $nroDocumento"
+            TipoDocumento.DNI.id -> "${TipoDocumento.DNI.nombre}: ${getNroDoc()}"
+            TipoDocumento.RUC.id -> "${TipoDocumento.RUC.nombre}: ${getNroDoc()}"
+            TipoDocumento.CEXT.id -> "${TipoDocumento.CEXT.nombre}: ${getNroDoc()}"
             else -> ""
         }
     }

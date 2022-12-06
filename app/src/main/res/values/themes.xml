@@ -98,4 +98,19 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="fontFamily">@font/opensans_semibold</item>
     </style>
+
+    <style name="RoundedTextImputLayaout">
+
+    </style>
+
+    <style name="Style.CarwashApp.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.CarwashApp.SmallComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.CarwashApp.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <!--this makes the 10 dp of cut corners of the MDC EditText-->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

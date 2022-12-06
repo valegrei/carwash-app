@@ -38,17 +38,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@{viewModel.selectedDistrib.razonSocial}"
+                android:text="@{viewModel.selectedDistrib.getRazSocial()}"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                 tools:text="Lavados de autos Santa Rosa" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/min_margin"
                 android:fontFamily="@font/opensans_regular"
-                android:text="@{@string/btnsh_correo(viewModel.selectedDistrib.correo)}"
+                android:text="@{viewModel.selectedDistrib.correo}"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                tools:text="Correo: valegrei@outlook.com" />
+                app:drawableStartCompat="@drawable/ic_outline_email_24"
+                tools:text="valegrei@outlook.com" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/min_margin"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{viewModel.selectedDistrib.nroCel1}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:drawableStartCompat="@drawable/ic_outline_phone_24"
+                tools:text="924448546" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/min_margin"
+                android:fontFamily="@font/opensans_regular"
+                android:text="@{viewModel.selectedDistrib.nroCel2}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:drawableStartCompat="@drawable/ic_whatsapp_outlined"
+                tools:text="924448546" />
         </LinearLayout>
 
         <View

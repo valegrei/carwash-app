@@ -140,13 +140,14 @@
     <string name="title_distrib_short">Distrib</string>
     <string name="title_usuarios">Usuarios</string>
     <string name="title_publicidad">Anuncios</string>
-    <string name="title_account">Cuenta</string>
+    <string name="title_account">Perfil</string>
+    <string name="title_account_edit">Editar Perfil</string>
 
     <string name="btnsh_ruc">RUC: %s</string>
     <string name="btnsh_correo">Correo: %s</string>
     <string name="btnsh_actions">Acciones:</string>
-    <string name="btnsh_enable_distr">Desactivar/Activar distribuidor</string>
-    <string name="btnsh_enable_user">Desactivar/Activar usuario</string>
+    <string name="btnsh_enable_distr">Habilitar/Deshabilitar distribuidor</string>
+    <string name="btnsh_enable_user">Habilitar/Deshabilitar usuario</string>
     <string name="btnsh_change_type">Cambiar tipo de usuario</string>
     <string name="btnsh_type_admin">Administrador</string>
     <string name="btnsh_type_client">Cliente</string>

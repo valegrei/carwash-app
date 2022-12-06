@@ -23,13 +23,17 @@
         android:label="@string/title_publicidad"
         tools:layout="@layout/fragment_announcement" />
     <fragment
-        android:id="@+id/navigation_my_data"
-        android:name="pe.com.valegrei.carwashapp.ui.my_data.MyDataFragment"
-        android:label="@string/my_data_title"
-        tools:layout="@layout/fragment_my_data" />
-    <fragment
         android:id="@+id/navigation_account"
         android:name="pe.com.valegrei.carwashapp.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_navigation_account_to_navigation_account_edit"
+            app:destination="@id/navigation_account_edit" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_account_edit"
+        android:name="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment"
+        android:label="@string/title_account_edit"
+        tools:layout="@layout/fragment_account_edit" />
 </navigation>
