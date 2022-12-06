@@ -51,6 +51,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="action_date">Buscar Fecha</string>
     <!--    Menu Nav Dis-->
     <string name="menu_reserve_list">Lista de Reservas</string>
     <string name="menu_my_data">Mis Datos</string>

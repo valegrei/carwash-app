@@ -2,7 +2,6 @@ package pe.com.valegrei.carwashapp.ui.reserve_list
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -65,11 +64,11 @@ class ReserveListFragment : Fragment(), MenuProvider, ReserveListAdapter.OnInter
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.search_menu, menu)
+        menuInflater.inflate(R.menu.search_date, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.action_search) {
+        if (menuItem.itemId == R.id.action_search_date) {
             showDatePicker()
             return true
         }
