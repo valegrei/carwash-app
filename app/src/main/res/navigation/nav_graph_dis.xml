@@ -16,13 +16,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_my_data"
+        android:id="@+id/navigation_account"
         android:name="pe.com.valegrei.carwashapp.ui.account.AccountFragment"
-        android:label="@string/menu_my_data"
+        android:label="@string/title_account"
         tools:layout="@layout/fragment_account" >
         <action
-            android:id="@+id/action_nav_my_data_to_nav_my_data_edit"
-            app:destination="@id/nav_my_data_edit" />
+            android:id="@+id/action_navigation_account_to_navigation_account_edit"
+            app:destination="@id/navigation_account_edit" />
     </fragment>
 
     <fragment
@@ -52,9 +52,9 @@
         tools:layout="@layout/fragment_reserve_details" />
 
     <fragment
-        android:id="@+id/nav_my_data_edit"
+        android:id="@+id/navigation_account_edit"
         android:name="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment"
-        android:label="@string/my_data_edit_title"
+        android:label="@string/title_account_edit"
         tools:layout="@layout/fragment_account_edit" />
     <fragment
         android:id="@+id/addPlaceFragment"

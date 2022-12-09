@@ -4,18 +4,18 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
 import pe.com.valegrei.carwashapp.database.usuario.TipoDocumento
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
-import pe.com.valegrei.carwashapp.network.response.RespLogin
-import pe.com.valegrei.carwashapp.network.response.RespUsuario
-import pe.com.valegrei.carwashapp.ui.login.LoginViewModel
-import pe.com.valegrei.carwashapp.ui.login.Status
+import java.io.File
 
 enum class SesionStatus { NORMAL, CLOSED }
-enum class EditStatus {LOADING, SUCCESS, ERROR, NORMAL}
+enum class EditStatus { LOADING, SUCCESS, ERROR, NORMAL }
 
 class MainViewModel(private val sesionData: SesionData) : ViewModel() {
     private val TAG = MainViewModel::class.simpleName
@@ -33,14 +33,15 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
     var nroDoc = MutableLiveData<String>()
     var nroCel1 = MutableLiveData<String>()
     var nroCel2 = MutableLiveData<String>()
+    var filePath = MutableLiveData<String>()
 
     private var _errMsg = MutableLiveData<String>()
     val errMsg: LiveData<String> = _errMsg
     private var _status = MutableLiveData<EditStatus>()
     val status: LiveData<EditStatus> = _status
 
-    fun getTipoDoc():String{
-        return when(idTipoDoc.value!!){
+    fun getTipoDoc(): String {
+        return when (idTipoDoc.value!!) {
             TipoDocumento.DNI.id -> TipoDocumento.DNI.nombre
             TipoDocumento.RUC.id -> TipoDocumento.RUC.nombre
             TipoDocumento.CEXT.id -> TipoDocumento.CEXT.nombre
@@ -48,16 +49,20 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         }
     }
 
+    fun setFilePath(path: String?) {
+        filePath.value = path!!
+    }
+
     init {
         _sesionStatus.value = SesionStatus.NORMAL
         cargarSesion()
     }
 
-    fun cargarSesion(){
+    fun cargarSesion() {
         _sesion.value = sesionData.getCurrentSesion()
     }
 
-    fun cargarCamposEdit(){
+    fun cargarCamposEdit() {
         _status.value = EditStatus.NORMAL
         nombres.value = sesion.value?.usuario?.nombres!!
         apePat.value = sesion.value?.usuario?.apellidoPaterno!!
@@ -70,22 +75,49 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         nroCel2.value = sesion.value?.usuario?.nroCel2!!
     }
 
-    fun guardarCambios(){
+    fun guardarCambios() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = EditStatus.LOADING
             //armar usuario con cambios
             val usuario = sesion.value?.usuario!!
             val sesion = sesion.value!!
-            usuario.nombres = nombres.value
-            usuario.apellidoPaterno = apePat.value
-            usuario.apellidoMaterno = apeMat.value
-            usuario.razonSocial = razSoc.value
-            usuario.idTipoDocumento = idTipoDoc.value!!
-            usuario.nroDocumento = nroDoc.value
-            usuario.nroCel1 = nroCel1.value
-            usuario.nroCel2 = nroCel2.value
+            val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+            val rbNombres = RequestBody.create(MediaType.parse("text/plain"), nombres.value ?: "")
+            val rbApePat = RequestBody.create(MediaType.parse("text/plain"), apePat.value ?: "")
+            val rbApeMat = RequestBody.create(MediaType.parse("text/plain"), apeMat.value ?: "")
+            val rbRazSoc = RequestBody.create(MediaType.parse("text/plain"), razSoc.value ?: "")
+            val rbIdTipoDoc =
+                RequestBody.create(MediaType.parse("text/plain"), (idTipoDoc.value ?: 0).toString())
+            val rbNroDoc = RequestBody.create(MediaType.parse("text/plain"), nroDoc.value ?: "")
+            val rbNroCel1 = RequestBody.create(MediaType.parse("text/plain"), nroCel1.value ?: "")
+            val rbNroCel2 = RequestBody.create(MediaType.parse("text/plain"), nroCel2.value ?: "")
+
+            var rbFoto: MultipartBody.Part? = null
+            if (filePath.value != null) {
+                val file = File(filePath.value!!)
+
+                if (file.exists())
+                    rbFoto = MultipartBody.Part.createFormData(
+                        "foto",
+                        file.name,
+                        RequestBody.create(MediaType.parse("image/*"), file)
+                    )
+            }
+
             //guardando en server
-            val res = Api.retrofitService.actualizarUsuario(usuario.id!!,usuario,sesion.getTokenBearer())
+            val res = Api.retrofitService.actualizarUsuario(
+                usuario.id!!,
+                rbNombres,
+                rbApePat,
+                rbApeMat,
+                rbRazSoc,
+                rbIdTipoDoc,
+                rbNroDoc,
+                rbNroCel1,
+                rbNroCel2,
+                rbFoto,
+                sesion.getTokenBearer()
+            )
             //guardando en local
             sesion.usuario = res.data.usuario
             sesionData.saveSesion(sesion)

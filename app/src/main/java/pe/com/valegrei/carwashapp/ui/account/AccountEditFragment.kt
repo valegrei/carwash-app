@@ -1,8 +1,12 @@
 package pe.com.valegrei.carwashapp.ui.account
 
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -10,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.canhub.cropper.*
 import pe.com.valegrei.carwashapp.EditStatus
 import pe.com.valegrei.carwashapp.MainViewModel
 import pe.com.valegrei.carwashapp.MainViewModelFactory
@@ -19,7 +24,9 @@ import pe.com.valegrei.carwashapp.databinding.FragmentAccountEditBinding
 import pe.com.valegrei.carwashapp.ui.util.ProgressDialog
 
 class AccountEditFragment : Fragment(), MenuProvider {
-
+    companion object {
+        val TAG = "AccountEditFragment"
+    }
     private var _binding: FragmentAccountEditBinding? = null
 
     // This property is only valid between onCreateView and
@@ -43,6 +50,7 @@ class AccountEditFragment : Fragment(), MenuProvider {
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             viewModel = sharedViewModel
+            accountEditFragment = this@AccountEditFragment
         }
         //Configura el menu del fragment
         (requireActivity() as MenuHost).addMenuProvider(
@@ -61,6 +69,52 @@ class AccountEditFragment : Fragment(), MenuProvider {
         }
     }
 
+    fun startCameraWithoutUri() {
+        customCropImage.launch(
+            CropImageContractOptions(
+                uri = null,
+                cropImageOptions = CropImageOptions(
+                    imageSourceIncludeCamera = false,
+                    imageSourceIncludeGallery = true,
+                    cropShape = CropImageView.CropShape.OVAL,
+                    fixAspectRatio = true,
+                    aspectRatioX = 1,
+                    aspectRatioY = 1,
+                    outputCompressFormat = Bitmap.CompressFormat.JPEG,
+                    outputCompressQuality = 90,
+                    outputRequestWidth = 165,
+                    outputRequestHeight = 165,
+                    outputRequestSizeOptions = CropImageView.RequestSizeOptions.RESIZE_FIT,
+                    showIntentChooser = false,
+                    autoZoomEnabled = false,
+                    multiTouchEnabled = true,
+                    centerMoveEnabled = true,
+                    cropMenuCropButtonIcon = R.drawable.ic_baseline_check_24,
+                    activityTitle = "Cambiar foto",
+                    activityBackgroundColor = Color.DKGRAY,
+                    toolbarColor = resources.getColor(R.color.purple,null),
+                    toolbarBackButtonColor = Color.WHITE,
+                    toolbarTitleColor = Color.WHITE,
+                    toolbarTintColor = Color.WHITE
+                ),
+            ),
+        )
+    }
+
+    private val customCropImage = registerForActivityResult(CropImageContract()) {
+        if (it !is CropImage.CancelledResult) {
+            handleCropImageResult(it.uriContent, it.getUriFilePath(requireContext()))
+        }
+    }
+
+    private fun handleCropImageResult(uri: Uri?,filePath: String?) {
+        //SampleResultScreen.start(this, null, Uri.parse(uri.replace("file:", "")), null)
+        //val uri = Uri.parse(uri.replace("file:", ""))
+        binding.imgLogo.setImageURI(uri)
+        sharedViewModel.setFilePath(filePath)
+        Log.d(TAG,uri.toString())
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -75,6 +129,10 @@ class AccountEditFragment : Fragment(), MenuProvider {
             sharedViewModel.guardarCambios()
         }
         return false
+    }
+
+    fun mostrarEditarFotoOpc(){
+        EditPhotoBottomSheetDialog().show(childFragmentManager,EditPhotoBottomSheetDialog.TAG)
     }
 
     var progressDialog = ProgressDialog()

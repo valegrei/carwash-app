@@ -4,6 +4,8 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.network.request.*
 import pe.com.valegrei.carwashapp.network.response.*
@@ -15,7 +17,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-private const val BASE_URL = "http://192.168.100.9:3000"
+const val BASE_URL = "http://192.168.100.9:3000"
 //private const val BASE_URL = "http://192.168.100.9"
 //private const val BASE_URL = "https://www.carwashperuapp.com/"
 
@@ -69,10 +71,19 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): RespUsuario
 
-    @PUT("api/usuarios/{id}")
+    @Multipart
+    @POST("api/usuarios/{id}")
     suspend fun actualizarUsuario(
         @Path("id") idUsuario: Int,
-        @Body usuario: Usuario,
+        @Part("nombres") nombres: RequestBody,
+        @Part("apellidoPaterno") apellidoPaterno: RequestBody,
+        @Part("apellidoMaterno") apellidoMaterno: RequestBody,
+        @Part("razonSocial") razonSocial: RequestBody,
+        @Part("idTipoDocumento") idTipoDocumento: RequestBody,
+        @Part("nroDocumento") nroDocumento: RequestBody,
+        @Part("nroCel1") nroCel1: RequestBody,
+        @Part("nroCel2") nroCel2: RequestBody,
+        @Part foto: MultipartBody.Part?,
         @Header("Authorization") authToken: String
     ): RespUsuario
 

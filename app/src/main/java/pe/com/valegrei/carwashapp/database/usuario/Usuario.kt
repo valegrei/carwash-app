@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import pe.com.valegrei.carwashapp.model.Archivo
+import pe.com.valegrei.carwashapp.network.BASE_URL
 import java.util.*
 
 enum class TipoUsuario(val id: Int, val nombre: String) {
@@ -73,16 +75,19 @@ data class Usuario(
     @Json(name = "updatedAt")
     @ColumnInfo(name = "updated_at")
     var updatedAt: Date?,
+    @Json(name = "Archivo")
+    @Ignore
+    var archivo: Archivo?,
 ) {
     constructor() : this(
         0, "", "", "", "", "",
         "", "", "", "", false, false, false,
-        0, 0, null, null
+        0, 0, null, null, null
     )
 
     fun getNombreCompleto(): String {
-        val nombres = "${nombres?:""} ${apellidoPaterno?:""} ${apellidoMaterno?:""}"
-        if(nombres.trim().isEmpty())
+        val nombres = "${nombres ?: ""} ${apellidoPaterno ?: ""} ${apellidoMaterno ?: ""}"
+        if (nombres.trim().isEmpty())
             return "(Nombre incompleto)"
         return nombres
     }
@@ -91,14 +96,14 @@ data class Usuario(
         return "${correo}\n${getNombreORazSocial()}".trim()
     }
 
-    fun getRazSocial(): String{
-        if((razonSocial?:"").isEmpty())
+    fun getRazSocial(): String {
+        if ((razonSocial ?: "").isEmpty())
             return "(Raz. Social incompleto)"
         return razonSocial!!
     }
 
-    fun getNombreORazSocial(): String{
-        return when(idTipoUsuario){
+    fun getNombreORazSocial(): String {
+        return when (idTipoUsuario) {
             TipoUsuario.DISTR.id -> getRazSocial()
             else -> getNombreCompleto()
         }
@@ -108,14 +113,14 @@ data class Usuario(
         return "${getNroDoc()}\n${getRazSocial()}\n$correo"
     }
 
-    fun getNroDoc(): String{
-        if((nroDocumento?:"").isEmpty())
+    fun getNroDoc(): String {
+        if ((nroDocumento ?: "").isEmpty())
             return "(Doc. incompleto)"
         return nroDocumento!!
     }
 
-    fun getNombreDoc(): String{
-        return when(idTipoDocumento){
+    fun getNombreDoc(): String {
+        return when (idTipoDocumento) {
             TipoDocumento.DNI.id -> TipoDocumento.DNI.nombre
             TipoDocumento.RUC.id -> TipoDocumento.RUC.nombre
             TipoDocumento.CEXT.id -> TipoDocumento.CEXT.nombre
@@ -132,4 +137,8 @@ data class Usuario(
         }
     }
 
+    fun getURLFoto(): String? {
+        return if (archivo == null || archivo?.nombre == null) null
+        else "$BASE_URL/files/images/${archivo?.nombre}"
+    }
 }

@@ -154,4 +154,6 @@
     <string name="btnsh_type_client">Cliente</string>
     <string name="btnsh_type_distrib">Distribuidor</string>
     <string name="btnsh_save">Guardar cambios</string>
+    <string name="btnsh_add_photo">Nueva foto de perfil</string>
+    <string name="btnsh_delete_photo">Eliminar foto actual</string>
 </resources>
