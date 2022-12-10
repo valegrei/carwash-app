@@ -1,12 +1,10 @@
 package pe.com.valegrei.carwashapp.ui
 
 import android.widget.ImageView
-import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import coil.imageLoader
 import coil.load
-import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import pe.com.valegrei.carwashapp.EstrEditFoto
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
 
@@ -31,6 +29,35 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             placeholder(R.drawable.loading_animation)
             error(R.drawable.ic_broken_image)
             transformations(CircleCropTransformation())
+        }
+    }
+}
+
+/**
+ * Uses the Coil library to load an image by URL into an [ImageView]
+ */
+@BindingAdapter("roudendImageEdit")
+fun bindImageEdit(imgView: ImageView, editFoto: EstrEditFoto?) {
+    editFoto?.let {
+        if (it.eliminarFoto) {
+            imgView.load(R.drawable.logo)
+            return
+        }
+        if (it.uriFile != null) {
+            imgView.load(it.uriFile) {
+                transformations(CircleCropTransformation())
+            }
+            return
+        }
+        if ((it.urlOriginal ?: "").isNotEmpty()) {
+            val sesion = SesionData(imgView.context).getCurrentSesion()
+            imgView.load(it.urlOriginal) {
+                setHeader("Authorization", sesion?.getTokenBearer()!!)
+                placeholder(R.drawable.loading_animation)
+                transformations(CircleCropTransformation())
+            }
+        } else {
+            imgView.load(R.drawable.logo)
         }
     }
 }

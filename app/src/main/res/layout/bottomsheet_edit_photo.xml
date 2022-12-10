@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="fragment"
             type="pe.com.valegrei.carwashapp.ui.account.EditPhotoBottomSheetDialog" />
@@ -31,6 +31,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:background="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/min_margin"
@@ -44,6 +45,8 @@
                 app:drawableStartCompat="@drawable/ic_outline_add_a_photo_24" />
 
             <TextView
+                android:visibility="@{viewModel.mostrarEliminarFoto() ? View.VISIBLE : View.GONE}"
+                android:background="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/min_margin"

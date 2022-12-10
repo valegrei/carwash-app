@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -15,9 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.canhub.cropper.*
-import pe.com.valegrei.carwashapp.EditStatus
-import pe.com.valegrei.carwashapp.MainViewModel
-import pe.com.valegrei.carwashapp.MainViewModelFactory
+import pe.com.valegrei.carwashapp.*
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentAccountEditBinding
@@ -27,6 +24,7 @@ class AccountEditFragment : Fragment(), MenuProvider {
     companion object {
         val TAG = "AccountEditFragment"
     }
+
     private var _binding: FragmentAccountEditBinding? = null
 
     // This property is only valid between onCreateView and
@@ -59,14 +57,26 @@ class AccountEditFragment : Fragment(), MenuProvider {
             Lifecycle.State.RESUMED
         )
 
-        sharedViewModel.status.observe(viewLifecycleOwner){
-            when(it){
-                EditStatus.LOADING -> showLoading()
-                EditStatus.ERROR -> hideLoading()
-                EditStatus.SUCCESS -> exit()
-                else -> {}
+        sharedViewModel.apply {
+            status.observe(viewLifecycleOwner) {
+                when (it) {
+                    EditStatus.LOADING -> showLoading()
+                    EditStatus.ERROR -> hideLoading()
+                    EditStatus.SUCCESS -> exit()
+                    else -> {}
+                }
+            }
+            addFotoStatus.observe(viewLifecycleOwner) {
+                when (it) {
+                    AddFotoStatus.LAUNCH -> {
+                        startCameraWithoutUri()
+                        ocultarAddFoto()
+                    }
+                    else -> {}
+                }
             }
         }
+
     }
 
     fun startCameraWithoutUri() {
@@ -92,7 +102,7 @@ class AccountEditFragment : Fragment(), MenuProvider {
                     cropMenuCropButtonIcon = R.drawable.ic_baseline_check_24,
                     activityTitle = "Cambiar foto",
                     activityBackgroundColor = Color.DKGRAY,
-                    toolbarColor = resources.getColor(R.color.purple,null),
+                    toolbarColor = resources.getColor(R.color.purple, null),
                     toolbarBackButtonColor = Color.WHITE,
                     toolbarTitleColor = Color.WHITE,
                     toolbarTintColor = Color.WHITE
@@ -107,12 +117,8 @@ class AccountEditFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun handleCropImageResult(uri: Uri?,filePath: String?) {
-        //SampleResultScreen.start(this, null, Uri.parse(uri.replace("file:", "")), null)
-        //val uri = Uri.parse(uri.replace("file:", ""))
-        binding.imgLogo.setImageURI(uri)
-        sharedViewModel.setFilePath(filePath)
-        Log.d(TAG,uri.toString())
+    private fun handleCropImageResult(uri: Uri?, filePath: String?) {
+        sharedViewModel.nuevaFoto(uri, filePath)
     }
 
     override fun onDestroyView() {
@@ -125,14 +131,14 @@ class AccountEditFragment : Fragment(), MenuProvider {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if(menuItem.itemId==R.id.action_save){
+        if (menuItem.itemId == R.id.action_save) {
             sharedViewModel.guardarCambios()
         }
         return false
     }
 
-    fun mostrarEditarFotoOpc(){
-        EditPhotoBottomSheetDialog().show(childFragmentManager,EditPhotoBottomSheetDialog.TAG)
+    fun mostrarEditarFotoOpc() {
+        EditPhotoBottomSheetDialog().show(childFragmentManager, EditPhotoBottomSheetDialog.TAG)
     }
 
     var progressDialog = ProgressDialog()
@@ -147,7 +153,7 @@ class AccountEditFragment : Fragment(), MenuProvider {
         }, 500)
     }
 
-    fun exit(){
+    fun exit() {
         Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()
             findNavController().popBackStack()

@@ -9,9 +9,11 @@
         <import type="android.view.View" />
 
         <import type="pe.com.valegrei.carwashapp.database.usuario.TipoUsuario" />
+
         <variable
             name="accountEditFragment"
             type="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment" />
+
         <variable
             name="viewModel"
             type="pe.com.valegrei.carwashapp.MainViewModel" />
@@ -36,22 +38,22 @@
 
                 <ImageView
                     android:id="@+id/img_logo"
+                    roudendImageEdit="@{viewModel.ternaFoto}"
                     android:layout_width="112dp"
                     android:layout_height="112dp"
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/my_data_dis_logo"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/logo" />
+                    android:scaleType="fitXY"/>
 
                 <ImageView
                     android:id="@+id/ic_change_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->accountEditFragment.mostrarEditarFotoOpc()}"
                     android:layout_alignParentBottom="true"
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@id/img_logo"
                     android:contentDescription="@string/my_data_change_logo"
+                    android:onClick="@{()->accountEditFragment.mostrarEditarFotoOpc()}"
                     app:srcCompat="@drawable/ic_baseline_edit_24" />
             </RelativeLayout>
 
@@ -146,8 +148,8 @@
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@{viewModel.getTipoDoc()}"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="16dp"
+                    android:hint="@{viewModel.getTipoDoc()}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

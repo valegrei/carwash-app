@@ -32,18 +32,19 @@ class EditPhotoBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     fun nuevaFoto(){
-        Toast.makeText(requireContext(),"nueva foto",Toast.LENGTH_SHORT).show()
+        viewModel.lanzarAddFoto()
         dismiss()
     }
 
     fun borrarFoto(){
-        Toast.makeText(requireContext(),"Borrar",Toast.LENGTH_SHORT).show()
         dismiss()
+        viewModel.eliminarFoto()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        binding.fragment = this
     }
 
     override fun onDestroyView() {

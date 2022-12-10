@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -16,13 +17,19 @@ import java.io.File
 
 enum class SesionStatus { NORMAL, CLOSED }
 enum class EditStatus { LOADING, SUCCESS, ERROR, NORMAL }
+enum class AddFotoStatus { LAUNCH, NORMAL}
 
 class MainViewModel(private val sesionData: SesionData) : ViewModel() {
     private val TAG = MainViewModel::class.simpleName
     private var _sesionStatus = MutableLiveData<SesionStatus>()
     val sesionStatus: LiveData<SesionStatus> = _sesionStatus
+    private var _addFotoStatud = MutableLiveData<AddFotoStatus>()
+    val addFotoStatus : LiveData<AddFotoStatus> = _addFotoStatud
     private var _sesion = MutableLiveData<Sesion>()
     val sesion: LiveData<Sesion> = _sesion
+
+    private var _ternaFoto = MutableLiveData<EstrEditFoto>()
+    val ternaFoto: LiveData<EstrEditFoto> = _ternaFoto
 
     //Datos para editar cuenta
     var nombres = MutableLiveData<String>()
@@ -33,7 +40,6 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
     var nroDoc = MutableLiveData<String>()
     var nroCel1 = MutableLiveData<String>()
     var nroCel2 = MutableLiveData<String>()
-    var filePath = MutableLiveData<String>()
 
     private var _errMsg = MutableLiveData<String>()
     val errMsg: LiveData<String> = _errMsg
@@ -49,10 +55,6 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         }
     }
 
-    fun setFilePath(path: String?) {
-        filePath.value = path!!
-    }
-
     init {
         _sesionStatus.value = SesionStatus.NORMAL
         cargarSesion()
@@ -62,7 +64,42 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         _sesion.value = sesionData.getCurrentSesion()
     }
 
+    fun nuevaFoto(uri: Uri?,path: String?) {
+        val editFoto = ternaFoto.value
+        editFoto?.uriFile = uri
+        editFoto?.filePath = path
+        editFoto?.eliminarFoto = false
+        _ternaFoto.value = editFoto!!
+    }
+
+    fun eliminarFoto() {
+        val editFoto = ternaFoto.value
+        editFoto?.uriFile = null
+        editFoto?.filePath = null
+        editFoto?.eliminarFoto = true
+        _ternaFoto.value = editFoto!!
+    }
+
+    fun mostrarEliminarFoto(): Boolean{
+        val editFoto = ternaFoto.value
+        if(editFoto?.eliminarFoto!!)
+            return false
+        if((editFoto.urlOriginal?:"").isNotEmpty() || editFoto.uriFile!=null){
+            return true
+        }
+        return false
+    }
+
+    fun lanzarAddFoto(){
+        _addFotoStatud.value = AddFotoStatus.LAUNCH
+    }
+
+    fun ocultarAddFoto(){
+        _addFotoStatud.value = AddFotoStatus.NORMAL
+    }
+
     fun cargarCamposEdit() {
+        _addFotoStatud.value = AddFotoStatus.NORMAL
         _status.value = EditStatus.NORMAL
         nombres.value = sesion.value?.usuario?.nombres!!
         apePat.value = sesion.value?.usuario?.apellidoPaterno!!
@@ -73,6 +110,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         nroDoc.value = sesion.value?.usuario?.nroDocumento!!
         nroCel1.value = sesion.value?.usuario?.nroCel1!!
         nroCel2.value = sesion.value?.usuario?.nroCel2!!
+        _ternaFoto.value = EstrEditFoto(sesion.value?.usuario?.getURLFoto(),null,null,false)
     }
 
     fun guardarCambios() {
@@ -93,8 +131,8 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
             val rbNroCel2 = RequestBody.create(MediaType.parse("text/plain"), nroCel2.value ?: "")
 
             var rbFoto: MultipartBody.Part? = null
-            if (filePath.value != null) {
-                val file = File(filePath.value!!)
+            if (ternaFoto.value?.filePath != null) {
+                val file = File(ternaFoto.value?.filePath!!)
 
                 if (file.exists())
                     rbFoto = MultipartBody.Part.createFormData(
@@ -102,6 +140,11 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
                         file.name,
                         RequestBody.create(MediaType.parse("image/*"), file)
                     )
+            }
+            var rbEliminarFoto: RequestBody? = null
+            if (ternaFoto.value?.eliminarFoto!!) {
+                rbEliminarFoto =
+                    RequestBody.create(MediaType.parse("text/plain"), ternaFoto.value?.eliminarFoto.toString())
             }
 
             //guardando en server
@@ -116,6 +159,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
                 rbNroCel1,
                 rbNroCel2,
                 rbFoto,
+                rbEliminarFoto,
                 sesion.getTokenBearer()
             )
             //guardando en local
@@ -138,6 +182,13 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         _status.value = EditStatus.ERROR
     }
 }
+
+class EstrEditFoto(
+    var urlOriginal: String? = null,
+    var uriFile: Uri? = null,
+    var filePath: String? = null,
+    var eliminarFoto: Boolean = false
+)
 
 class MainViewModelFactory(
     private val sesionData: SesionData

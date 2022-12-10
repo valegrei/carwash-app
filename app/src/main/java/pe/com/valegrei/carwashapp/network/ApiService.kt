@@ -84,6 +84,7 @@ interface ApiService {
         @Part("nroCel1") nroCel1: RequestBody,
         @Part("nroCel2") nroCel2: RequestBody,
         @Part foto: MultipartBody.Part?,
+        @Part("eliminarFoto") eliminarFoto: RequestBody?,
         @Header("Authorization") authToken: String
     ): RespUsuario
 

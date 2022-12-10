@@ -66,7 +66,10 @@ class SesionData(context: Context) {
         editor.putInt(USU_ID_TIPO_DOC_KEY, sesion.usuario.idTipoDocumento)
         editor.putLong(USU_CREATED_AT_KEY, sesion.usuario.createdAt?.time!!)
         editor.putLong(USU_UPDATED_AT_KEY, sesion.usuario.updatedAt?.time!!)
-        editor.putString(USU_NOMBRE_ARCHIVO, sesion.usuario.archivo?.nombre!!)
+        if(sesion.usuario.archivo != null)
+            editor.putString(USU_NOMBRE_ARCHIVO, sesion.usuario.archivo?.nombre!!)
+        else
+            editor.putString(USU_NOMBRE_ARCHIVO, null)
         editor.apply()
     }
 
