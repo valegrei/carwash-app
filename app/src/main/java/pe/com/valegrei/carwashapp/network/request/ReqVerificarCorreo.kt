@@ -1,3 +1,8 @@
 package pe.com.valegrei.carwashapp.network.request
 
-class ReqVerificarCorreo (var id: Int, var codigo: Int)
+import com.squareup.moshi.Json
+
+class ReqVerificarCorreo(
+    @Json(name = "id") var id: Int,
+    @Json(name = "codigo") var codigo: Int
+)

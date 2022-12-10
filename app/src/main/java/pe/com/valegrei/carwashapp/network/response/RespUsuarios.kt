@@ -11,5 +11,5 @@ class RespUsuarios(
     timeStamp: Date,
     @Json(name = "data") val data: Data
 ) : Response(statusCode, httpStatus, message, timeStamp) {
-    class Data(var usuarios: List<Usuario>)
+    class Data(@Json(name = "usuarios") var usuarios: List<Usuario>)
 }

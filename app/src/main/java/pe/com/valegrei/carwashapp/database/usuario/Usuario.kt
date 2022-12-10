@@ -138,7 +138,7 @@ data class Usuario(
     }
 
     fun getURLFoto(): String? {
-        return if (archivo == null || archivo?.nombre == null) null
-        else "$BASE_URL/files/images/${archivo?.nombre}"
+        return if (archivo == null || archivo?.path == null) null
+        else "$BASE_URL${archivo?.path}"
     }
 }

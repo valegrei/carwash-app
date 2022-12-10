@@ -29,6 +29,7 @@ private const val USU_ID_TIPO_DOC_KEY = "usu_id_tipo_doc"
 private const val USU_CREATED_AT_KEY = "usu_created_at"
 private const val USU_UPDATED_AT_KEY = "usu_updated_at"
 private const val SINCRO_USUARIOS = "sincro_usuarios"
+private const val SINCRO_ANUNCIOS = "sincro_anuncios"
 
 class SesionData(context: Context) {
     private var pref: SharedPreferences
@@ -66,8 +67,8 @@ class SesionData(context: Context) {
         editor.putInt(USU_ID_TIPO_DOC_KEY, sesion.usuario.idTipoDocumento)
         editor.putLong(USU_CREATED_AT_KEY, sesion.usuario.createdAt?.time!!)
         editor.putLong(USU_UPDATED_AT_KEY, sesion.usuario.updatedAt?.time!!)
-        if(sesion.usuario.archivo != null)
-            editor.putString(USU_NOMBRE_ARCHIVO, sesion.usuario.archivo?.nombre!!)
+        if (sesion.usuario.archivo != null)
+            editor.putString(USU_NOMBRE_ARCHIVO, sesion.usuario.archivo?.path!!)
         else
             editor.putString(USU_NOMBRE_ARCHIVO, null)
         editor.apply()
@@ -112,5 +113,15 @@ class SesionData(context: Context) {
 
     fun getLastSincroUsuarios(): Date {
         return Date(pref.getLong(SINCRO_USUARIOS, 0))
+    }
+
+    fun saveLastSincroAnuncios(lastSincro: Date) {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_ANUNCIOS, lastSincro.time)
+        edit.apply()
+    }
+
+    fun getLastSincroAnuncios(): Date {
+        return Date(pref.getLong(SINCRO_ANUNCIOS, 0))
     }
 }

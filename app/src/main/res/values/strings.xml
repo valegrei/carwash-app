@@ -82,6 +82,7 @@
     <string name="my_data_whatsapp">Número de Whatsapp</string>
     <string name="my_data_email">Email</string>
     <string name="action_edit">Editar</string>
+    <string name="action_add">Agregar</string>
     <string name="action_save">Guardar</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -156,4 +157,6 @@
     <string name="btnsh_save">Guardar cambios</string>
     <string name="btnsh_add_photo">Nueva foto de perfil</string>
     <string name="btnsh_delete_photo">Eliminar foto actual</string>
+
+    <string name="announc_img_descr">Anuncio</string>
 </resources>

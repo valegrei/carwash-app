@@ -1,10 +1,10 @@
 package pe.com.valegrei.carwashapp.network.response
 
 import com.squareup.moshi.Json
-import pe.com.valegrei.carwashapp.database.usuario.Usuario
+import pe.com.valegrei.carwashapp.database.anuncio.Anuncio
 import java.util.*
 
-class RespLogin(
+class RespAnuncio(
     statusCode: Int,
     httpStatus: String,
     message: String,
@@ -12,9 +12,10 @@ class RespLogin(
     @Json(name = "data")
     val data: Data
 ) : Response(statusCode, httpStatus, message, timeStamp) {
-    class Data(
-        @Json(name = "usuario") var usuario: Usuario,
-        @Json(name = "exp") var exp: Date?,
-        @Json(name = "jwt") var jwt: String?
-    )
+    class Data(@Json(name = "anuncios") var anuncios: List<Anuncio>)
+
+    fun getAnunciosDb(): List<Anuncio> {
+        data.anuncios.forEach { it.setPathArchivo() }
+        return data.anuncios
+    }
 }

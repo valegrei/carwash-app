@@ -1,3 +1,5 @@
 package pe.com.valegrei.carwashapp.model
 
-data class Archivo(var nombre: String?)
+import com.squareup.moshi.Json
+
+data class Archivo(@Json(name = "path") var path: String?)

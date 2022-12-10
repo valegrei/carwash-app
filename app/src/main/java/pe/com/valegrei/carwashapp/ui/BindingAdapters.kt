@@ -20,8 +20,23 @@ fun bindCheckStatus(checkImageView: ImageView, checked: Boolean) {
 /**
  * Uses the Coil library to load an image by URL into an [ImageView]
  */
-@BindingAdapter("roudendImageUrl")
+@BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        val sesion = SesionData(imgView.context).getCurrentSesion()
+        imgView.load(it) {
+            setHeader("Authorization", sesion?.getTokenBearer()!!)
+            placeholder(R.drawable.loading_animation)
+            error(R.drawable.ic_broken_image)
+        }
+    }
+}
+
+/**
+ * Uses the Coil library to load an image by URL into an [ImageView]
+ */
+@BindingAdapter("roudendImageUrl")
+fun bindRoundImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val sesion = SesionData(imgView.context).getCurrentSesion()
         imgView.load(it) {
@@ -37,7 +52,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
  * Uses the Coil library to load an image by URL into an [ImageView]
  */
 @BindingAdapter("roudendImageEdit")
-fun bindImageEdit(imgView: ImageView, editFoto: EstrEditFoto?) {
+fun bindRoundImageEdit(imgView: ImageView, editFoto: EstrEditFoto?) {
     editFoto?.let {
         if (it.eliminarFoto) {
             imgView.load(R.drawable.logo)

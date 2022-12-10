@@ -95,6 +95,19 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): Response
 
+    @GET("api/admin/anuncios")
+    suspend fun obtenerAnuncios(
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespAnuncio
+
+    @POST("api/admin/anuncios")
+    suspend fun crearAnuncio(
+        @Part("descripcion") descripcion: RequestBody?,
+        @Part("url") url: RequestBody?,
+        @Part imagen: MultipartBody.Part?,
+        @Header("Authorization") authToken: String
+    ): RespAnuncio
 }
 
 /**
