@@ -26,9 +26,6 @@ class AccountEditFragment : Fragment(), MenuProvider {
     }
 
     private var _binding: FragmentAccountEditBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private val sharedViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(SesionData(requireContext()))
@@ -100,8 +97,8 @@ class AccountEditFragment : Fragment(), MenuProvider {
                     multiTouchEnabled = true,
                     centerMoveEnabled = true,
                     cropMenuCropButtonIcon = R.drawable.ic_baseline_check_24,
-                    activityTitle = "Cambiar foto",
-                    activityBackgroundColor = Color.DKGRAY,
+                    activityTitle = getString(R.string.my_data_change_photo),
+                    activityBackgroundColor = resources.getColor(R.color.bg_color, null),
                     toolbarColor = resources.getColor(R.color.purple, null),
                     toolbarBackButtonColor = Color.WHITE,
                     toolbarTitleColor = Color.WHITE,

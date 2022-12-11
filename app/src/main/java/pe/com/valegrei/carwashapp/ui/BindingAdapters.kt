@@ -7,6 +7,7 @@ import coil.transform.CircleCropTransformation
 import pe.com.valegrei.carwashapp.EstrEditFoto
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
+import pe.com.valegrei.carwashapp.ui.announcement.TuplaImageEdit
 
 @BindingAdapter("checkStatus")
 fun bindCheckStatus(checkImageView: ImageView, checked: Boolean) {
@@ -73,6 +74,23 @@ fun bindRoundImageEdit(imgView: ImageView, editFoto: EstrEditFoto?) {
             }
         } else {
             imgView.load(R.drawable.logo)
+        }
+    }
+}
+
+@BindingAdapter("imageUrlEdit")
+fun bindImageEdit(imgView: ImageView, imageEdit: TuplaImageEdit?) {
+    imageEdit?.let {
+        if ((it.urlImagen ?: "").isNotEmpty()) {
+            val sesion = SesionData(imgView.context).getCurrentSesion()
+            imgView.load(it.urlImagen) {
+                setHeader("Authorization", sesion?.getTokenBearer()!!)
+                placeholder(R.drawable.loading_animation)
+            }
+            return
+        }
+        if (it.uriFile != null) {
+            imgView.load(it.uriFile)
         }
     }
 }

@@ -17,11 +17,7 @@ import pe.com.valegrei.carwashapp.databinding.FragmentAccountBinding
 class AccountFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentAccountBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    //private val sharedViewModel: MyDataViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(SesionData(requireContext()))
     }

@@ -1,5 +1,8 @@
 package pe.com.valegrei.carwashapp.ui.announcement
 
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuHost
@@ -8,6 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
@@ -38,8 +46,8 @@ class AnnouncementFragment : Fragment(), MenuProvider {
         super.onViewCreated(view, savedInstanceState)
 
         val anunciosAdapter = AnnouncementGridAdapter {
-            //viewModel.setSelectedUsu(it)
-            //UsersBottomSheedDialog().show(childFragmentManager, UsersBottomSheedDialog.TAG)
+            viewModel.verAnuncio(it)
+            findNavController().navigate(R.id.action_navigation_announcement_to_navigation_announcement_new)
         }
 
         binding.rvAnuncios.adapter = anunciosAdapter
@@ -73,11 +81,47 @@ class AnnouncementFragment : Fragment(), MenuProvider {
         viewModel.descargarAnuncios()
     }
 
+    fun mostrarEscogerImagen() {
+        customCropImage.launch(
+            CropImageContractOptions(
+                uri = null,
+                cropImageOptions = CropImageOptions(
+                    imageSourceIncludeCamera = false,
+                    imageSourceIncludeGallery = true,
+                    outputCompressFormat = Bitmap.CompressFormat.JPEG,
+                    outputCompressQuality = 90,
+                    skipEditing = true,
+                    activityTitle = getString(R.string.announc_title_new),
+                    activityBackgroundColor = resources.getColor(R.color.bg_color, null),
+                    toolbarColor = resources.getColor(R.color.purple, null),
+                    toolbarBackButtonColor = Color.WHITE,
+                    toolbarTitleColor = Color.WHITE,
+                    toolbarTintColor = Color.WHITE
+                ),
+            ),
+        )
+    }
+
+    private val customCropImage = registerForActivityResult(CropImageContract()) {
+        if (it !is CropImage.CancelledResult) {
+            handleCropImageResult(it.uriContent, it.getUriFilePath(requireContext()))
+        }
+    }
+
+    private fun handleCropImageResult(uri: Uri?, filePath: String?) {
+        viewModel.nuevoAnuncio(uri, filePath)
+        findNavController().navigate(R.id.action_navigation_announcement_to_navigation_announcement_new)
+    }
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.add_menu, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.action_add) {
+            mostrarEscogerImagen()
+            return true
+        }
         return false
     }
 }

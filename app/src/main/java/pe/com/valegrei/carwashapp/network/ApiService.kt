@@ -101,13 +101,28 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): RespAnuncio
 
+    @Multipart
     @POST("api/admin/anuncios")
     suspend fun crearAnuncio(
         @Part("descripcion") descripcion: RequestBody?,
         @Part("url") url: RequestBody?,
         @Part imagen: MultipartBody.Part?,
         @Header("Authorization") authToken: String
-    ): RespAnuncio
+    ): Response
+
+
+    @PUT("api/admin/anuncios/{id}")
+    suspend fun actualizarAnuncio(
+        @Path("id") descripcion: Int,
+        @Body reqAnuncio: ReqAnuncioActualizar,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @HTTP(method = "DELETE", path = "api/admin/anuncios/", hasBody = true)
+    suspend fun eliminarAnuncios(
+        @Body reqIds: ReqAnuncioEliminar,
+        @Header("Authorization") authToken: String
+    ): Response
 }
 
 /**

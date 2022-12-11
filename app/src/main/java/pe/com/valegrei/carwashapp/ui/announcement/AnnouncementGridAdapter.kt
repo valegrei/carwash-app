@@ -16,10 +16,10 @@ class AnnouncementGridAdapter(private val onItemClicked: (Anuncio) -> Unit) :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(anuncio: Anuncio) {
             binding.anuncio = anuncio
-            binding.cardAnuncio.setOnLongClickListener {
+            /*binding.cardAnuncio.setOnLongClickListener {
                 binding.cardAnuncio.toggle()
                 true
-            }
+            }*/
             binding.executePendingBindings()
         }
     }

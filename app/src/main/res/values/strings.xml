@@ -81,9 +81,11 @@
     <string name="my_data_cellphone">Número Celular</string>
     <string name="my_data_whatsapp">Número de Whatsapp</string>
     <string name="my_data_email">Email</string>
+    <string name="my_data_change_photo">Cambiar foto</string>
     <string name="action_edit">Editar</string>
     <string name="action_add">Agregar</string>
     <string name="action_save">Guardar</string>
+    <string name="action_delete">Eliminar</string>
     <string name="title_activity_main">MainActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -142,6 +144,7 @@
     <string name="title_distrib_short">Distrib</string>
     <string name="title_usuarios">Usuarios</string>
     <string name="title_publicidad">Anuncios</string>
+    <string name="title_publicidad_new">Nuevo anuncio</string>
     <string name="title_account">Perfil</string>
     <string name="title_account_edit">Editar Perfil</string>
 
@@ -158,5 +161,11 @@
     <string name="btnsh_add_photo">Nueva foto de perfil</string>
     <string name="btnsh_delete_photo">Eliminar foto actual</string>
 
+    <!--    Anuncios -->
     <string name="announc_img_descr">Anuncio</string>
+    <string name="announc_descr">Descripción</string>
+    <string name="announc_url">URL</string>
+    <string name="announc_title_new">Nuevo anuncio</string>
+    <string name="announc_title_edit">Editar anuncio</string>
+    <string name="announc_title_view">Ver anuncio</string>
 </resources>
