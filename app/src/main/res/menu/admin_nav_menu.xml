@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/navigation_distrib"
         android:icon="@drawable/ic_store_black_24"
         android:title="@string/title_distrib" />
-
     <item
         android:id="@+id/navigation_users"
         android:icon="@drawable/ic_groups_black_24"
         android:title="@string/title_usuarios" />
-
     <item
         android:id="@+id/navigation_announcement"
         android:icon="@drawable/ic_announcement_black_24"
         android:title="@string/title_publicidad" />
-
     <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/ic_account_black_circle_24"
-        android:title="@string/title_account"
-        />
-
+        android:title="@string/title_account" />
 </menu>

@@ -14,7 +14,7 @@ import pe.com.valegrei.carwashapp.network.request.ReqId
 import pe.com.valegrei.carwashapp.network.request.ReqVerificarCorreo
 import java.util.*
 
-enum class Status { LOADING, ERROR, GO_ADMIN, GO_CLIENT, GO_DISTR, SENT_CODE, NORMAL, CLEARED }
+enum class Status { LOADING, ERROR, GO_ADMIN, GO_CLIENT, GO_DISTR, SENT_CODE, NORMAL, CLEARED, GO_LOGIN }
 
 class VerifyViewModel(private val sesionData: SesionData) :
     ViewModel() {
@@ -79,9 +79,14 @@ class VerifyViewModel(private val sesionData: SesionData) :
                 )
             )
 
-            //procede a guardar
-            guardarSesionUsuario(resp.data.usuario, resp.data.exp!!, resp.data.jwt!!)
-            verificarSesion(resp.data.usuario)
+            if (resp.data.usuario.idTipoUsuario == TipoUsuario.DISTR.id && !resp.data.usuario.distAct) {
+                //Usuario distribuidor debe activarse
+                _status.value = Status.GO_LOGIN
+            } else {
+                //procede a guardar
+                guardarSesionUsuario(resp.data.usuario, resp.data.exp!!, resp.data.jwt!!)
+                verificarSesion(resp.data.usuario)
+            }
         }
     }
 
@@ -90,10 +95,7 @@ class VerifyViewModel(private val sesionData: SesionData) :
         when (usuario.idTipoUsuario) {
             TipoUsuario.ADMIN.id -> _status.value = Status.GO_ADMIN
             TipoUsuario.CLIENTE.id -> _status.value = Status.GO_CLIENT
-            TipoUsuario.DISTR.id -> {
-                if (usuario.distAct) _status.value = Status.GO_DISTR
-                else _status.value = Status.GO_CLIENT
-            }
+            TipoUsuario.DISTR.id -> _status.value = Status.GO_DISTR
             else -> {}
         }
     }

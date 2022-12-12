@@ -11,6 +11,7 @@ import okhttp3.RequestBody
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
 import pe.com.valegrei.carwashapp.database.usuario.TipoDocumento
+import pe.com.valegrei.carwashapp.database.usuario.TipoUsuario
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import java.io.File
@@ -59,6 +60,8 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         _sesionStatus.value = SesionStatus.NORMAL
         cargarSesion()
     }
+
+    fun getTipoPerfilNombre(): String = sesion.value?.usuario?.getTipoPerfilNombre()!!
 
     fun cargarSesion() {
         _sesion.value = sesionData.getCurrentSesion()

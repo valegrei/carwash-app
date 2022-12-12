@@ -23,10 +23,12 @@ data class Anuncio(
     @Json(name = "Archivo")
     var archivo: Archivo?,
     @Json(name = "estado")
-    var estado: Boolean
+    var estado: Boolean,
+    @Ignore
+    var selected: Boolean?,
 ) {
     constructor() : this(
-        0, null, null, 0, "", null, false
+        0, null, null, 0, "", null, false,false
     )
 
     fun setPathArchivo(){

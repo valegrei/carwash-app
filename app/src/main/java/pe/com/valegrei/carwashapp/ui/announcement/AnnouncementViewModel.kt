@@ -62,6 +62,7 @@ class AnnouncementViewModel(
     fun verAnuncio(anuncio: Anuncio) {
         _errMsg.value = ""
         _selectedAnuncio.value = anuncio
+        idAnuncio.value = selectedAnuncio.value?.id!!
         _imagen.value = TuplaImageEdit(selectedAnuncio.value?.getUrlArchivo(), null, null)
         _editStatus.value = EditStatus.VIEW
         _mostrarEditar.value = false

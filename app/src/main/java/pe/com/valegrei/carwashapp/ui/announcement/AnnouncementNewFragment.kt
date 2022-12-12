@@ -2,6 +2,7 @@ package pe.com.valegrei.carwashapp.ui.announcement
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -58,9 +59,9 @@ class AnnouncementNewFragment : Fragment(), MenuProvider {
 
     fun mostrarTitulo(status: EditStatus) {
         when (status) {
-            EditStatus.VIEW -> requireActivity().title = getString(R.string.announc_title_view)
-            EditStatus.EDIT -> requireActivity().title = getString(R.string.announc_title_edit)
-            EditStatus.NEW -> requireActivity().title = getString(R.string.announc_title_new)
+            EditStatus.VIEW -> (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.announc_title_view)
+            EditStatus.EDIT -> (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.announc_title_edit)
+            EditStatus.NEW -> (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.announc_title_new)
             else -> {}
         }
     }

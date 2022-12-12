@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.ui.verify
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import pe.com.valegrei.carwashapp.MainAdminActivity
@@ -51,6 +53,7 @@ class VerifyFragment : Fragment() {
                     Status.GO_ADMIN -> goAdmin()
                     Status.GO_CLIENT -> goClient()
                     Status.GO_DISTR -> goDistr()
+                    Status.GO_LOGIN -> goLogin()
                     else -> {}
                 }
             }
@@ -67,6 +70,17 @@ class VerifyFragment : Fragment() {
         _binding = null
     }
 
+    private fun goLogin() {
+        progressDialog.dismiss()
+        AlertDialog.Builder(requireContext())
+            .setCancelable(false)
+            .setTitle(R.string.login_act_dist_title)
+            .setMessage(R.string.login_act_dist_msg)
+            .setPositiveButton(R.string.login_act_dist_ok) { _, _ ->
+                findNavController().navigate(R.id.action_newPasswordFragment_to_loginFragment)
+            }
+            .show()
+    }
 
     private fun goAdmin() {
         Handler(Looper.getMainLooper()).postDelayed({

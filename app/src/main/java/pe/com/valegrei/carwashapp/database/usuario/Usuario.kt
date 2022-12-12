@@ -137,6 +137,15 @@ data class Usuario(
         }
     }
 
+    fun getTipoPerfilNombre(): String {
+        return when (idTipoUsuario) {
+            TipoUsuario.ADMIN.id -> TipoUsuario.ADMIN.nombre
+            TipoUsuario.DISTR.id -> TipoUsuario.DISTR.nombre
+            TipoUsuario.CLIENTE.id -> TipoUsuario.CLIENTE.nombre
+            else -> ""
+        }
+    }
+
     fun getURLFoto(): String? {
         return if (archivo == null || archivo?.path == null) null
         else "$BASE_URL${archivo?.path}"
