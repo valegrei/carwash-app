@@ -55,7 +55,6 @@ class NewPasswordFragment : Fragment() {
                     Status.GO_CLIENT -> goClient()
                     Status.GO_DISTR -> goDistr()
                     Status.VERIFICAR -> goVerify()
-                    Status.GO_LOGIN -> goLogin()
                     else -> {}
                 }
             }
@@ -100,19 +99,6 @@ class NewPasswordFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }, 500)
-    }
-
-    private fun goLogin() {
-        newPasswordViewModel.clear()
-        progressDialog.dismiss()
-        AlertDialog.Builder(requireContext())
-            .setCancelable(false)
-            .setTitle(R.string.login_act_dist_title)
-            .setMessage(R.string.login_act_dist_msg)
-            .setPositiveButton(R.string.login_act_dist_ok) { _, _ ->
-                findNavController().navigate(R.id.action_newPasswordFragment_to_loginFragment)
-            }
-            .show()
     }
 
     override fun onDestroyView() {

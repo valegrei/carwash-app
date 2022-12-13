@@ -14,7 +14,7 @@ import pe.com.valegrei.carwashapp.network.request.ReqId
 import pe.com.valegrei.carwashapp.network.request.ReqVerificarCorreo
 import java.util.*
 
-enum class Status { LOADING, ERROR, GO_ADMIN, GO_CLIENT, GO_DISTR, SENT_CODE, NORMAL, CLEARED, GO_LOGIN }
+enum class Status { LOADING, ERROR, GO_ADMIN, GO_CLIENT, GO_DISTR, SENT_CODE, NORMAL, CLEARED }
 
 class VerifyViewModel(private val sesionData: SesionData) :
     ViewModel() {
@@ -79,14 +79,10 @@ class VerifyViewModel(private val sesionData: SesionData) :
                 )
             )
 
-            if (resp.data.usuario.idTipoUsuario == TipoUsuario.DISTR.id && !resp.data.usuario.distAct) {
-                //Usuario distribuidor debe activarse
-                _status.value = Status.GO_LOGIN
-            } else {
-                //procede a guardar
-                guardarSesionUsuario(resp.data.usuario, resp.data.exp!!, resp.data.jwt!!)
-                verificarSesion(resp.data.usuario)
-            }
+            //procede a guardar
+            guardarSesionUsuario(resp.data.usuario, resp.data.exp!!, resp.data.jwt!!)
+            verificarSesion(resp.data.usuario)
+
         }
     }
 

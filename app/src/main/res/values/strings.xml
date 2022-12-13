@@ -12,7 +12,7 @@
     <string name="login_register">Crea una cuenta</string>
     <string name="login_app_version">V %s</string>
     <string name="login_act_dist_title">Activación Pendiente</string>
-    <string name="login_act_dist_msg">La activación de su cuenta de distribuidor está pendiente</string>
+    <string name="login_act_dist_msg">Registro enviado.\nSe le informará cuando el administrador apruebe su registro.</string>
     <string name="login_act_dist_ok">Aceptar</string>
 
     <!--    Register-->
@@ -24,7 +24,7 @@
     <string name="register_next">Registrar</string>
     <string name="register_razon_social">Razon Social*</string>
     <string name="register_ruc">RUC*</string>
-    <string name="register_cellphone">Número Celular</string>
+    <string name="register_cellphone">Número de Teléfono</string>
     <string name="register_whatsapp">Número de Whatsapp</string>
     <!--    Recover-->
     <string name="recover_label">Olvidé mi Clave</string>
@@ -81,7 +81,7 @@
     <string name="my_data_ape_pat">Apellido Paterno</string>
     <string name="my_data_ape_mat">Apellido Materno</string>
     <string name="my_data_ruc">RUC</string>
-    <string name="my_data_cellphone">Número Celular</string>
+    <string name="my_data_cellphone">Número de Teléfono</string>
     <string name="my_data_whatsapp">Número de Whatsapp</string>
     <string name="my_data_email">Email</string>
     <string name="my_data_change_photo">Cambiar foto</string>

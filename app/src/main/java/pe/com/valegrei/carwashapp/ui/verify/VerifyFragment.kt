@@ -53,7 +53,6 @@ class VerifyFragment : Fragment() {
                     Status.GO_ADMIN -> goAdmin()
                     Status.GO_CLIENT -> goClient()
                     Status.GO_DISTR -> goDistr()
-                    Status.GO_LOGIN -> goLogin()
                     else -> {}
                 }
             }
@@ -68,18 +67,6 @@ class VerifyFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun goLogin() {
-        progressDialog.dismiss()
-        AlertDialog.Builder(requireContext())
-            .setCancelable(false)
-            .setTitle(R.string.login_act_dist_title)
-            .setMessage(R.string.login_act_dist_msg)
-            .setPositiveButton(R.string.login_act_dist_ok) { _, _ ->
-                findNavController().navigate(R.id.action_newPasswordFragment_to_loginFragment)
-            }
-            .show()
     }
 
     private fun goAdmin() {

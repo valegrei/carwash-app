@@ -14,7 +14,7 @@ import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 
-enum class Status { LOADING, ERROR, SUCCESS, CLEARED }
+enum class Status { LOADING, ERROR, GO_VERIFY, CLEARED, GO_LOGIN }
 
 class RegisterViewModel : ViewModel() {
     private val TAG = RegisterViewModel::class.simpleName
@@ -198,8 +198,13 @@ class RegisterViewModel : ViewModel() {
                 nuevoUsuario.idTipoDocumento = TipoDocumento.DNI.id
             }
             val resp = Api.retrofitService.registrar(nuevoUsuario)
-            _usuario.value = resp.data.usuario
-            _status.value = Status.SUCCESS
+            val usuResp = resp.data.usuario
+            if(usuResp.idTipoUsuario == TipoUsuario.DISTR.id && !usuResp.distAct){
+                _status.value = Status.GO_LOGIN
+            }else{
+                _usuario.value = resp.data.usuario
+                _status.value = Status.GO_VERIFY
+            }
         }
     }
 
