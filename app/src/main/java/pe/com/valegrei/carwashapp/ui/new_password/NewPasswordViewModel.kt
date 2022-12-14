@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
+import pe.com.valegrei.carwashapp.database.usuario.EstadoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.TipoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.network.Api
@@ -105,7 +106,7 @@ class NewPasswordViewModel(private val sesionData: SesionData) :
                 )
             )
             //Comprueba si se debe verificar
-            if (resp.data.usuario.verificado) {
+            if (resp.data.usuario.estado == EstadoUsuario.ACTIVO.id) {
                 //procede a guardar
                 guardarSesionUsuario(resp.data.usuario, resp.data.exp!!, resp.data.jwt!!)
                 verificarSesion(resp.data.usuario)

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import pe.com.valegrei.carwashapp.database.usuario.EstadoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.TipoDocumento
 import pe.com.valegrei.carwashapp.database.usuario.TipoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
@@ -199,7 +200,7 @@ class RegisterViewModel : ViewModel() {
             }
             val resp = Api.retrofitService.registrar(nuevoUsuario)
             val usuResp = resp.data.usuario
-            if(usuResp.idTipoUsuario == TipoUsuario.DISTR.id && !usuResp.distAct){
+            if(usuResp.idTipoUsuario == TipoUsuario.DISTR.id){
                 _status.value = Status.GO_LOGIN
             }else{
                 _usuario.value = resp.data.usuario

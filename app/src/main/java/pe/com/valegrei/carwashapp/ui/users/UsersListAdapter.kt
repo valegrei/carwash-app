@@ -31,7 +31,7 @@ class UsersListAdapter(private val onItemClicked: (Usuario) -> Unit) :
                     && oldItem.apellidoPaterno == newItem.apellidoPaterno
                     && oldItem.apellidoMaterno == newItem.apellidoMaterno
                     && oldItem.razonSocial == newItem.razonSocial
-                    && oldItem.nroDocumento == newItem.nroDocumento && oldItem.distAct == newItem.distAct
+                    && oldItem.nroDocumento == newItem.nroDocumento
                     && oldItem.estado == newItem.estado
         }
 

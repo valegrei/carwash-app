@@ -5,9 +5,9 @@
 
     <data>
 
-        <variable
-            name="tipoUsuario"
-            type="pe.com.valegrei.carwashapp.database.usuario.TipoUsuario" />
+        <import type="android.view.View" />
+
+        <import type="pe.com.valegrei.carwashapp.database.usuario.EstadoUsuario" />
 
         <variable
             name="viewModel"
@@ -77,6 +77,15 @@
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                 app:drawableStartCompat="@drawable/ic_whatsapp_outlined"
                 tools:text="924448546" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/min_margin"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedUsu.getTipoPerfilNombre()}"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Cliente" />
         </LinearLayout>
 
         <View
@@ -101,46 +110,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/min_margin"
-                android:fontFamily="@font/opensans_regular"
-                android:text="@string/btnsh_change_type" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="@{viewModel.selectedUsu.idTipoUsuario == tipoUsuario.ADMIN.id}"
-                    android:fontFamily="@font/opensans_regular"
-                    android:onClick="@{() -> viewModel.cambiarTipoUsuario(tipoUsuario.ADMIN.id)}"
-                    android:text="@string/btnsh_type_admin" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="@{viewModel.selectedUsu.idTipoUsuario == tipoUsuario.CLIENTE.id}"
-                    android:fontFamily="@font/opensans_regular"
-                    android:onClick="@{() -> viewModel.cambiarTipoUsuario(tipoUsuario.CLIENTE.id)}"
-                    android:text="@string/btnsh_type_client" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="@{viewModel.selectedUsu.idTipoUsuario == tipoUsuario.DISTR.id}"
-                    android:fontFamily="@font/opensans_regular"
-                    android:onClick="@{() -> viewModel.cambiarTipoUsuario(tipoUsuario.DISTR.id)}"
-                    android:text="@string/btnsh_type_distrib" />
-            </RadioGroup>
+                android:drawablePadding="@dimen/min_margin"
+                android:fontFamily="@font/opensans_semibold"
+                android:paddingVertical="@dimen/min_margin"
+                android:text="@string/btnsh_verif_pend"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:visibility="@{viewModel.mostrarCambiarEstado() ? View.GONE : View.VISIBLE}" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="@{viewModel.selectedUsu.estado}"
+                android:checked="@{viewModel.selectedUsu.estado == EstadoUsuario.ACTIVO.id}"
                 android:onClick="@{()-> viewModel.cambiarEstadoUsuario()}"
                 android:text="@string/btnsh_enable_user"
-                android:theme="@style/ThemeOverlay.CarwashApp.Switch" />
+                android:theme="@style/ThemeOverlay.CarwashApp.Switch"
+                android:visibility="@{viewModel.mostrarCambiarEstado() ? View.VISIBLE : View.GONE}" />
 
             <Button
                 style="@style/Widget.Material3.Button.Icon"
@@ -150,6 +134,7 @@
                 android:onClick="@{()->viewModel.guardarCambios()}"
                 android:text="@string/btnsh_save"
                 android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                android:visibility="@{viewModel.mostrarCambiarEstado() ? View.VISIBLE : View.GONE}"
                 app:icon="@drawable/ic_baseline_save_24" />
         </LinearLayout>
     </LinearLayout>

@@ -12,13 +12,13 @@
 
 
     <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/min_margin"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/white"
-        style="?attr/materialCardViewElevatedStyle"
         app:cardCornerRadius="@dimen/small_margin">
 
         <LinearLayout
@@ -30,12 +30,16 @@
 
             <TextView
                 android:id="@+id/textView3"
+                userType="@{usuario.idTipoUsuario}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:drawablePadding="@dimen/min_margin"
+                android:gravity="center_vertical"
                 android:text="@{usuario.correo}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                tools:drawableStart="@drawable/ic_baseline_person_purple_24"
                 tools:text="valegrei@outlook.com" />
 
             <ImageView
@@ -44,7 +48,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/small_margin"
-                tools:srcCompat="@drawable/ic_check_circle_green_24" />
+                tools:srcCompat="@drawable/ic_circle_green_24" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

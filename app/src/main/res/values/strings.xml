@@ -114,6 +114,8 @@
     <string name="title_publicidad_new">Nuevo anuncio</string>
     <string name="title_account">Perfil</string>
     <string name="title_account_edit">Editar Perfil</string>
+    <string name="title_add_admin">Nuevo Administrador</string>
+    <string name="action_add_admin">Agregar Administrador</string>
 
     <string name="btnsh_ruc">RUC: %s</string>
     <string name="btnsh_correo">Correo: %s</string>
@@ -125,6 +127,9 @@
     <string name="btnsh_type_client">Cliente</string>
     <string name="btnsh_type_distrib">Distribuidor</string>
     <string name="btnsh_save">Guardar cambios</string>
+    <string name="btnsh_aprove">Aprobar</string>
+    <string name="btnsh_reject">Rechazar</string>
+    <string name="btnsh_verif_pend">Verificación Pendiente</string>
     <string name="btnsh_add_photo">Nueva foto de perfil</string>
     <string name="btnsh_delete_photo">Eliminar foto actual</string>
 

@@ -29,7 +29,7 @@
             <RelativeLayout
                 android:id="@+id/ly_portrait"
                 android:layout_width="match_parent"
-                android:layout_height="128dp"
+                android:layout_height="112dp"
                 android:background="?attr/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +37,8 @@
 
                 <ImageView
                     android:id="@+id/img_logo"
-                    roudendImageUrl="@{viewModel.sesion.usuario.getURLFoto()}"
-                    android:layout_width="112dp"
-                    android:layout_height="112dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/my_data_dis_logo"
                     android:scaleType="fitXY"

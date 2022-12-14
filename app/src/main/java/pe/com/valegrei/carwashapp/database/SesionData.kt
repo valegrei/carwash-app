@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
-import pe.com.valegrei.carwashapp.model.Archivo
 import java.util.*
 
 private const val PREF_NAME = "sesion_data"
@@ -20,9 +19,6 @@ private const val USU_RAZ_SOC_KEY = "usu_razon_social"
 private const val USU_NRO_DOC_KEY = "usu_nro_doc"
 private const val USU_NRO_CEL1_KEY = "usu_nro_cel1"
 private const val USU_NRO_CEL2_KEY = "usu_nro_cel2"
-private const val USU_NOMBRE_ARCHIVO = "usu_nombre_archivo"
-private const val USU_DIST_ACT_KEY = "usu_dist_act"
-private const val USU_VERIFICADO_KEY = "usu_verificado"
 private const val USU_ESTADO_KEY = "usu_estado_act"
 private const val USU_ID_TIPO_KEY = "usu_id_tipo"
 private const val USU_ID_TIPO_DOC_KEY = "usu_id_tipo_doc"
@@ -60,17 +56,11 @@ class SesionData(context: Context) {
         editor.putString(USU_NRO_DOC_KEY, sesion.usuario.nroDocumento)
         editor.putString(USU_NRO_CEL1_KEY, sesion.usuario.nroCel1)
         editor.putString(USU_NRO_CEL2_KEY, sesion.usuario.nroCel2)
-        editor.putBoolean(USU_DIST_ACT_KEY, sesion.usuario.distAct)
-        editor.putBoolean(USU_VERIFICADO_KEY, sesion.usuario.verificado)
-        editor.putBoolean(USU_ESTADO_KEY, sesion.usuario.estado)
+        editor.putInt(USU_ESTADO_KEY, sesion.usuario.estado)
         editor.putInt(USU_ID_TIPO_KEY, sesion.usuario.idTipoUsuario)
         editor.putInt(USU_ID_TIPO_DOC_KEY, sesion.usuario.idTipoDocumento)
         editor.putLong(USU_CREATED_AT_KEY, sesion.usuario.createdAt?.time!!)
         editor.putLong(USU_UPDATED_AT_KEY, sesion.usuario.updatedAt?.time!!)
-        if (sesion.usuario.archivo != null)
-            editor.putString(USU_NOMBRE_ARCHIVO, sesion.usuario.archivo?.path!!)
-        else
-            editor.putString(USU_NOMBRE_ARCHIVO, null)
         editor.apply()
     }
 
@@ -92,14 +82,11 @@ class SesionData(context: Context) {
                 pref.getString(USU_NRO_DOC_KEY, ""),
                 pref.getString(USU_NRO_CEL1_KEY, ""),
                 pref.getString(USU_NRO_CEL2_KEY, ""),
-                pref.getBoolean(USU_DIST_ACT_KEY, false),
-                pref.getBoolean(USU_VERIFICADO_KEY, false),
-                pref.getBoolean(USU_ESTADO_KEY, false),
+                pref.getInt(USU_ESTADO_KEY, 0),
                 pref.getInt(USU_ID_TIPO_KEY, 0),
                 pref.getInt(USU_ID_TIPO_DOC_KEY, 0),
                 Date(pref.getLong(USU_CREATED_AT_KEY, 0)),
                 Date(pref.getLong(USU_UPDATED_AT_KEY, 0)),
-                Archivo(pref.getString(USU_NOMBRE_ARCHIVO, null)),
             ),
             true
         )

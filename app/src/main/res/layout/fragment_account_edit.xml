@@ -32,29 +32,19 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="128dp"
+                android:layout_height="112dp"
                 android:background="?attr/colorPrimary"
                 android:paddingBottom="16dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
-                    roudendImageEdit="@{viewModel.ternaFoto}"
-                    android:layout_width="112dp"
-                    android:layout_height="112dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_centerHorizontal="true"
                     android:contentDescription="@string/my_data_dis_logo"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/logo" />
 
-                <ImageView
-                    android:id="@+id/ic_change_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:layout_toEndOf="@id/img_logo"
-                    android:contentDescription="@string/my_data_change_logo"
-                    android:onClick="@{()->accountEditFragment.mostrarEditarFotoOpc()}"
-                    app:srcCompat="@drawable/ic_baseline_edit_24" />
             </RelativeLayout>
 
             <LinearLayout

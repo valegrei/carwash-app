@@ -10,7 +10,7 @@ import pe.com.valegrei.carwashapp.database.anuncio.AnuncioDao
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 
-@Database(entities = [Usuario::class, Anuncio::class], version = 1)
+@Database(entities = [Usuario::class, Anuncio::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao

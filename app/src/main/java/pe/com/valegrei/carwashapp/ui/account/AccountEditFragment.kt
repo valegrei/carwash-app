@@ -1,8 +1,5 @@
 package pe.com.valegrei.carwashapp.ui.account
 
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.canhub.cropper.*
-import pe.com.valegrei.carwashapp.*
+import pe.com.valegrei.carwashapp.EditStatus
+import pe.com.valegrei.carwashapp.MainViewModel
+import pe.com.valegrei.carwashapp.MainViewModelFactory
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentAccountEditBinding
@@ -63,20 +61,11 @@ class AccountEditFragment : Fragment(), MenuProvider {
                     else -> {}
                 }
             }
-            addFotoStatus.observe(viewLifecycleOwner) {
-                when (it) {
-                    AddFotoStatus.LAUNCH -> {
-                        startCameraWithoutUri()
-                        ocultarAddFoto()
-                    }
-                    else -> {}
-                }
-            }
         }
 
     }
 
-    fun startCameraWithoutUri() {
+    /*fun startCameraWithoutUri() {
         customCropImage.launch(
             CropImageContractOptions(
                 uri = null,
@@ -106,17 +95,17 @@ class AccountEditFragment : Fragment(), MenuProvider {
                 ),
             ),
         )
-    }
+    }*/
 
-    private val customCropImage = registerForActivityResult(CropImageContract()) {
+    /*private val customCropImage = registerForActivityResult(CropImageContract()) {
         if (it !is CropImage.CancelledResult) {
             handleCropImageResult(it.uriContent, it.getUriFilePath(requireContext()))
         }
-    }
+    }*/
 
-    private fun handleCropImageResult(uri: Uri?, filePath: String?) {
+    /*private fun handleCropImageResult(uri: Uri?, filePath: String?) {
         sharedViewModel.nuevaFoto(uri, filePath)
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -134,9 +123,9 @@ class AccountEditFragment : Fragment(), MenuProvider {
         return false
     }
 
-    fun mostrarEditarFotoOpc() {
+    /*fun mostrarEditarFotoOpc() {
         EditPhotoBottomSheetDialog().show(childFragmentManager, EditPhotoBottomSheetDialog.TAG)
-    }
+    }*/
 
     var progressDialog = ProgressDialog()
 

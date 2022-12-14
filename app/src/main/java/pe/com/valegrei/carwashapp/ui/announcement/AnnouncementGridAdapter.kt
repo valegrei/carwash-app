@@ -30,7 +30,7 @@ class AnnouncementGridAdapter(private val onItemClicked: (Anuncio) -> Unit) :
         }
 
         override fun areContentsTheSame(oldItem: Anuncio, newItem: Anuncio): Boolean {
-            return oldItem.pathArchivo == newItem.pathArchivo && oldItem.descripcion == newItem.descripcion
+            return oldItem.path == newItem.path && oldItem.descripcion == newItem.descripcion
                     && oldItem.url == newItem.url && oldItem.estado == newItem.estado
         }
 

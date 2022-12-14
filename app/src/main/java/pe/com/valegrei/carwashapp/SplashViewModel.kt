@@ -25,10 +25,7 @@ class SplashViewModel(private val sesionData: SesionData) : ViewModel() {
         when (sesion.usuario.idTipoUsuario) {
             TipoUsuario.ADMIN.id -> _status.value = Status.ADMIN
             TipoUsuario.CLIENTE.id -> _status.value = Status.CLIENT
-            TipoUsuario.DISTR.id -> {
-                if (sesion.usuario.distAct) _status.value = Status.DISTRIB
-                else _status.value = Status.CLIENT
-            }
+            TipoUsuario.DISTR.id -> _status.value = Status.DISTRIB
             else -> {}
         }
     }

@@ -27,8 +27,7 @@ class DistribsListAdapter(private val onItemClicked: (Usuario) -> Unit) :
 
         override fun areContentsTheSame(oldItem: Usuario, newItem: Usuario): Boolean {
             return oldItem.correo == newItem.correo && oldItem.razonSocial == newItem.razonSocial
-                    && oldItem.nroDocumento == newItem.nroDocumento && oldItem.distAct == newItem.distAct
-                    && oldItem.estado == newItem.estado
+                    && oldItem.nroDocumento == newItem.nroDocumento && oldItem.estado == newItem.estado
         }
 
     }

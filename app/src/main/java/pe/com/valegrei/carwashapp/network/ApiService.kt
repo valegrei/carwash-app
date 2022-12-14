@@ -17,8 +17,8 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-//const val BASE_URL = "http://192.168.100.9:3000"
-const val BASE_URL = "https://www.carwashperuapp.com"
+const val BASE_URL = "http://192.168.100.9:3000"
+//const val BASE_URL = "https://www.carwashperuapp.com"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -64,26 +64,22 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): RespUsuarios
 
+    @POST("api/admin/usuarios")
+    suspend fun agregarAdmin(
+        @Body reqAddAdmin: ReqAddAdmin,
+        @Header("Authorization") authToken: String
+    ): Response
+
     @GET("api/usuarios/{id}")
     suspend fun obtenerUsuario(
         @Path("id") idUsuario: Int,
         @Header("Authorization") authToken: String
     ): RespUsuario
 
-    @Multipart
-    @POST("api/usuarios/{id}")
+    @PUT("api/usuarios/{id}")
     suspend fun actualizarUsuario(
         @Path("id") idUsuario: Int,
-        @Part("nombres") nombres: RequestBody,
-        @Part("apellidoPaterno") apellidoPaterno: RequestBody,
-        @Part("apellidoMaterno") apellidoMaterno: RequestBody,
-        @Part("razonSocial") razonSocial: RequestBody,
-        @Part("idTipoDocumento") idTipoDocumento: RequestBody,
-        @Part("nroDocumento") nroDocumento: RequestBody,
-        @Part("nroCel1") nroCel1: RequestBody,
-        @Part("nroCel2") nroCel2: RequestBody,
-        @Part foto: MultipartBody.Part?,
-        @Part("eliminarFoto") eliminarFoto: RequestBody?,
+        @Body usuario: Usuario,
         @Header("Authorization") authToken: String
     ): RespUsuario
 

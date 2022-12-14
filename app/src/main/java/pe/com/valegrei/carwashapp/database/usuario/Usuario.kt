@@ -1,13 +1,14 @@
 package pe.com.valegrei.carwashapp.database.usuario
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.squareup.moshi.Json
-import pe.com.valegrei.carwashapp.model.Archivo
-import pe.com.valegrei.carwashapp.network.BASE_URL
 import java.util.*
+
+enum class EstadoUsuario(val id: Int, val nombre: String) {
+    INACTIVO(0, "Inactivo"),
+    ACTIVO(1, "Activo"),
+    VERIFICANDO(2, "Verificando")
+}
 
 enum class TipoUsuario(val id: Int, val nombre: String) {
     ADMIN(1, "Administrador"),
@@ -21,7 +22,7 @@ enum class TipoDocumento(val id: Int, val nombre: String, val digitos: Int) {
     CEXT(3, "CEXT", 12)
 }
 
-@Entity(tableName = "usuario")
+@Entity(tableName = "usuario", indices = [Index(value = ["correo"], unique = true)])
 data class Usuario(
     @Json(name = "id")
     @PrimaryKey
@@ -54,15 +55,9 @@ data class Usuario(
     @Json(name = "nroCel2")
     @ColumnInfo(name = "nro_cel_2")
     var nroCel2: String?,
-    @Json(name = "distAct")
-    @ColumnInfo(name = "dist_act")
-    var distAct: Boolean,
-    @Json(name = "verificado")
-    @ColumnInfo(name = "verificado")
-    var verificado: Boolean,
     @Json(name = "estado")
     @ColumnInfo(name = "estado")
-    var estado: Boolean,
+    var estado: Int,
     @Json(name = "idTipoUsuario")
     @ColumnInfo(name = "id_tipo_usuario")
     var idTipoUsuario: Int,
@@ -75,14 +70,11 @@ data class Usuario(
     @Json(name = "updatedAt")
     @ColumnInfo(name = "updated_at")
     var updatedAt: Date?,
-    @Json(name = "Archivo")
-    @Ignore
-    var archivo: Archivo?,
 ) {
     constructor() : this(
         0, "", "", "", "", "",
-        "", "", "", "", false, false, false,
-        0, 0, null, null, null
+        "", "", "", "", 0,
+        0, 0, null, null
     )
 
     fun getNombreCompleto(): String {
@@ -144,10 +136,5 @@ data class Usuario(
             TipoUsuario.CLIENTE.id -> TipoUsuario.CLIENTE.nombre
             else -> ""
         }
-    }
-
-    fun getURLFoto(): String? {
-        return if (archivo == null || archivo?.path == null) null
-        else "$BASE_URL${archivo?.path}"
     }
 }

@@ -4,23 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import pe.com.valegrei.carwashapp.MainViewModel
-import pe.com.valegrei.carwashapp.MainViewModelFactory
-import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.BottomsheetEditPhotoBinding
 
 class EditPhotoBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var _binding: BottomsheetEditPhotoBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by activityViewModels {
+    /*private val viewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(
             SesionData(requireContext())
         )
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,19 +26,19 @@ class EditPhotoBottomSheetDialog : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    fun nuevaFoto(){
-        viewModel.lanzarAddFoto()
+    fun nuevaFoto() {
+        //viewModel.lanzarAddFoto()
         dismiss()
     }
 
-    fun borrarFoto(){
+    fun borrarFoto() {
         dismiss()
-        viewModel.eliminarFoto()
+        //viewModel.eliminarFoto()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = viewModel
+        //binding.viewModel = viewModel
         binding.fragment = this
     }
 

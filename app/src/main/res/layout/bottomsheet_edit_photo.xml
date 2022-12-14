@@ -3,15 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="fragment"
             type="pe.com.valegrei.carwashapp.ui.account.EditPhotoBottomSheetDialog" />
-
-        <variable
-            name="viewModel"
-            type="pe.com.valegrei.carwashapp.MainViewModel" />
-
     </data>
 
     <LinearLayout
@@ -31,28 +28,27 @@
             android:orientation="vertical">
 
             <TextView
-                android:background="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:drawablePadding="@dimen/min_margin"
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="center_vertical"
                 android:onClick="@{()->fragment.nuevaFoto()}"
                 android:padding="@dimen/small_margin"
-                android:clickable="true"
                 android:text="@string/btnsh_add_photo"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                 app:drawableStartCompat="@drawable/ic_outline_add_a_photo_24" />
 
             <TextView
-                android:visibility="@{viewModel.mostrarEliminarFoto() ? View.VISIBLE : View.GONE}"
-                android:background="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
                 android:drawablePadding="@dimen/min_margin"
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="center_vertical"
-                android:clickable="true"
                 android:onClick="@{()->fragment.borrarFoto()}"
                 android:padding="@dimen/small_margin"
                 android:text="@string/btnsh_delete_photo"

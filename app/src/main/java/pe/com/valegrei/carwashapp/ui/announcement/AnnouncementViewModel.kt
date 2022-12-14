@@ -37,7 +37,7 @@ class AnnouncementViewModel(
     private var _editStatus = MutableLiveData<EditStatus>()
     val editStatus: LiveData<EditStatus> = _editStatus
     private var _mostrarEditar = MutableLiveData<Boolean>()
-    val mostrarEditar : LiveData<Boolean> = _mostrarEditar
+    val mostrarEditar: LiveData<Boolean> = _mostrarEditar
 
     var idAnuncio = MutableLiveData<Int>()
     var descripcion = MutableLiveData<String>()
@@ -92,7 +92,7 @@ class AnnouncementViewModel(
 
     private suspend fun descargarAnuncios(sesion: Sesion?, lastSincro: Date) {
         val res = Api.retrofitService.obtenerAnuncios(lastSincro, sesion?.getTokenBearer()!!)
-        val anuncios = res.getAnunciosDb()
+        val anuncios = res.data.anuncios
         if (anuncios.isNotEmpty()) {
             anuncioDao.guardarAnuncios(anuncios)
         }
@@ -226,4 +226,8 @@ class AnnouncementViewModelFactory(
     }
 }
 
-class TuplaImageEdit(var urlImagen: String?, var uriFile: Uri?, var pathFile: String?)
+class TuplaImageEdit(
+    var urlImagen: String?,
+    var uriFile: Uri?,
+    var pathFile: String?
+)

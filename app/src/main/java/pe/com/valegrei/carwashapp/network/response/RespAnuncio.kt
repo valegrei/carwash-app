@@ -13,9 +13,4 @@ class RespAnuncio(
     val data: Data
 ) : Response(statusCode, httpStatus, message, timeStamp) {
     class Data(@Json(name = "anuncios") var anuncios: List<Anuncio>)
-
-    fun getAnunciosDb(): List<Anuncio> {
-        data.anuncios.forEach { it.setPathArchivo() }
-        return data.anuncios
-    }
 }

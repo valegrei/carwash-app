@@ -38,12 +38,12 @@
                 tools:text="10709177864\nLavados de carros Santa Rosa" />
 
             <ImageView
-                checkStatus="@{distrib.distAct}"
+                checkStatus="@{distrib.estado}"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/small_margin"
-                tools:srcCompat="@drawable/ic_check_circle_green_24" />
+                tools:srcCompat="@drawable/ic_circle_green_24" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

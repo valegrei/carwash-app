@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
+import pe.com.valegrei.carwashapp.database.usuario.EstadoUsuario
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 import pe.com.valegrei.carwashapp.network.Api
@@ -28,12 +29,6 @@ class DistribsViewModel(
 
     private var _selectedDistrib = MutableLiveData<Usuario>()
     val selectedDistrib : LiveData<Usuario> = _selectedDistrib
-
-    fun cambiarActivacionDistrib(){
-        val usuario = selectedDistrib.value
-        usuario?.distAct = !usuario?.distAct!!
-        _selectedDistrib.value = usuario!!
-    }
 
     fun setSelectedDistrib(distrib: Usuario){
         _selectedDistrib.value = distrib.copy()
@@ -60,14 +55,18 @@ class DistribsViewModel(
         sesionData.saveLastSincroUsuarios(res.timeStamp)
     }
 
-    fun guardarCambios(){
+    fun aprobarDist(apruebo: Boolean){
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroUsuarios()
-            val distrib = selectedDistrib.value
+            val distrib = selectedDistrib.value!!
+            if(apruebo)
+                distrib.estado = EstadoUsuario.ACTIVO.id
+            else
+                distrib.estado = EstadoUsuario.INACTIVO.id
             //guarda lo cambiado
-            Api.retrofitService.modificarUsuario(distrib?.id!!,distrib, sesion?.getTokenBearer()!!)
+            Api.retrofitService.modificarUsuario(distrib.id!!,distrib, sesion?.getTokenBearer()!!)
             //Trae los cambios
             descargarDistribuidores(sesion, lastSincro)
             _status.value = Status.SUCCESS

@@ -15,7 +15,11 @@
         android:id="@+id/navigation_users"
         android:name="pe.com.valegrei.carwashapp.ui.users.UsersFragment"
         android:label="@string/title_usuarios"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_navigation_users_to_addAdminFragment"
+            app:destination="@id/addAdminFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_announcement"
@@ -46,4 +50,9 @@
         android:name="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment"
         android:label="@string/title_account_edit"
         tools:layout="@layout/fragment_account_edit" />
+    <fragment
+        android:id="@+id/addAdminFragment"
+        android:name="pe.com.valegrei.carwashapp.ui.add_admin.AddAdminFragment"
+        android:label="@string/title_add_admin"
+        tools:layout="@layout/fragment_add_admin" />
 </navigation>

@@ -1,59 +1,55 @@
-package pe.com.valegrei.carwashapp.ui.users
+package pe.com.valegrei.carwashapp.ui.add_admin
 
 import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
-import pe.com.valegrei.carwashapp.database.usuario.*
+import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
+import pe.com.valegrei.carwashapp.network.request.ReqAddAdmin
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR, NORMAL }
-
-class UsersViewModel(
-    private val sesionData: SesionData, private val usuarioDao: UsuarioDao
+class AddAdminViewModel(
+    private val sesionData: SesionData,
+    private val usuarioDao: UsuarioDao,
 ) : ViewModel() {
-    private val TAG = UsersViewModel::class.simpleName
+    private val TAG = AddAdminViewModel::class.simpleName
+
+    //Datos para editar cuenta
+    var correo = MutableLiveData<String>()
+    var nombres = MutableLiveData<String>()
+    var apePat = MutableLiveData<String>()
+    var apeMat = MutableLiveData<String>()
 
     private var _errMsg = MutableLiveData<String>()
     val errMsg: LiveData<String> = _errMsg
-
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
 
-    private var _selectedUsu = MutableLiveData<Usuario>()
-    val selectedUsu: LiveData<Usuario> = _selectedUsu
-
-    fun setSelectedUsu(usuario: Usuario) {
-        _selectedUsu.value = usuario.copy()
-    }
-
-    fun mostrarCambiarEstado(): Boolean {
-        if (selectedUsu.value?.estado!! == EstadoUsuario.VERIFICANDO.id) return false
-        return true
-    }
-
-    fun cambiarEstadoUsuario() {
-        val usuario = selectedUsu.value
-        usuario?.estado =
-            if (usuario?.estado == EstadoUsuario.ACTIVO.id) EstadoUsuario.INACTIVO.id else EstadoUsuario.ACTIVO.id
-        _selectedUsu.value = usuario!!
-    }
-
-    fun cargarUsuarios(): Flow<List<Usuario>> = usuarioDao.obtenerUsuarios()
-
-    fun descargarUsuarios() {
-        viewModelScope.launch(exceptionHandler) {
-            _status.value = Status.LOADING
-            val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroUsuarios()
-            descargarUsuarios(sesion, lastSincro)
-            _status.value = Status.SUCCESS
+    fun agregarAdmin() {
+        val correo = (this.correo.value ?: "").trim()
+        val nombres = (this.nombres.value ?: "").trim()
+        val apePat = (this.apePat.value ?: "").trim()
+        val apeMat = (this.apeMat.value ?: "").trim()
+        if (validar(correo)) {
+            agregarAdmin(correo, nombres, apePat, apeMat)
         }
+    }
+
+    private fun validar(correo: String): Boolean {
+        if (correo.isEmpty()) {
+            _errMsg.value = "Campo vacío"
+            return false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
+            _errMsg.value = "Correo inválido"
+            return false
+        }
+        return true
     }
 
     private suspend fun descargarUsuarios(sesion: Sesion?, lastSincro: Date) {
@@ -65,14 +61,14 @@ class UsersViewModel(
         sesionData.saveLastSincroUsuarios(res.timeStamp)
     }
 
-    fun guardarCambios() {
+    private fun agregarAdmin(correo: String, nombres: String, apePat: String, apeMat: String) {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroUsuarios()
-            val usuario = selectedUsu.value
+            val reqAddAdmin = ReqAddAdmin(correo, nombres, apePat, apeMat);
             //guarda lo cambiado
-            Api.retrofitService.modificarUsuario(usuario?.id!!, usuario, sesion?.getTokenBearer()!!)
+            Api.retrofitService.agregarAdmin(reqAddAdmin, sesion?.getTokenBearer()!!)
             //Trae los cambios
             descargarUsuarios(sesion, lastSincro)
             _status.value = Status.SUCCESS
@@ -87,13 +83,15 @@ class UsersViewModel(
     }
 }
 
-class UsersViewModelFactory(
-    private val sesionData: SesionData, private val usuarioDao: UsuarioDao
+
+class AddAdminViewModelFactory(
+    private val sesionData: SesionData,
+    private val usuarioDao: UsuarioDao,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(UsersViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(AddAdminViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return UsersViewModel(sesionData, usuarioDao) as T
+            return AddAdminViewModel(sesionData, usuarioDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

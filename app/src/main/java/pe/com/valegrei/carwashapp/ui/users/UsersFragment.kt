@@ -9,13 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
-import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.databinding.FragmentUsersBinding
-import pe.com.valegrei.carwashapp.ui.distribs.DistribsListAdapter
 
 class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
 
@@ -82,7 +81,7 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.search_menu, menu)
+        menuInflater.inflate(R.menu.search_usu_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
         searchView.queryHint = getString(R.string.action_search)
@@ -90,6 +89,10 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.action_add_admin) {
+            findNavController().navigate(R.id.action_navigation_users_to_addAdminFragment)
+            return true
+        }
         return false
     }
 
