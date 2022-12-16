@@ -68,7 +68,7 @@ class RegisterFragment : Fragment() {
             .setCancelable(false)
             //.setTitle(R.string.login_act_dist_title)
             .setMessage(R.string.login_act_dist_msg)
-            .setPositiveButton(R.string.login_act_dist_ok) { _, _ ->
+            .setPositiveButton(R.string.accept) { _, _ ->
                 findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
             }
             .show()

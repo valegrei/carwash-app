@@ -179,18 +179,6 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginHorizontal="@dimen/small_margin"
-                android:layout_marginBottom="@dimen/small_margin"
-                android:onClick="@{()->viewModel.cerrarSesion()}"
-                android:text="Cerrar Sesión"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ly_show_data" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

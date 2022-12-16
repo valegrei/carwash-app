@@ -16,6 +16,9 @@ class SplashViewModel(private val sesionData: SesionData) : ViewModel() {
     val status: LiveData<Status> = _status
 
     fun verificarSesion() {
+        //verifica antes la version de db
+        sesionData.checkDBVersion()
+        //verifica datos de sesion
         val sesion = sesionData.getCurrentSesion()
         val fecha = Date().time
         if (sesion == null || !sesion.estado || sesion.fechaExpira.time < fecha) {

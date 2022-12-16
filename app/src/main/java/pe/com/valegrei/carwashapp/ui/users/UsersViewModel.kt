@@ -32,8 +32,14 @@ class UsersViewModel(
         _selectedUsu.value = usuario.copy()
     }
 
-    fun mostrarCambiarEstado(): Boolean {
-        if (selectedUsu.value?.estado!! == EstadoUsuario.VERIFICANDO.id) return false
+    fun mostrarPendienteVerif(): Boolean {
+        if (selectedUsu.value?.estado!! == EstadoUsuario.VERIFICANDO.id) return true
+        return false
+    }
+
+    fun mostrarEliminar(): Boolean {
+        val correoActual = sesionData.getCurrentSesion()?.usuario?.correo ?: ""
+        if (selectedUsu.value?.correo == correoActual) return false
         return true
     }
 
@@ -65,7 +71,14 @@ class UsersViewModel(
         sesionData.saveLastSincroUsuarios(res.timeStamp)
     }
 
-    fun guardarCambios() {
+    fun eliminarUsuario() {
+        val usuario = selectedUsu.value
+        usuario?.estado = EstadoUsuario.INACTIVO.id
+        _selectedUsu.value = usuario!!
+        guardarCambios()
+    }
+
+    private fun guardarCambios() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()

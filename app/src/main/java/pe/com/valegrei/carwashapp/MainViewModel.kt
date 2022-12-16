@@ -101,6 +101,9 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
 
     fun cerrarSesion() {
         sesionData.closeSesion()
+        sesionData.clearLastSincroUsuarios()
+        sesionData.clearLastSincroParametros()
+        sesionData.clearLastSincroParametros()
         _sesionStatus.value = SesionStatus.CLOSED
     }
 

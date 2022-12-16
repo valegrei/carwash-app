@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="pe.com.valegrei.carwashapp.ui.distribs.DistribsViewModel" />
@@ -86,7 +88,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/small_margin"
-            android:paddingBottom="@dimen/small_margin">
+            android:paddingBottom="@dimen/small_margin"
+            android:visibility="@{viewModel.mostrarAprobar() ? View.VISIBLE: View.GONE}">
 
             <TextView
                 android:layout_width="match_parent"

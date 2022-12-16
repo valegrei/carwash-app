@@ -15,7 +15,7 @@
         android:id="@+id/navigation_users"
         android:name="pe.com.valegrei.carwashapp.ui.users.UsersFragment"
         android:label="@string/title_usuarios"
-        tools:layout="@layout/fragment_users" >
+        tools:layout="@layout/fragment_users">
         <action
             android:id="@+id/action_navigation_users_to_addAdminFragment"
             app:destination="@id/addAdminFragment" />
@@ -25,7 +25,7 @@
         android:id="@+id/navigation_announcement"
         android:name="pe.com.valegrei.carwashapp.ui.announcement.AnnouncementFragment"
         android:label="@string/title_publicidad"
-        tools:layout="@layout/fragment_announcement" >
+        tools:layout="@layout/fragment_announcement">
         <action
             android:id="@+id/action_navigation_announcement_to_navigation_announcement_new"
             app:destination="@id/navigation_announcement_new" />
@@ -40,7 +40,7 @@
         android:id="@+id/navigation_account"
         android:name="pe.com.valegrei.carwashapp.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" >
+        tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_navigation_account_to_navigation_account_edit"
             app:destination="@id/navigation_account_edit" />
@@ -55,4 +55,21 @@
         android:name="pe.com.valegrei.carwashapp.ui.add_admin.AddAdminFragment"
         android:label="@string/title_add_admin"
         tools:layout="@layout/fragment_add_admin" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="pe.com.valegrei.carwashapp.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/navigation_menu"
+        android:name="pe.com.valegrei.carwashapp.ui.menu_admin.MenuAdminFragment"
+        android:label="@string/menu"
+        tools:layout="@layout/fragment_menu_admin" >
+        <action
+            android:id="@+id/action_navigation_menu_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_navigation_menu_to_navigation_account"
+            app:destination="@id/navigation_account" />
+    </fragment>
 </navigation>

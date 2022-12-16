@@ -7,14 +7,19 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import pe.com.valegrei.carwashapp.database.anuncio.Anuncio
 import pe.com.valegrei.carwashapp.database.anuncio.AnuncioDao
+import pe.com.valegrei.carwashapp.database.parametro.Parametro
+import pe.com.valegrei.carwashapp.database.parametro.ParametroDao
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 
-@Database(entities = [Usuario::class, Anuncio::class], version = 2)
+const val DB_VERSION = 3
+
+@Database(entities = [Usuario::class, Anuncio::class, Parametro::class], version = DB_VERSION)
 @TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao
     abstract fun anuncioDao(): AnuncioDao
+    abstract fun parametroDao(): ParametroDao
 
     companion object {
         @Volatile
@@ -26,7 +31,7 @@ abstract class AppDataBase : RoomDatabase() {
                     context,
                     AppDataBase::class.java,
                     "carwash_db"
-                )
+                ).fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
 

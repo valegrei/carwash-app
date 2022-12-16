@@ -38,7 +38,7 @@ class MainAdminActivity : AppCompatActivity() {
                 R.id.navigation_distrib,
                 R.id.navigation_users,
                 R.id.navigation_announcement,
-                R.id.navigation_account
+                R.id.navigation_menu,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

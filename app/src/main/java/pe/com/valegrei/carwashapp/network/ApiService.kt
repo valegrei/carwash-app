@@ -118,6 +118,29 @@ interface ApiService {
         @Body reqIds: ReqAnuncioEliminar,
         @Header("Authorization") authToken: String
     ): Response
+
+    @PUT("api/admin/parametros/smtp")
+    suspend fun guardarVerificarSMTP(
+        @Body reqParamsSMTP: ReqParamsSMTP,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @PUT("api/admin/parametros/correo")
+    suspend fun guardarCorreo(
+        @Body reqParamsCorreo: ReqParamsCorreo,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @POST("api/admin/parametros/correo")
+    suspend fun probarCorreo(
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @GET("api/admin/parametros")
+    suspend fun obtenerParametros(
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespParams
 }
 
 /**

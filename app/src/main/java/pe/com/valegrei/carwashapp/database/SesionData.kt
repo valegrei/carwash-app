@@ -26,6 +26,8 @@ private const val USU_CREATED_AT_KEY = "usu_created_at"
 private const val USU_UPDATED_AT_KEY = "usu_updated_at"
 private const val SINCRO_USUARIOS = "sincro_usuarios"
 private const val SINCRO_ANUNCIOS = "sincro_anuncios"
+private const val SINCRO_PARAMETROS = "sincro_parametros"
+private const val DB_VERSION_NUM = "db_version_num"
 
 class SesionData(context: Context) {
     private var pref: SharedPreferences
@@ -38,6 +40,18 @@ class SesionData(context: Context) {
         val editor = pref.edit()
         editor.putBoolean(SESION_ESTADO_KEY, false)
         editor.apply()
+    }
+
+    fun checkDBVersion(){
+        if (pref.getInt(DB_VERSION_NUM,0) != DB_VERSION){
+            //Nueva version de DB, se tuvo que limpiar, por lo tanto reiniciar sincronizacion
+            val editor = pref.edit()
+            editor.putInt(DB_VERSION_NUM, DB_VERSION)
+            editor.putLong(SINCRO_USUARIOS,0)
+            editor.putLong(SINCRO_ANUNCIOS,0)
+            editor.putLong(SINCRO_PARAMETROS,0)
+            editor.apply()
+        }
     }
 
     fun saveSesion(sesion: Sesion) {
@@ -92,6 +106,12 @@ class SesionData(context: Context) {
         )
     }
 
+    fun clearLastSincroUsuarios() {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_USUARIOS, 0)
+        edit.apply()
+    }
+
     fun saveLastSincroUsuarios(lastSincro: Date) {
         val edit = pref.edit()
         edit.putLong(SINCRO_USUARIOS, lastSincro.time)
@@ -102,6 +122,12 @@ class SesionData(context: Context) {
         return Date(pref.getLong(SINCRO_USUARIOS, 0))
     }
 
+    fun clearLastSincroAnuncios() {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_ANUNCIOS, 0)
+        edit.apply()
+    }
+
     fun saveLastSincroAnuncios(lastSincro: Date) {
         val edit = pref.edit()
         edit.putLong(SINCRO_ANUNCIOS, lastSincro.time)
@@ -110,5 +136,21 @@ class SesionData(context: Context) {
 
     fun getLastSincroAnuncios(): Date {
         return Date(pref.getLong(SINCRO_ANUNCIOS, 0))
+    }
+
+    fun clearLastSincroParametros() {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_PARAMETROS, 0)
+        edit.apply()
+    }
+
+    fun saveLastSincroParametros(lastSincro: Date) {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_PARAMETROS, lastSincro.time)
+        edit.apply()
+    }
+
+    fun getLastSincroParametros(): Date {
+        return Date(pref.getLong(SINCRO_PARAMETROS, 0))
     }
 }

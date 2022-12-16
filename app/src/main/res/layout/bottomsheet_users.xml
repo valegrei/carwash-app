@@ -115,27 +115,27 @@
                 android:paddingVertical="@dimen/min_margin"
                 android:text="@string/btnsh_verif_pend"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:visibility="@{viewModel.mostrarCambiarEstado() ? View.GONE : View.VISIBLE}" />
-
-            <com.google.android.material.materialswitch.MaterialSwitch
+                android:visibility="@{viewModel.mostrarPendienteVerif() ? View.VISIBLE : View.GONE}" />
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="@{viewModel.selectedUsu.estado == EstadoUsuario.ACTIVO.id}"
-                android:onClick="@{()-> viewModel.cambiarEstadoUsuario()}"
-                android:text="@string/btnsh_enable_user"
-                android:theme="@style/ThemeOverlay.CarwashApp.Switch"
-                android:visibility="@{viewModel.mostrarCambiarEstado() ? View.VISIBLE : View.GONE}" />
+                android:drawablePadding="@dimen/min_margin"
+                android:fontFamily="@font/opensans_semibold"
+                android:paddingVertical="@dimen/min_margin"
+                android:text="@string/btnsh_current_user"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:visibility="@{!viewModel.mostrarEliminar() ? View.VISIBLE : View.GONE}" />
 
             <Button
                 style="@style/Widget.Material3.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="@{()->viewModel.guardarCambios()}"
-                android:text="@string/btnsh_save"
-                android:theme="@style/ThemeOverlay.CarwashApp.Button"
-                android:visibility="@{viewModel.mostrarCambiarEstado() ? View.VISIBLE : View.GONE}"
-                app:icon="@drawable/ic_baseline_save_24" />
+                android:onClick="@{()->viewModel.eliminarUsuario()}"
+                android:text="@string/btnsh_delete"
+                android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
+                android:visibility="@{viewModel.mostrarEliminar() ? View.VISIBLE : View.GONE}"
+                app:icon="@drawable/ic_baseline_delete_24" />
         </LinearLayout>
     </LinearLayout>
 </layout>

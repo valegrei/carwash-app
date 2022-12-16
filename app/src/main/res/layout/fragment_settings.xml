@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <data>
+
+        <import type="pe.com.valegrei.carwashapp.database.parametro.ParametroKt" />
+
+        <variable
+            name="fragment"
+            type="pe.com.valegrei.carwashapp.ui.settings.SettingsFragment" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.settings.SettingsViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/ly_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingTop="@dimen/mid_margin"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:text="@string/settings_title_smtp"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitlePrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.editarHost()}"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/small_margin"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingEnd="@dimen/small_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_lbl_smtp_host"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.parametros.get(ParametroKt.EMAIL_HOST)}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                        tools:text="smtp.gmail.com" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.editarPort()}"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/small_margin"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingEnd="@dimen/small_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_lbl_smtp_port"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.parametros.get(ParametroKt.EMAIL_PORT)}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                        tools:text="465" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.editarSecure()}"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/small_margin"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingEnd="@dimen/small_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_lbl_smtp_secure"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Integer.valueOf(viewModel.parametros.get(ParametroKt.EMAIL_SSL_TLS)!=null ? viewModel.parametros.get(ParametroKt.EMAIL_SSL_TLS):`0` ) == 0 ? `TLS` : `SSL`}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                        tools:text="SSL" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/min_margin"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/min_margin"
+                        android:onClick="@{()->viewModel.verificarGuardarSMTP()}"
+                        android:text="@string/settings_verify_save"
+                        android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                        app:icon="@drawable/ic_baseline_save_24" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingTop="@dimen/mid_margin"
+                    android:paddingEnd="@dimen/small_margin"
+                    android:text="@string/settings_title_email"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitlePrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.editarAddr()}"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/small_margin"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingEnd="@dimen/small_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_lbl_email_address"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.parametros.get(ParametroKt.EMAIL_ADDR)}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                        tools:text="carwashperuapp@gmail.com" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{()->fragment.editarPass()}"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/small_margin"
+                    android:paddingStart="@dimen/large_margin"
+                    android:paddingEnd="@dimen/small_margin">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_lbl_email_pass"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.parametros.get(ParametroKt.EMAIL_PASS)}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                        tools:text="asdadwfgwf" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/min_margin"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/min_margin"
+                        android:onClick="@{()->viewModel.guardarCorreo()}"
+                        android:text="@string/settings_save"
+                        android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                        app:icon="@drawable/ic_baseline_save_24" />
+
+                    <Button
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/min_margin"
+                        android:onClick="@{()->viewModel.probarCorreo()}"
+                        android:text="@string/settings_test"
+                        android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                        app:icon="@drawable/ic_baseline_check_24" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

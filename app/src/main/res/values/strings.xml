@@ -13,7 +13,8 @@
     <string name="login_app_version">V %s</string>
     <string name="login_act_dist_title">Activación Pendiente</string>
     <string name="login_act_dist_msg">Registro enviado.\nSe le informará cuando el administrador apruebe su registro.</string>
-    <string name="login_act_dist_ok">Aceptar</string>
+    <string name="accept">Aceptar</string>
+    <string name="ok">OK</string>
 
     <!--    Register-->
     <string name="register_label">Registro</string>
@@ -113,6 +114,7 @@
     <string name="title_publicidad">Anuncios</string>
     <string name="title_publicidad_new">Nuevo anuncio</string>
     <string name="title_account">Perfil</string>
+    <string name="title_settings">Configuración</string>
     <string name="title_account_edit">Editar Perfil</string>
     <string name="title_add_admin">Nuevo Administrador</string>
     <string name="action_add_admin">Agregar Administrador</string>
@@ -127,9 +129,11 @@
     <string name="btnsh_type_client">Cliente</string>
     <string name="btnsh_type_distrib">Distribuidor</string>
     <string name="btnsh_save">Guardar cambios</string>
+    <string name="btnsh_delete">Eliminar usuario</string>
     <string name="btnsh_aprove">Aprobar</string>
     <string name="btnsh_reject">Rechazar</string>
     <string name="btnsh_verif_pend">Verificación Pendiente</string>
+    <string name="btnsh_current_user">Usuario actual</string>
     <string name="btnsh_add_photo">Nueva foto de perfil</string>
     <string name="btnsh_delete_photo">Eliminar foto actual</string>
 
@@ -140,4 +144,25 @@
     <string name="announc_title_new">Nuevo anuncio</string>
     <string name="announc_title_edit">Editar anuncio</string>
     <string name="announc_title_view">Ver anuncio</string>
+    <!-- Settings -->
+    <string name="settings_title_smtp">SMTP</string>
+    <string name="settings_title_email">Correo</string>
+    <string name="settings_lbl_smtp_port">Número de Puerto</string>
+    <string name="settings_lbl_smtp_host">Nombre de Host</string>
+    <string name="settings_lbl_smtp_secure">SSL/TLS</string>
+    <string name="settings_lbl_email_address">Dirección</string>
+    <string name="settings_lbl_email_pass">Contraseña</string>
+    <string name="settings_save">Guardar</string>
+    <string name="settings_verify_save">Verificar y Guardar</string>
+    <string name="settings_verify">Verificar</string>
+    <string name="settings_test">Probar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!--    Menu Admin-->
+    <string name="menu">Menú</string>
+    <string name="menu_my_data">Mis datos</string>
+    <string name="menu_change_pass">Cambiar contraseña</string>
+    <string name="menu_settings">Configuraciones de servidor</string>
+    <string name="menu_logout">Cerrar sesión</string>
+
 </resources>

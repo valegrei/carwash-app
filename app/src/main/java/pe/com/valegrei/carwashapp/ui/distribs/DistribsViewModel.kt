@@ -34,6 +34,11 @@ class DistribsViewModel(
         _selectedDistrib.value = distrib.copy()
     }
 
+    fun mostrarAprobar(): Boolean {
+        if (selectedDistrib.value?.estado!! == EstadoUsuario.VERIFICANDO.id) return true
+        return false
+    }
+
     fun cargarDistribuidores(): Flow<List<Usuario>>  = usuarioDao.obtenerDistribuidores()
 
     fun descargarDistribuidores() {
