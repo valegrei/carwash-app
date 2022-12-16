@@ -157,7 +157,11 @@
     <string name="settings_verify">Verificar</string>
     <string name="settings_test">Probar</string>
     <string name="cancel">Cancelar</string>
-
+    <!--    Change pass-->
+    <string name="change_pass_title">Cambiar Contraseña</string>
+    <string name="change_pass_old">Contraseña anterior</string>
+    <string name="change_pass_new">Nueva contraseña</string>
+    <string name="change_pass_new_re">Repetir nueva contraseña</string>
     <!--    Menu Admin-->
     <string name="menu">Menú</string>
     <string name="menu_my_data">Mis datos</string>

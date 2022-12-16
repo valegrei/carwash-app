@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.menu_admin.MenuAdminFragment">
+    tools:context=".ui.menu_distrib.MenuDistribFragment">
 
     <data>
 
         <variable
             name="fragment"
-            type="pe.com.valegrei.carwashapp.ui.menu_admin.MenuAdminFragment" />
+            type="pe.com.valegrei.carwashapp.ui.menu_distrib.MenuDistribFragment" />
 
         <variable
             name="viewModel"
@@ -105,23 +105,6 @@
                     android:layout_weight="1"
                     android:background="?android:attr/listDivider" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:drawablePadding="@dimen/small_margin"
-                    android:gravity="center_vertical"
-                    android:onClick="@{()-> fragment.goToSettings()}"
-                    android:padding="@dimen/small_margin"
-                    android:text="@string/menu_settings"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-                    app:drawableStartCompat="@drawable/ic_baseline_setting_24" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:background="?android:attr/listDivider" />
             </LinearLayout>
 
             <Button

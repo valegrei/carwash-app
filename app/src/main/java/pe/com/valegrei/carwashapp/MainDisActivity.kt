@@ -39,7 +39,7 @@ class MainDisActivity : AppCompatActivity() {
                 R.id.nav_my_places,
                 R.id.nav_my_services,
                 R.id.nav_my_schedules,
-                R.id.navigation_account
+                R.id.navigation_menu,
             )
         )
         //Limpio subtitulos al cambiar de fragment

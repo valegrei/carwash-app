@@ -1,4 +1,4 @@
-package pe.com.valegrei.carwashapp.ui.menu_admin
+package pe.com.valegrei.carwashapp.ui.menu_distrib
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +12,11 @@ import pe.com.valegrei.carwashapp.MainViewModel
 import pe.com.valegrei.carwashapp.MainViewModelFactory
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
-import pe.com.valegrei.carwashapp.databinding.FragmentMenuAdminBinding
+import pe.com.valegrei.carwashapp.databinding.FragmentMenuDistribBinding
 
-class MenuAdminFragment : Fragment() {
+class MenuDistribFragment : Fragment() {
 
-    private var _binding: FragmentMenuAdminBinding? = null
+    private var _binding: FragmentMenuDistribBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(SesionData(requireContext()))
@@ -27,7 +27,7 @@ class MenuAdminFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentMenuAdminBinding.inflate(inflater, container, false)
+        _binding = FragmentMenuDistribBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,7 +48,4 @@ class MenuAdminFragment : Fragment() {
         findNavController().navigate(R.id.action_navigation_menu_to_navigation_change_pass)
     }
 
-    fun goToSettings() {
-        findNavController().navigate(R.id.action_navigation_menu_to_navigation_settings)
-    }
 }

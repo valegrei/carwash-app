@@ -17,8 +17,8 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-const val BASE_URL = "http://192.168.100.9:3000"
-//const val BASE_URL = "https://www.carwashperuapp.com"
+//const val BASE_URL = "http://192.168.100.9:3000"
+const val BASE_URL = "https://www.carwashperuapp.com"
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -82,6 +82,13 @@ interface ApiService {
         @Body usuario: Usuario,
         @Header("Authorization") authToken: String
     ): RespUsuario
+
+    @PUT("api/usuarios/{id}/pass")
+    suspend fun cambiarClaveUsu(
+        @Path("id") idUsuario: Int,
+        @Body reqCambiarClaveUsu: ReqCambiarClaveUsu,
+        @Header("Authorization") authToken: String
+    ): Response
 
     @PUT("api/admin/usuarios/{id}")
     suspend fun modificarUsuario(
