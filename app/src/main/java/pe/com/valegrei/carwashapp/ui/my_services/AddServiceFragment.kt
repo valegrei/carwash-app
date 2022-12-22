@@ -2,6 +2,7 @@ package pe.com.valegrei.carwashapp.ui.my_services
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -29,7 +30,7 @@ class AddServiceFragment : Fragment(), MenuProvider {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAddServiceBinding.inflate(inflater, container, false)
         return binding.root
@@ -49,9 +50,8 @@ class AddServiceFragment : Fragment(), MenuProvider {
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
                 Status.LOADING -> showLoading()
-                Status.ERROR -> hideLoading()
                 Status.SUCCESS -> exit()
-                else -> {}
+                else -> hideLoading()
             }
         }
 
@@ -61,6 +61,8 @@ class AddServiceFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+        (activity as AppCompatActivity).supportActionBar?.title =
+            if (viewModel.editStatus.value == EditStatus.NEW) getString(R.string.service_add) else getString(R.string.service_edit)
     }
 
     var progressDialog = ProgressDialog()

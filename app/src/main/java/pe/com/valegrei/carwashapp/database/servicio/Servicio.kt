@@ -1,6 +1,7 @@
 package pe.com.valegrei.carwashapp.database.servicio
 
 import android.icu.math.BigDecimal
+import android.icu.text.DecimalFormat
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -26,12 +27,17 @@ data class Servicio(
     var idDistrib: Int,
 ){
     fun getNombrePrecio(): String{
-        return "$nombre\nS/ $precio"
+        return "$nombre\nS/ ${getPrecioFormateado()}"
     }
     fun getNombreFormateado(): String{
         return "Nombre: $nombre"
     }
+    fun getPrecioLabel(): String{
+        return "Precio: S/ ${getPrecioFormateado()}"
+    }
+
     fun getPrecioFormateado(): String{
-        return "Precio: S/ $precio"
+        val df = DecimalFormat("#,###.00")
+        return df.format(precio)
     }
 }

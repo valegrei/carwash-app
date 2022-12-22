@@ -79,6 +79,7 @@
     <string name="service_delete">Eliminar servicio</string>
     <string name="service_delete_msg">Se va eliminar el siguiente servicio:\n%s</string>
     <string name="service_edit">Editar servicio</string>
+    <string name="service_add">Nuevo servicio</string>
     <!--    My data-->
     <string name="my_data_title">Mis Datos</string>
     <string name="my_data_edit_title">Editar Mis Datos</string>
@@ -137,8 +138,11 @@
     <string name="btnsh_type_distrib">Distribuidor</string>
     <string name="btnsh_save">Guardar cambios</string>
     <string name="btnsh_delete">Eliminar usuario</string>
+    <string name="btnsh_delete_msg">¿Eliminar el usuario seleccionado?</string>
     <string name="btnsh_aprove">Aprobar</string>
+    <string name="btnsh_aprove_msg">¿Aprobar el distribuidor seleccionado?</string>
     <string name="btnsh_reject">Rechazar</string>
+    <string name="btnsh_reject_msg">¿Rechazar el distribuidor seleccionado?</string>
     <string name="btnsh_verif_pend">Verificación Pendiente</string>
     <string name="btnsh_current_user">Usuario actual</string>
     <string name="btnsh_add_photo">Nueva foto de perfil</string>

@@ -18,6 +18,7 @@ import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
 enum class EditStatus { NEW, EDIT, DELETE, NORMAL }
+enum class GoStatus { GO_ADD, SHOW_DELETE, NORMAL }
 class MyServicesViewModel(
     private val sesionData: SesionData,
     private val servicioDao: ServicioDao,
@@ -34,6 +35,8 @@ class MyServicesViewModel(
     val status: LiveData<Status> = _status
     private var _editStatus = MutableLiveData<EditStatus>()
     val editStatus: LiveData<EditStatus> = _editStatus
+    private var _goStatus = MutableLiveData<GoStatus>()
+    val goStatus: LiveData<GoStatus> = _goStatus
 
     private var _selectedService = MutableLiveData<Servicio>()
     val selectedService: LiveData<Servicio> = _selectedService
@@ -46,22 +49,27 @@ class MyServicesViewModel(
     fun goNuevo() {
         nombre.value = ""
         precio.value = ""
+        _errMsg.value = ""
         _editStatus.value = EditStatus.NEW
+        _goStatus.value = GoStatus.GO_ADD
     }
 
     fun goEditar() {
+        _errMsg.value = ""
         val selServ = selectedService.value!!
         nombre.value = selServ.nombre
-        precio.value = selServ.precio.toString()
+        precio.value = selServ.getPrecioFormateado()
         _editStatus.value = EditStatus.EDIT
+        _goStatus.value = GoStatus.GO_ADD
     }
 
-    fun goDelete(){
+    fun goDelete() {
         _editStatus.value = EditStatus.DELETE
+        _goStatus.value = GoStatus.SHOW_DELETE
     }
 
     fun cargarServicios(): Flow<List<Servicio>> {
-        val sesion = sesionData.getCurrentSesion();
+        val sesion = sesionData.getCurrentSesion()
         return servicioDao.obtenerServicios(sesion?.usuario?.id!!)
     }
 
@@ -75,12 +83,16 @@ class MyServicesViewModel(
         }
     }
 
-    fun clearEditStatus(){
+    fun clearEditStatus() {
         _editStatus.value = EditStatus.NORMAL
     }
 
-    fun guardar(){
-        when(editStatus.value){
+    fun clearGoStatus() {
+        _goStatus.value = GoStatus.NORMAL
+    }
+
+    fun guardar() {
+        when (editStatus.value) {
             EditStatus.NEW -> agregarServicio()
             EditStatus.EDIT -> modificarServicio()
             else -> {}
@@ -100,7 +112,7 @@ class MyServicesViewModel(
         val precio = (this.precio.value ?: "").trim()
         if (validar(nombre, precio)) {
             val modServicio = selectedService.value!!
-            modServicio.nombre = nombre;
+            modServicio.nombre = nombre
             modServicio.precio = BigDecimal(precio)
             modificarServicio(modServicio)
         }
@@ -115,11 +127,11 @@ class MyServicesViewModel(
     private fun validar(nombre: String, precio: String): Boolean {
         _errMsg.value = ""
         if (nombre.isEmpty()) {
-            _errMsg.value = "Campo nombre vacío"
+            _errMsg.value = "Campo Servicio vacío"
             return false
         }
         if (precio.isEmpty()) {
-            _errMsg.value = "Campo precio vacío"
+            _errMsg.value = "Campo Precio vacío"
             return false
         }
         return true
@@ -130,7 +142,7 @@ class MyServicesViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroServicios()
-            val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio));
+            val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio))
             //guarda lo cambiado
             Api.retrofitService.agregarServicio(
                 sesion?.usuario?.id!!, reqAddServicio,

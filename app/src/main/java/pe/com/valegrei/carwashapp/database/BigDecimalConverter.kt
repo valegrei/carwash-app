@@ -5,12 +5,13 @@ import androidx.room.TypeConverter
 
 class BigDecimalConverter {
     @TypeConverter
-    fun fromLong(value: Long?): BigDecimal? {
-        return if (value == null) null else BigDecimal(value).divide(BigDecimal(100))
+    fun bigDecimalToDouble(input: BigDecimal?): Double {
+        return input?.toDouble() ?: 0.0
     }
 
     @TypeConverter
-    fun toLong(bigDecimal: BigDecimal?): Long? {
-        return bigDecimal?.multiply(BigDecimal(100))?.toLong()
+    fun stringToBigDecimal(input: Double?): BigDecimal {
+        if (input == null) return BigDecimal.ZERO
+        return BigDecimal.valueOf(input) ?: BigDecimal.ZERO
     }
 }

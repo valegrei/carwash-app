@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="@{()->viewModel.eliminarUsuario()}"
+                android:onClick="@{()->viewModel.showEliminar()}"
                 android:text="@string/btnsh_delete"
                 android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
                 android:visibility="@{viewModel.mostrarEliminar() ? View.VISIBLE : View.GONE}"

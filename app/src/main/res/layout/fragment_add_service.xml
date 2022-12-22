@@ -38,7 +38,7 @@
                     android:ems="10"
                     android:hint="@string/service"
                     android:inputType="text"
-                    android:text="@{viewModel.nombre}"
+                    android:text="@={viewModel.nombre}"
                     tools:ignore="TextContrastCheck"
                     tools:text="Lavado de salón" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -57,8 +57,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/service_price"
-                    android:inputType="text"
-                    android:text="@{viewModel.precio}"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.precio}"
                     tools:ignore="TextContrastCheck"
                     tools:text="30.00" />
             </com.google.android.material.textfield.TextInputLayout>

@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="@dimen/min_margin"
-                    android:onClick="@{()->viewModel.aprobarDist(true)}"
+                    android:onClick="@{()->viewModel.showConfirmar()}"
                     android:text="@string/btnsh_aprove"
                     android:theme="@style/ThemeOverlay.CarwashApp.Button"
                     app:icon="@drawable/ic_baseline_check_24" />
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/min_margin"
-                    android:onClick="@{()->viewModel.aprobarDist(false)}"
+                    android:onClick="@{()->viewModel.showDenegar()}"
                     android:text="@string/btnsh_reject"
                     android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
                     app:icon="@drawable/ic_baseline_close_white_24" />

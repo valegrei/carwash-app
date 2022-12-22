@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ServicioDao {
-    @Query("SELECT * FROM servicios WHERE idDistrib = :idDistribuidor")
+    @Query("SELECT * FROM servicios WHERE idDistrib = :idDistribuidor AND estado = 1")
     fun obtenerServicios(idDistribuidor: Int): Flow<List<Servicio>>
 
     @Insert(onConflict = REPLACE)

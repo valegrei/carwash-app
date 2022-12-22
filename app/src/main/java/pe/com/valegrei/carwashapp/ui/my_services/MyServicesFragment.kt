@@ -31,7 +31,7 @@ class MyServicesFragment : Fragment(), MenuProvider {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMyServicesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -64,10 +64,10 @@ class MyServicesFragment : Fragment(), MenuProvider {
                 else -> binding.swipeService.isRefreshing = false
             }
         }
-        viewModel.editStatus.observe(viewLifecycleOwner) {
+        viewModel.goStatus.observe(viewLifecycleOwner) {
             when (it) {
-                EditStatus.NEW, EditStatus.EDIT -> editarServicio()
-                EditStatus.DELETE -> showDeleteDialog()
+                GoStatus.GO_ADD -> editarServicio()
+                GoStatus.SHOW_DELETE -> showDeleteDialog()
                 else -> {}
             }
         }
@@ -98,10 +98,12 @@ class MyServicesFragment : Fragment(), MenuProvider {
             }.setNegativeButton(R.string.cancel) { _, _ ->
                 viewModel.clearEditStatus()
             }.show()
+        viewModel.clearGoStatus()
     }
 
     fun editarServicio() {
         findNavController().navigate(R.id.action_nav_my_services_to_nav_add_service)
+        viewModel.clearGoStatus()
     }
 
     override fun onDestroyView() {

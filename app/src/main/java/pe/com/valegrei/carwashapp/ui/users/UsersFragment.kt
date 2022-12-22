@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.ui.users
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -31,7 +32,7 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,6 +63,12 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
             when (it) {
                 Status.LOADING -> binding.swipeUsers.isRefreshing = true
                 else -> binding.swipeUsers.isRefreshing = false
+            }
+        }
+        viewModel.goStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                GoStatus.SHOW_DELETE -> showEliminar()
+                else -> {}
             }
         }
 
@@ -103,6 +110,19 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         (binding.rvUsers.adapter as UsersListAdapter).filter.filter(newText)
         return false
+    }
+
+    private fun showEliminar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.btnsh_delete)
+            .setMessage(R.string.btnsh_delete_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.eliminarUsuario()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+        viewModel.clearGoStatus()
     }
 
 }

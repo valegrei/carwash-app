@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.ui.distribs
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -15,7 +16,6 @@ import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentDistribsBinding
-import pe.com.valegrei.carwashapp.ui.util.FilterableListAdapter
 
 class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
 
@@ -32,7 +32,7 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDistribsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -64,6 +64,13 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
             when (it) {
                 Status.LOADING -> binding.swipeDistrib.isRefreshing = true
                 else -> binding.swipeDistrib.isRefreshing = false
+            }
+        }
+        viewModel.goStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                GoStatus.SHOW_CONFIRM -> showConfirmar()
+                GoStatus.SHOW_DENEG -> showDenegar()
+                else -> {}
             }
         }
 
@@ -101,6 +108,32 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         (binding.rvDistrib.adapter as DistribsListAdapter).filter.filter(newText)
         return false
+    }
+
+    private fun showConfirmar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.btnsh_aprove)
+            .setMessage(R.string.btnsh_aprove_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.aprobarDist(true)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+        viewModel.clearGoStatus()
+    }
+
+    private fun showDenegar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.btnsh_reject)
+            .setMessage(R.string.btnsh_reject_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.aprobarDist(false)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+        viewModel.clearGoStatus()
     }
 
 }

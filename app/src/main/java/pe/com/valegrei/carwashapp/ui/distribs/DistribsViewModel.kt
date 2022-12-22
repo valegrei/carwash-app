@@ -14,7 +14,8 @@ import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import java.util.*
 
-enum class Status { LOADING, SUCCESS, ERROR, NORMAL }
+enum class Status { LOADING, SUCCESS, ERROR }
+enum class GoStatus { SHOW_CONFIRM, SHOW_DENEG, NORMAL }
 
 class DistribsViewModel(
     private val sesionData: SesionData, private val usuarioDao: UsuarioDao
@@ -27,6 +28,9 @@ class DistribsViewModel(
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
 
+    private var _goStatus = MutableLiveData<GoStatus>()
+    val goStatus: LiveData<GoStatus> = _goStatus
+
     private var _selectedDistrib = MutableLiveData<Usuario>()
     val selectedDistrib : LiveData<Usuario> = _selectedDistrib
 
@@ -37,6 +41,18 @@ class DistribsViewModel(
     fun mostrarAprobar(): Boolean {
         if (selectedDistrib.value?.estado!! == EstadoUsuario.VERIFICANDO.id) return true
         return false
+    }
+
+    fun showConfirmar() {
+        _goStatus.value = GoStatus.SHOW_CONFIRM
+    }
+
+    fun showDenegar() {
+        _goStatus.value = GoStatus.SHOW_DENEG
+    }
+
+    fun clearGoStatus(){
+        _goStatus.value = GoStatus.NORMAL
     }
 
     fun cargarDistribuidores(): Flow<List<Usuario>>  = usuarioDao.obtenerDistribuidores()

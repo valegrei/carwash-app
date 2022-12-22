@@ -3,7 +3,6 @@ package pe.com.valegrei.carwashapp.ui.users
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.databinding.ItemUsuariosBinding
@@ -38,7 +37,13 @@ class UsersListAdapter(private val onItemClicked: (Usuario) -> Unit) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        return UsersViewHolder(ItemUsuariosBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return UsersViewHolder(
+            ItemUsuariosBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
@@ -48,7 +53,7 @@ class UsersListAdapter(private val onItemClicked: (Usuario) -> Unit) :
 
     override fun onFilter(list: List<Usuario>, constraint: String): List<Usuario> {
         return list.filter {
-            it.correo.startsWith(constraint,true)
+            it.correo.startsWith(constraint, true)
         }
     }
 }

@@ -12,7 +12,8 @@ import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import java.util.*
 
-enum class Status { LOADING, SUCCESS, ERROR, NORMAL }
+enum class Status { LOADING, SUCCESS, ERROR }
+enum class GoStatus {SHOW_DELETE, NORMAL }
 
 class UsersViewModel(
     private val sesionData: SesionData, private val usuarioDao: UsuarioDao
@@ -28,8 +29,19 @@ class UsersViewModel(
     private var _selectedUsu = MutableLiveData<Usuario>()
     val selectedUsu: LiveData<Usuario> = _selectedUsu
 
+    private var _goStatus = MutableLiveData<GoStatus>()
+    val goStatus: LiveData<GoStatus> = _goStatus
+
     fun setSelectedUsu(usuario: Usuario) {
         _selectedUsu.value = usuario.copy()
+    }
+
+    fun showEliminar() {
+        _goStatus.value = GoStatus.SHOW_DELETE
+    }
+
+    fun clearGoStatus(){
+        _goStatus.value = GoStatus.NORMAL
     }
 
     fun mostrarPendienteVerif(): Boolean {
@@ -41,13 +53,6 @@ class UsersViewModel(
         val correoActual = sesionData.getCurrentSesion()?.usuario?.correo ?: ""
         if (selectedUsu.value?.correo == correoActual) return false
         return true
-    }
-
-    fun cambiarEstadoUsuario() {
-        val usuario = selectedUsu.value
-        usuario?.estado =
-            if (usuario?.estado == EstadoUsuario.ACTIVO.id) EstadoUsuario.INACTIVO.id else EstadoUsuario.ACTIVO.id
-        _selectedUsu.value = usuario!!
     }
 
     fun cargarUsuarios(): Flow<List<Usuario>> = usuarioDao.obtenerUsuarios()
