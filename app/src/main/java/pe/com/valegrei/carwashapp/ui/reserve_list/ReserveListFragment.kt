@@ -16,7 +16,7 @@ import pe.com.valegrei.carwashapp.model.Reserva
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReserveListFragment : Fragment(), MenuProvider, ReserveListAdapter.OnInteractionListener {
+class ReserveListFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentReserveListBinding? = null
     private val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -41,7 +41,9 @@ class ReserveListFragment : Fragment(), MenuProvider, ReserveListAdapter.OnInter
 
         //Adapter de RV
         reserveListViewModel.reserveList.observe(viewLifecycleOwner) {
-            binding.rvReserveList.adapter = ReserveListAdapter(it, this)
+            binding.rvReserveList.adapter = ReserveListAdapter(it){r->
+                goReserva(r)
+            }
         }
 
         //Configura el menu del fragment
@@ -94,7 +96,7 @@ class ReserveListFragment : Fragment(), MenuProvider, ReserveListAdapter.OnInter
         (activity as AppCompatActivity).supportActionBar?.subtitle = subTitle
     }
 
-    override fun onClick(item: Reserva) {
+    fun goReserva(item: Reserva) {
         findNavController().navigate(R.id.action_nav_reserve_list_to_serviceDetailsFragment)
     }
 }

@@ -1,29 +1,28 @@
-package pe.com.valegrei.carwashapp.ui.add_admin
+package pe.com.valegrei.carwashapp.ui.my_services
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import pe.com.valegrei.carwashapp.CarwashApplication
-import pe.com.valegrei.carwashapp.EditStatus
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
-import pe.com.valegrei.carwashapp.databinding.FragmentAddAdminBinding
+import pe.com.valegrei.carwashapp.databinding.FragmentAddServiceBinding
 import pe.com.valegrei.carwashapp.ui.util.ProgressDialog
 
-class AddAdminFragment : Fragment(), MenuProvider {
-    private var _binding: FragmentAddAdminBinding? = null
+class AddServiceFragment : Fragment(), MenuProvider {
+
+    private var _binding: FragmentAddServiceBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AddAdminViewModel by viewModels {
-        AddAdminViewModelFactory(
+
+    private val viewModel: MyServicesViewModel by activityViewModels {
+        MyServicesViewModelFactory(
             SesionData(requireContext()),
-            (activity?.application as CarwashApplication).database.usuarioDao()
+            (activity?.application as CarwashApplication).database.servicioDao()
         )
     }
 
@@ -32,17 +31,22 @@ class AddAdminFragment : Fragment(), MenuProvider {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAddAdminBinding.inflate(inflater, container, false)
+        _binding = FragmentAddServiceBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            viewModel = this@AddAdminFragment.viewModel
+            viewModel = this@AddServiceFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        viewModel.status.observe(viewLifecycleOwner){
+        viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
                 Status.LOADING -> showLoading()
                 Status.ERROR -> hideLoading()
@@ -61,21 +65,19 @@ class AddAdminFragment : Fragment(), MenuProvider {
 
     var progressDialog = ProgressDialog()
 
-    fun showLoading() {
+    private fun showLoading() {
         progressDialog.show(childFragmentManager, "progressDialog")
     }
 
-    fun hideLoading() {
-        Handler(Looper.getMainLooper()).postDelayed({
+    private fun hideLoading() {
+        if (progressDialog.isVisible)
             progressDialog.dismiss()
-        }, 500)
     }
 
-    fun exit() {
-        Handler(Looper.getMainLooper()).postDelayed({
+    private fun exit() {
+        if (progressDialog.isVisible)
             progressDialog.dismiss()
-            findNavController().popBackStack()
-        }, 500)
+        findNavController().popBackStack()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -84,13 +86,10 @@ class AddAdminFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.action_save) {
-            viewModel.agregarAdmin()
+            viewModel.guardar()
             return true
         }
         return false
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 }

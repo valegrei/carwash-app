@@ -27,6 +27,7 @@ private const val USU_UPDATED_AT_KEY = "usu_updated_at"
 private const val SINCRO_USUARIOS = "sincro_usuarios"
 private const val SINCRO_ANUNCIOS = "sincro_anuncios"
 private const val SINCRO_PARAMETROS = "sincro_parametros"
+private const val SINCRO_SERVICIOS = "sincro_servicios"
 private const val DB_VERSION_NUM = "db_version_num"
 
 class SesionData(context: Context) {
@@ -152,5 +153,22 @@ class SesionData(context: Context) {
 
     fun getLastSincroParametros(): Date {
         return Date(pref.getLong(SINCRO_PARAMETROS, 0))
+    }
+
+
+    fun clearLastSincroServicios() {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_SERVICIOS, 0)
+        edit.apply()
+    }
+
+    fun saveLastSincroServicios(lastSincro: Date) {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_SERVICIOS, lastSincro.time)
+        edit.apply()
+    }
+
+    fun getLastSincroServicios(): Date {
+        return Date(pref.getLong(SINCRO_SERVICIOS, 0))
     }
 }

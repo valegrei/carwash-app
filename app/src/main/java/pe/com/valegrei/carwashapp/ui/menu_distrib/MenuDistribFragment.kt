@@ -48,4 +48,8 @@ class MenuDistribFragment : Fragment() {
         findNavController().navigate(R.id.action_navigation_menu_to_navigation_change_pass)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

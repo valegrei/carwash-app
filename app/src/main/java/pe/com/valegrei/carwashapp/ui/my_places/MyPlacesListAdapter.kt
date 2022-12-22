@@ -3,12 +3,13 @@ package pe.com.valegrei.carwashapp.ui.my_places
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pe.com.valegrei.carwashapp.database.servicio.Servicio
 import pe.com.valegrei.carwashapp.databinding.ItemMyPlacesBinding
 import pe.com.valegrei.carwashapp.model.Local
 
 class MyPlacesListAdapter(
     private val dataSet: Array<Local>,
-    private var listener: OnInteractionListener
+    private val onItemClicked: (Local) -> Unit
 ) :
     RecyclerView.Adapter<MyPlacesListAdapter.ViewHolder>() {
 
@@ -18,12 +19,10 @@ class MyPlacesListAdapter(
      */
     class ViewHolder(private val binding: ItemMyPlacesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: Local, listener: OnInteractionListener) {
+        fun bindData(local: Local) {
             binding.apply {
-                tvDepartamento.text = data.departamento
-                tvProvincia.text = data.provincia
-                tvDireccion.text = data.direccion
-                cardview.setOnClickListener { listener.onClick(data) }
+                binding.local = local
+                binding.executePendingBindings()
             }
         }
     }
@@ -39,13 +38,10 @@ class MyPlacesListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.bindData(dataSet[position], listener)
+        holder.bindData(dataSet[position])
+        holder.itemView.setOnClickListener{onItemClicked(dataSet[position])}
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    interface OnInteractionListener {
-        fun onClick(item: Local)
-    }
 }

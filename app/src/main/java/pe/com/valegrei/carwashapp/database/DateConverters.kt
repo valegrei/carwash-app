@@ -3,7 +3,7 @@ package pe.com.valegrei.carwashapp.database
 import androidx.room.TypeConverter
 import java.util.*
 
-class Converters {
+class DateConverters {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }

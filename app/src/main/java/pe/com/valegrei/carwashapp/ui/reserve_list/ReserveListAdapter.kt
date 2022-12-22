@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.com.valegrei.carwashapp.databinding.ItemReserveListBinding
+import pe.com.valegrei.carwashapp.model.Local
 import pe.com.valegrei.carwashapp.model.Reserva
 
 class ReserveListAdapter(
     private val dataSet: Array<Reserva>,
-    private var listener: OnInteractionListener
+    private val onItemClicked: (Reserva) -> Unit
 ) :
     RecyclerView.Adapter<ReserveListAdapter.ViewHolder>() {
 
@@ -18,13 +19,8 @@ class ReserveListAdapter(
      */
     class ViewHolder(private val binding: ItemReserveListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: Reserva, listener: OnInteractionListener) {
-            binding.apply {
-                tvClient.text = data.client
-                tvVehicle.text = data.vehicle
-                tvPlace.text = data.place
-                cardview.setOnClickListener { listener.onClick(data) }
-            }
+        fun bindData(data: Reserva) {
+            binding.reserva = data
         }
     }
 
@@ -39,13 +35,11 @@ class ReserveListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.bindData(dataSet[position], listener)
+        holder.bindData(dataSet[position])
+        holder.itemView.setOnClickListener{onItemClicked(dataSet[position])}
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    interface OnInteractionListener {
-        fun onClick(item: Reserva)
-    }
 }

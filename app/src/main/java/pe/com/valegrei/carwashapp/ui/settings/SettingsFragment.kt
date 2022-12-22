@@ -71,6 +71,11 @@ class SettingsFragment : Fragment() {
         viewModel.descargarParams()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     fun mostrarSwipeLoading() {
         binding.swipeSettings.isRefreshing = true
     }

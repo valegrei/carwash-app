@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.my_services.MyServicesViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottomsheet_background"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/small_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedService.getNombreFormateado()}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="Nombre: Lavado de Autos" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_semibold"
+                android:text="@{viewModel.selectedService.getPrecioFormateado()}"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                tools:text="Precio: S/ 30.00" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/min_margin"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:paddingHorizontal="@dimen/small_margin"
+            android:text="@string/btnsh_actions" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="@dimen/min_margin"
+            android:fontFamily="@font/opensans_regular"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.goEditar()}"
+            android:padding="@dimen/small_margin"
+            android:text="@string/service_edit"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            app:drawableStartCompat="@drawable/ic_outline_edit_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawablePadding="@dimen/min_margin"
+            android:fontFamily="@font/opensans_regular"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.goDelete()}"
+            android:padding="@dimen/small_margin"
+            android:text="@string/service_delete"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            app:drawableStartCompat="@drawable/ic_baseline_delete_outline_24" />
+
+    </LinearLayout>
+</layout>

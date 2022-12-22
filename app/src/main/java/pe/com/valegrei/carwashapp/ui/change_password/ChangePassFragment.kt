@@ -66,4 +66,8 @@ class ChangePassFragment : Fragment() {
             findNavController().popBackStack()
         }, 500)
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

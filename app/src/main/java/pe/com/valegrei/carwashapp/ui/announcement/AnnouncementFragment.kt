@@ -124,4 +124,8 @@ class AnnouncementFragment : Fragment(), MenuProvider {
         }
         return false
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

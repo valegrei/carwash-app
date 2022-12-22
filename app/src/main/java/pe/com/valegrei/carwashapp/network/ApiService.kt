@@ -1,7 +1,10 @@
 package pe.com.valegrei.carwashapp.network
 
+import android.icu.math.BigDecimal
+import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.ToJson
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.MultipartBody
@@ -17,8 +20,15 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-//const val BASE_URL = "http://192.168.100.9:3000"
-const val BASE_URL = "https://www.carwashperuapp.com"
+const val BASE_URL = "http://192.168.100.9:3000"
+//const val BASE_URL = "https://www.carwashperuapp.com"
+
+object BigDecimalAdapter {
+    @FromJson
+    fun fromJson(string: String) = BigDecimal(string)
+    @ToJson
+    fun toJson(value: BigDecimal) = value.toString()
+}
 
 /**
  * Build the Moshi object with Kotlin adapter factory that Retrofit will be using.
@@ -26,6 +36,7 @@ const val BASE_URL = "https://www.carwashperuapp.com"
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .add(Date::class.java, Rfc3339DateJsonAdapter())
+    .add(BigDecimalAdapter)
     .build()
 
 /**
@@ -90,6 +101,8 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): Response
 
+    /* ADMIN */
+
     @PUT("api/admin/usuarios/{id}")
     suspend fun modificarUsuario(
         @Path("id") idUsuario: Int,
@@ -148,6 +161,29 @@ interface ApiService {
         @Query("lastSincro") lastSincro: Date,
         @Header("Authorization") authToken: String
     ): RespParams
+
+    /* Distribuidor */
+
+    @GET("api/distrib/{id}/servicio")
+    suspend fun obtenerServicios(
+        @Path("id") idUsuario: Int,
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespServicios
+
+    @POST("api/distrib/{id}/servicio")
+    suspend fun agregarServicio(
+        @Path("id") idUsuario: Int,
+        @Body reqAddServicio: ReqAddServicio,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @PUT("api/distrib/{id}/servicio")
+    suspend fun modificarServicio(
+        @Path("id") idUsuario: Int,
+        @Body reqModServicio: ReqModServicio,
+        @Header("Authorization") authToken: String
+    ): Response
 }
 
 /**

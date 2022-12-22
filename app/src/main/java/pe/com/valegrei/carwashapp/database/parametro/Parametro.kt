@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.database.parametro
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
@@ -15,7 +16,14 @@ const val EMAIL_PASS = "EMAIL_PASS"
 
 @Entity(tableName = "parametro")
 data class Parametro(
-    @Json(name = "clave") @PrimaryKey var clave: String,
-    @Json(name = "valor") var valor: String,
-    @Json(name = "idTipo") var idTipo: Int,
+    @Json(name = "clave")
+    @PrimaryKey
+    @ColumnInfo(name = "clave")
+    var clave: String,
+    @Json(name = "valor")
+    @ColumnInfo(name = "valor")
+    var valor: String,
+    @Json(name = "idTipo")
+    @ColumnInfo(name = "idTipo")
+    var idTipo: Int,
 )

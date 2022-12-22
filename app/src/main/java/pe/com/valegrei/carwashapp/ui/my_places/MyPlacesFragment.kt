@@ -11,10 +11,8 @@ import androidx.navigation.fragment.findNavController
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.databinding.FragmentMyPlacesBinding
 import pe.com.valegrei.carwashapp.model.Local
-import pe.com.valegrei.carwashapp.ui.reserve_list.ReserveListAdapter
-import pe.com.valegrei.carwashapp.ui.reserve_list.ReserveListViewModel
 
-class MyPlacesFragment : Fragment(), MenuProvider , MyPlacesListAdapter.OnInteractionListener{
+class MyPlacesFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentMyPlacesBinding? = null
 
@@ -40,7 +38,7 @@ class MyPlacesFragment : Fragment(), MenuProvider , MyPlacesListAdapter.OnIntera
             ViewModelProvider(this)[MyPlacesViewModel::class.java]
         //Adapter de RV
         myPlacesViewModel.localList.observe(viewLifecycleOwner) {
-            binding.rvPlacesList.adapter = MyPlacesListAdapter(it, this)
+            binding.rvPlacesList.adapter = MyPlacesListAdapter(it) { l -> goLocal(l) }
         }
 
         //Configura el menu del fragment
@@ -68,7 +66,7 @@ class MyPlacesFragment : Fragment(), MenuProvider , MyPlacesListAdapter.OnIntera
         return false
     }
 
-    override fun onClick(item: Local) {
+    fun goLocal(item: Local) {
         findNavController().navigate(R.id.action_nav_my_places_to_addPlaceFragment)
     }
 }

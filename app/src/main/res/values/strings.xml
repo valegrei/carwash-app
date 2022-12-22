@@ -72,6 +72,13 @@
     <string name="service_state_attended">Atendido</string>
     <string name="service_state_pending">Pendiente</string>
     <string name="service_state_canceled">Cancelado</string>
+    <!--    My Services-->
+    <string name="service">Servicio</string>
+    <string name="service_price">Precio (S/)</string>
+    <string name="service_active">Activo</string>
+    <string name="service_delete">Eliminar servicio</string>
+    <string name="service_delete_msg">Se va eliminar el siguiente servicio:\n%s</string>
+    <string name="service_edit">Editar servicio</string>
     <!--    My data-->
     <string name="my_data_title">Mis Datos</string>
     <string name="my_data_edit_title">Editar Mis Datos</string>
@@ -168,5 +175,7 @@
     <string name="menu_change_pass">Cambiar contraseña</string>
     <string name="menu_settings">Configuraciones de servidor</string>
     <string name="menu_logout">Cerrar sesión</string>
+    
+    
 
 </resources>

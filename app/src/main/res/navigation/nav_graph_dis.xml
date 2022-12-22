@@ -38,7 +38,11 @@
         android:id="@+id/nav_my_services"
         android:name="pe.com.valegrei.carwashapp.ui.my_services.MyServicesFragment"
         android:label="@string/menu_my_services"
-        tools:layout="@layout/fragment_my_services" />
+        tools:layout="@layout/fragment_my_services" >
+        <action
+            android:id="@+id/action_nav_my_services_to_nav_add_service"
+            app:destination="@id/nav_add_service" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_my_schedules"
@@ -67,9 +71,6 @@
         android:label="@string/menu"
         tools:layout="@layout/fragment_menu_distrib" >
         <action
-            android:id="@+id/action_navigation_menu_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
-        <action
             android:id="@+id/action_navigation_menu_to_navigation_account"
             app:destination="@id/navigation_account" />
         <action
@@ -81,4 +82,9 @@
         android:name="pe.com.valegrei.carwashapp.ui.change_password.ChangePassFragment"
         android:label="@string/change_pass_title"
         tools:layout="@layout/fragment_change_pass" />
+    <fragment
+        android:id="@+id/nav_add_service"
+        android:name="pe.com.valegrei.carwashapp.ui.my_services.AddServiceFragment"
+        android:label="fragment_add_service"
+        tools:layout="@layout/fragment_add_service" />
 </navigation>

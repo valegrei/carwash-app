@@ -9,17 +9,23 @@ import pe.com.valegrei.carwashapp.database.anuncio.Anuncio
 import pe.com.valegrei.carwashapp.database.anuncio.AnuncioDao
 import pe.com.valegrei.carwashapp.database.parametro.Parametro
 import pe.com.valegrei.carwashapp.database.parametro.ParametroDao
+import pe.com.valegrei.carwashapp.database.servicio.Servicio
+import pe.com.valegrei.carwashapp.database.servicio.ServicioDao
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 
-const val DB_VERSION = 3
+const val DB_VERSION = 5
 
-@Database(entities = [Usuario::class, Anuncio::class, Parametro::class], version = DB_VERSION)
-@TypeConverters(Converters::class)
+@Database(
+    entities = [Usuario::class, Anuncio::class, Parametro::class, Servicio::class],
+    version = DB_VERSION
+)
+@TypeConverters(DateConverters::class, BigDecimalConverter::class)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun usuarioDao(): UsuarioDao
     abstract fun anuncioDao(): AnuncioDao
     abstract fun parametroDao(): ParametroDao
+    abstract fun servicioDao(): ServicioDao
 
     companion object {
         @Volatile

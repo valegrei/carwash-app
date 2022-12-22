@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="local"
-            type="pe.com.valegrei.carwashapp.model.Local" />
+            name="servicio"
+            type="pe.com.valegrei.carwashapp.database.servicio.Servicio" />
     </data>
 
 
@@ -31,11 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@{local.ubigeoDireccion}"
                 android:drawablePadding="@dimen/min_margin"
+                android:text="@{servicio.getNombrePrecio()}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
-                app:drawableStartCompat="@drawable/ic_baseline_place_24"
-                tools:text="Lima - Lima - Santa Rosa\nMz I2 Lot. 1, urb. Coovitiomar" />
+                app:drawableStartCompat="@drawable/ic_baseline_home_repair_service_24"
+                tools:text="Lavado de Carro\nS/ 30.00" />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

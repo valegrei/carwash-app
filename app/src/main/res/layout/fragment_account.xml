@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/my_data_nombres"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.nombres}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
                     tools:text="Víctor Augusto" />
 
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/my_data_ape_pat"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
 
                 <TextView
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.apellidoPaterno}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
                     tools:text="Alegre" />
 
@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/my_data_ape_mat"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
 
                 <TextView
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.apellidoMaterno}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
                     tools:text="Ibáñez" />
 
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.razonSocial}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
                     tools:text="Lavados de Carros Santa Rosa" />
 
@@ -124,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.sesion.usuario.getNombreDoc()}"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
                     tools:text="RUC" />
 
                 <TextView
@@ -132,49 +132,49 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.nroDocumento}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     tools:text="10709582864" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/my_data_cellphone"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.nroCel1}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     tools:text="925416855" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/my_data_whatsapp"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.nroCel2}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     tools:text="958412963" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/my_data_email"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:text="@{viewModel.sesion.usuario.correo}"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     tools:text="example@gmail.com" />
 
             </LinearLayout>

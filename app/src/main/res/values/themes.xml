@@ -92,6 +92,16 @@
         <item name="fontFamily">@font/opensans_semibold</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
+    
+    <style name="TextAppearance.CarwashApp.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/opensans_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/opensans_bold</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
 
     <style name="Theme.CarwashApp.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
@@ -133,6 +143,7 @@
     <style name="Style.CarwashApp.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
         <item name="boxBackgroundColor">@color/white</item>
         <item name="shapeAppearance">@style/ShapeAppearance.CarwashApp.SmallComponent</item>
+        <item name="android:textAppearance">@style/TextAppearance.CarwashApp.BodyLarge</item>
     </style>
 
     <style name="ShapeAppearance.CarwashApp.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
