@@ -104,7 +104,9 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <!--    Places-->
     <string name="new_place">Nuevo Local</string>
+    <string name="place_my_location">Mi Ubicacion</string>
 
     <string name="loading">Cargando</string>
     <string name="title_activity_splash">SplashActivity</string>
@@ -179,7 +181,6 @@
     <string name="menu_change_pass">Cambiar contraseña</string>
     <string name="menu_settings">Configuraciones de servidor</string>
     <string name="menu_logout">Cerrar sesión</string>
-    
-    
+
 
 </resources>

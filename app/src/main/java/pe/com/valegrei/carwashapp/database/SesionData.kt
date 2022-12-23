@@ -51,6 +51,7 @@ class SesionData(context: Context) {
             editor.putLong(SINCRO_USUARIOS,0)
             editor.putLong(SINCRO_ANUNCIOS,0)
             editor.putLong(SINCRO_PARAMETROS,0)
+            editor.putLong(SINCRO_SERVICIOS,0)
             editor.apply()
         }
     }

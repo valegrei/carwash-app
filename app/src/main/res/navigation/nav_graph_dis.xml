@@ -32,7 +32,10 @@
         tools:layout="@layout/fragment_my_places" >
         <action
             android:id="@+id/action_nav_my_places_to_addPlaceFragment"
-            app:destination="@id/addPlaceFragment" />
+            app:destination="@id/nav_add_place" />
+        <action
+            android:id="@+id/action_nav_my_places_to_showPlaceFragment"
+            app:destination="@id/nav_place_detail" />
     </fragment>
     <fragment
         android:id="@+id/nav_my_services"
@@ -61,10 +64,17 @@
         android:label="@string/title_account_edit"
         tools:layout="@layout/fragment_account_edit" />
     <fragment
-        android:id="@+id/addPlaceFragment"
+        android:id="@+id/nav_add_place"
         android:name="pe.com.valegrei.carwashapp.ui.add_place_fragment.AddPlaceFragment"
         android:label="@string/new_place"
-        tools:layout="@layout/fragment_add_place" />
+        tools:layout="@layout/fragment_add_place" >
+        <action
+            android:id="@+id/action_addPlaceFragment_to_searchPlaceFragment"
+            app:destination="@id/nav_search_place" />
+        <action
+            android:id="@+id/action_addPlaceFragment_to_showPlaceFragment"
+            app:destination="@id/nav_place_detail" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_menu"
         android:name="pe.com.valegrei.carwashapp.ui.menu_distrib.MenuDistribFragment"
@@ -87,4 +97,18 @@
         android:name="pe.com.valegrei.carwashapp.ui.my_services.AddServiceFragment"
         android:label="fragment_add_service"
         tools:layout="@layout/fragment_add_service" />
+    <fragment
+        android:id="@+id/nav_search_place"
+        android:name="pe.com.valegrei.carwashapp.SearchPlaceFragment"
+        android:label="fragment_search_place"
+        tools:layout="@layout/fragment_search_place" />
+    <fragment
+        android:id="@+id/nav_place_detail"
+        android:name="pe.com.valegrei.carwashapp.ShowPlaceFragment"
+        android:label="fragment_show_place"
+        tools:layout="@layout/fragment_show_place" >
+        <action
+            android:id="@+id/action_showPlaceFragment_to_addPlaceFragment"
+            app:destination="@id/nav_add_place" />
+    </fragment>
 </navigation>
