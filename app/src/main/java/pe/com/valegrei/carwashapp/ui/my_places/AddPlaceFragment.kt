@@ -20,7 +20,9 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,7 +34,9 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.*
+import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
+import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.databinding.FragmentAddPlaceBinding
 
 class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
@@ -52,20 +56,24 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
     // Current location is set to Lima, this will be of no use
     var currentLocation: LatLng = LatLng(-12.046664, -77.0431219)
 
+    private val viewModel: MyPlacesViewModel by activityViewModels {
+        MyPlacesViewModelFactory(
+            SesionData(requireContext()),
+            (activity?.application as CarwashApplication).database.direccionDao(),
+            (activity?.application as CarwashApplication).database.ubigeoDao(),
+        )
+    }
     // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
     // and once again when the user makes a selection (for example when calling fetchPlace()).
     private var token: AutocompleteSessionToken? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
-//        mMap.setOnCameraMoveListener {
-//            centerMarker?.remove()
-//            val test = mMap.cameraPosition
-//            centerMarker = mMap.addMarker(MarkerOptions().position(mMap.cameraPosition.target).anchor(0.5f,0.5f).title("Test"))
-//            Log.d("Test", "Map Coordinate: " + test.toString());
-//        }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f))
-        getLastLocation()
+        if(viewModel.selectedLatLng.value == null)
+            getLastLocation()
+        else
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewModel.selectedLatLng.value!!, 15.0f))
     }
 
     override fun onCreateView(
@@ -78,22 +86,8 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState) // Fetching API_KEY which we wrapped
-//        val ai: ApplicationInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            requireActivity().applicationContext.packageManager
-//                .getApplicationInfo(
-//                    requireActivity().applicationContext.packageName,
-//                    PackageManager.ApplicationInfoFlags.of(0)
-//                )
-//        } else {
-//            requireActivity().applicationContext.packageManager
-//                .getApplicationInfo(
-//                    requireActivity().applicationContext.packageName,
-//                    PackageManager.GET_META_DATA
-//                )
-//        }
-//        val value = ai.metaData.getString("com.google.android.geo.API_KEY")
-        val apiKey = getString(R.string.api_key) // value.toString()
+        super.onViewCreated(view, savedInstanceState)
+        val apiKey = getString(R.string.api_key)
 
         // Initializing the Places API with the help of our API_KEY
         if (!Places.isInitialized()) {
@@ -335,7 +329,8 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
 
     private fun saveLocation(){
         val selectedLocation = mMap.cameraPosition.target
-
+        viewModel.setSelectedLatLng(selectedLocation)
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

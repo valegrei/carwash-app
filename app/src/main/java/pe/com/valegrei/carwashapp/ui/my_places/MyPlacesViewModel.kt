@@ -47,6 +47,8 @@ class MyPlacesViewModel(
     private var _selectedDistrito = MutableLiveData<Distrito>()
     val selectedDistrito: LiveData<Distrito> = _selectedDistrito
     val direccion = MutableLiveData<String>();
+    private var _selectedLatLng = MutableLiveData<LatLng?>()
+    val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
 
     private var _departamentos = MutableLiveData<List<Departamento>>()
     val departamentos: LiveData<List<Departamento>> = _departamentos
@@ -59,7 +61,8 @@ class MyPlacesViewModel(
     val selectedDireccion: LiveData<Direccion> = _selectedDireccion
 
 
-    fun nuevoDireccion(latLng: LatLng) {
+    fun nuevoDireccion() {
+        _selectedLatLng.value = null
         _selectedDepartamento.value = Departamento(0,"")
         _selectedProvincia.value = Provincia(0,"",0)
         _selectedDistrito.value = Distrito(0,"",0,"")
@@ -74,6 +77,7 @@ class MyPlacesViewModel(
 
     fun verDireccion(direccion: Direccion) {
         _selectedDireccion.value = direccion
+        _selectedLatLng.value = LatLng(direccion.latitud.toDouble(),direccion.longitud.toDouble())
         _errMsg.value = ""
         _editStatus.value = EditStatus.VIEW
         _mostrarEditar.value = false
@@ -91,6 +95,10 @@ class MyPlacesViewModel(
     fun isDistrib(): Boolean {
         val sesion = sesionData.getCurrentSesion()
         return sesion?.usuario?.idTipoUsuario == TipoUsuario.DISTR.id
+    }
+
+    fun setSelectedLatLng(latLng: LatLng?){
+        _selectedLatLng.value = latLng
     }
 
     fun cargarUbigeo(direccion: Direccion){

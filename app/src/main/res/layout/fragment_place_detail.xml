@@ -183,13 +183,36 @@
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
-                <ImageView
-                    staticMapDireccion="@{viewModel.selectedDireccion}"
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{()->fragment.showMapOrEdit()}"
-                    android:scaleType="centerCrop"
-                    tools:srcCompat="@drawable/mapa_ejemplo" />
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{()->fragment.showMapOrEdit()}">
+
+                    <ImageView
+                        staticMapDireccion="@{viewModel.selectedLatLng}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="@{viewModel.selectedLatLng == null ? View.GONE : View.VISIBLE}"
+                        tools:srcCompat="@drawable/mapa_ejemplo" />
+
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                        android:visibility="@{viewModel.selectedLatLng == null ? View.VISIBLE : View.GONE}"
+                        android:text="@string/place_select_map" />
+                </RelativeLayout>
+
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.google.android.gms.maps.model.LatLng
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.direccion.Direccion
@@ -99,15 +100,15 @@ fun bindImageEdit(imgView: ImageView, imageEdit: TuplaImageEdit?) {
  * Uses the Coil library to load an image by URL into an [ImageView]
  */
 @BindingAdapter("staticMapDireccion")
-fun bindStaticMapDireccion(imgView: ImageView, direccion: Direccion?) {
-    direccion?.let {
+fun bindStaticMapDireccion(imgView: ImageView, latLng: LatLng?) {
+    latLng?.let {
         val secretKey = imgView.context.getString(R.string.secret_key)
         val apiKey = imgView.context.getString(R.string.api_key)
         val url = URL(
             imgView.context.getString(
                 R.string.map_static_url,
-                direccion.latitud,
-                direccion.longitud,
+                latLng.latitude,
+                latLng.longitude,
                 apiKey
             )
         )

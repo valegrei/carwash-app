@@ -2,5 +2,5 @@
 <resources>
     <string name="api_key">AIzaSyCfVTAjcFWY15meeNleMJzjlb6xTX38NR8</string>
     <string name="secret_key">TKIC6LLknzyaR18hKG_izmRj86I=</string>
-    <string name="map_static_url">https://maps.googleapis.com/maps/api/staticmap?zoom=16&amp;size=400x400&amp;maptype=roadmap&amp;markers=color:0x742384|%1$s,%2$s&amp;key=%3$s</string>
+    <string name="map_static_url">https://maps.googleapis.com/maps/api/staticmap?zoom=16&amp;size=400x400&amp;maptype=roadmap&amp;markers=color:0x742384|%1$f,%2$f&amp;key=%3$s</string>
 </resources>

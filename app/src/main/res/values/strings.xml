@@ -114,6 +114,7 @@
     <string name="place_title_new">Nuevo Local</string>
     <string name="place_title_edit">Editar Local</string>
     <string name="place_title_view">Ver Local</string>
+    <string name="place_select_map">Click para seleccionar en el mapa</string>
 
     <string name="loading">Cargando</string>
     <string name="title_activity_splash">SplashActivity</string>

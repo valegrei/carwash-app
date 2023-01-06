@@ -31,9 +31,6 @@
         android:label="@string/menu_my_places"
         tools:layout="@layout/fragment_my_places" >
         <action
-            android:id="@+id/action_nav_my_places_to_addPlaceFragment"
-            app:destination="@id/nav_add_place" />
-        <action
             android:id="@+id/action_nav_my_places_to_nav_place_detail"
             app:destination="@id/nav_place_detail" />
     </fragment>
@@ -67,11 +64,7 @@
         android:id="@+id/nav_add_place"
         android:name="pe.com.valegrei.carwashapp.ui.my_places.AddPlaceFragment"
         android:label="@string/new_place"
-        tools:layout="@layout/fragment_add_place" >
-        <action
-            android:id="@+id/action_addPlaceFragment_to_showPlaceFragment"
-            app:destination="@id/nav_place_detail" />
-    </fragment>
+        tools:layout="@layout/fragment_add_place" />
     <fragment
         android:id="@+id/navigation_menu"
         android:name="pe.com.valegrei.carwashapp.ui.menu_distrib.MenuDistribFragment"
@@ -98,7 +91,7 @@
         android:id="@+id/nav_place_detail"
         android:name="pe.com.valegrei.carwashapp.ui.my_places.PlaceDetailFragment"
         android:label="nav_place_detail"
-        tools:layout="@layout/fragment_show_place" >
+        tools:layout="@layout/fragment_place_detail" >
         <action
             android:id="@+id/action_nav_place_detail_to_nav_add_place"
             app:destination="@id/nav_add_place" />

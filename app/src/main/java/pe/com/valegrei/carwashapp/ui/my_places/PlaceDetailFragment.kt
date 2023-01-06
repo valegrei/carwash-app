@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.database.SesionData
-import pe.com.valegrei.carwashapp.database.direccion.Direccion
 import pe.com.valegrei.carwashapp.database.ubigeo.Departamento
 import pe.com.valegrei.carwashapp.database.ubigeo.Distrito
 import pe.com.valegrei.carwashapp.database.ubigeo.Provincia
@@ -58,17 +57,17 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
         binding.acDepartamentos.setOnItemClickListener { adapterView, _, position, _ ->
             val selectedDepartamento = adapterView.getItemAtPosition(position) as Departamento
             viewModel.setSelectedDepartamento(selectedDepartamento)
-            val noProv = Provincia(0,"",0)
+            val noProv = Provincia(0, "", 0)
             viewModel.setSelectedProvincia(noProv)
             viewModel.cargarProvincias(selectedDepartamento)
-            val noDis = Distrito(0,"",0,"")
+            val noDis = Distrito(0, "", 0, "")
             viewModel.setSelectedDistrito(noDis)
             viewModel.cargarDistritos(noProv)
         }
         binding.acProvincias.setOnItemClickListener { adapterView, _, position, _ ->
             val selectedProvincia = adapterView.getItemAtPosition(position) as Provincia
             viewModel.setSelectedProvincia(selectedProvincia)
-            viewModel.setSelectedDistrito(Distrito(0,"",0,""))
+            viewModel.setSelectedDistrito(Distrito(0, "", 0, ""))
             viewModel.cargarDistritos(selectedProvincia)
         }
         binding.acDistritos.setOnItemClickListener { adapterView, _, position, _ ->
@@ -180,7 +179,7 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
             mapIntent.setPackage("com.google.android.apps.maps")
             startActivity(mapIntent)
         } else {
-
+            findNavController().navigate(R.id.action_nav_place_detail_to_nav_add_place)
         }
     }
 
@@ -200,9 +199,5 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
             }
             else -> false
         }
-    }
-
-    fun goLocal(item: Direccion) {
-        findNavController().navigate(R.id.action_nav_my_places_to_addPlaceFragment)
     }
 }

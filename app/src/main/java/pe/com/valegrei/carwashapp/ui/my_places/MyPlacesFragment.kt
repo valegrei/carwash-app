@@ -87,13 +87,14 @@ class MyPlacesFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.action_add_place) {
-            findNavController().navigate(R.id.action_nav_my_places_to_addPlaceFragment)
+            viewModel.nuevoDireccion()
+            findNavController().navigate(R.id.action_nav_my_places_to_nav_place_detail)
             return true
         }
         return false
     }
 
-    fun goLocal(item: Direccion) {
+    private fun goLocal(item: Direccion) {
         viewModel.verDireccion(item)
         findNavController().navigate(R.id.action_nav_my_places_to_nav_place_detail)
     }
