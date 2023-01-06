@@ -2,16 +2,14 @@ package pe.com.valegrei.carwashapp.ui.my_places
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.com.valegrei.carwashapp.database.servicio.Servicio
+import pe.com.valegrei.carwashapp.database.direccion.Direccion
 import pe.com.valegrei.carwashapp.databinding.ItemMyPlacesBinding
-import pe.com.valegrei.carwashapp.model.Local
 
-class MyPlacesListAdapter(
-    private val dataSet: Array<Local>,
-    private val onItemClicked: (Local) -> Unit
-) :
-    RecyclerView.Adapter<MyPlacesListAdapter.ViewHolder>() {
+class MyPlacesListAdapter(private val onItemClicked: (Direccion) -> Unit) :
+    ListAdapter<Direccion, MyPlacesListAdapter.ViewHolder>(DiffCallback) {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -19,9 +17,9 @@ class MyPlacesListAdapter(
      */
     class ViewHolder(private val binding: ItemMyPlacesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindData(local: Local) {
+        fun bind(direccion: Direccion) {
             binding.apply {
-                binding.local = local
+                binding.local = direccion
                 binding.executePendingBindings()
             }
         }
@@ -38,10 +36,22 @@ class MyPlacesListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.bindData(dataSet[position])
-        holder.itemView.setOnClickListener{onItemClicked(dataSet[position])}
+        holder.bind(getItem(position))
+        holder.itemView.setOnClickListener { onItemClicked(getItem(position)) }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    companion object DiffCallback : DiffUtil.ItemCallback<Direccion>() {
+        override fun areItemsTheSame(oldItem: Direccion, newItem: Direccion): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Direccion, newItem: Direccion): Boolean {
+            return oldItem.departamento == newItem.departamento
+                    && oldItem.provincia == newItem.provincia
+                    && oldItem.distrito == newItem.distrito
+                    && oldItem.direccion == newItem.direccion
+                    && oldItem.estado == newItem.estado
+        }
+
+    }
 }

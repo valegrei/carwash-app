@@ -6,7 +6,7 @@
     <data>
         <variable
             name="local"
-            type="pe.com.valegrei.carwashapp.model.Local" />
+            type="pe.com.valegrei.carwashapp.database.direccion.Direccion" />
     </data>
 
 

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.com.valegrei.carwashapp.databinding.ItemReserveListBinding
-import pe.com.valegrei.carwashapp.model.Local
 import pe.com.valegrei.carwashapp.model.Reserva
 
 class ReserveListAdapter(

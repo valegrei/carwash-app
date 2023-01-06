@@ -28,6 +28,7 @@ private const val SINCRO_USUARIOS = "sincro_usuarios"
 private const val SINCRO_ANUNCIOS = "sincro_anuncios"
 private const val SINCRO_PARAMETROS = "sincro_parametros"
 private const val SINCRO_SERVICIOS = "sincro_servicios"
+private const val SINCRO_DIRECCIONES = "sincro_direcciones"
 private const val DB_VERSION_NUM = "db_version_num"
 
 class SesionData(context: Context) {
@@ -43,15 +44,16 @@ class SesionData(context: Context) {
         editor.apply()
     }
 
-    fun checkDBVersion(){
-        if (pref.getInt(DB_VERSION_NUM,0) != DB_VERSION){
+    fun checkDBVersion() {
+        if (pref.getInt(DB_VERSION_NUM, 0) != DB_VERSION) {
             //Nueva version de DB, se tuvo que limpiar, por lo tanto reiniciar sincronizacion
             val editor = pref.edit()
             editor.putInt(DB_VERSION_NUM, DB_VERSION)
-            editor.putLong(SINCRO_USUARIOS,0)
-            editor.putLong(SINCRO_ANUNCIOS,0)
-            editor.putLong(SINCRO_PARAMETROS,0)
-            editor.putLong(SINCRO_SERVICIOS,0)
+            editor.putLong(SINCRO_USUARIOS, 0)
+            editor.putLong(SINCRO_ANUNCIOS, 0)
+            editor.putLong(SINCRO_PARAMETROS, 0)
+            editor.putLong(SINCRO_SERVICIOS, 0)
+            editor.putLong(SINCRO_DIRECCIONES, 0)
             editor.apply()
         }
     }
@@ -171,5 +173,21 @@ class SesionData(context: Context) {
 
     fun getLastSincroServicios(): Date {
         return Date(pref.getLong(SINCRO_SERVICIOS, 0))
+    }
+
+    fun clearLastSincroDirecciones() {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_DIRECCIONES, 0)
+        edit.apply()
+    }
+
+    fun saveLastSincroDirecciones(lastSincro: Date) {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_DIRECCIONES, lastSincro.time)
+        edit.apply()
+    }
+
+    fun getLastSincroDirecciones(): Date {
+        return Date(pref.getLong(SINCRO_DIRECCIONES, 0))
     }
 }

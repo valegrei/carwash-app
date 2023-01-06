@@ -103,6 +103,23 @@
         <item name="android:fontFamily">@font/opensans_bold</item>
     </style>
 
+
+    <style name="TextAppearance.CarwashApp.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/opensans_semibold</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/opensans_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextAppearance.CarwashApp.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/opensans_regular</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+
     <style name="Theme.CarwashApp.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
         <item name="windowSplashScreenBackground">@color/purple</item>
@@ -141,6 +158,12 @@
     </style>
 
     <style name="Style.CarwashApp.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.CarwashApp.SmallComponent</item>
+        <item name="android:textAppearance">@style/TextAppearance.CarwashApp.BodyLarge</item>
+    </style>
+
+    <style name="Style.CarwashApp.TextInputLayout.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
         <item name="boxBackgroundColor">@color/white</item>
         <item name="shapeAppearance">@style/ShapeAppearance.CarwashApp.SmallComponent</item>
         <item name="android:textAppearance">@style/TextAppearance.CarwashApp.BodyLarge</item>

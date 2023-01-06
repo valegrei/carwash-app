@@ -5,12 +5,16 @@ import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
+import pe.com.valegrei.carwashapp.CarwashApplication
 import pe.com.valegrei.carwashapp.R
+import pe.com.valegrei.carwashapp.database.SesionData
+import pe.com.valegrei.carwashapp.database.direccion.Direccion
 import pe.com.valegrei.carwashapp.databinding.FragmentMyPlacesBinding
-import pe.com.valegrei.carwashapp.model.Local
 
 class MyPlacesFragment : Fragment(), MenuProvider {
 
@@ -19,26 +23,47 @@ class MyPlacesFragment : Fragment(), MenuProvider {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val viewModel: MyPlacesViewModel by activityViewModels {
+        MyPlacesViewModelFactory(
+            SesionData(requireContext()),
+            (activity?.application as CarwashApplication).database.direccionDao(),
+            (activity?.application as CarwashApplication).database.ubigeoDao(),
+        )
+    }
+
+    private lateinit var adapter: MyPlacesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val myPlacesViewModel =
-            ViewModelProvider(this).get(MyPlacesViewModel::class.java)
-
         _binding = FragmentMyPlacesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val myPlacesViewModel =
-            ViewModelProvider(this)[MyPlacesViewModel::class.java]
         //Adapter de RV
-        myPlacesViewModel.localList.observe(viewLifecycleOwner) {
-            binding.rvPlacesList.adapter = MyPlacesListAdapter(it) { l -> goLocal(l) }
+        adapter = MyPlacesListAdapter { goLocal(it) }
+
+        binding.rvPlacesList.adapter = adapter
+        //Actualiza la vista en tiempo real
+        lifecycle.coroutineScope.launch {
+            viewModel.cargarDirecciones().collect {
+                adapter.submitList(it)
+            }
+        }
+
+        binding.swipeLocales.setColorSchemeResources(R.color.purple)
+        binding.swipeLocales.setOnRefreshListener {
+            viewModel.descargarDirecciones()
+        }
+        viewModel.status.observe(viewLifecycleOwner) {
+            when (it) {
+                Status.LOADING -> binding.swipeLocales.isRefreshing = true
+                else -> binding.swipeLocales.isRefreshing = false
+            }
         }
 
         //Configura el menu del fragment
@@ -47,6 +72,8 @@ class MyPlacesFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+
+        viewModel.descargarDirecciones()
     }
 
     override fun onDestroyView() {
@@ -66,7 +93,8 @@ class MyPlacesFragment : Fragment(), MenuProvider {
         return false
     }
 
-    fun goLocal(item: Local) {
-        findNavController().navigate(R.id.action_nav_my_places_to_addPlaceFragment)
+    fun goLocal(item: Direccion) {
+        viewModel.verDireccion(item)
+        findNavController().navigate(R.id.action_nav_my_places_to_nav_place_detail)
     }
 }

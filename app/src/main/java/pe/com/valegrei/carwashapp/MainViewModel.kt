@@ -105,6 +105,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         sesionData.clearLastSincroParametros()
         sesionData.clearLastSincroAnuncios()
         sesionData.clearLastSincroServicios()
+        sesionData.clearLastSincroDirecciones()
         _sesionStatus.value = SesionStatus.CLOSED
     }
 

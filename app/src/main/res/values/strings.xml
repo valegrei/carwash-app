@@ -107,6 +107,13 @@
     <!--    Places-->
     <string name="new_place">Nuevo Local</string>
     <string name="place_my_location">Mi Ubicacion</string>
+    <string name="place_departamento">Departamento</string>
+    <string name="place_provincia">Provincia</string>
+    <string name="place_distrito">Distrito</string>
+    <string name="place_address">Dirección</string>
+    <string name="place_title_new">Nuevo Local</string>
+    <string name="place_title_edit">Editar Local</string>
+    <string name="place_title_view">Ver Local</string>
 
     <string name="loading">Cargando</string>
     <string name="title_activity_splash">SplashActivity</string>

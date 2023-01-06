@@ -26,6 +26,7 @@ const val BASE_URL = "http://192.168.100.9:3000"
 object BigDecimalAdapter {
     @FromJson
     fun fromJson(string: String) = BigDecimal(string)
+
     @ToJson
     fun toJson(value: BigDecimal) = value.toString()
 }
@@ -184,6 +185,13 @@ interface ApiService {
         @Body reqModServicio: ReqModServicio,
         @Header("Authorization") authToken: String
     ): Response
+
+    @GET("api/distrib/{id}/direccion")
+    suspend fun obtenerDirecciones(
+        @Path("id") idUsuario: Int,
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespDireccion
 }
 
 /**

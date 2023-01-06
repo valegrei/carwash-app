@@ -1,22 +1,27 @@
-package pe.com.valegrei.carwashapp.ui.add_place_fragment
+package pe.com.valegrei.carwashapp.ui.my_places
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -24,19 +29,32 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.*
 import pe.com.valegrei.carwashapp.R
 import pe.com.valegrei.carwashapp.databinding.FragmentAddPlaceBinding
 
-class AddPlaceFragment : Fragment() {
+class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
+    companion object {
+        val TAG: String = AddPlaceFragment::class.java.name
+    }
+
     private var _binding: FragmentAddPlaceBinding? = null
     private val binding get() = _binding!!
 
     private val pERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     lateinit var mMap: GoogleMap
+    lateinit var placesClient: PlacesClient
+    lateinit var adapter: PlaceAutcompleteListAdapter
 
     // Current location is set to Lima, this will be of no use
     var currentLocation: LatLng = LatLng(-12.046664, -77.0431219)
+
+    // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
+    // and once again when the user makes a selection (for example when calling fetchPlace()).
+    private var token: AutocompleteSessionToken? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
@@ -61,18 +79,28 @@ class AddPlaceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState) // Fetching API_KEY which we wrapped
-        val ai: ApplicationInfo = requireActivity().applicationContext.packageManager
-            .getApplicationInfo(
-                requireActivity().applicationContext.packageName,
-                PackageManager.GET_META_DATA
-            )
-        val value = ai.metaData["com.google.android.geo.API_KEY"]
-        val apiKey = value.toString()
+//        val ai: ApplicationInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            requireActivity().applicationContext.packageManager
+//                .getApplicationInfo(
+//                    requireActivity().applicationContext.packageName,
+//                    PackageManager.ApplicationInfoFlags.of(0)
+//                )
+//        } else {
+//            requireActivity().applicationContext.packageManager
+//                .getApplicationInfo(
+//                    requireActivity().applicationContext.packageName,
+//                    PackageManager.GET_META_DATA
+//                )
+//        }
+//        val value = ai.metaData.getString("com.google.android.geo.API_KEY")
+        val apiKey = getString(R.string.api_key) // value.toString()
 
         // Initializing the Places API with the help of our API_KEY
         if (!Places.isInitialized()) {
             Places.initialize(requireActivity().applicationContext, apiKey)
         }
+        // Instancio placesCliente
+        placesClient = Places.createClient(requireContext())
 
         // Initializing Map
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -85,6 +113,21 @@ class AddPlaceFragment : Fragment() {
         binding.btnCenter.setOnClickListener {
             getLastLocation()
         }
+        binding.btnSave.setOnClickListener{
+            saveLocation()
+        }
+
+        //Recyclerview
+        adapter = PlaceAutcompleteListAdapter { goPlace(it.placeId) }
+        binding.rvPlacesList.adapter = adapter
+
+        //Configura el menu del fragment
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+
     }
 
 
@@ -119,11 +162,10 @@ class AddPlaceFragment : Fragment() {
     // from previous location
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        val mLocationRequest = LocationRequest()
-        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        mLocationRequest.interval = 0
-        mLocationRequest.fastestInterval = 0
-        mLocationRequest.numUpdates = 1
+        val mLocationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 0).apply {
+            setMaxUpdates(1)
+            setMinUpdateIntervalMillis(0)
+        }.build()
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mFusedLocationClient.requestLocationUpdates(
@@ -189,5 +231,115 @@ class AddPlaceFragment : Fragment() {
                 getLastLocation()
             }
         }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.queryHint = getString(R.string.action_search)
+        searchView.setOnQueryTextListener(this)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return false
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        buscar(query)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        buscar(newText)
+        return true
+    }
+
+    private fun buscar(query: String?){
+        if (query?.trim()!!.isNotEmpty()) {
+            if (token == null)
+                token = AutocompleteSessionToken.newInstance()
+            showPlaceList()
+            autocompletar(query)
+        } else {
+            showMap()
+        }
+    }
+
+    private fun autocompletar(query: String) {
+
+        // Use the builder to create a FindAutocompletePredictionsRequest.
+        val request =
+            FindAutocompletePredictionsRequest.builder()
+                // Call either setLocationBias() OR setLocationRestriction().
+                //.setLocationBias(bounds)
+                //.setLocationRestriction(bounds)
+                .setOrigin(currentLocation)
+                .setCountries("PE")
+                //.setTypesFilter(listOf(TypeFilter.ADDRESS.toString()))
+                .setSessionToken(token)
+                .setQuery(query)
+                .build()
+        placesClient.findAutocompletePredictions(request)
+            .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
+                adapter.submitList(
+                    response.autocompletePredictions.sortedBy { it.distanceMeters ?: 1000000 }
+                )
+            }.addOnFailureListener { exception: Exception? ->
+                if (exception is ApiException) {
+                    Log.e(TAG, "Place not found: " + exception.message)
+                }
+            }
+    }
+
+    private fun showMap() {
+        if (!binding.lyMap.isVisible) {
+            binding.lyMap.visibility = View.VISIBLE
+        }
+        if (binding.rvPlacesList.isVisible) {
+            binding.rvPlacesList.visibility = View.GONE
+        }
+        //ocultar teclado
+        val imm: InputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    private fun showPlaceList() {
+        if (binding.lyMap.isVisible) {
+            binding.lyMap.visibility = View.GONE
+        }
+        if (!binding.rvPlacesList.isVisible) {
+            binding.rvPlacesList.visibility = View.VISIBLE
+        }
+    }
+
+    private fun goPlace(placeId: String) {
+        // Specify the fields to return.
+        val placeFields = listOf(Place.Field.ID, Place.Field.LAT_LNG)
+
+        // Construct a request object, passing the place ID and fields array.
+        val request = FetchPlaceRequest.newInstance(placeId, placeFields)
+
+        placesClient.fetchPlace(request)
+            .addOnSuccessListener { response: FetchPlaceResponse ->
+                val place = response.place
+                showMap()
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 16F))
+            }.addOnFailureListener { exception: Exception ->
+                if (exception is ApiException) {
+                    Log.e(TAG, "Place not found: ${exception.message}")
+                }
+            }
+    }
+
+    private fun saveLocation(){
+        val selectedLocation = mMap.cameraPosition.target
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
