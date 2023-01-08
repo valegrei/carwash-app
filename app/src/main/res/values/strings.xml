@@ -115,6 +115,10 @@
     <string name="place_title_edit">Editar Local</string>
     <string name="place_title_view">Ver Local</string>
     <string name="place_select_map">Click para seleccionar en el mapa</string>
+    <string name="place_delete">Eliminar Local</string>
+    <string name="place_delete_msg">Eliminar el local también anulará sus horarios correspondientes y afectará a futuras reservas.\n¿Desea eliminar el local?</string>
+    <string name="place_save">Guardar</string>
+    <string name="place_save_msg">Se guardará la información del local</string>
     <!--    Schedule-->
     <string name="schedules_label_local">Local</string>
     <string name="schedules_label_freq">Frecuencia</string>
@@ -141,6 +145,10 @@
     <string name="schedules_title_new">Nuevo Horario</string>
     <string name="schedules_title_edit">Editar Horario</string>
     <string name="schedules_title_view">Ver Horario</string>
+    <string name="schedules_delete">Eliminar Horario</string>
+    <string name="schedules_delete_msg">Eliminar horarios afectará a futuras reservas.\n¿Desea eliminar horario?</string>
+    <string name="schedules_save">Guardar</string>
+    <string name="schedules_save_msg">Se guardará la información de horario</string>
     
     <string name="loading">Cargando</string>
     <string name="title_activity_splash">SplashActivity</string>
@@ -188,9 +196,15 @@
     <string name="announc_img_descr">Anuncio</string>
     <string name="announc_descr">Descripción</string>
     <string name="announc_url">URL</string>
+    <string name="announc_show">Mostrar anuncio</string>
     <string name="announc_title_new">Nuevo anuncio</string>
     <string name="announc_title_edit">Editar anuncio</string>
     <string name="announc_title_view">Ver anuncio</string>
+    <string name="announc_delete">Eliminar</string>
+    <string name="announc_delete_msg">Se eliminará el presente anuncio.</string>
+    <string name="announc_save">Guardar</string>
+    <string name="announc_save_msg">Se guardará la información del anuncio.</string>
+
     <!-- Settings -->
     <string name="settings_title_smtp">SMTP</string>
     <string name="settings_title_email">Correo</string>

@@ -42,6 +42,7 @@ class AnnouncementViewModel(
     var idAnuncio = MutableLiveData<Int>()
     var descripcion = MutableLiveData<String>()
     var url = MutableLiveData<String>()
+    var mostrar = MutableLiveData<Boolean>()
 
     private var _imagen = MutableLiveData<TuplaImageEdit>()
     val imagen: LiveData<TuplaImageEdit> = _imagen
@@ -54,6 +55,7 @@ class AnnouncementViewModel(
         _errMsg.value = ""
         descripcion.value = ""
         url.value = ""
+        mostrar.value = false
         _imagen.value = TuplaImageEdit(null, uriFile, pathFile)
         _editStatus.value = EditStatus.NEW
         _mostrarEditar.value = true
@@ -62,6 +64,7 @@ class AnnouncementViewModel(
     fun verAnuncio(anuncio: Anuncio) {
         _errMsg.value = ""
         _selectedAnuncio.value = anuncio
+        mostrar.value = anuncio.mostrar
         idAnuncio.value = selectedAnuncio.value?.id!!
         _imagen.value = TuplaImageEdit(selectedAnuncio.value?.getUrlArchivo(), null, null)
         _editStatus.value = EditStatus.VIEW
@@ -72,6 +75,7 @@ class AnnouncementViewModel(
         _errMsg.value = ""
         idAnuncio.value = selectedAnuncio.value?.id!!
         descripcion.value = selectedAnuncio.value?.descripcion!!
+        mostrar.value = selectedAnuncio.value?.mostrar!!
         url.value = selectedAnuncio.value?.url!!
         _imagen.value = TuplaImageEdit(selectedAnuncio.value?.getUrlArchivo(), null, null)
         _editStatus.value = EditStatus.EDIT
@@ -135,17 +139,17 @@ class AnnouncementViewModel(
         val idAnuncio = this.idAnuncio.value ?: 0
         val descr = (descripcion.value ?: "").trim()
         val url = (this.url.value ?: "").trim()
+        val mostrar = this.mostrar.value ?: false
         if (validar(url)) {
-            actualizarAnuncio(idAnuncio, descr, url)
+            actualizarAnuncio(idAnuncio, descr, url, mostrar)
         }
     }
 
-    private fun actualizarAnuncio(idAnuncio: Int, descr: String, url: String) {
+    private fun actualizarAnuncio(idAnuncio: Int, descr: String, url: String, mostrar: Boolean) {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroAnuncios()
-            val mostrar = true  //TODO completar logica
 
             Api.retrofitService.actualizarAnuncio(
                 idAnuncio,
@@ -164,12 +168,13 @@ class AnnouncementViewModel(
     private fun crearAnuncio() {
         val descr = (descripcion.value ?: "").trim()
         val url = (this.url.value ?: "").trim()
+        val mostrar = this.mostrar.value ?: false
         if (validar(url)) {
-            crearAnuncio(descr, url)
+            crearAnuncio(descr, url, mostrar)
         }
     }
 
-    private fun crearAnuncio(descr: String, url: String) {
+    private fun crearAnuncio(descr: String, url: String, mostrar: Boolean) {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
@@ -177,6 +182,7 @@ class AnnouncementViewModel(
 
             val rbDescr = RequestBody.create(MediaType.parse("text/plain"), descr)
             val rbUrl = RequestBody.create(MediaType.parse("text/plain"), url)
+            val rbMostrar = RequestBody.create(MediaType.parse("text/plain"), mostrar.toString())
 
             var rbImagen: MultipartBody.Part? = null
             if (imagen.value?.pathFile != null) {
@@ -190,7 +196,13 @@ class AnnouncementViewModel(
                     )
             }
 
-            Api.retrofitService.crearAnuncio(rbDescr, rbUrl, rbImagen, sesion?.getTokenBearer()!!)
+            Api.retrofitService.crearAnuncio(
+                rbDescr,
+                rbUrl,
+                rbMostrar,
+                rbImagen,
+                sesion?.getTokenBearer()!!
+            )
 
             //procede a descargar
             descargarAnuncios(sesion, lastSincro)

@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.ui.my_places
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -198,7 +199,7 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_delete -> {
-                viewModel.eliminarDireccion()
+                showEliminar()
                 true
             }
             R.id.action_edit -> {
@@ -206,10 +207,35 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
                 true
             }
             R.id.action_save -> {
-                viewModel.guardarDireccion()
+                showGuardar()
                 true
             }
             else -> false
         }
+    }
+
+
+    private fun showEliminar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.place_delete)
+            .setMessage(R.string.place_delete_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.eliminarDireccion()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun showGuardar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.place_save)
+            .setMessage(R.string.place_save_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.guardarDireccion()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }

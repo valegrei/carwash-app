@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="anuncio"
             type="pe.com.valegrei.carwashapp.database.anuncio.Anuncio" />
@@ -10,26 +14,45 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_anuncio"
-        app:cardCornerRadius="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkable="true"
         android:clickable="true"
         android:focusable="true"
-        android:checkable="true"
         app:cardBackgroundColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:cardCornerRadius="0dp">
 
         <pe.com.valegrei.carwashapp.ui.SquareFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                imageUrl="@{anuncio.getUrlArchivo()}"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/announc_img_descr"
-                android:scaleType="centerInside"
-                tools:srcCompat="@drawable/car" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/min_margin"
+                    android:visibility="@{anuncio.mostrar ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_check_circle_green_24" />
+
+                <ImageView
+                    imageUrl="@{anuncio.getUrlArchivo()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/announc_img_descr"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/car" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </pe.com.valegrei.carwashapp.ui.SquareFrameLayout>
 

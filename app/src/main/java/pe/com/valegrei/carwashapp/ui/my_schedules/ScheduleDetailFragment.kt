@@ -201,7 +201,7 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_delete -> {
-                viewModel.eliminarHorarioConfig()
+                showEliminar()
                 true
             }
             R.id.action_edit -> {
@@ -209,10 +209,34 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
                 true
             }
             R.id.action_save -> {
-                viewModel.guardarHorarioConfig()
+                showGuardar()
                 true
             }
             else -> false
         }
+    }
+
+    private fun showEliminar() {
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.schedules_delete)
+            .setMessage(R.string.schedules_delete_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.eliminarHorarioConfig()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun showGuardar() {
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle(R.string.schedules_save)
+            .setMessage(R.string.schedules_save_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.guardarHorarioConfig()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }

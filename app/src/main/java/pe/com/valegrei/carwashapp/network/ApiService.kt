@@ -122,6 +122,7 @@ interface ApiService {
     suspend fun crearAnuncio(
         @Part("descripcion") descripcion: RequestBody?,
         @Part("url") url: RequestBody?,
+        @Part("mostrar") mostrar: RequestBody?,
         @Part imagen: MultipartBody.Part?,
         @Header("Authorization") authToken: String
     ): Response

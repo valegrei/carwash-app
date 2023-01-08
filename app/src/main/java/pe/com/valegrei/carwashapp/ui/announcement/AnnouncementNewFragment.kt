@@ -1,5 +1,6 @@
 package pe.com.valegrei.carwashapp.ui.announcement
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -59,9 +60,12 @@ class AnnouncementNewFragment : Fragment(), MenuProvider {
 
     fun mostrarTitulo(status: EditStatus) {
         when (status) {
-            EditStatus.VIEW -> (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.announc_title_view)
-            EditStatus.EDIT -> (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.announc_title_edit)
-            EditStatus.NEW -> (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.announc_title_new)
+            EditStatus.VIEW -> (activity as AppCompatActivity).supportActionBar?.title =
+                getString(R.string.announc_title_view)
+            EditStatus.EDIT -> (activity as AppCompatActivity).supportActionBar?.title =
+                getString(R.string.announc_title_edit)
+            EditStatus.NEW -> (activity as AppCompatActivity).supportActionBar?.title =
+                getString(R.string.announc_title_new)
             else -> {}
         }
     }
@@ -102,7 +106,7 @@ class AnnouncementNewFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_delete -> {
-                viewModel.eliminarAnuncio()
+                showEliminar()
                 true
             }
             R.id.action_edit -> {
@@ -110,14 +114,39 @@ class AnnouncementNewFragment : Fragment(), MenuProvider {
                 true
             }
             R.id.action_save -> {
-                viewModel.guardarAnuncio()
+                showGuardar()
                 true
             }
             else -> false
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showEliminar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.announc_delete)
+            .setMessage(R.string.announc_delete_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.eliminarAnuncio()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun showGuardar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.announc_save)
+            .setMessage(R.string.announc_save_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.guardarAnuncio()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }
