@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="error">#FFBF00</color>
+    <color name="error">#A30000</color>
+    <color name="error2">#FFBF00</color>
     <color name="grey">#E6E6E6</color>
     <!--    State Colors-->
     <color name="service_state_attended">#008A00</color>

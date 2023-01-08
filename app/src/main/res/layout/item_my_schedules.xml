@@ -7,7 +7,7 @@
 
         <variable
             name="horarioConfig"
-            type="pe.com.valegrei.carwashapp.database.horario.HorarioConfig" />
+            type="pe.com.valegrei.carwashapp.database.horario.HorarioConfigLocal" />
     </data>
 
 
@@ -37,7 +37,7 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
                 app:drawableStartCompat="@drawable/ic_baseline_schedule_24"
                 app:drawableTint="?attr/colorPrimary"
-                tools:text="Lun Mie Vie\n8:00 AM - 12:00PM\nIntervalo: 30 min" />
+                tools:text="Av. 8 de Enero, 206\nLun Mie Vie\n8:00 AM - 12:00PM\nIntervalo: 30 min" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

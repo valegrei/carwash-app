@@ -59,6 +59,7 @@ abstract class AppDataBase : RoomDatabase() {
                     AppDataBase::class.java,
                     "carwash_db"
                 )//.fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .createFromAsset("database/ubigeos.db")
                     .build()
                 INSTANCE = instance

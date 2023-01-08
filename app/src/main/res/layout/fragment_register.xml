@@ -69,24 +69,25 @@
                     android:labelFor="@id/edt_username"
                     android:text="@{viewModel.errCorreo}"
                     android:textAlignment="textEnd"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                     tools:text="Error" />
             </LinearLayout>
 
-
-            <EditText
-                android:id="@+id/edt_username"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Style.CarwashApp.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/min_margin"
-                android:autofillHints="emailAddress"
-                android:background="@drawable/rounded_edittext_states"
-                android:ems="10"
-                android:fontFamily="@font/opensans_regular"
-                android:inputType="textEmailAddress"
-                android:text="@={viewModel.correo}"
-                tools:ignore="TextContrastCheck"
-                tools:text="example@gmail.com" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_username"
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:text="@={viewModel.correo}"
+                    tools:text="example@gmail.com" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
@@ -109,24 +110,25 @@
                     android:labelFor="@id/edt_username"
                     android:text="@{viewModel.errClave}"
                     android:textAlignment="textEnd"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                     tools:text="Error" />
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/edt_password"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Style.CarwashApp.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/min_margin"
-                android:autofillHints=""
-                android:background="@drawable/rounded_edittext_states"
-                android:ems="10"
-                android:fontFamily="@font/opensans_regular"
-                android:inputType="textPassword"
-                android:text="@={viewModel.clave}"
-                tools:ignore="TextContrastCheck"
-                tools:text="123456789" />
+                android:layout_height="wrap_content">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_password"
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.clave}"
+                    tools:text="123456789" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,23 +150,26 @@
                     android:labelFor="@id/edt_username"
                     android:text="@{viewModel.errRepClave}"
                     android:textAlignment="textEnd"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                     tools:text="Error" />
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/edt_repeat_password"
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Style.CarwashApp.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/min_margin"
-                android:autofillHints=""
-                android:background="@drawable/rounded_edittext_states"
-                android:ems="10"
-                android:fontFamily="@font/opensans_regular"
-                android:inputType="textPassword"
-                android:text="@={viewModel.repClave}"
-                tools:ignore="TextContrastCheck"
-                tools:text="123456789" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_repeat_password"
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.repClave}"
+                    tools:text="123456789" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -202,23 +207,25 @@
                         android:labelFor="@id/edt_username"
                         android:text="@{viewModel.errRazSoc}"
                         android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                         tools:text="Error" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_razon_social"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/min_margin"
-                    android:autofillHints="name"
-                    android:background="@drawable/rounded_edittext_states"
-                    android:ems="10"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="text"
-                    android:text="@={viewModel.razSoc}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="Lavados de Carros Santa Rosa" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_razon_social"
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:text="@={viewModel.razSoc}"
+                        tools:text="Lavados de Carros Santa Rosa" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -240,23 +247,25 @@
                         android:labelFor="@id/edt_username"
                         android:text="@{viewModel.errNroDoc}"
                         android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                         tools:text="Error" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_ruc"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/min_margin"
-                    android:autofillHints="name"
-                    android:background="@drawable/rounded_edittext_states"
-                    android:ems="10"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="number"
-                    android:text="@={viewModel.nroDoc}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="10709582864" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_ruc"
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:text="@={viewModel.nroDoc}"
+                        tools:text="10709582864" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
                 <LinearLayout
@@ -279,23 +288,25 @@
                         android:labelFor="@id/edt_username"
                         android:text="@{viewModel.errNroCel1}"
                         android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                         tools:text="Error" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_cellphone"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/min_margin"
-                    android:autofillHints="name"
-                    android:background="@drawable/rounded_edittext_states"
-                    android:ems="10"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="phone"
-                    android:text="@={viewModel.nroCel1}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="925416855" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_cellphone"
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="phone"
+                        android:text="@={viewModel.nroCel1}"
+                        tools:text="925416855" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -317,24 +328,25 @@
                         android:labelFor="@id/edt_username"
                         android:text="@{viewModel.errNroCel2}"
                         android:textAlignment="textEnd"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                         tools:text="Error" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/edt_whatsapp"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/min_margin"
-                    android:autofillHints="name"
-                    android:background="@drawable/rounded_edittext_states"
-                    android:ems="10"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="phone"
-                    android:text="@={viewModel.nroCel2}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="958412963" />
+                    android:layout_height="wrap_content">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_whatsapp"
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="phone"
+                        android:text="@={viewModel.nroCel2}"
+                        tools:text="958412963" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <TextView
@@ -342,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/min_margin"
                 android:text="@{viewModel.errMsg}"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                 tools:text="Contraseña Inválida" />
 
             <Button

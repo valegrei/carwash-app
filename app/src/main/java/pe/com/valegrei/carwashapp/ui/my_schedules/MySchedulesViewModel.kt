@@ -2,6 +2,7 @@ package pe.com.valegrei.carwashapp.ui.my_schedules
 
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -9,9 +10,9 @@ import pe.com.valegrei.carwashapp.database.SesionData
 import pe.com.valegrei.carwashapp.database.direccion.Direccion
 import pe.com.valegrei.carwashapp.database.direccion.DireccionDao
 import pe.com.valegrei.carwashapp.database.horario.HorarioConfig
+import pe.com.valegrei.carwashapp.database.horario.HorarioConfigLocal
 import pe.com.valegrei.carwashapp.database.horario.HorarioDao
 import pe.com.valegrei.carwashapp.database.sesion.Sesion
-import pe.com.valegrei.carwashapp.database.ubigeo.Distrito
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
 import pe.com.valegrei.carwashapp.network.request.ReqHorarioConfig
@@ -232,9 +233,9 @@ class MySchedulesViewModel(
         _horarioFin.value = formatHora(hora, min)
     }
 
-    fun cargarHorarioConfigs(): Flow<List<HorarioConfig>> {
+    fun cargarHorarioConfigs(): Flow<List<HorarioConfigLocal>> {
         val sesion = sesionData.getCurrentSesion()
-        return horarioDao.obtenerHorarioConfigs(sesion?.usuario?.id!!)
+        return horarioDao.obtenerHorarioConfigLocales(sesion?.usuario?.id!!)
     }
 
     fun descargarHorarioConfigs() {
@@ -289,7 +290,7 @@ class MySchedulesViewModel(
                 horaFin = horaFin.value!!,
                 minFin = minFin.value!!,
                 intervalo = (intervalo.value ?: "0").toInt(),
-                idLocal = local.value?.id?:0,
+                idLocal = local.value?.id ?: 0,
             )
 
             Api.retrofitService.agregarHorarioConfig(
@@ -307,7 +308,7 @@ class MySchedulesViewModel(
 
     private fun validar(): Boolean {
         _errMsg.value = null
-        if((local.value?.id ?: 0) == 0){
+        if ((local.value?.id ?: 0) == 0) {
             _errMsg.value = "Debe seleccionar un local"
             return false
         }
@@ -321,9 +322,25 @@ class MySchedulesViewModel(
             _errMsg.value = "Seleccione horas de inicio y fin correctos"
             return false
         }
-        //TODO query para buscar coliciones con otros horarios del mismo local
         if ((intervalo.value ?: "0").toInt() <= 15) {
             _errMsg.value = "Ingrese una cantidad correcta"
+            return false
+        }
+        val query = buildQuery(
+            lunes = lunes.value!!,
+            martes = martes.value!!,
+            miercoles = miercoles.value!!,
+            jueves = jueves.value!!,
+            viernes = viernes.value!!,
+            sabado = sabado.value!!,
+            domingo = domingo.value!!,
+            horaIni = horaIni.value ?: 0,
+            horaFin = horaFin.value ?: 0,
+            idLocal = local.value?.id ?: 0
+        )
+        val cant = horarioDao.verificarInterseciones(query)
+        if (cant > 0) {
+            _errMsg.value = "$cant conflictos con otros horarios"
             return false
         }
         return true
@@ -379,7 +396,7 @@ class MySchedulesViewModel(
                 horaFin = horaFin.value!!,
                 minFin = minFin.value!!,
                 intervalo = (intervalo.value ?: "0").toInt(),
-                idLocal = local.value?.id?:0,
+                idLocal = local.value?.id ?: 0,
             )
 
             Api.retrofitService.modificarHorarioConfig(
@@ -443,6 +460,25 @@ class MySchedulesViewModel(
             direccionDao.guardarDirecciones(direcciones)
         }
         sesionData.saveLastSincroDirecciones(res.timeStamp)
+    }
+
+    private fun buildQuery(
+        lunes: Boolean, martes: Boolean, miercoles: Boolean,
+        jueves: Boolean, viernes: Boolean, sabado: Boolean, domingo: Boolean,
+        horaIni: Int, horaFin: Int, idLocal: Int
+    ): SimpleSQLiteQuery {
+        var query = "SELECT COUNT(*) FROM horario_config WHERE "
+        query += "idLocal = $idLocal AND estado = 1 AND ("
+        if (lunes) query += "(lunes = 1) OR "
+        if (martes) query += "(martes = 1) OR "
+        if (miercoles) query += "(miercoles = 1) OR "
+        if (jueves) query += "(jueves = 1) OR "
+        if (viernes) query += "(viernes = 1) OR "
+        if (sabado) query += "(sabado = 1) OR "
+        if (domingo) query += "(domingo = 1) OR "
+        query += "1=0) AND "
+        query += "( MAX(horaIni, $horaIni) - MIN(horaFin, $horaFin) ) <= 0 "
+        return SimpleSQLiteQuery(query)
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->

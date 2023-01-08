@@ -78,7 +78,7 @@ class SettingsViewModel(
             val secure = parametros.value?.get(EMAIL_SSL_TLS) ?: ""
 
             //guardando en server
-            val res = Api.retrofitService.guardarVerificarSMTP(
+            Api.retrofitService.guardarVerificarSMTP(
                 ReqParamsSMTP(host, port, secure),
                 sesion?.getTokenBearer()!!
             )
@@ -115,7 +115,7 @@ class SettingsViewModel(
             val pass = parametros.value?.get(EMAIL_PASS) ?: ""
 
             //guardando en server
-            val res = Api.retrofitService.guardarCorreo(
+            Api.retrofitService.guardarCorreo(
                 ReqParamsCorreo(correo, pass),
                 sesion?.getTokenBearer()!!
             )
@@ -130,7 +130,7 @@ class SettingsViewModel(
             val sesion = sesionData.getCurrentSesion()
 
             //guardando en server
-            val res = Api.retrofitService.probarCorreo(
+            Api.retrofitService.probarCorreo(
                 sesion?.getTokenBearer()!!
             )
             _status.value = Status.SUCCESS

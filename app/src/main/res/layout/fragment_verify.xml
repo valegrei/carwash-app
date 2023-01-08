@@ -64,25 +64,28 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite"
                 tools:ignore="TextContrastCheck" />
 
-            <EditText
-                android:id="@+id/edt_code"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Style.CarwashApp.TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/min_margin"
-                android:autofillHints=""
-                android:background="@drawable/rounded_edittext_states"
-                android:ems="10"
-                android:fontFamily="@font/opensans_regular"
-                android:inputType="number"
-                android:text="@={viewModel.codigo}"
-                tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_code"
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:text="@={viewModel.codigo}"
+                    android:inputType="number"
+                    tools:text="856957" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/min_margin"
                 android:text="@{viewModel.errMsg}"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelError2"
                 tools:text="Código inválido" />
 
             <Button

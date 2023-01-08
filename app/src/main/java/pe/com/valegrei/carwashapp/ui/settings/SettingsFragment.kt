@@ -94,7 +94,7 @@ class SettingsFragment : Fragment() {
         val bindEdt = AlertEdittextBinding.inflate(layoutInflater)
         val text = viewModel.parametros.value?.get(EMAIL_HOST)
         bindEdt.edittext.append(text ?: "")
-        val builder = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_lbl_smtp_host)
             .setView(bindEdt.root)
             .setCancelable(true)
@@ -110,7 +110,7 @@ class SettingsFragment : Fragment() {
         val text = viewModel.parametros.value?.get(EMAIL_PORT)
         bindEdt.edittext.inputType = InputType.TYPE_CLASS_NUMBER
         bindEdt.edittext.append(text ?: "")
-        val builder = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_lbl_smtp_port)
             .setView(bindEdt.root)
             .setCancelable(true)
@@ -125,7 +125,7 @@ class SettingsFragment : Fragment() {
     fun editarSecure() {
         val secure = viewModel.parametros.value?.get(EMAIL_SSL_TLS) ?: "0"
         var selected = secure.toInt()
-        val builder = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_lbl_smtp_secure)
             .setSingleChoiceItems(arrayOf("TLS", "SSL"), selected) { _, which ->
                 selected = which
@@ -144,7 +144,7 @@ class SettingsFragment : Fragment() {
         val text = viewModel.parametros.value?.get(EMAIL_ADDR)
         bindEdt.edittext.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         bindEdt.edittext.append(text ?: "")
-        val builder = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_lbl_email_address)
             .setView(bindEdt.root)
             .setCancelable(true)
@@ -159,7 +159,7 @@ class SettingsFragment : Fragment() {
         val bindEdt = AlertEdittextBinding.inflate(layoutInflater)
         val text = viewModel.parametros.value?.get(EMAIL_PASS)
         bindEdt.edittext.append(text ?: "")
-        val builder = AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_lbl_email_pass)
             .setView(bindEdt.root)
             .setCancelable(true)

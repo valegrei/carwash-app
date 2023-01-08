@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.com.valegrei.carwashapp.database.horario.HorarioConfig
+import pe.com.valegrei.carwashapp.database.horario.HorarioConfigLocal
 import pe.com.valegrei.carwashapp.databinding.ItemMySchedulesBinding
 
-class MySchedulesListAdapter(private val onItemClicked: (HorarioConfig) -> Unit) :
-    ListAdapter<HorarioConfig, MySchedulesListAdapter.ViewHolder>(DiffCallback) {
+class MySchedulesListAdapter(private val onItemClicked: (HorarioConfigLocal) -> Unit) :
+    ListAdapter<HorarioConfigLocal, MySchedulesListAdapter.ViewHolder>(DiffCallback) {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -17,7 +17,7 @@ class MySchedulesListAdapter(private val onItemClicked: (HorarioConfig) -> Unit)
      */
     class ViewHolder(private val binding: ItemMySchedulesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(horarioConfig: HorarioConfig) {
+        fun bind(horarioConfig: HorarioConfigLocal) {
             binding.apply {
                 binding.horarioConfig = horarioConfig
                 binding.executePendingBindings()
@@ -40,23 +40,29 @@ class MySchedulesListAdapter(private val onItemClicked: (HorarioConfig) -> Unit)
         holder.itemView.setOnClickListener { onItemClicked(getItem(position)) }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<HorarioConfig>() {
-        override fun areItemsTheSame(oldItem: HorarioConfig, newItem: HorarioConfig): Boolean {
-            return oldItem.id == newItem.id
+    companion object DiffCallback : DiffUtil.ItemCallback<HorarioConfigLocal>() {
+        override fun areItemsTheSame(
+            oldItem: HorarioConfigLocal,
+            newItem: HorarioConfigLocal
+        ): Boolean {
+            return oldItem.horarioConfig.id == newItem.horarioConfig.id
         }
 
-        override fun areContentsTheSame(oldItem: HorarioConfig, newItem: HorarioConfig): Boolean {
-            return oldItem.lunes == newItem.lunes
-                    && oldItem.martes == newItem.martes
-                    && oldItem.miercoles == newItem.miercoles
-                    && oldItem.jueves == newItem.jueves
-                    && oldItem.viernes == newItem.viernes
-                    && oldItem.sabado == newItem.sabado
-                    && oldItem.domingo == newItem.domingo
-                    && oldItem.horaIni == newItem.horaIni
-                    && oldItem.horaFin == newItem.horaFin
-                    && oldItem.intervalo == newItem.intervalo
-                    && oldItem.estado == newItem.estado
+        override fun areContentsTheSame(
+            oldItem: HorarioConfigLocal,
+            newItem: HorarioConfigLocal
+        ): Boolean {
+            return oldItem.horarioConfig.lunes == newItem.horarioConfig.lunes
+                    && oldItem.horarioConfig.martes == newItem.horarioConfig.martes
+                    && oldItem.horarioConfig.miercoles == newItem.horarioConfig.miercoles
+                    && oldItem.horarioConfig.jueves == newItem.horarioConfig.jueves
+                    && oldItem.horarioConfig.viernes == newItem.horarioConfig.viernes
+                    && oldItem.horarioConfig.sabado == newItem.horarioConfig.sabado
+                    && oldItem.horarioConfig.domingo == newItem.horarioConfig.domingo
+                    && oldItem.horarioConfig.horaIni == newItem.horarioConfig.horaIni
+                    && oldItem.horarioConfig.horaFin == newItem.horarioConfig.horaFin
+                    && oldItem.horarioConfig.intervalo == newItem.horarioConfig.intervalo
+                    && oldItem.horarioConfig.estado == newItem.horarioConfig.estado
         }
 
     }

@@ -44,7 +44,7 @@ class MySchedulesFragment : Fragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MySchedulesListAdapter { goView(it) }
+        adapter = MySchedulesListAdapter { goView(it.horarioConfig) }
         binding.rvSchedulesList.adapter = adapter
         //Actualiza la vista en tiempo real
         lifecycle.coroutineScope.launch {

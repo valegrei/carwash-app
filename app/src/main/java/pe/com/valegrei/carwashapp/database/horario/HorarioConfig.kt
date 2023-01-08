@@ -1,9 +1,8 @@
 package pe.com.valegrei.carwashapp.database.horario
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.squareup.moshi.Json
+import pe.com.valegrei.carwashapp.database.direccion.Direccion
 import pe.com.valegrei.carwashapp.ui.util.formatHora
 
 @Entity(tableName = "horario_config")
@@ -48,4 +47,15 @@ data class HorarioConfig(
     fun horario(): String = "${horarioIni()} - ${horarioFin()}"
     fun intervaloMin(): String = "$intervalo min"
     fun resumen(): String = "${dias()}\nInicio - Fin: ${horario()}\nIntervalo: ${intervaloMin()}"
+}
+
+data class HorarioConfigLocal(
+    @Embedded val horarioConfig: HorarioConfig,
+    @Relation(
+        parentColumn = "idLocal",
+        entityColumn = "id"
+    )
+    val local: Direccion
+){
+    fun resumen(): String = "${local.direccion}\n${horarioConfig.resumen()}"
 }

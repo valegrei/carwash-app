@@ -288,7 +288,7 @@ class MyPlacesViewModel(
             Api.retrofitService.eliminarDireccion(
                 sesion?.usuario?.id!!,
                 idDireccion,
-                sesion.getTokenBearer()!!
+                sesion.getTokenBearer()
             )
 
             //procede a descargar

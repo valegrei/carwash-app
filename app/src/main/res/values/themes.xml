@@ -69,6 +69,9 @@
     <style name="TextAppearance.CarwashApp.LabelError" parent="TextAppearance.CarwashApp.LabelWhite">
         <item name="android:textColor">@color/error</item>
     </style>
+    <style name="TextAppearance.CarwashApp.LabelError2" parent="TextAppearance.CarwashApp.LabelWhite">
+        <item name="android:textColor">@color/error2</item>
+    </style>
 
     <style name="TextAppearance.CarwashApp.LabelPrimary" parent="TextAppearance.CarwashApp.LabelWhite">
         <item name="android:textColor">?attr/colorPrimary</item>
