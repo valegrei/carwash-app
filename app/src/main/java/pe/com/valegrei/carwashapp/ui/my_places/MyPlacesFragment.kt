@@ -82,11 +82,11 @@ class MyPlacesFragment : Fragment(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.add_place, menu)
+        menuInflater.inflate(R.menu.add_menu, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.action_add_place) {
+        if (menuItem.itemId == R.id.action_add) {
             viewModel.nuevoDireccion()
             findNavController().navigate(R.id.action_nav_my_places_to_nav_place_detail)
             return true

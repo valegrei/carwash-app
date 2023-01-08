@@ -115,7 +115,33 @@
     <string name="place_title_edit">Editar Local</string>
     <string name="place_title_view">Ver Local</string>
     <string name="place_select_map">Click para seleccionar en el mapa</string>
-
+    <!--    Schedule-->
+    <string name="schedules_label_local">Local</string>
+    <string name="schedules_label_freq">Frecuencia</string>
+    <string name="schedules_label_start_end">Inicio - Fin</string>
+    <string name="schedules_label_start">Inicio</string>
+    <string name="schedules_label_end">Fin</string>
+    <string name="schedules_label_start_sel">Seleccione Inicio</string>
+    <string name="schedules_label_end_sel">Seleccione Fin</string>
+    <string name="schedules_label_turno">Turno</string>
+    <string name="schedules_label_intervalo">Intervalo</string>
+    <string name="schedules_label_intervalo_min">Intervalo (minutos)</string>
+    <string name="schedules_freq_all">Todos los días</string>
+    <string name="schedules_freq_lun_vie">Lun - Vie</string>
+    <string name="schedules_freq_custom">Personalizado</string>
+    <string name="schedules_freq_lunes">Lunes</string>
+    <string name="schedules_freq_martes">Martes</string>
+    <string name="schedules_freq_miercoles">Miércoles</string>
+    <string name="schedules_freq_jueves">Jueves</string>
+    <string name="schedules_freq_viernes">Viernes</string>
+    <string name="schedules_freq_sabado">Sábado</string>
+    <string name="schedules_freq_domingo">Domingo</string>
+    <string name="schedules_turno_manana">Mañana</string>
+    <string name="schedules_turno_tarde">Tarde</string>
+    <string name="schedules_title_new">Nuevo Horario</string>
+    <string name="schedules_title_edit">Editar Horario</string>
+    <string name="schedules_title_view">Ver Horario</string>
+    
     <string name="loading">Cargando</string>
     <string name="title_activity_splash">SplashActivity</string>
 

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.my_schedules.ScheduleDetailFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.valegrei.carwashapp.ui.my_schedules.MySchedulesViewModel" />
+
+        <variable
+            name="fragment"
+            type="pe.com.valegrei.carwashapp.ui.my_schedules.ScheduleDetailFragment" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/small_margin"
+                    android:visibility="@{viewModel.mostrarEditar ? View.GONE:  View.VISIBLE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_local"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="@{viewModel.local.ubigeoDireccion}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                        tools:text="LIMA - LIMA - SAN JUAN DE LURIGANCHO\nAv. Las Flores 206" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_freq"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="@{viewModel.selectedHorarioConfig.dias()}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                        tools:text="Todos los días" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_start_end"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="@{viewModel.selectedHorarioConfig.horario()}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                        tools:text="8:00 AM - 12:00 PM" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_intervalo"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.selectedHorarioConfig.intervaloMin()}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                        tools:text="30 min" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/small_margin"
+                    android:paddingTop="@dimen/small_margin"
+                    android:visibility="@{viewModel.mostrarEditar ? View.VISIBLE:  View.GONE}">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_local"
+                        android:labelFor="@id/ac_local"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundColor="@color/white"
+                        app:errorEnabled="true">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/ac_local"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:inputType="none"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="Av. Las Flores 206" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_freq"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.freqTodosLosDias}"
+                            android:onClick="@{()->viewModel.setTodosLosDias()}"
+                            android:text="@string/schedules_freq_all" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.freqLunVie}"
+                            android:onClick="@{()->viewModel.setLunVie()}"
+                            android:text="@string/schedules_freq_lun_vie" />
+
+                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.freqPersonalizado}"
+                            android:onClick="@{()->fragment.mostrarDialogoDias()}"
+                            android:text="@{viewModel.freqPersonalizadoText}"
+                            tools:checked="true"
+                            tools:text="Personalizado ( Lun Mie Vie )" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/min_margin"
+                            android:layout_weight="1"
+                            android:text="@string/schedules_label_start"
+                            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/min_margin"
+                            android:layout_weight="1"
+                            android:text="@string/schedules_label_end"
+                            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_start"
+                            style="@style/Style.CarwashApp.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/min_margin"
+                            android:layout_weight="1"
+                            app:boxBackgroundColor="@color/white"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Style.CarwashApp.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true"
+                                android:ems="10"
+                                android:focusable="false"
+                                android:inputType="none"
+                                android:onClick="@{()->fragment.mostrarRelojIni()}"
+                                android:text="@{viewModel.horarioIni}"
+                                tools:ignore="TextContrastCheck"
+                                tools:text="08:00 AM" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_end"
+                            style="@style/Style.CarwashApp.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/min_margin"
+                            android:layout_weight="1"
+                            app:boxBackgroundColor="@color/white"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Style.CarwashApp.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true"
+                                android:ems="10"
+                                android:focusable="false"
+                                android:inputType="none"
+                                android:onClick="@{()->fragment.mostrarRelojFin()}"
+                                android:text="@{viewModel.horarioFin}"
+                                tools:ignore="TextContrastCheck"
+                                tools:text="08:00 PM" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schedules_label_intervalo_min"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ti_intervalo"
+                            style="@style/Style.CarwashApp.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/small_margin"
+                            android:layout_weight="1"
+                            app:boxBackgroundColor="@color/white"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Style.CarwashApp.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:ems="10"
+                                android:inputType="number"
+                                android:text="@={viewModel.intervalo}"
+                                tools:ignore="TextContrastCheck"
+                                tools:text="30" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.errMsg}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
+</layout>

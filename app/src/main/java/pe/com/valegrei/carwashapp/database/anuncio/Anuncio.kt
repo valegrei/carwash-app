@@ -22,6 +22,9 @@ data class Anuncio(
     @Json(name = "path")
     @ColumnInfo(name = "path")
     var path: String,
+    @Json(name = "mostrar")
+    @ColumnInfo(name = "mostrar")
+    var mostrar: Boolean,
     @Json(name = "estado")
     @ColumnInfo(name = "estado")
     var estado: Boolean,
@@ -29,7 +32,7 @@ data class Anuncio(
     var selected: Boolean?,
 ) {
     constructor() : this(
-        0, null, null, "", false, null,
+        0, null, null, "", false,false, null,
     )
 
     fun getUrlArchivo(): String {

@@ -39,8 +39,6 @@ data class Direccion(
     @Json(name = "idUsuario")
     val idUsuario: Int,
 ){
-
-    fun getUbigeoDireccion(): String{
-        return "$departamento - $provincia - $distrito\n$direccion"
-    }
+    fun getUbigeoDireccion(): String= "$departamento - $provincia - $distrito\n$direccion"
+    override fun toString(): String = direccion
 }

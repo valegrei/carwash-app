@@ -192,6 +192,57 @@ interface ApiService {
         @Query("lastSincro") lastSincro: Date,
         @Header("Authorization") authToken: String
     ): RespDireccion
+
+    @POST("api/distrib/{id}/direccion")
+    suspend fun agregarDireccion(
+        @Path("id") idUsuario: Int,
+        @Body reqDireccion: ReqDireccion,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @PUT("api/distrib/{id}/direccion/{idDireccion}")
+    suspend fun modificarDireccion(
+        @Path("id") idUsuario: Int,
+        @Path("idDireccion") idDireccion: Int,
+        @Body reqDireccion: ReqDireccion,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @DELETE("api/distrib/{id}/direccion/{idDireccion}")
+    suspend fun eliminarDireccion(
+        @Path("id") idUsuario: Int,
+        @Path("idDireccion") idDireccion: Int,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @GET("api/distrib/{id}/horarioConfig")
+    suspend fun obtenerHorarioConfigs(
+        @Path("id") idDistrib: Int,
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespHorarioConfig
+
+    @POST("api/distrib/{id}/horarioConfig")
+    suspend fun agregarHorarioConfig(
+        @Path("id") idDistrib: Int,
+        @Body reqHorarioConfig: ReqHorarioConfig,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @PUT("api/distrib/{id}/horarioConfig/{idHorarioConfig}")
+    suspend fun modificarHorarioConfig(
+        @Path("id") idDistrib: Int,
+        @Path("idHorarioConfig") idHorarioConfig: Int,
+        @Body reqHorarioConfig: ReqHorarioConfig,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @DELETE("api/distrib/{id}/horarioConfig/{idHorarioConfig}")
+    suspend fun eliminarHorarioConfig(
+        @Path("id") idDistrib: Int,
+        @Path("idHorarioConfig") idHorarioConfig: Int,
+        @Header("Authorization") authToken: String
+    ): Response
 }
 
 /**

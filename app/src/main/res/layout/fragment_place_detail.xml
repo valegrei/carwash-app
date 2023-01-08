@@ -99,15 +99,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/small_margin"
+                    android:paddingHorizontal="@dimen/small_margin"
+                    android:paddingTop="@dimen/small_margin"
                     android:visibility="@{viewModel.mostrarEditar ? View.VISIBLE:  View.GONE}">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_departamento"
                         style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/small_margin"
-                        app:boxBackgroundColor="@color/white">
+                        app:boxBackgroundColor="@color/white"
+                        app:errorEnabled="true">
 
                         <AutoCompleteTextView
                             android:id="@+id/ac_departamentos"
@@ -122,11 +124,12 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_provincia"
                         style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/small_margin"
-                        app:boxBackgroundColor="@color/white">
+                        app:boxBackgroundColor="@color/white"
+                        app:errorEnabled="true">
 
                         <AutoCompleteTextView
                             android:id="@+id/ac_provincias"
@@ -141,11 +144,12 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_distrito"
                         style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/small_margin"
-                        app:boxBackgroundColor="@color/white">
+                        app:boxBackgroundColor="@color/white"
+                        app:errorEnabled="true">
 
                         <AutoCompleteTextView
                             android:id="@+id/ac_distritos"
@@ -161,12 +165,14 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_direccion"
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:boxBackgroundColor="@color/white"
                         app:counterEnabled="true"
-                        app:counterMaxLength="200">
+                        app:counterMaxLength="200"
+                        app:errorEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             style="@style/Style.CarwashApp.TextInputLayout"
@@ -181,6 +187,13 @@
                             tools:ignore="TextContrastCheck"
                             tools:text="Av. Las Flores 400, Urb Mi Casita" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.errMsg}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
+
                 </LinearLayout>
 
                 <View
@@ -205,12 +218,12 @@
                         tools:srcCompat="@drawable/mapa_ejemplo" />
 
                     <TextView
-                        android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/place_select_map"
                         android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
-                        android:visibility="@{viewModel.selectedLatLng == null ? View.VISIBLE : View.GONE}"
-                        android:text="@string/place_select_map" />
+                        android:visibility="@{viewModel.selectedLatLng == null ? View.VISIBLE : View.GONE}" />
                 </RelativeLayout>
 
 

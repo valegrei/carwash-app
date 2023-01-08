@@ -63,17 +63,23 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
             (activity?.application as CarwashApplication).database.ubigeoDao(),
         )
     }
+
     // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
     // and once again when the user makes a selection (for example when calling fetchPlace()).
     private var token: AutocompleteSessionToken? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f))
-        if(viewModel.selectedLatLng.value == null)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
+        if (viewModel.selectedLatLng.value == null)
             getLastLocation()
         else
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(viewModel.selectedLatLng.value!!, 15.0f))
+            mMap.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    viewModel.selectedLatLng.value!!,
+                    15.0f
+                )
+            )
     }
 
     override fun onCreateView(
@@ -107,7 +113,7 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
         binding.btnCenter.setOnClickListener {
             getLastLocation()
         }
-        binding.btnSave.setOnClickListener{
+        binding.btnSave.setOnClickListener {
             saveLocation()
         }
 
@@ -227,12 +233,14 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
         }
     }
 
+    private var searchView : SearchView?=null
+
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.action_search)
-        searchView.setOnQueryTextListener(this)
+        searchView = searchItem.actionView as SearchView
+        searchView?.queryHint = getString(R.string.action_search)
+        searchView?.setOnQueryTextListener(this)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -249,7 +257,7 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
         return true
     }
 
-    private fun buscar(query: String?){
+    private fun buscar(query: String?) {
         if (query?.trim()!!.isNotEmpty()) {
             if (token == null)
                 token = AutocompleteSessionToken.newInstance()
@@ -327,9 +335,10 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
             }
     }
 
-    private fun saveLocation(){
+    private fun saveLocation() {
         val selectedLocation = mMap.cameraPosition.target
         viewModel.setSelectedLatLng(selectedLocation)
+        searchView?.setOnQueryTextListener(null)
         findNavController().popBackStack()
     }
 

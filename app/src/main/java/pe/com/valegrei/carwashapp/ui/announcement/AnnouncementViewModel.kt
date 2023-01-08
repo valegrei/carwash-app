@@ -145,10 +145,11 @@ class AnnouncementViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroAnuncios()
+            val mostrar = true  //TODO completar logica
 
             Api.retrofitService.actualizarAnuncio(
                 idAnuncio,
-                ReqAnuncioActualizar(descr, url),
+                ReqAnuncioActualizar(descr, url, mostrar),
                 sesion?.getTokenBearer()!!
             )
 

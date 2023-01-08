@@ -108,6 +108,18 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
                 mostrarBotones(it)
                 salir(it)
             }
+            errDepartamento.observe(viewLifecycleOwner) {
+                binding.tiDepartamento.error = it
+            }
+            errProvincia.observe(viewLifecycleOwner) {
+                binding.tiProvincia.error = it
+            }
+            errDistrito.observe(viewLifecycleOwner) {
+                binding.tiDistrito.error = it
+            }
+            errDireccion.observe(viewLifecycleOwner) {
+                binding.tiDireccion.error = it
+            }
         }
 
 
@@ -186,7 +198,7 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_delete -> {
-                //viewModel.eliminarAnuncio()
+                viewModel.eliminarDireccion()
                 true
             }
             R.id.action_edit -> {
@@ -194,7 +206,7 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
                 true
             }
             R.id.action_save -> {
-                //viewModel.guardarAnuncio()
+                viewModel.guardarDireccion()
                 true
             }
             else -> false

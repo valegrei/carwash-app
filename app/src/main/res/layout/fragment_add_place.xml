@@ -18,15 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
 
         <ImageView
             android:id="@+id/center_marker"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            app:layout_constraintBottom_toBottomOf="@id/map"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="@id/map"
             app:layout_constraintStart_toStartOf="@id/map"
-            app:layout_constraintTop_toTopOf="@id/map"
             app:srcCompat="@drawable/ic_baseline_location_on_24"
             app:tint="?attr/colorPrimary" />
 
@@ -51,6 +56,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_baseline_my_location_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

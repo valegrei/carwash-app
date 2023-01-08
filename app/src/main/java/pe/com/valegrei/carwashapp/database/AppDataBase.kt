@@ -9,6 +9,8 @@ import pe.com.valegrei.carwashapp.database.anuncio.Anuncio
 import pe.com.valegrei.carwashapp.database.anuncio.AnuncioDao
 import pe.com.valegrei.carwashapp.database.direccion.Direccion
 import pe.com.valegrei.carwashapp.database.direccion.DireccionDao
+import pe.com.valegrei.carwashapp.database.horario.HorarioConfig
+import pe.com.valegrei.carwashapp.database.horario.HorarioDao
 import pe.com.valegrei.carwashapp.database.parametro.Parametro
 import pe.com.valegrei.carwashapp.database.parametro.ParametroDao
 import pe.com.valegrei.carwashapp.database.servicio.Servicio
@@ -20,7 +22,7 @@ import pe.com.valegrei.carwashapp.database.ubigeo.UbigeoDao
 import pe.com.valegrei.carwashapp.database.usuario.Usuario
 import pe.com.valegrei.carwashapp.database.usuario.UsuarioDao
 
-const val DB_VERSION = 6
+const val DB_VERSION = 7
 
 @Database(
     entities = [
@@ -32,6 +34,7 @@ const val DB_VERSION = 6
         Provincia::class,
         Distrito::class,
         Direccion::class,
+        HorarioConfig::class,
     ],
     version = DB_VERSION
 )
@@ -43,6 +46,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun servicioDao(): ServicioDao
     abstract fun ubigeoDao(): UbigeoDao
     abstract fun direccionDao(): DireccionDao
+    abstract fun horarioDao(): HorarioDao
 
     companion object {
         @Volatile

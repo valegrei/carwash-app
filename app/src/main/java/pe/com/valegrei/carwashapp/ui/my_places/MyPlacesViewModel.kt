@@ -17,6 +17,7 @@ import pe.com.valegrei.carwashapp.database.ubigeo.UbigeoDao
 import pe.com.valegrei.carwashapp.database.usuario.TipoUsuario
 import pe.com.valegrei.carwashapp.network.Api
 import pe.com.valegrei.carwashapp.network.handleThrowable
+import pe.com.valegrei.carwashapp.network.request.ReqDireccion
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
@@ -29,8 +30,19 @@ class MyPlacesViewModel(
 ) : ViewModel() {
     private val TAG = MyPlacesViewModel::class.simpleName
 
-    private var _errMsg = MutableLiveData<String>()
-    val errMsg: LiveData<String> = _errMsg
+    //errores
+    private var _errDepartamento = MutableLiveData<String?>()
+    val errDepartamento: LiveData<String?> = _errDepartamento
+    private var _errProvincia = MutableLiveData<String?>()
+    val errProvincia: LiveData<String?> = _errProvincia
+    private var _errDistrito = MutableLiveData<String?>()
+    val errDistrito: LiveData<String?> = _errDistrito
+    private var _errDireccion = MutableLiveData<String?>()
+    val errDireccion: LiveData<String?> = _errDireccion
+    private var _errMsg = MutableLiveData<String?>()
+    val errMsg: LiveData<String?> = _errMsg
+
+    //estados
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
     private var _editStatus = MutableLiveData<EditStatus>()
@@ -40,6 +52,7 @@ class MyPlacesViewModel(
     private var _mostrarEditar = MutableLiveData<Boolean>()
     val mostrarEditar: LiveData<Boolean> = _mostrarEditar
 
+    //seleccionados
     private var _selectedDepartamento = MutableLiveData<Departamento>()
     val selectedDepartamento: LiveData<Departamento> = _selectedDepartamento
     private var _selectedProvincia = MutableLiveData<Provincia>()
@@ -49,7 +62,10 @@ class MyPlacesViewModel(
     val direccion = MutableLiveData<String>();
     private var _selectedLatLng = MutableLiveData<LatLng?>()
     val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
+    private var _selectedDireccion = MutableLiveData<Direccion>()
+    val selectedDireccion: LiveData<Direccion> = _selectedDireccion
 
+    //campos
     private var _departamentos = MutableLiveData<List<Departamento>>()
     val departamentos: LiveData<List<Departamento>> = _departamentos
     private var _provincias = MutableLiveData<List<Provincia>>()
@@ -57,15 +73,11 @@ class MyPlacesViewModel(
     private var _distritos = MutableLiveData<List<Distrito>>()
     val distritos: LiveData<List<Distrito>> = _distritos
 
-    private var _selectedDireccion = MutableLiveData<Direccion>()
-    val selectedDireccion: LiveData<Direccion> = _selectedDireccion
-
-
     fun nuevoDireccion() {
         _selectedLatLng.value = null
-        _selectedDepartamento.value = Departamento(0,"")
-        _selectedProvincia.value = Provincia(0,"",0)
-        _selectedDistrito.value = Distrito(0,"",0,"")
+        _selectedDepartamento.value = Departamento(0, "")
+        _selectedProvincia.value = Provincia(0, "", 0)
+        _selectedDistrito.value = Distrito(0, "", 0, "")
         cargarDepartamentos()
         _provincias.value = listOf()
         _distritos.value = listOf()
@@ -77,7 +89,7 @@ class MyPlacesViewModel(
 
     fun verDireccion(direccion: Direccion) {
         _selectedDireccion.value = direccion
-        _selectedLatLng.value = LatLng(direccion.latitud.toDouble(),direccion.longitud.toDouble())
+        _selectedLatLng.value = LatLng(direccion.latitud.toDouble(), direccion.longitud.toDouble())
         _errMsg.value = ""
         _editStatus.value = EditStatus.VIEW
         _mostrarEditar.value = false
@@ -97,25 +109,28 @@ class MyPlacesViewModel(
         return sesion?.usuario?.idTipoUsuario == TipoUsuario.DISTR.id
     }
 
-    fun setSelectedLatLng(latLng: LatLng?){
+    fun setSelectedLatLng(latLng: LatLng?) {
         _selectedLatLng.value = latLng
     }
 
-    fun cargarUbigeo(direccion: Direccion){
+    fun cargarUbigeo(direccion: Direccion) {
         viewModelScope.launch {
             val departamentos = ubigeoDao.obtenerDepartamentos()
-            val dep = departamentos.find {it.departamento == direccion.departamento}
-            _selectedDepartamento.value = dep?: Departamento(idDepartamento = 0,departamento="")
+            val dep = departamentos.find { it.departamento == direccion.departamento }
+            _selectedDepartamento.value = dep ?: Departamento(0, "")
             _departamentos.value = departamentos
 
-            val provincias = ubigeoDao.obtenerProvincia(selectedDepartamento.value?.idDepartamento!!)
-            val prov = provincias.find {it.provincia == direccion.provincia}
-            _selectedProvincia.value = prov?:Provincia(idProvincia = 0,provincia="", idDepartamento = 0)
+            val provincias =
+                ubigeoDao.obtenerProvincia(selectedDepartamento.value?.idDepartamento!!)
+            val prov = provincias.find { it.provincia == direccion.provincia }
+            _selectedProvincia.value =
+                prov ?: Provincia(0, "", 0)
             _provincias.value = provincias
 
             val distritos = ubigeoDao.obtenerDistrito(selectedProvincia.value?.idProvincia!!)
-            val dis = distritos.find {it.distrito == direccion.distrito}
-            _selectedDistrito.value = dis?:Distrito(idDistrito = 0,distrito="", idProvincia = 0, codigo = "")
+            val dis = distritos.find { it.distrito == direccion.distrito }
+            _selectedDistrito.value =
+                dis ?: Distrito(0, "", 0, "")
             _distritos.value = distritos
         }
     }
@@ -126,7 +141,7 @@ class MyPlacesViewModel(
         }
     }
 
-    fun setSelectedDepartamento(selectedDepartamento: Departamento){
+    fun setSelectedDepartamento(selectedDepartamento: Departamento) {
         _selectedDepartamento.value = selectedDepartamento
     }
 
@@ -136,7 +151,7 @@ class MyPlacesViewModel(
         }
     }
 
-    fun setSelectedProvincia(selectedProvincia: Provincia){
+    fun setSelectedProvincia(selectedProvincia: Provincia) {
         _selectedProvincia.value = selectedProvincia
     }
 
@@ -146,7 +161,7 @@ class MyPlacesViewModel(
         }
     }
 
-    fun setSelectedDistrito(selectedDistrito: Distrito){
+    fun setSelectedDistrito(selectedDistrito: Distrito) {
         _selectedDistrito.value = selectedDistrito
     }
 
@@ -176,6 +191,163 @@ class MyPlacesViewModel(
             direccionDao.guardarDirecciones(direcciones)
         }
         sesionData.saveLastSincroDirecciones(res.timeStamp)
+    }
+
+    private fun crearDireccion() {
+        val direccion = (this.direccion.value ?: "").trim()
+        if (validar(direccion)) {
+            crearDireccion(direccion)
+        }
+    }
+
+    private fun crearDireccion(direccion: String) {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val lastSincro = sesionData.getLastSincroDirecciones()
+
+            val departamento = selectedDepartamento.value?.departamento!!
+            val provincia = selectedProvincia.value?.provincia!!
+            val distrito = selectedDistrito.value?.distrito!!
+            val ubigeo = selectedDistrito.value?.codigo!!
+            val latitud = selectedLatLng.value?.latitude.toString()
+            val longitud = selectedLatLng.value?.longitude.toString()
+            val reqDireccion = ReqDireccion(
+                departamento,
+                provincia,
+                distrito,
+                ubigeo,
+                direccion,
+                latitud,
+                longitud
+            )
+
+            Api.retrofitService.agregarDireccion(
+                sesion?.usuario?.id!!,
+                reqDireccion,
+                sesion.getTokenBearer()
+            )
+
+            //procede a descargar
+            descargarDirecciones(sesion, lastSincro)
+            _status.value = Status.SUCCESS
+            _editStatus.value = EditStatus.EXIT
+        }
+    }
+
+    private fun clearErrs(){
+        _errDepartamento.value = null
+        _errProvincia.value = null
+        _errDistrito.value = null
+        _errDireccion.value = null
+        _errMsg.value = null
+    }
+
+    private fun validar(direccion: String): Boolean {
+        var res = true
+        clearErrs()
+        _errDepartamento.value = ""
+        _errProvincia.value = ""
+        _errDistrito.value = ""
+        _errDireccion.value = ""
+        _errMsg.value = ""
+        if ((selectedDepartamento.value?.departamento ?: "").isEmpty()) {
+            _errDepartamento.value = "Seleccione Departamento"
+            res = false
+        }
+        if ((selectedProvincia.value?.provincia ?: "").isEmpty()) {
+            _errProvincia.value = "Seleccione Provincia"
+            res = false
+        }
+        if ((selectedDistrito.value?.distrito ?: "").isEmpty()) {
+            _errDistrito.value = "Seleccione Distrito"
+            res = false
+        }
+        if (direccion.isEmpty()) {
+            _errDireccion.value = "Ingrese su dirección"
+            res = false
+        }
+        if (selectedLatLng.value == null) {
+            _errMsg.value = "Seleccione la dirección en el mapa"
+            res = false
+        }
+        return res
+    }
+
+    fun eliminarDireccion() {
+        val idDireccion = selectedDireccion.value?.id!!
+        eliminarDireccion(idDireccion)
+    }
+
+    private fun eliminarDireccion(idDireccion: Int) {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val lastSincro = sesionData.getLastSincroDirecciones()
+
+            Api.retrofitService.eliminarDireccion(
+                sesion?.usuario?.id!!,
+                idDireccion,
+                sesion.getTokenBearer()!!
+            )
+
+            //procede a descargar
+            descargarDirecciones(sesion, lastSincro)
+            _status.value = Status.SUCCESS
+            _editStatus.value = EditStatus.EXIT
+        }
+    }
+
+    private fun actualizarDireccion() {
+        val idDireccion = selectedDireccion.value?.id!!
+        val direccion = (this.direccion.value ?: "").trim()
+        if (validar(direccion)) {
+            actualizarDireccion(idDireccion, direccion)
+        }
+    }
+
+    private fun actualizarDireccion(idDireccion: Int, direccion: String) {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val lastSincro = sesionData.getLastSincroDirecciones()
+
+            val departamento = selectedDepartamento.value?.departamento!!
+            val provincia = selectedProvincia.value?.provincia!!
+            val distrito = selectedDistrito.value?.distrito!!
+            val ubigeo = selectedDistrito.value?.codigo!!
+            val latitud = selectedLatLng.value?.latitude.toString()
+            val longitud = selectedLatLng.value?.longitude.toString()
+            val reqDireccion = ReqDireccion(
+                departamento,
+                provincia,
+                distrito,
+                ubigeo,
+                direccion,
+                latitud,
+                longitud
+            )
+
+            Api.retrofitService.modificarDireccion(
+                sesion?.usuario?.id!!,
+                idDireccion,
+                reqDireccion,
+                sesion.getTokenBearer()
+            )
+
+            //procede a descargar
+            descargarDirecciones(sesion, lastSincro)
+            _status.value = Status.SUCCESS
+            _editStatus.value = EditStatus.EXIT
+        }
+    }
+
+    fun guardarDireccion() {
+        when (editStatus.value) {
+            EditStatus.EDIT -> actualizarDireccion()
+            EditStatus.NEW -> crearDireccion()
+            else -> {}
+        }
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
