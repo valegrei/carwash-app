@@ -128,8 +128,6 @@ class AnnouncementViewModel(
                 sesion?.getTokenBearer()!!
             )
 
-            //procede a descargar
-            descargarAnuncios(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
@@ -157,8 +155,6 @@ class AnnouncementViewModel(
                 sesion?.getTokenBearer()!!
             )
 
-            //procede a descargar
-            descargarAnuncios(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
@@ -204,8 +200,6 @@ class AnnouncementViewModel(
                 sesion?.getTokenBearer()!!
             )
 
-            //procede a descargar
-            descargarAnuncios(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }

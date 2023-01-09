@@ -69,6 +69,8 @@ class MySchedulesFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+
+        viewModel.descargarHorarioConfigs()
     }
 
     override fun onDestroyView() {

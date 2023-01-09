@@ -16,7 +16,7 @@ import pe.com.valegrei.carwashapp.network.request.ReqAddServicio
 import pe.com.valegrei.carwashapp.network.request.ReqModServicio
 import java.util.*
 
-enum class Status { LOADING, SUCCESS, ERROR }
+enum class Status { LOADING, SUCCESS, ERROR , NORMAL}
 enum class EditStatus { NEW, EDIT, DELETE, NORMAL }
 enum class GoStatus { GO_ADD, SHOW_DELETE, NORMAL }
 class MyServicesViewModel(
@@ -51,6 +51,7 @@ class MyServicesViewModel(
         precio.value = ""
         _errMsg.value = ""
         _editStatus.value = EditStatus.NEW
+        _status.value = Status.NORMAL
         _goStatus.value = GoStatus.GO_ADD
     }
 
@@ -60,6 +61,7 @@ class MyServicesViewModel(
         nombre.value = selServ.nombre
         precio.value = selServ.getPrecioFormateado()
         _editStatus.value = EditStatus.EDIT
+        _status.value = Status.NORMAL
         _goStatus.value = GoStatus.GO_ADD
     }
 
@@ -114,14 +116,14 @@ class MyServicesViewModel(
             val modServicio = selectedService.value!!
             modServicio.nombre = nombre
             modServicio.precio = BigDecimal(precio)
-            modificarServicio(modServicio)
+            modificarServicio(modServicio, false)
         }
     }
 
     fun eliminarServicio() {
         val modServicio = selectedService.value!!
         modServicio.estado = false//!modServicio.estado
-        modificarServicio(modServicio)
+        modificarServicio(modServicio, true)
     }
 
     private fun validar(nombre: String, precio: String): Boolean {
@@ -149,13 +151,13 @@ class MyServicesViewModel(
                 sesion.getTokenBearer()
             )
             //Trae los cambios
-            descargarServicios(sesion, lastSincro)
+            //descargarServicios(sesion, lastSincro)
             _editStatus.value = EditStatus.NORMAL
             _status.value = Status.SUCCESS
         }
     }
 
-    private fun modificarServicio(modServicio: Servicio) {
+    private fun modificarServicio(modServicio: Servicio, descargar: Boolean) {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
@@ -172,7 +174,8 @@ class MyServicesViewModel(
                 sesion.getTokenBearer()
             )
             //Trae los cambios
-            descargarServicios(sesion, lastSincro)
+            if (descargar)
+                descargarServicios(sesion, lastSincro)
             _editStatus.value = EditStatus.NORMAL
             _status.value = Status.SUCCESS
         }

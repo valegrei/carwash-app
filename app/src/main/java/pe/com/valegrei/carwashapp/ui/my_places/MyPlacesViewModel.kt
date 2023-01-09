@@ -228,14 +228,12 @@ class MyPlacesViewModel(
                 sesion.getTokenBearer()
             )
 
-            //procede a descargar
-            descargarDirecciones(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
     }
 
-    private fun clearErrs(){
+    private fun clearErrs() {
         _errDepartamento.value = null
         _errProvincia.value = null
         _errDistrito.value = null
@@ -291,8 +289,6 @@ class MyPlacesViewModel(
                 sesion.getTokenBearer()
             )
 
-            //procede a descargar
-            descargarDirecciones(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
@@ -335,8 +331,6 @@ class MyPlacesViewModel(
                 sesion.getTokenBearer()
             )
 
-            //procede a descargar
-            descargarDirecciones(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }

@@ -266,7 +266,7 @@ class MySchedulesViewModel(
     }
 
     private fun crearHorarioConfig() {
-        if (validar()) {
+        if (validar(null)) {
             crearHorarioConfig2()
         }
     }
@@ -299,14 +299,12 @@ class MySchedulesViewModel(
                 sesion.getTokenBearer()
             )
 
-            //procede a descargar
-            descargarHorarioConfigs(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
     }
 
-    private fun validar(): Boolean {
+    private fun validar(idHorarioConfig: Int?): Boolean {
         _errMsg.value = null
         if ((local.value?.id ?: 0) == 0) {
             _errMsg.value = "Debe seleccionar un local"
@@ -336,7 +334,8 @@ class MySchedulesViewModel(
             domingo = domingo.value!!,
             horaIni = horaIni.value ?: 0,
             horaFin = horaFin.value ?: 0,
-            idLocal = local.value?.id ?: 0
+            idLocal = local.value?.id ?: 0,
+            idHorarioConfig = idHorarioConfig,
         )
         val cant = horarioDao.verificarInterseciones(query)
         if (cant > 0) {
@@ -363,8 +362,6 @@ class MySchedulesViewModel(
                 sesion.getTokenBearer()
             )
 
-            //procede a descargar
-            descargarHorarioConfigs(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
@@ -372,7 +369,7 @@ class MySchedulesViewModel(
 
     private fun actualizarHorarioConfig() {
         val idHorarioConfig = selectedHorarioConfig.value?.id!!
-        if (validar()) {
+        if (validar(idHorarioConfig)) {
             actualizarHorarioConfig(idHorarioConfig)
         }
     }
@@ -406,8 +403,6 @@ class MySchedulesViewModel(
                 sesion.getTokenBearer()
             )
 
-            //procede a descargar
-            descargarHorarioConfigs(sesion, lastSincro)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
@@ -465,9 +460,10 @@ class MySchedulesViewModel(
     private fun buildQuery(
         lunes: Boolean, martes: Boolean, miercoles: Boolean,
         jueves: Boolean, viernes: Boolean, sabado: Boolean, domingo: Boolean,
-        horaIni: Int, horaFin: Int, idLocal: Int
+        horaIni: Int, horaFin: Int, idLocal: Int, idHorarioConfig: Int?
     ): SimpleSQLiteQuery {
         var query = "SELECT COUNT(*) FROM horario_config WHERE "
+        if (idHorarioConfig != null) query += "id != $idHorarioConfig AND "
         query += "idLocal = $idLocal AND estado = 1 AND ("
         if (lunes) query += "(lunes = 1) OR "
         if (martes) query += "(martes = 1) OR "
