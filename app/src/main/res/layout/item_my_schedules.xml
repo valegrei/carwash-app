@@ -7,7 +7,7 @@
 
         <variable
             name="horarioConfig"
-            type="pe.com.valegrei.carwashapp.database.horario.HorarioConfigLocal" />
+            type="pe.com.carwashperuapp.carwashapp.database.horario.HorarioConfigLocal" />
     </data>
 
 

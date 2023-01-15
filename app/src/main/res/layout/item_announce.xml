@@ -9,7 +9,7 @@
 
         <variable
             name="anuncio"
-            type="pe.com.valegrei.carwashapp.database.anuncio.Anuncio" />
+            type="pe.com.carwashperuapp.carwashapp.database.anuncio.Anuncio" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -22,7 +22,7 @@
         app:cardBackgroundColor="@color/black"
         app:cardCornerRadius="0dp">
 
-        <pe.com.valegrei.carwashapp.ui.SquareFrameLayout
+        <pe.com.carwashperuapp.carwashapp.ui.SquareFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -54,7 +54,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </pe.com.valegrei.carwashapp.ui.SquareFrameLayout>
+        </pe.com.carwashperuapp.carwashapp.ui.SquareFrameLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

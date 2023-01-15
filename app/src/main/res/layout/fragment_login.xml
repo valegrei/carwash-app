@@ -8,11 +8,11 @@
 
         <variable
             name="loginFragment"
-            type="pe.com.valegrei.carwashapp.ui.login.LoginFragment" />
+            type="pe.com.carwashperuapp.carwashapp.ui.login.LoginFragment" />
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.login.LoginViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.login.LoginViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

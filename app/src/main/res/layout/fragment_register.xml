@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.register.RegisterViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.register.RegisterViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

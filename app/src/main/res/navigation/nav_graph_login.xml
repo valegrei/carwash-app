@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="pe.com.valegrei.carwashapp.ui.login.LoginFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.login.LoginFragment"
         android:label="@string/login_label"
         tools:layout="@layout/fragment_login">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="pe.com.valegrei.carwashapp.ui.register.RegisterFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.register.RegisterFragment"
         android:label="@string/register_label"
         tools:layout="@layout/fragment_register">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/recoverFragment"
-        android:name="pe.com.valegrei.carwashapp.ui.recover.RecoverFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.recover.RecoverFragment"
         android:label="@string/recover_label"
         tools:layout="@layout/fragment_recover">
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPasswordFragment"
-        android:name="pe.com.valegrei.carwashapp.ui.new_password.NewPasswordFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.new_password.NewPasswordFragment"
         android:label="@string/new_pass_label"
         tools:layout="@layout/fragment_new_password" >
         <argument
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/verifyFragment"
-        android:name="pe.com.valegrei.carwashapp.ui.verify.VerifyFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.verify.VerifyFragment"
         android:label="fragment_verify"
         tools:layout="@layout/fragment_verify">
         <argument

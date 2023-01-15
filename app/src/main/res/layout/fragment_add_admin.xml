@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.add_admin.AddAdminViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.add_admin.AddAdminViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

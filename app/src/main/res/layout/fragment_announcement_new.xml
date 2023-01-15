@@ -9,11 +9,11 @@
 
         <variable
             name="fragment"
-            type="pe.com.valegrei.carwashapp.ui.announcement.AnnouncementNewFragment" />
+            type="pe.com.carwashperuapp.carwashapp.ui.announcement.AnnouncementNewFragment" />
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.announcement.AnnouncementViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.announcement.AnnouncementViewModel" />
     </data>
 
     <LinearLayout

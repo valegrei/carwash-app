@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.verify.VerifyViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.verify.VerifyViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_distrib"
-        android:name="pe.com.valegrei.carwashapp.ui.distribs.DistribsFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.distribs.DistribsFragment"
         android:label="@string/title_distrib"
         tools:layout="@layout/fragment_distribs" />
 
     <fragment
         android:id="@+id/navigation_users"
-        android:name="pe.com.valegrei.carwashapp.ui.users.UsersFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.users.UsersFragment"
         android:label="@string/title_usuarios"
         tools:layout="@layout/fragment_users">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_announcement"
-        android:name="pe.com.valegrei.carwashapp.ui.announcement.AnnouncementFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.announcement.AnnouncementFragment"
         android:label="@string/title_publicidad"
         tools:layout="@layout/fragment_announcement">
         <action
@@ -33,12 +33,12 @@
 
     <fragment
         android:id="@+id/navigation_announcement_new"
-        android:name="pe.com.valegrei.carwashapp.ui.announcement.AnnouncementNewFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.announcement.AnnouncementNewFragment"
         android:label="@string/title_publicidad_new"
         tools:layout="@layout/fragment_announcement_new" />
     <fragment
         android:id="@+id/navigation_account"
-        android:name="pe.com.valegrei.carwashapp.ui.account.AccountFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account">
         <action
@@ -47,22 +47,22 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_account_edit"
-        android:name="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountEditFragment"
         android:label="@string/title_account_edit"
         tools:layout="@layout/fragment_account_edit" />
     <fragment
         android:id="@+id/addAdminFragment"
-        android:name="pe.com.valegrei.carwashapp.ui.add_admin.AddAdminFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.add_admin.AddAdminFragment"
         android:label="@string/title_add_admin"
         tools:layout="@layout/fragment_add_admin" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="pe.com.valegrei.carwashapp.ui.settings.SettingsFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="pe.com.valegrei.carwashapp.ui.menu_admin.MenuAdminFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.menu_admin.MenuAdminFragment"
         android:label="@string/menu"
         tools:layout="@layout/fragment_menu_admin" >
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_change_pass"
-        android:name="pe.com.valegrei.carwashapp.ui.change_password.ChangePassFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.change_password.ChangePassFragment"
         android:label="@string/change_pass_title"
         tools:layout="@layout/fragment_change_pass" />
 </navigation>

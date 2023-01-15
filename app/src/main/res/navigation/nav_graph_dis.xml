@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_reserve_list"
-        android:name="pe.com.valegrei.carwashapp.ui.reserve_list.ReserveListFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_list.ReserveListFragment"
         android:label="@string/menu_reserve_list"
         tools:layout="@layout/fragment_reserve_list" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_account"
-        android:name="pe.com.valegrei.carwashapp.ui.account.AccountFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountFragment"
         android:label="@string/title_account"
         tools:layout="@layout/fragment_account" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/nav_my_places"
-        android:name="pe.com.valegrei.carwashapp.ui.my_places.MyPlacesFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_places.MyPlacesFragment"
         android:label="@string/menu_my_places"
         tools:layout="@layout/fragment_my_places" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_my_services"
-        android:name="pe.com.valegrei.carwashapp.ui.my_services.MyServicesFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_services.MyServicesFragment"
         android:label="@string/menu_my_services"
         tools:layout="@layout/fragment_my_services" >
         <action
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/nav_my_schedules"
-        android:name="pe.com.valegrei.carwashapp.ui.my_schedules.MySchedulesFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_schedules.MySchedulesFragment"
         android:label="@string/menu_my_schedules"
         tools:layout="@layout/fragment_my_schedules" >
         <action
@@ -55,23 +55,23 @@
     </fragment>
     <fragment
         android:id="@+id/nav_reserve_details"
-        android:name="pe.com.valegrei.carwashapp.ui.reserve_details.ReserveDetailsFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_details.ReserveDetailsFragment"
         android:label="@string/reserve_details"
         tools:layout="@layout/fragment_reserve_details" />
 
     <fragment
         android:id="@+id/navigation_account_edit"
-        android:name="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountEditFragment"
         android:label="@string/title_account_edit"
         tools:layout="@layout/fragment_account_edit" />
     <fragment
         android:id="@+id/nav_add_place"
-        android:name="pe.com.valegrei.carwashapp.ui.my_places.AddPlaceFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_places.AddPlaceFragment"
         android:label="@string/new_place"
         tools:layout="@layout/fragment_add_place" />
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="pe.com.valegrei.carwashapp.ui.menu_distrib.MenuDistribFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.menu_distrib.MenuDistribFragment"
         android:label="@string/menu"
         tools:layout="@layout/fragment_menu_distrib" >
         <action
@@ -83,17 +83,17 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_change_pass"
-        android:name="pe.com.valegrei.carwashapp.ui.change_password.ChangePassFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.change_password.ChangePassFragment"
         android:label="@string/change_pass_title"
         tools:layout="@layout/fragment_change_pass" />
     <fragment
         android:id="@+id/nav_add_service"
-        android:name="pe.com.valegrei.carwashapp.ui.my_services.AddServiceFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_services.AddServiceFragment"
         android:label="fragment_add_service"
         tools:layout="@layout/fragment_add_service" />
     <fragment
         android:id="@+id/nav_place_detail"
-        android:name="pe.com.valegrei.carwashapp.ui.my_places.PlaceDetailFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceDetailFragment"
         android:label="nav_place_detail"
         tools:layout="@layout/fragment_place_detail" >
         <action
@@ -102,7 +102,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_schedules_detail"
-        android:name="pe.com.valegrei.carwashapp.ui.my_schedules.ScheduleDetailFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.my_schedules.ScheduleDetailFragment"
         android:label="ScheduleDetailFragment"
         tools:layout="@layout/fragment_schedule_detail"/>
 </navigation>

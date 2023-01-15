@@ -7,11 +7,11 @@
 
         <import type="android.view.View" />
 
-        <import type="pe.com.valegrei.carwashapp.database.usuario.EstadoUsuario" />
+        <import type="pe.com.carwashperuapp.carwashapp.database.usuario.EstadoUsuario" />
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.users.UsersViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.users.UsersViewModel" />
 
     </data>
 

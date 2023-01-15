@@ -7,7 +7,7 @@
 
         <variable
             name="usuario"
-            type="pe.com.valegrei.carwashapp.database.usuario.Usuario" />
+            type="pe.com.carwashperuapp.carwashapp.database.usuario.Usuario" />
     </data>
 
 

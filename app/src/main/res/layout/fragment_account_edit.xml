@@ -8,15 +8,15 @@
 
         <import type="android.view.View" />
 
-        <import type="pe.com.valegrei.carwashapp.database.usuario.TipoUsuario" />
+        <import type="pe.com.carwashperuapp.carwashapp.database.usuario.TipoUsuario" />
 
         <variable
             name="accountEditFragment"
-            type="pe.com.valegrei.carwashapp.ui.account.AccountEditFragment" />
+            type="pe.com.carwashperuapp.carwashapp.ui.account.AccountEditFragment" />
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.MainViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.MainViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

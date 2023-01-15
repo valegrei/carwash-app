@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'pe.com.valegrei.carwashapp'
+    namespace 'pe.com.carwashperuapp.carwashapp'
     compileSdk 33
 
     defaultConfig {
-        applicationId "pe.com.valegrei.carwashapp"
+        applicationId "pe.com.carwashperuapp.carwashapp"
         minSdk 26
         targetSdk 33
         versionCode 1

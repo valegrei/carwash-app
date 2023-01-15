@@ -8,7 +8,7 @@
 
         <variable
             name="fragment"
-            type="pe.com.valegrei.carwashapp.ui.account.EditPhotoBottomSheetDialog" />
+            type="pe.com.carwashperuapp.carwashapp.ui.account.EditPhotoBottomSheetDialog" />
     </data>
 
     <LinearLayout

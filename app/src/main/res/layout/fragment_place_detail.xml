@@ -10,11 +10,11 @@
 
         <variable
             name="viewModel"
-            type="pe.com.valegrei.carwashapp.ui.my_places.MyPlacesViewModel" />
+            type="pe.com.carwashperuapp.carwashapp.ui.my_places.MyPlacesViewModel" />
 
         <variable
             name="fragment"
-            type="pe.com.valegrei.carwashapp.ui.my_places.PlaceDetailFragment" />
+            type="pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceDetailFragment" />
     </data>
 
     <FrameLayout
