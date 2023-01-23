@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import pe.com.carwashperuapp.carwashapp.MainAdminActivity
+import pe.com.carwashperuapp.carwashapp.MainCliActivity
 import pe.com.carwashperuapp.carwashapp.MainDisActivity
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -86,14 +87,16 @@ class LoginFragment : Fragment() {
             requireActivity().finish()
         }, 500)
     }
+
     private fun goClient() {
         Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()
-            val intent = Intent(context, MainDisActivity::class.java)
+            val intent = Intent(context, MainCliActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }, 500)
     }
+
     private fun goDistr() {
         Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()

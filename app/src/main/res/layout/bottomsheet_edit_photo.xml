@@ -5,10 +5,12 @@
     <data>
 
         <import type="android.view.View" />
-
+        <variable
+            name="viewModel"
+            type="pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModel" />
         <variable
             name="fragment"
-            type="pe.com.carwashperuapp.carwashapp.ui.account.EditPhotoBottomSheetDialog" />
+            type="pe.com.carwashperuapp.carwashapp.ui.my_cars.EditPhotoBottomSheetDialog" />
     </data>
 
     <LinearLayout
@@ -49,6 +51,7 @@
                 android:drawablePadding="@dimen/min_margin"
                 android:fontFamily="@font/opensans_regular"
                 android:gravity="center_vertical"
+                android:visibility="@{viewModel.mostrarEliminarFoto()?View.VISIBLE: View.GONE}"
                 android:onClick="@{()->fragment.borrarFoto()}"
                 android:padding="@dimen/small_margin"
                 android:text="@string/btnsh_delete_photo"

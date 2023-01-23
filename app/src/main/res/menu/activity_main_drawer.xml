@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reserve"
+            android:icon="@drawable/ic_outline_near_me_24"
+            android:title="@string/menu_reserve" />
+        <item
+            android:id="@+id/nav_my_reserves"
+            android:icon="@drawable/ic_outline_calendar_month_24"
+            android:title="@string/menu_my_reserves" />
+        <item
+            android:id="@+id/nav_my_cars"
+            android:icon="@drawable/ic_outline_directions_car_24"
+            android:title="@string/menu_my_cars" />
+        <item
+            android:id="@+id/nav_my_places"
+            android:icon="@drawable/ic_outline_place_24"
+            android:title="@string/menu_my_directions" />
+        <item
+            android:id="@+id/navigation_menu"
+            android:icon="@drawable/ic_outline_manage_accounts_24"
+            android:title="@string/menu" />
+    </group>
+    <item
+        android:id="@+id/menu_logout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="@string/menu_logout"
+        />
+</menu>

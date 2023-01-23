@@ -82,22 +82,20 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): Response
 
-    @GET("api/usuarios/{id}")
+    /*@GET("api/usuarios/account")
     suspend fun obtenerUsuario(
         @Path("id") idUsuario: Int,
         @Header("Authorization") authToken: String
-    ): RespUsuario
+    ): RespUsuario*/
 
-    @PUT("api/usuarios/{id}")
+    @PUT("api/usuarios/account")
     suspend fun actualizarUsuario(
-        @Path("id") idUsuario: Int,
         @Body usuario: Usuario,
         @Header("Authorization") authToken: String
     ): RespUsuario
 
-    @PUT("api/usuarios/{id}/pass")
+    @PUT("api/usuarios/pass")
     suspend fun cambiarClaveUsu(
-        @Path("id") idUsuario: Int,
         @Body reqCambiarClaveUsu: ReqCambiarClaveUsu,
         @Header("Authorization") authToken: String
     ): Response
@@ -166,82 +164,107 @@ interface ApiService {
 
     /* Distribuidor */
 
-    @GET("api/distrib/{id}/servicio")
+    @GET("api/distrib/servicio")
     suspend fun obtenerServicios(
-        @Path("id") idUsuario: Int,
         @Query("lastSincro") lastSincro: Date,
         @Header("Authorization") authToken: String
     ): RespServicios
 
-    @POST("api/distrib/{id}/servicio")
+    @POST("api/distrib/servicio")
     suspend fun agregarServicio(
-        @Path("id") idUsuario: Int,
         @Body reqAddServicio: ReqAddServicio,
         @Header("Authorization") authToken: String
     ): Response
 
-    @PUT("api/distrib/{id}/servicio")
+    @PUT("api/distrib/servicio")
     suspend fun modificarServicio(
-        @Path("id") idUsuario: Int,
         @Body reqModServicio: ReqModServicio,
         @Header("Authorization") authToken: String
     ): Response
 
-    @GET("api/distrib/{id}/direccion")
+    @GET("api/usuarios/direccion")
     suspend fun obtenerDirecciones(
-        @Path("id") idUsuario: Int,
         @Query("lastSincro") lastSincro: Date,
         @Header("Authorization") authToken: String
     ): RespDireccion
 
-    @POST("api/distrib/{id}/direccion")
+    @POST("api/usuarios/direccion")
     suspend fun agregarDireccion(
-        @Path("id") idUsuario: Int,
         @Body reqDireccion: ReqDireccion,
         @Header("Authorization") authToken: String
     ): Response
 
-    @PUT("api/distrib/{id}/direccion/{idDireccion}")
+    @PUT("api/usuarios/direccion/{idDireccion}")
     suspend fun modificarDireccion(
-        @Path("id") idUsuario: Int,
         @Path("idDireccion") idDireccion: Int,
         @Body reqDireccion: ReqDireccion,
         @Header("Authorization") authToken: String
     ): Response
 
-    @DELETE("api/distrib/{id}/direccion/{idDireccion}")
+    @DELETE("api/usuarios/direccion/{idDireccion}")
     suspend fun eliminarDireccion(
-        @Path("id") idUsuario: Int,
         @Path("idDireccion") idDireccion: Int,
         @Header("Authorization") authToken: String
     ): Response
 
-    @GET("api/distrib/{id}/horarioConfig")
+    @GET("api/distrib/horarioConfig")
     suspend fun obtenerHorarioConfigs(
-        @Path("id") idDistrib: Int,
         @Query("lastSincro") lastSincro: Date,
         @Header("Authorization") authToken: String
     ): RespHorarioConfig
 
-    @POST("api/distrib/{id}/horarioConfig")
+    @POST("api/distrib/horarioConfig")
     suspend fun agregarHorarioConfig(
-        @Path("id") idDistrib: Int,
         @Body reqHorarioConfig: ReqHorarioConfig,
         @Header("Authorization") authToken: String
     ): Response
 
-    @PUT("api/distrib/{id}/horarioConfig/{idHorarioConfig}")
+    @PUT("api/distrib/horarioConfig/{idHorarioConfig}")
     suspend fun modificarHorarioConfig(
-        @Path("id") idDistrib: Int,
         @Path("idHorarioConfig") idHorarioConfig: Int,
         @Body reqHorarioConfig: ReqHorarioConfig,
         @Header("Authorization") authToken: String
     ): Response
 
-    @DELETE("api/distrib/{id}/horarioConfig/{idHorarioConfig}")
+    @DELETE("api/distrib/horarioConfig/{idHorarioConfig}")
     suspend fun eliminarHorarioConfig(
-        @Path("id") idDistrib: Int,
         @Path("idHorarioConfig") idHorarioConfig: Int,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @GET("api/clientes/vehiculos")
+    suspend fun obtenerVehiculos(
+        @Query("lastSincro") lastSincro: Date,
+        @Header("Authorization") authToken: String
+    ): RespVehiculos
+
+    @Multipart
+    @POST("api/clientes/vehiculos")
+    suspend fun agregarVehiculo(
+        @Part("marca") marca: RequestBody?,
+        @Part("modelo") modelo: RequestBody?,
+        @Part("year") year: RequestBody?,
+        @Part("placa") placa: RequestBody?,
+        @Part imagen: MultipartBody.Part?,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @Multipart
+    @PUT("api/clientes/vehiculos/{idVehiculo}")
+    suspend fun modificarVehiculo(
+        @Path("idVehiculo") idVehiculo: Int,
+        @Part("marca") marca: RequestBody?,
+        @Part("modelo") modelo: RequestBody?,
+        @Part("year") year: RequestBody?,
+        @Part("placa") placa: RequestBody?,
+        @Part("borrarFoto") borrarFoto: RequestBody?,
+        @Part imagen: MultipartBody.Part?,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @DELETE("api/clientes/vehiculos/{idVehiculo}")
+    suspend fun eliminarVehiculo(
+        @Path("idVehiculo") idVehiculo: Int,
         @Header("Authorization") authToken: String
     ): Response
 }

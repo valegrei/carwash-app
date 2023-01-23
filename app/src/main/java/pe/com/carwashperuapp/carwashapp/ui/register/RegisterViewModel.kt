@@ -141,10 +141,10 @@ class RegisterViewModel : ViewModel() {
             if (nroDoc.isEmpty()) {
                 _errNroDoc.value = "Campo vacío"
                 res = false
-            } else if (nroDoc.length != TipoDocumento.RUC.digitos) {//RUC
+            }/* else if (nroDoc.length != TipoDocumento.RUC.digitos) {//RUC
                 _errNroDoc.value = "RUC inválido"
                 res = false
-            }
+            }*/
             if (nroCel1.isNotEmpty() && !Patterns.PHONE.matcher(nroCel1).matches()) {
                 _errNroCel1.value = "Nro. inválido"
                 res = false

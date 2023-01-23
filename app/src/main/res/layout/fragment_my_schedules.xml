@@ -16,6 +16,7 @@
             android:id="@+id/rv_schedules_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:paddingHorizontal="@dimen/small_margin"
             android:paddingVertical="@dimen/min_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

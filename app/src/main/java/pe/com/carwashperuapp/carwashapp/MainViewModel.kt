@@ -73,7 +73,6 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = EditStatus.LOADING
             //armar usuario con cambios
-            val usuario = sesion.value?.usuario!!
             val sesion = sesion.value!!
             val usuEdit = Usuario()
             usuEdit.nombres = nombres.value ?: ""
@@ -87,7 +86,6 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
 
             //guardando en server
             val res = Api.retrofitService.actualizarUsuario(
-                usuario.id!!,
                 usuEdit,
                 sesion.getTokenBearer()
             )
@@ -107,6 +105,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         sesionData.clearLastSincroServicios()
         sesionData.clearLastSincroDirecciones()
         sesionData.clearLastSincroHorarioConfigs()
+        sesionData.clearLastSincroVehiculos()
         _sesionStatus.value = SesionStatus.CLOSED
     }
 

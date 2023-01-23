@@ -174,7 +174,6 @@ class AnnouncementViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroAnuncios()
 
             val rbDescr = RequestBody.create(MediaType.parse("text/plain"), descr)
             val rbUrl = RequestBody.create(MediaType.parse("text/plain"), url)

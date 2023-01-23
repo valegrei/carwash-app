@@ -147,8 +147,7 @@ class MyServicesViewModel(
             val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio))
             //guarda lo cambiado
             Api.retrofitService.agregarServicio(
-                sesion?.usuario?.id!!, reqAddServicio,
-                sesion.getTokenBearer()
+                reqAddServicio, sesion?.getTokenBearer()!!
             )
             //Trae los cambios
             //descargarServicios(sesion, lastSincro)
@@ -170,8 +169,7 @@ class MyServicesViewModel(
             )
             //guarda lo cambiado
             Api.retrofitService.modificarServicio(
-                sesion?.usuario?.id!!, reqModServicio,
-                sesion.getTokenBearer()
+                reqModServicio, sesion?.getTokenBearer()!!
             )
             //Trae los cambios
             if (descargar)
@@ -184,9 +182,8 @@ class MyServicesViewModel(
 
     private suspend fun descargarServicios(sesion: Sesion?, lastSincro: Date) {
         val res = Api.retrofitService.obtenerServicios(
-            sesion?.usuario?.id!!,
             lastSincro,
-            sesion.getTokenBearer()
+            sesion?.getTokenBearer()!!
         )
         val servicios = res.data.servicios
         if (servicios.isNotEmpty()) {

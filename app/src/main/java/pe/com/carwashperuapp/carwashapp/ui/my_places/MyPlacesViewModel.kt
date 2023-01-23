@@ -182,9 +182,8 @@ class MyPlacesViewModel(
 
     private suspend fun descargarDirecciones(sesion: Sesion?, lastSincro: Date) {
         val res = Api.retrofitService.obtenerDirecciones(
-            sesion?.usuario?.id!!,
             lastSincro,
-            sesion.getTokenBearer()
+            sesion?.getTokenBearer()!!
         )
         val direcciones = res.data.direcciones
         if (direcciones.isNotEmpty()) {
@@ -204,7 +203,6 @@ class MyPlacesViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroDirecciones()
 
             val departamento = selectedDepartamento.value?.departamento!!
             val provincia = selectedProvincia.value?.provincia!!
@@ -223,9 +221,8 @@ class MyPlacesViewModel(
             )
 
             Api.retrofitService.agregarDireccion(
-                sesion?.usuario?.id!!,
                 reqDireccion,
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
 
             _status.value = Status.SUCCESS
@@ -281,12 +278,10 @@ class MyPlacesViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroDirecciones()
 
             Api.retrofitService.eliminarDireccion(
-                sesion?.usuario?.id!!,
                 idDireccion,
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
 
             _status.value = Status.SUCCESS
@@ -306,7 +301,6 @@ class MyPlacesViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroDirecciones()
 
             val departamento = selectedDepartamento.value?.departamento!!
             val provincia = selectedProvincia.value?.provincia!!
@@ -325,10 +319,9 @@ class MyPlacesViewModel(
             )
 
             Api.retrofitService.modificarDireccion(
-                sesion?.usuario?.id!!,
                 idDireccion,
                 reqDireccion,
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
 
             _status.value = Status.SUCCESS

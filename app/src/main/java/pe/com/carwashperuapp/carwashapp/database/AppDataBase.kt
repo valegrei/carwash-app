@@ -21,8 +21,10 @@ import pe.com.carwashperuapp.carwashapp.database.ubigeo.Provincia
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.UbigeoDao
 import pe.com.carwashperuapp.carwashapp.database.usuario.Usuario
 import pe.com.carwashperuapp.carwashapp.database.usuario.UsuarioDao
+import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
+import pe.com.carwashperuapp.carwashapp.database.vehiculo.VehiculoDao
 
-const val DB_VERSION = 7
+const val DB_VERSION = 8
 
 @Database(
     entities = [
@@ -35,6 +37,7 @@ const val DB_VERSION = 7
         Distrito::class,
         Direccion::class,
         HorarioConfig::class,
+        Vehiculo::class,
     ],
     version = DB_VERSION
 )
@@ -47,6 +50,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun ubigeoDao(): UbigeoDao
     abstract fun direccionDao(): DireccionDao
     abstract fun horarioDao(): HorarioDao
+    abstract fun vehiculoDao(): VehiculoDao
 
     companion object {
         @Volatile

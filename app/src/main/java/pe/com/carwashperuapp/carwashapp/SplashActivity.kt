@@ -47,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun goClient() {
-        val intent = Intent(this, MainDisActivity::class.java)
+        val intent = Intent(this, MainCliActivity::class.java)
         startActivity(intent)
         finish()
     }

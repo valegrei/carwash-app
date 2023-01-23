@@ -57,7 +57,7 @@ class MainAdminActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    fun goLogin(){
+    private fun goLogin(){
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()

@@ -23,8 +23,8 @@
     <string name="register_repeat_password">Repita contraseña*</string>
     <string name="register_check_dis">Registrarse como distribuidor</string>
     <string name="register_next">Registrar</string>
-    <string name="register_razon_social">Razon Social*</string>
-    <string name="register_ruc">RUC*</string>
+    <string name="register_razon_social">Nombres / Razon Social*</string>
+    <string name="register_ruc">DNI / CEXT / RUC*</string>
     <string name="register_cellphone">Número de Teléfono</string>
     <string name="register_whatsapp">Número de Whatsapp</string>
     <!--    Recover-->
@@ -49,7 +49,8 @@
 
     <!--    Distribuidor-->
     <!--    Nav Dis-->
-    <string name="title_activity_main_dis">MainDisActivity</string>
+    <string name="title_activity_main_dis">Distribuidor</string>
+    <string name="title_activity_main_cli">Cliente</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Lavado de Carros Santa Rosa</string>
@@ -66,7 +67,7 @@
     <string name="user_photo">Foto de usuario</string>
     <string name="action_search">Buscar</string>
     <!--    Reserve Details-->
-    <string name="foto_car_descr">Foto de vehiculo</string>
+    <string name="foto_car_descr">Foto de auto</string>
     <string name="service_title">Servicios</string>
     <string name="reserve_details">Detalle de Reserva</string>
     <string name="service_state_attended">Atendido</string>
@@ -85,7 +86,7 @@
     <string name="my_data_edit_title">Editar Mis Datos</string>
     <string name="my_data_dis_logo">Logo Distribuidor</string>
     <string name="my_data_change_logo">Cambiar Logo</string>
-    <string name="my_data_razon_social">Razon Social</string>
+    <string name="my_data_razon_social">Nombres / Razon Social</string>
     <string name="my_data_nombres">Nombres</string>
     <string name="my_data_ape_pat">Apellido Paterno</string>
     <string name="my_data_ape_mat">Apellido Materno</string>
@@ -98,7 +99,7 @@
     <string name="action_add">Agregar</string>
     <string name="action_save">Guardar</string>
     <string name="action_delete">Eliminar</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Administrador</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -129,6 +130,7 @@
     <string name="schedules_label_end_sel">Seleccione Fin</string>
     <string name="schedules_label_turno">Turno</string>
     <string name="schedules_label_intervalo">Intervalo</string>
+    <string name="schedules_label_vista_previa">Vista Previa</string>
     <string name="schedules_label_intervalo_min">Intervalo (minutos)</string>
     <string name="schedules_freq_all">Todos los días</string>
     <string name="schedules_freq_lun_vie">Lun - Vie</string>
@@ -149,7 +151,7 @@
     <string name="schedules_delete_msg">Eliminar horarios afectará a futuras reservas.\n¿Desea eliminar horario?</string>
     <string name="schedules_save">Guardar</string>
     <string name="schedules_save_msg">Se guardará la información de horario</string>
-    
+
     <string name="loading">Cargando</string>
     <string name="title_activity_splash">SplashActivity</string>
 
@@ -230,5 +232,28 @@
     <string name="menu_settings">Configuraciones de servidor</string>
     <string name="menu_logout">Cerrar sesión</string>
 
+    <!--    Menu Cliente-->
+    <string name="menu_reserve">Reservar</string>
+    <string name="menu_my_reserves">Mis Reservas</string>
+    <string name="menu_my_cars">Mis Autos</string>
+    <string name="menu_my_directions">Mis Direcciones</string>
 
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="logout_msg">¿Desea cerrar sesión y volver al Login?</string>
+
+    <!--    My Cars-->
+    <string name="car_marca">Marca</string>
+    <string name="car_model">Modelo</string>
+    <string name="car_year">Año</string>
+    <string name="car_placa">Placa</string>
+    <string name="car_delete">Eliminar Local</string>
+    <string name="car_delete_msg">¿Desea eliminar el auto?</string>
+    <string name="car_save">Guardar</string>
+    <string name="car_save_msg">Se guardará la información del auto</string>
+    <string name="car_title_new">Nuevo Auto</string>
+    <string name="car_title_edit">Editar Auto</string>
+    <string name="car_title_view">Ver Auto</string>
+    <string name="car_title_detail">Auto</string>
 </resources>

@@ -254,9 +254,8 @@ class MySchedulesViewModel(
 
     private suspend fun descargarHorarioConfigs(sesion: Sesion?, lastSincro: Date) {
         val res = Api.retrofitService.obtenerHorarioConfigs(
-            sesion?.usuario?.id!!,
             lastSincro,
-            sesion.getTokenBearer()
+            sesion?.getTokenBearer()!!
         )
         val horarioConfigs = res.data.horarioConfigs
         if (horarioConfigs.isNotEmpty()) {
@@ -275,7 +274,6 @@ class MySchedulesViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroHorarioConfigs()
 
             val reqHorarioConfig = ReqHorarioConfig(
                 lunes = lunes.value!!,
@@ -294,9 +292,8 @@ class MySchedulesViewModel(
             )
 
             Api.retrofitService.agregarHorarioConfig(
-                sesion?.usuario?.id!!,
                 reqHorarioConfig,
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
 
             _status.value = Status.SUCCESS
@@ -354,12 +351,10 @@ class MySchedulesViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroHorarioConfigs()
 
             Api.retrofitService.eliminarHorarioConfig(
-                sesion?.usuario?.id!!,
                 idHorarioConfig,
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
 
             _status.value = Status.SUCCESS
@@ -378,7 +373,6 @@ class MySchedulesViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroHorarioConfigs()
 
             val reqHorarioConfig = ReqHorarioConfig(
                 lunes = lunes.value!!,
@@ -397,10 +391,9 @@ class MySchedulesViewModel(
             )
 
             Api.retrofitService.modificarHorarioConfig(
-                sesion?.usuario?.id!!,
                 idHorarioConfig,
                 reqHorarioConfig,
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
 
             _status.value = Status.SUCCESS
@@ -446,9 +439,8 @@ class MySchedulesViewModel(
 
     private suspend fun descargarDirecciones(sesion: Sesion?, lastSincro: Date) {
         val res = Api.retrofitService.obtenerDirecciones(
-            sesion?.usuario?.id!!,
             lastSincro,
-            sesion.getTokenBearer()
+            sesion?.getTokenBearer()!!
         )
         val direcciones = res.data.direcciones
         if (direcciones.isNotEmpty()) {

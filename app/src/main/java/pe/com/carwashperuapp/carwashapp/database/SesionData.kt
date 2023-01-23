@@ -30,6 +30,7 @@ private const val SINCRO_PARAMETROS = "sincro_parametros"
 private const val SINCRO_SERVICIOS = "sincro_servicios"
 private const val SINCRO_DIRECCIONES = "sincro_direcciones"
 private const val SINCRO_HORARIO_CONFIG = "sincro_horario_config"
+private const val SINCRO_VEHICULOS = "sincro_vehiculos"
 private const val DB_VERSION_NUM = "db_version_num"
 
 class SesionData(context: Context) {
@@ -56,6 +57,7 @@ class SesionData(context: Context) {
             editor.putLong(SINCRO_SERVICIOS, 0)
             editor.putLong(SINCRO_DIRECCIONES, 0)
             editor.putLong(SINCRO_HORARIO_CONFIG, 0)
+            editor.putLong(SINCRO_VEHICULOS, 0)
             editor.apply()
         }
     }
@@ -207,5 +209,21 @@ class SesionData(context: Context) {
 
     fun getLastSincroHorarioConfigs(): Date {
         return Date(pref.getLong(SINCRO_HORARIO_CONFIG, 0))
+    }
+
+    fun clearLastSincroVehiculos() {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_VEHICULOS, 0)
+        edit.apply()
+    }
+
+    fun saveLastSincroVehiculos(lastSincro: Date) {
+        val edit = pref.edit()
+        edit.putLong(SINCRO_VEHICULOS, lastSincro.time)
+        edit.apply()
+    }
+
+    fun getLastSincroVehiculos(): Date {
+        return Date(pref.getLong(SINCRO_VEHICULOS, 0))
     }
 }

@@ -1,4 +1,4 @@
-package pe.com.carwashperuapp.carwashapp.ui.reserve_list
+package pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis
 
 import android.os.Bundle
 import android.view.*

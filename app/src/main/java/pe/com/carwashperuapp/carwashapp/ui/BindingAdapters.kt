@@ -52,13 +52,19 @@ fun bindCheckStatus(textView: TextView, tipoUsuario: Int) {
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val sesion = SesionData(imgView.context).getCurrentSesion()
-        imgView.load(it) {
+    val sesion = SesionData(imgView.context).getCurrentSesion()
+    if (!(imgUrl).isNullOrEmpty()) {
+        imgView.colorFilter = null
+        imgView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imgView.load(imgUrl) {
             setHeader("Authorization", sesion?.getTokenBearer()!!)
             placeholder(R.drawable.loading_animation)
             error(R.drawable.ic_broken_image)
         }
+    } else {
+        imgView.setColorFilter(imgView.context.getColor(R.color.purple))
+        imgView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        imgView.load(R.drawable.logo)
     }
 }
 
@@ -82,16 +88,26 @@ fun bindRoundImage(imgView: ImageView, imgUrl: String?) {
 fun bindImageEdit(imgView: ImageView, imageEdit: TuplaImageEdit?) {
     imageEdit?.let {
         if ((it.urlImagen ?: "").isNotEmpty()) {
+            imgView.colorFilter = null
+            imgView.scaleType = ImageView.ScaleType.CENTER_CROP
             val sesion = SesionData(imgView.context).getCurrentSesion()
             imgView.load(it.urlImagen) {
                 setHeader("Authorization", sesion?.getTokenBearer()!!)
                 placeholder(R.drawable.loading_animation)
+                error(R.drawable.ic_broken_image)
             }
             return
         }
         if (it.uriFile != null) {
+            imgView.colorFilter = null
+            imgView.scaleType = ImageView.ScaleType.CENTER_CROP
             imgView.load(it.uriFile)
+            return
         }
+
+        imgView.setColorFilter(imgView.context.getColor(R.color.purple))
+        imgView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        imgView.load(R.drawable.logo)
     }
 }
 

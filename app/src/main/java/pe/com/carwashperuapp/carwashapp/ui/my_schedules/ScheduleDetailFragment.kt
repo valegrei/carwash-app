@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.chip.Chip
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
@@ -18,6 +19,7 @@ import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentScheduleDetailBinding
+import pe.com.carwashperuapp.carwashapp.ui.util.generarHorariosPrevio
 
 
 class ScheduleDetailFragment : Fragment(), MenuProvider {
@@ -69,6 +71,7 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
             editStatus.observe(viewLifecycleOwner) {
                 mostrarTitulo(it)
                 mostrarBotones(it)
+                mostrarVistaPrevia(it)
                 salir(it)
             }
         }
@@ -80,6 +83,24 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+    }
+
+    private fun mostrarVistaPrevia(editStatus: EditStatus) {
+        if (editStatus == EditStatus.VIEW) {
+            val horarioConfig = viewModel.selectedHorarioConfig.value!!
+            val horarios = generarHorariosPrevio(
+                horarioConfig.horaIni,
+                horarioConfig.minIni,
+                horarioConfig.horaFin,
+                horarioConfig.minFin,
+                horarioConfig.intervalo
+            )
+            horarios.forEach {
+                val chip = Chip(requireContext())
+                chip.text = it.toString()
+                binding.chgHorarios.addView(chip)
+            }
+        }
     }
 
     fun salir(editStatus: EditStatus) {

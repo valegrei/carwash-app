@@ -90,9 +90,23 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
                         android:text="@{viewModel.selectedHorarioConfig.intervaloMin()}"
                         android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                         tools:text="30 min" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="@string/schedules_label_vista_previa"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chg_horarios"
+                        app:singleSelection="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
 
                 <LinearLayout

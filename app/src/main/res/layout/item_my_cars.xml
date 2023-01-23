@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vehiculo"
+            type="pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/img_car"
+                android:scaleType="centerCrop"
+                imageUrl="@{vehiculo.getUrlArchivo()}"
+                tools:srcCompat="@drawable/car"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:id="@+id/ly_descr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/shadow"
+                app:layout_constraintBottom_toBottomOf="@+id/img_car">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="@{vehiculo.modelo}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        tools:text="BMW M4" />
+
+                    <TextView
+                        android:text="@{vehiculo.marca}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        tools:text="BMW" />
+                </LinearLayout>
+
+                <TextView
+                    android:text="@{vehiculo.placa}"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelAccent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    tools:text="MYS 5521" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

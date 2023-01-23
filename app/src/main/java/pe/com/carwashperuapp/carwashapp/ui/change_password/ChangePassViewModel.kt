@@ -67,9 +67,8 @@ class ChangePassViewModel(
             val sesion = sesionData.getCurrentSesion()
             //guarda lo cambiado
             Api.retrofitService.cambiarClaveUsu(
-                sesion?.usuario?.id!!,
                 ReqCambiarClaveUsu(claveOld, claveNew),
-                sesion.getTokenBearer()
+                sesion?.getTokenBearer()!!
             )
             _status.value = Status.SUCCESS
         }

@@ -1,21 +1,25 @@
-package pe.com.carwashperuapp.carwashapp.ui.account
+package pe.com.carwashperuapp.carwashapp.ui.my_cars
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import pe.com.carwashperuapp.carwashapp.CarwashApplication
+import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.BottomsheetEditPhotoBinding
 
 class EditPhotoBottomSheetDialog : BottomSheetDialogFragment() {
 
     private var _binding: BottomsheetEditPhotoBinding? = null
     private val binding get() = _binding!!
-    /*private val viewModel: MainViewModel by activityViewModels {
-        MainViewModelFactory(
-            SesionData(requireContext())
+    private val viewModel: MyCarsViewModel by activityViewModels {
+        MyCarsViewModelFactory(
+            SesionData(requireContext()),
+            (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
-    }*/
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,19 +31,19 @@ class EditPhotoBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     fun nuevaFoto() {
-        //viewModel.lanzarAddFoto()
         dismiss()
+        viewModel.lanzarAddFoto()
     }
 
     fun borrarFoto() {
         dismiss()
-        //viewModel.eliminarFoto()
+        viewModel.eliminarFoto()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //binding.viewModel = viewModel
         binding.fragment = this
+        binding.viewModel = viewModel
     }
 
     override fun onDestroyView() {
