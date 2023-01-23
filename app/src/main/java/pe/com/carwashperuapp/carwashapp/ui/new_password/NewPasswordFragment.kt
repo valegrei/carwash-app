@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import pe.com.carwashperuapp.carwashapp.MainAdminActivity
+import pe.com.carwashperuapp.carwashapp.MainCliActivity
 import pe.com.carwashperuapp.carwashapp.MainDisActivity
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentNewPasswordBinding
@@ -70,7 +71,7 @@ class NewPasswordFragment : Fragment() {
     private fun goClient() {
         Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()
-            val intent = Intent(context, MainDisActivity::class.java)
+            val intent = Intent(context, MainCliActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }, 500)

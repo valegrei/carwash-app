@@ -20,6 +20,7 @@ import pe.com.carwashperuapp.carwashapp.database.ubigeo.Departamento
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Distrito
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Provincia
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentPlaceDetailBinding
+import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
 class PlaceDetailFragment : Fragment(), MenuProvider {
 
@@ -108,6 +109,13 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
                 mostrarTitulo(it)
                 mostrarBotones(it)
                 salir(it)
+            }
+            status.observe(viewLifecycleOwner) {
+                when (it) {
+                    Status.LOADING -> showLoading()
+                    Status.ERROR, Status.SUCCESS -> hideLoading()
+                    else -> {}
+                }
             }
             errDepartamento.observe(viewLifecycleOwner) {
                 binding.tiDepartamento.error = it
@@ -237,5 +245,16 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    var progressDialog = ProgressDialog()
+
+    fun showLoading() {
+        progressDialog.show(childFragmentManager, "progressDialog")
+    }
+
+    fun hideLoading() {
+        if (progressDialog.isVisible)
+            progressDialog.dismiss()
     }
 }

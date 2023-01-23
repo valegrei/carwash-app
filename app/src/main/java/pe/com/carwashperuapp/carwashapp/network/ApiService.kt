@@ -20,8 +20,8 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-const val BASE_URL = "http://192.168.100.9:3000"
-//const val BASE_URL = "https://www.carwashperuapp.com"
+//const val BASE_URL = "http://192.168.100.9:3000"
+const val BASE_URL = "https://www.carwashperuapp.com"
 
 object BigDecimalAdapter {
     @FromJson
@@ -267,6 +267,15 @@ interface ApiService {
         @Path("idVehiculo") idVehiculo: Int,
         @Header("Authorization") authToken: String
     ): Response
+
+    @GET("api/clientes/locales")
+    suspend fun obtenerLocales(
+        @Query("latNE") latNE: String,
+        @Query("longNE") longNE: String,
+        @Query("latSW") latSW: String,
+        @Query("longSW") longSW: String,
+        @Header("Authorization") authToken: String
+    ): RespLocales
 }
 
 /**

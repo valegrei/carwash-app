@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import pe.com.carwashperuapp.carwashapp.MainAdminActivity
+import pe.com.carwashperuapp.carwashapp.MainCliActivity
 import pe.com.carwashperuapp.carwashapp.MainDisActivity
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -79,7 +80,7 @@ class VerifyFragment : Fragment() {
     private fun goClient() {
         Handler(Looper.getMainLooper()).postDelayed({
             progressDialog.dismiss()
-            val intent = Intent(context, MainDisActivity::class.java)
+            val intent = Intent(context, MainCliActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }, 500)

@@ -18,6 +18,7 @@ import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentCarDetailBinding
+import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
 class CarDetailFragment : Fragment(), MenuProvider {
 
@@ -57,6 +58,13 @@ class CarDetailFragment : Fragment(), MenuProvider {
                 mostrarTitulo(it)
                 mostrarBotones(it)
                 salir(it)
+            }
+            status.observe(viewLifecycleOwner) {
+                when (it) {
+                    Status.LOADING -> showLoading()
+                    Status.ERROR, Status.SUCCESS -> hideLoading()
+                    else -> {}
+                }
             }
             errMarca.observe(viewLifecycleOwner) {
                 binding.tiMarca.error = it
@@ -227,5 +235,16 @@ class CarDetailFragment : Fragment(), MenuProvider {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    var progressDialog = ProgressDialog()
+
+    fun showLoading() {
+        progressDialog.show(childFragmentManager, "progressDialog")
+    }
+
+    fun hideLoading() {
+        if (progressDialog.isVisible)
+            progressDialog.dismiss()
     }
 }

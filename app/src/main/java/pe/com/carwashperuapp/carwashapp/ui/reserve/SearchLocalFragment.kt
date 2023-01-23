@@ -14,15 +14,14 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,6 +29,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
@@ -38,9 +39,8 @@ import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentSearchLocalBinding
+import pe.com.carwashperuapp.carwashapp.model.Local
 import pe.com.carwashperuapp.carwashapp.ui.my_places.AddPlaceFragment
-import pe.com.carwashperuapp.carwashapp.ui.my_places.MyPlacesViewModel
-import pe.com.carwashperuapp.carwashapp.ui.my_places.MyPlacesViewModelFactory
 import pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceAutcompleteListAdapter
 
 class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
@@ -51,7 +51,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     private var _binding: FragmentSearchLocalBinding? = null
     private val binding get() = _binding!!
 
-    private val pERMISSION_ID = 42
+    private val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     lateinit var mMap: GoogleMap
     lateinit var placesClient: PlacesClient
@@ -60,11 +60,10 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     // Current location is set to Lima, this will be of no use
     var currentLocation: LatLng = LatLng(-12.046664, -77.0431219)
 
-    private val viewModel: MyPlacesViewModel by activityViewModels {
-        MyPlacesViewModelFactory(
+    private val viewModel: ReserveViewModel by activityViewModels {
+        ReserveViewModelFactory(
             SesionData(requireContext()),
             (activity?.application as CarwashApplication).database.direccionDao(),
-            (activity?.application as CarwashApplication).database.ubigeoDao(),
         )
     }
 
@@ -75,15 +74,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
-        if (viewModel.selectedLatLng.value == null)
-            getLastLocation()
-        else
-            mMap.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    viewModel.selectedLatLng.value!!,
-                    15.0f
-                )
-            )
+        getLastLocation()
     }
 
     override fun onCreateView(
@@ -121,6 +112,10 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             searchLocales()
         }
 
+        viewModel.locales.observe(viewLifecycleOwner){
+            mostrarLocales(it)
+        }
+
         //Recyclerview
         adapter = PlaceAutcompleteListAdapter { goPlace(it.placeId) }
         binding.rvPlacesList.adapter = adapter
@@ -132,6 +127,19 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             Lifecycle.State.RESUMED
         )
 
+    }
+
+    private fun mostrarLocales(locales: List<Local>) {
+        val map = mutableMapOf<Marker,Local>()
+        mMap.clear()
+        locales.forEach {
+            val markerOp = MarkerOptions()
+                .position(LatLng(it.latitud.toDouble(), it.longitud.toDouble()))
+                .title(it.distrib.razonSocial)
+            val marker = mMap.addMarker(markerOp)
+            map[marker!!] = it
+        }
+        viewModel.setMarkersData(map)
     }
 
 
@@ -220,7 +228,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ),
-            pERMISSION_ID
+            PERMISSION_ID
         )
     }
 
@@ -230,14 +238,14 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         permissions: Array<String>,
         grantResults: IntArray
     ) {
-        if (requestCode == pERMISSION_ID) {
+        if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 getLastLocation()
             }
         }
     }
 
-    private var searchView : SearchView?=null
+    private var searchView: SearchView? = null
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.search_menu, menu)
@@ -340,6 +348,10 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     }
 
     private fun searchLocales() {
+        val bounds = mMap.projection.visibleRegion.latLngBounds
+        val cornerNE = bounds.northeast
+        val cornerSW = bounds.southwest
+        viewModel.consultarLocales(cornerNE, cornerSW)
     }
 
     override fun onDestroyView() {

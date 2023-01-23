@@ -19,8 +19,8 @@ import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentScheduleDetailBinding
+import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 import pe.com.carwashperuapp.carwashapp.ui.util.generarHorariosPrevio
-
 
 class ScheduleDetailFragment : Fragment(), MenuProvider {
 
@@ -67,6 +67,13 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
                     it
                 )
                 binding.acLocal.setAdapter(adapter)
+            }
+            status.observe(viewLifecycleOwner) {
+                when (it) {
+                    Status.LOADING -> showLoading()
+                    Status.ERROR, Status.SUCCESS -> hideLoading()
+                    else -> {}
+                }
             }
             editStatus.observe(viewLifecycleOwner) {
                 mostrarTitulo(it)
@@ -259,5 +266,16 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    var progressDialog = ProgressDialog()
+
+    fun showLoading() {
+        progressDialog.show(childFragmentManager, "progressDialog")
+    }
+
+    fun hideLoading() {
+        if (progressDialog.isVisible)
+            progressDialog.dismiss()
     }
 }
