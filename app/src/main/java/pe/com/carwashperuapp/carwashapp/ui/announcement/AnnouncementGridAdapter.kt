@@ -47,8 +47,8 @@ class AnnouncementGridAdapter(private val onItemClicked: (Anuncio) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: AnnouncementViewHolder, position: Int) {
-        holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { onItemClicked(getItem(position)) }
+        holder.bind(getItem(holder.adapterPosition))
+        holder.itemView.setOnClickListener { onItemClicked(getItem(holder.adapterPosition)) }
     }
 
 }

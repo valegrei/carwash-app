@@ -1,16 +1,15 @@
 package pe.com.carwashperuapp.carwashapp
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoUsuario
 import java.util.*
 
 enum class Status { LOGIN, ADMIN, CLIENT, DISTRIB }
 
-class SplashViewModel(private val sesionData: SesionData) : ViewModel() {
+class SplashViewModel(
+    private val sesionData: SesionData,
+) : ViewModel() {
 
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
@@ -35,7 +34,7 @@ class SplashViewModel(private val sesionData: SesionData) : ViewModel() {
 }
 
 class SplashViewModelFactory(
-    private val sesionData: SesionData
+    private val sesionData: SesionData,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {

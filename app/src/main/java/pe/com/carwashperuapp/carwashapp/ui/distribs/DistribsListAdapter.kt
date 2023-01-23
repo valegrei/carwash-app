@@ -43,8 +43,8 @@ class DistribsListAdapter(private val onItemClicked: (Usuario) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: DistribViewHolder, position: Int) {
-        holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { onItemClicked(getItem(position)) }
+        holder.bind(getItem(holder.adapterPosition))
+        holder.itemView.setOnClickListener { onItemClicked(getItem(holder.adapterPosition)) }
     }
 
     override fun onFilter(list: List<Usuario>, constraint: String): List<Usuario> {

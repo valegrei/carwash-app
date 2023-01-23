@@ -11,7 +11,9 @@ import pe.com.carwashperuapp.carwashapp.database.SesionData
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private val viewModel: SplashViewModel by viewModels {
-        SplashViewModelFactory(SesionData(this))
+        SplashViewModelFactory(
+            SesionData(this),
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun goClient() {
+        val intentSrv = Intent(this, SincroCliService::class.java)
+        startService(intentSrv)
         val intent = Intent(this, MainCliActivity::class.java)
         startActivity(intent)
         finish()

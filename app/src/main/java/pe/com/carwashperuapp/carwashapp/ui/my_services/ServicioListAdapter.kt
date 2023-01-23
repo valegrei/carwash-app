@@ -43,8 +43,8 @@ class ServicioListAdapter(private val onItemClicked: (Servicio) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ServicioViewHolder, position: Int) {
-        holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { onItemClicked(getItem(position)) }
+        holder.bind(getItem(holder.adapterPosition))
+        holder.itemView.setOnClickListener { onItemClicked(getItem(holder.adapterPosition)) }
     }
 
 }

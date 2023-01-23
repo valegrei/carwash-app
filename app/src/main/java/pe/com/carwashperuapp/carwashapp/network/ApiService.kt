@@ -109,6 +109,13 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): Response
 
+    @PUT("api/admin/usuarios/{id}/password")
+    suspend fun cambiarClave(
+        @Path("id") idUsuario: Int,
+        @Body cambiarClaveAdmin: ReqCambiarClaveAdmin,
+        @Header("Authorization") authToken: String
+    ): Response
+
     @GET("api/admin/anuncios")
     suspend fun obtenerAnuncios(
         @Query("lastSincro") lastSincro: Date,

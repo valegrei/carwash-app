@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import pe.com.carwashperuapp.carwashapp.MainAdminActivity
 import pe.com.carwashperuapp.carwashapp.MainCliActivity
 import pe.com.carwashperuapp.carwashapp.MainDisActivity
+import pe.com.carwashperuapp.carwashapp.SincroCliService
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentNewPasswordBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
@@ -61,7 +62,6 @@ class NewPasswordFragment : Fragment() {
 
     private fun goAdmin() {
         Handler(Looper.getMainLooper()).postDelayed({
-            progressDialog.dismiss()
             val intent = Intent(context, MainAdminActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
@@ -69,8 +69,9 @@ class NewPasswordFragment : Fragment() {
     }
 
     private fun goClient() {
+        val intentSrv = Intent(requireContext(), SincroCliService::class.java)
+        requireActivity().startService(intentSrv)
         Handler(Looper.getMainLooper()).postDelayed({
-            progressDialog.dismiss()
             val intent = Intent(context, MainCliActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
@@ -79,7 +80,6 @@ class NewPasswordFragment : Fragment() {
 
     private fun goDistr() {
         Handler(Looper.getMainLooper()).postDelayed({
-            progressDialog.dismiss()
             val intent = Intent(context, MainDisActivity::class.java)
             startActivity(intent)
             requireActivity().finish()

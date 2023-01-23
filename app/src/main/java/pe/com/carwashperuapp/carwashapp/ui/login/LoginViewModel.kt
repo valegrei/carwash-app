@@ -15,7 +15,7 @@ import pe.com.carwashperuapp.carwashapp.network.handleThrowable
 import pe.com.carwashperuapp.carwashapp.network.request.ReqLogin
 import java.util.*
 
-enum class Status { LOADING, ERROR, GO_ADMIN, GO_CLIENT, GO_DISTR, VERIFICAR, CLEARED }
+enum class Status { LOADING, ERROR, GO_SPLASH, GO_ADMIN, GO_CLIENT, GO_DISTR, VERIFICAR, CLEARED }
 
 class LoginViewModel(private val sesionData: SesionData) :
     ViewModel() {

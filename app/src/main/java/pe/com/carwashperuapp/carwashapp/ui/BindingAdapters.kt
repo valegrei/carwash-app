@@ -64,7 +64,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     } else {
         imgView.setColorFilter(imgView.context.getColor(R.color.purple))
         imgView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        imgView.load(R.drawable.logo)
+        imgView.load(R.drawable.ic_splash)
     }
 }
 
@@ -107,7 +107,7 @@ fun bindImageEdit(imgView: ImageView, imageEdit: TuplaImageEdit?) {
 
         imgView.setColorFilter(imgView.context.getColor(R.color.purple))
         imgView.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        imgView.load(R.drawable.logo)
+        imgView.load(R.drawable.ic_splash)
     }
 }
 

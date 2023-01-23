@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import pe.com.carwashperuapp.carwashapp.MainAdminActivity
-import pe.com.carwashperuapp.carwashapp.MainCliActivity
-import pe.com.carwashperuapp.carwashapp.MainDisActivity
-import pe.com.carwashperuapp.carwashapp.R
+import pe.com.carwashperuapp.carwashapp.*
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentVerifyBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
@@ -70,7 +67,6 @@ class VerifyFragment : Fragment() {
 
     private fun goAdmin() {
         Handler(Looper.getMainLooper()).postDelayed({
-            progressDialog.dismiss()
             val intent = Intent(context, MainAdminActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
@@ -78,8 +74,9 @@ class VerifyFragment : Fragment() {
     }
 
     private fun goClient() {
+        val intentSrv = Intent(requireContext(), SincroCliService::class.java)
+        requireActivity().startService(intentSrv)
         Handler(Looper.getMainLooper()).postDelayed({
-            progressDialog.dismiss()
             val intent = Intent(context, MainCliActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
@@ -88,7 +85,6 @@ class VerifyFragment : Fragment() {
 
     private fun goDistr() {
         Handler(Looper.getMainLooper()).postDelayed({
-            progressDialog.dismiss()
             val intent = Intent(context, MainDisActivity::class.java)
             startActivity(intent)
             requireActivity().finish()

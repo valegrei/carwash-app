@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.CancelableCallback
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -73,7 +74,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
 
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12.5F))
         getLastLocation()
     }
 
@@ -142,6 +143,13 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         viewModel.setMarkersData(map)
     }
 
+    private var cameraCallback = object : CancelableCallback{
+        override fun onCancel() {}
+
+        override fun onFinish() {
+            searchLocales()
+        }
+    }
 
     // Get current location
     @SuppressLint("MissingPermission")
@@ -157,7 +165,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
                         currentLocation = LatLng(location.latitude, location.longitude)
                         //mMap.clear()
                         //mMap.addMarker(MarkerOptions().position(currentLocation))
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12.5F),cameraCallback)
                     }
                 }
             } else {
@@ -339,7 +347,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             .addOnSuccessListener { response: FetchPlaceResponse ->
                 val place = response.place
                 showMap()
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 16F))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 12.5F),cameraCallback)
             }.addOnFailureListener { exception: Exception ->
                 if (exception is ApiException) {
                     Log.e(TAG, "Place not found: ${exception.message}")

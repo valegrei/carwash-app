@@ -36,8 +36,8 @@ class MyCarsListAdapter(private val onItemClicked: (Vehiculo) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.bind(getItem(position))
-        holder.itemView.setOnClickListener { onItemClicked(getItem(position)) }
+        holder.bind(getItem(holder.adapterPosition))
+        holder.itemView.setOnClickListener { onItemClicked(getItem(holder.adapterPosition)) }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Vehiculo>() {
@@ -46,7 +46,8 @@ class MyCarsListAdapter(private val onItemClicked: (Vehiculo) -> Unit) :
         }
 
         override fun areContentsTheSame(oldItem: Vehiculo, newItem: Vehiculo): Boolean {
-            return oldItem.marca == newItem.marca
+            return oldItem.id == newItem.id
+                    && oldItem.marca == newItem.marca
                     && oldItem.modelo == newItem.modelo
                     && oldItem.year == newItem.year
                     && oldItem.placa == newItem.placa

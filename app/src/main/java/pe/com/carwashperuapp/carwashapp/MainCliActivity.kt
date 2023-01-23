@@ -3,17 +3,22 @@ package pe.com.carwashperuapp.carwashapp
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import coil.load
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.ActivityMainCliBinding
+import pe.com.carwashperuapp.carwashapp.network.BASE_URL
 
 class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -49,10 +54,30 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
+        mostrarFotoVehiculo()
         viewModel.sesionStatus.observe(this) {
             when (it) {
                 SesionStatus.CLOSED -> goLogin()
                 else -> {}
+            }
+        }
+    }
+
+    private fun mostrarFotoVehiculo() {
+        val vehiculoDao = (application as CarwashApplication).database.vehiculoDao()
+        lifecycleScope.launch {
+            val sesion = viewModel.sesion.value!!
+            vehiculoDao.obtenerPathFotoVehiculo(sesion.usuario.id!!).collect {
+                val header = binding.navView.getHeaderView(0)
+                val imgCar = header.findViewById<ImageView>(R.id.img_car)
+                if (!it.isNullOrEmpty()) {
+                    val url = "$BASE_URL$it"
+                    imgCar.load(url) {
+                        setHeader("Authorization", sesion.getTokenBearer())
+                    }
+                } else {
+                    imgCar.setImageDrawable(null)
+                }
             }
         }
     }

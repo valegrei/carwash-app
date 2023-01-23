@@ -14,6 +14,9 @@ interface VehiculoDao {
     @Query("SELECT * FROM vehiculos WHERE id_cliente = :idCliente AND estado = 1")
     suspend fun obtenerVehiculos2(idCliente: Int): List<Vehiculo>
 
+    @Query("SELECT path FROM vehiculos where id_cliente = :idCliente AND path IS NOT NULL AND estado=1 LIMIT 1")
+    fun obtenerPathFotoVehiculo(idCliente: Int): Flow<String?>
+
     @Insert(onConflict = REPLACE)
     suspend fun guardarVehiculos(servicio: List<Vehiculo>)
 }
