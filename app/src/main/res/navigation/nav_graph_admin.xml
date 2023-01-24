@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_navigation_users_to_addAdminFragment"
             app:destination="@id/addAdminFragment" />
+        <action
+            android:id="@+id/action_navigation_users_self"
+            app:destination="@id/navigation_users" />
+        <action
+            android:id="@+id/action_navigation_users_to_usersChangePassFragment"
+            app:destination="@id/usersChangePassFragment" />
     </fragment>
 
     <fragment
@@ -80,4 +86,9 @@
         android:name="pe.com.carwashperuapp.carwashapp.ui.change_password.ChangePassFragment"
         android:label="@string/change_pass_title"
         tools:layout="@layout/fragment_change_pass" />
+    <fragment
+        android:id="@+id/usersChangePassFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.users.UsersChangePassFragment"
+        android:label="@string/title_change_pass_user"
+        tools:layout="@layout/fragment_change_pass_admin" />
 </navigation>

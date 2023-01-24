@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.users.UsersChangePassFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="fragment"
+            type="pe.com.carwashperuapp.carwashapp.ui.users.UsersChangePassFragment" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.carwashperuapp.carwashapp.ui.users.UsersViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_email"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:text="@{viewModel.selectedUsu.correo}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                    tools:text="valegrei@outlook.com" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxBackgroundColor="@color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/change_pass_new"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.claveNew}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="Alegre" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:boxBackgroundColor="@color/white">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/change_pass_new_re"
+                        android:inputType="textPassword"
+                        android:text="@={viewModel.claveNewRe}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="Ibáñez" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.errMsg}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
+
+                <Button
+                    android:id="@+id/button"
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginHorizontal="@dimen/large_margin"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:onClick="@{()->viewModel.cambiarClave()}"
+                    android:text="@string/change_pass_title"
+                    android:theme="@style/ThemeOverlay.CarwashApp.Button" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

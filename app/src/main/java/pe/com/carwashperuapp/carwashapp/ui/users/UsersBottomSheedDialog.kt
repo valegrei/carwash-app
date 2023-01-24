@@ -25,8 +25,8 @@ class UsersBottomSheedDialog : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = BottomsheetUsersBinding.inflate(inflater, container, false);
+    ): View {
+        _binding = BottomsheetUsersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,6 +47,6 @@ class UsersBottomSheedDialog : BottomSheetDialogFragment() {
     }
 
     companion object {
-        val TAG = "UsersBottomSheedDialog"
+        const val TAG = "UsersBottomSheedDialog"
     }
 }

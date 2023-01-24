@@ -193,6 +193,7 @@
     <string name="btnsh_current_user">Usuario actual</string>
     <string name="btnsh_add_photo">Nueva foto de perfil</string>
     <string name="btnsh_delete_photo">Eliminar foto actual</string>
+    <string name="btnsh_change_pass">Cambiar Clave</string>
 
     <!--    Anuncios -->
     <string name="announc_img_descr">Anuncio</string>
@@ -262,4 +263,5 @@
     <string name="btnsh_reserve">Reservar</string>
     <string name="reserve_distance">Distancia</string>
     <string name="reserve_search_in_area">Buscar en el área</string>
+    <string name="title_change_pass_user">Cambiar Clave</string>
 </resources>

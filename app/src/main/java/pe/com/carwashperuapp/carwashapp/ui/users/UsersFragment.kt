@@ -68,6 +68,7 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
         viewModel.goStatus.observe(viewLifecycleOwner) {
             when (it) {
                 GoStatus.SHOW_DELETE -> showEliminar()
+                GoStatus.SHOW_CHANGE_PASSWORD  -> showChangePassword()
                 else -> {}
             }
         }
@@ -122,6 +123,11 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+        viewModel.clearGoStatus()
+    }
+
+    private fun showChangePassword() {
+        findNavController().navigate(R.id.action_navigation_users_to_usersChangePassFragment)
         viewModel.clearGoStatus()
     }
 

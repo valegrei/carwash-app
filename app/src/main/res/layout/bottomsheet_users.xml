@@ -126,16 +126,32 @@
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                 android:visibility="@{!viewModel.mostrarEliminar() ? View.VISIBLE : View.GONE}" />
 
-            <Button
-                style="@style/Widget.Material3.Button.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="@{()->viewModel.showEliminar()}"
-                android:text="@string/btnsh_delete"
-                android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
-                android:visibility="@{viewModel.mostrarEliminar() ? View.VISIBLE : View.GONE}"
-                app:icon="@drawable/ic_baseline_delete_24" />
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.showCambiarClave()}"
+                    android:layout_marginHorizontal="4dp"
+                    android:text="@string/btnsh_change_pass"
+                    android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                    app:icon="@drawable/ic_baseline_security_24" />
+                <Button
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:onClick="@{()->viewModel.showEliminar()}"
+                    android:text="@string/btnsh_delete"
+                    android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
+                    android:visibility="@{viewModel.mostrarEliminar() ? View.VISIBLE : View.GONE}"
+                    app:icon="@drawable/ic_baseline_delete_24" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

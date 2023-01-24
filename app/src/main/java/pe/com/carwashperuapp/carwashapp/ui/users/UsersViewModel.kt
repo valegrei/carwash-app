@@ -10,10 +10,11 @@ import pe.com.carwashperuapp.carwashapp.database.sesion.Sesion
 import pe.com.carwashperuapp.carwashapp.database.usuario.*
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
+import pe.com.carwashperuapp.carwashapp.network.request.ReqCambiarClaveAdmin
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
-enum class GoStatus {SHOW_DELETE, NORMAL }
+enum class GoStatus { SHOW_DELETE, SHOW_CHANGE_PASSWORD, NORMAL }
 
 class UsersViewModel(
     private val sesionData: SesionData, private val usuarioDao: UsuarioDao
@@ -40,7 +41,12 @@ class UsersViewModel(
         _goStatus.value = GoStatus.SHOW_DELETE
     }
 
-    fun clearGoStatus(){
+    fun showCambiarClave() {
+        clearClave()
+        _goStatus.value = GoStatus.SHOW_CHANGE_PASSWORD
+    }
+
+    fun clearGoStatus() {
         _goStatus.value = GoStatus.NORMAL
     }
 
@@ -97,10 +103,59 @@ class UsersViewModel(
         }
     }
 
+    //Datos para editar cuenta
+    var claveNew = MutableLiveData<String>()
+    var claveNewRe = MutableLiveData<String>()
+
+    fun cambiarClave() {
+        val claveNew = (this.claveNew.value ?: "").trim()
+        val claveNewRe = (this.claveNewRe.value ?: "").trim()
+        if (validar(claveNew, claveNewRe)) {
+            cambiarClave(claveNew)
+        }
+    }
+
+    private fun validar(claveNew: String, claveNewRe: String): Boolean {
+        if (claveNew.isEmpty()) {
+            _errMsg.value = "Campo nueva clave vacío"
+            return false
+        }
+        if (claveNewRe.isEmpty()) {
+            _errMsg.value = "Campo repetir nueva clave vacío"
+            return false
+        }
+        if (claveNew != claveNewRe) {
+            _errMsg.value = "Claves no coindicen"
+            return false
+        }
+        return true
+    }
+
+    private fun clearClave() {
+        claveNew.value = ""
+        claveNewRe.value = ""
+    }
+
+    private fun cambiarClave(claveNew: String) {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            //guarda lo cambiado
+            Api.retrofitService.cambiarClave(
+                selectedUsu.value?.id!!,
+                ReqCambiarClaveAdmin(claveNew),
+                sesion?.getTokenBearer()!!
+            )
+            _status.value = Status.SUCCESS
+        }
+    }
+
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
         Log.e(TAG, e.message, e)
         val exceptionError = e.handleThrowable()
-        _errMsg.value = exceptionError.message
+        if (!exceptionError.message.contains("No hay")) {
+            _errMsg.value = exceptionError.message
+        }
         _status.value = Status.ERROR
     }
 }
