@@ -74,6 +74,11 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
 
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
+        mMap.setOnMarkerClickListener {
+            viewModel.selectLocal(it, currentLocation)
+            LocalBottomSheedDialog().show(childFragmentManager, LocalBottomSheedDialog.TAG)
+            true
+        }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12.5F))
         getLastLocation()
     }
@@ -113,7 +118,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             searchLocales()
         }
 
-        viewModel.locales.observe(viewLifecycleOwner){
+        viewModel.locales.observe(viewLifecycleOwner) {
             mostrarLocales(it)
         }
 
@@ -131,7 +136,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     }
 
     private fun mostrarLocales(locales: List<Local>) {
-        val map = mutableMapOf<Marker,Local>()
+        val map = mutableMapOf<Marker, Local>()
         mMap.clear()
         locales.forEach {
             val markerOp = MarkerOptions()
@@ -143,7 +148,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         viewModel.setMarkersData(map)
     }
 
-    private var cameraCallback = object : CancelableCallback{
+    private var cameraCallback = object : CancelableCallback {
         override fun onCancel() {}
 
         override fun onFinish() {
@@ -165,7 +170,12 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
                         currentLocation = LatLng(location.latitude, location.longitude)
                         //mMap.clear()
                         //mMap.addMarker(MarkerOptions().position(currentLocation))
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12.5F),cameraCallback)
+                        mMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                currentLocation,
+                                12.5F
+                            ), cameraCallback
+                        )
                     }
                 }
             } else {
@@ -347,7 +357,10 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             .addOnSuccessListener { response: FetchPlaceResponse ->
                 val place = response.place
                 showMap()
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng!!, 12.5F),cameraCallback)
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(place.latLng!!, 12.5F),
+                    cameraCallback
+                )
             }.addOnFailureListener { exception: Exception ->
                 if (exception is ApiException) {
                     Log.e(TAG, "Place not found: ${exception.message}")

@@ -257,4 +257,9 @@
     <string name="car_title_view">Ver Auto</string>
     <string name="car_title_detail">Auto</string>
     <string name="account">Cuenta</string>
+
+    <!--    Reserve-->
+    <string name="btnsh_reserve">Reservar</string>
+    <string name="reserve_distance">Distancia</string>
+    <string name="reserve_search_in_area">Buscar en el área</string>
 </resources>

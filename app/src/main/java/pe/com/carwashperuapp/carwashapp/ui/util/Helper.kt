@@ -1,6 +1,7 @@
 package pe.com.carwashperuapp.carwashapp.ui.util
 
 import pe.com.carwashperuapp.carwashapp.model.Horario
+import kotlin.math.*
 
 fun formatHora(hora: Int, min: Int): String {
     val minStr = if (min.toString().length < 2) "0$min" else min.toString()
@@ -39,7 +40,13 @@ fun formatHora(horaSrc: String): String {
     }
 }
 
-fun generarHorariosPrevio(horaIni: Int, minIni: Int, horaFin: Int, minFin: Int, intervalo: Int): List<Horario>{
+fun generarHorariosPrevio(
+    horaIni: Int,
+    minIni: Int,
+    horaFin: Int,
+    minFin: Int,
+    intervalo: Int
+): List<Horario> {
     val minutosIni = horaIni * 60 + minIni
     val minutosFin = horaFin * 60 + minFin
     val nuevosHorarios = mutableListOf<Horario>()
@@ -71,4 +78,35 @@ fun minToTime(minutos: Int): String {
     if (hora.length < 2) hora = "0$hora"
     if (min.length < 2) min = "0$min"
     return "$hora:$min:00"
+}
+
+fun formatearDistancia(meters: Int?): String {
+    return if (meters != null) {
+        if (meters < 1000)
+            "$meters m"
+        else if (meters < 10000) {
+            val km: Float = meters / 1000f
+            String.format("%.1f Km", km)
+        } else if (meters < 500000) {
+            val km: Int = meters / 1000
+            String.format("%d Km", km)
+        } else ""
+    } else ""
+}
+
+fun calcularDistanciaEnMetros(
+    latitude1: Double,
+    longitude1: Double,
+    latitude2: Double,
+    longitude2: Double,
+): Int {
+    val theta = longitude1 - longitude2
+    val distance = 60 * 1.1515 * (180 / PI) * acos(
+        sin(latitude1 * (PI / 180)) * sin(latitude2 * (PI / 180)) +
+                cos(latitude1 * (PI / 180)) * cos(latitude2 * (PI / 180)) * cos(
+            theta * (PI / 180)
+        )
+    )
+    //En metros
+    return (distance * 1.609344 * 1000).roundToInt()
 }

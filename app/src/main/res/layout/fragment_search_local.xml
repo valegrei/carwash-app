@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"/>
+            app:layout_constraintGuide_percent="0.5" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_search_area"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/small_margin"
             android:layout_marginBottom="@dimen/small_margin"
-            android:contentDescription="@string/menu_reserve"
+            android:contentDescription="@string/reserve_search_in_area"
             app:layout_constraintBottom_toTopOf="@id/btn_center"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_baseline_search_24" />
@@ -50,10 +50,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:visibility="gone"
-        android:clipToPadding="false"
         android:id="@+id/rv_places_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>

@@ -22,12 +22,13 @@
         <service
             android:name=".SincroCliService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".MainCliActivity"
             android:exported="false"
             android:label="@string/title_activity_main_cli"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.CarwashApp.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"

@@ -7,11 +7,12 @@ import com.google.android.gms.maps.model.Marker
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
-import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
 import pe.com.carwashperuapp.carwashapp.model.Local
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
+import pe.com.carwashperuapp.carwashapp.ui.util.calcularDistanciaEnMetros
+import pe.com.carwashperuapp.carwashapp.ui.util.formatearDistancia
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
@@ -38,16 +39,16 @@ class ReserveViewModel(
     val mostrarEditar: LiveData<Boolean> = _mostrarEditar
 
     //seleccionados
-    val direccion = MutableLiveData<String>()
-    private var _selectedDireccion = MutableLiveData<Direccion>()
-    val selectedDireccion: LiveData<Direccion> = _selectedDireccion
     private var _locales = MutableLiveData<List<Local>>()
     val locales: LiveData<List<Local>> = _locales
-    private var _markersData = MutableLiveData<Map<Marker,Local>>()
-    val markersData: LiveData<Map<Marker,Local>> = _markersData
+    private var _markersData = MutableLiveData<Map<Marker, Local>>()
+    val markersData: LiveData<Map<Marker, Local>> = _markersData
+    private var _selectedLocal = MutableLiveData<Local>()
+    val selectedLocal: LiveData<Local> = _selectedLocal
+    private var _distanceToLocal = MutableLiveData<String>()
+    val distanceToLocal: LiveData<String> = _distanceToLocal
 
     fun nuevaReserva() {
-        this.direccion.value = ""
         _errMsg.value = ""
         _editStatus.value = EditStatus.NEW
         _mostrarEditar.value = true
@@ -57,7 +58,6 @@ class ReserveViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroDirecciones()
             try {
                 val res = Api.retrofitService.obtenerLocales(
                     cornerNE.latitude.toString(),
@@ -74,8 +74,19 @@ class ReserveViewModel(
         }
     }
 
-    fun setMarkersData(map: Map<Marker, Local>){
+    fun setMarkersData(map: Map<Marker, Local>) {
         _markersData.value = map
+    }
+
+    fun selectLocal(marker: Marker, currentLocation: LatLng) {
+        val local = markersData.value!![marker]!!
+        _selectedLocal.value = local
+        _distanceToLocal.value = formatearDistancia(
+            calcularDistanciaEnMetros(
+                marker.position.latitude, marker.position.longitude,
+                currentLocation.latitude, currentLocation.longitude
+            )
+        )
     }
 
     private fun clearErrs() {
