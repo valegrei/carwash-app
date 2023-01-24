@@ -29,9 +29,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/opensans_semibold"
                 android:text="@{viewModel.selectedLocal.distrib.razonSocial}"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
                 tools:text="Lavados de autos Santa Rosa" />
 
 
@@ -39,9 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/min_margin"
-                android:fontFamily="@font/opensans_regular"
                 android:text="@{viewModel.selectedLocal.direccion}"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                 app:drawableStartCompat="@drawable/ic_outline_place_24"
                 tools:text="Av Santa Rosa, 201" />
 

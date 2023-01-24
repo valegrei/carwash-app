@@ -264,4 +264,10 @@
     <string name="reserve_distance">Distancia</string>
     <string name="reserve_search_in_area">Buscar en el área</string>
     <string name="title_change_pass_user">Cambiar Clave</string>
+    <string name="label_about">Acerca</string>
+    <string name="reserve_hora">Hora</string>
+    <string name="reserve_fecha_hora">Fecha y Hora</string>
+    <string name="reserve_fecha">Fecha</string>
+    <string name="reserve_services">Servicios</string>
+    <string name="reserve_no_disponible">No hay turnos disponibles</string>
 </resources>

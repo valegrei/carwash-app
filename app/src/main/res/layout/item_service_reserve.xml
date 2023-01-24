@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="servicio"
+            type="pe.com.carwashperuapp.carwashapp.model.ServicioReserva" />
+    </data>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="@={servicio.seleccionado}"
+        android:drawablePadding="@dimen/min_margin"
+        android:gravity="center_vertical"
+        android:layoutDirection="rtl"
+        android:text="@{servicio.getNombrePrecio()}"
+        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+        app:drawableEndCompat="@drawable/ic_baseline_home_repair_service_24"
+        tools:text="Lavado de Carro\nS/ 30.00" />
+
+</layout>
