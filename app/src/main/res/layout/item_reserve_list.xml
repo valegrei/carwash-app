@@ -6,7 +6,7 @@
     <data>
         <variable
             name="reserva"
-            type="pe.com.carwashperuapp.carwashapp.model.Reserva" />
+            type="pe.com.carwashperuapp.carwashapp.model.Reserva1" />
     </data>
 
 

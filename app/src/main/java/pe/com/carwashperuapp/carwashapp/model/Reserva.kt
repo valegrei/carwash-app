@@ -1,18 +1,13 @@
 package pe.com.carwashperuapp.carwashapp.model
 
+import com.squareup.moshi.Json
+
 class Reserva(
-    var client: String,
-    var vehicle: String,
-    var place: String,
-    var hora: String,
+    @Json(name = "id") val id: Int,
+    @Json(name = "idCliente") val idCliente: Int,
+    @Json(name = "idVehiculo") val idVehiculo: Int,
+    @Json(name = "estado") val estado: Boolean,
+    @Json(name = "Horario") val horario: Horario? = null,
+    @Json(name = "Servicio") val servicioReserva: ServicioReserva? = null,
 ) {
-    companion object {
-        val dataSet = arrayOf(
-            Reserva("Mario Trujillo Guzman", "Toyota Corola, Rojo", "Calle los tulipanes 1956","8:00"),
-            Reserva("Brandon Tejada Luna", "Toyota Corola, Negro", "Calle los tulipanes 1956","10:00"),
-            Reserva("Mario Trujillo Guzman", "Toyota Corola, Rojo", "Calle los tulipanes 1956","11:00"),
-            Reserva("Mario Trujillo Guzman", "Toyota Corola, Rojo", "Calle los tulipanes 1956","14:30"),
-            Reserva("Mario Trujillo Guzman", "Toyota Corola, Rojo", "Calle los tulipanes 1956","15:00")
-        )
-    }
 }

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveListBinding
-import pe.com.carwashperuapp.carwashapp.model.Reserva
+import pe.com.carwashperuapp.carwashapp.model.Reserva1
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -96,7 +96,7 @@ class ReserveListFragment : Fragment(), MenuProvider {
         (activity as AppCompatActivity).supportActionBar?.subtitle = subTitle
     }
 
-    fun goReserva(item: Reserva) {
+    fun goReserva(item: Reserva1) {
         findNavController().navigate(R.id.action_nav_reserve_list_to_serviceDetailsFragment)
     }
 }

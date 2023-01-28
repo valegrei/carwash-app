@@ -13,5 +13,6 @@ class Local(
     @Json(name = "longitud") val longitud: String,
     @Json(name = "estado") val estado: Boolean,
     @Json(name = "idUsuario") val idUsuario: Int,
-    @Json(name = "Usuario") val distrib: Distrib,
+    @Json(name = "Usuario") val distrib: Distrib? = null,
+    @Json(name = "Favoritos") val favoritos: List<Favorito>? = null,
 )

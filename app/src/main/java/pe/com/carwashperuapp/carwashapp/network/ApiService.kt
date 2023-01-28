@@ -283,6 +283,48 @@ interface ApiService {
         @Query("longSW") longSW: String,
         @Header("Authorization") authToken: String
     ): RespLocales
+
+    @GET("api/clientes/horarios")
+    suspend fun obtenerHorarios(
+        @Query("idLocal") idLocal: Int,
+        @Query("fecha") fecha: String,
+        @Header("Authorization") authToken: String
+    ): RespHorarios
+
+    @POST("api/clientes/reserva")
+    suspend fun crearReserva(
+        @Body reqReservar: ReqReservar,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @GET("api/clientes/reserva")
+    suspend fun obtenerReservas(
+        @Query("fecha") fecha: String,
+        @Header("Authorization") authToken: String
+    ): RespReservas
+
+    @DELETE("api/clientes/reserva/{idReserva}")
+    suspend fun eliminarReserva(
+        @Path("idReserva") idReserva: Int,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @GET("api/clientes/favoritos")
+    suspend fun obtenerLocalesFavoritos(
+        @Header("Authorization") authToken: String
+    ): RespLocales
+
+    @POST("api/clientes/favoritos")
+    suspend fun agregarFavorito(
+        @Body reqFavorito: ReqFavorito,
+        @Header("Authorization") authToken: String
+    ): Response
+
+    @DELETE("api/clientes/favoritos/{idFavorito}")
+    suspend fun eliminarFavorito(
+        @Path("idFavorito") idFavorito: Int,
+        @Header("Authorization") authToken: String
+    ): Response
 }
 
 /**

@@ -8,7 +8,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
+import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
+import pe.com.carwashperuapp.carwashapp.database.vehiculo.VehiculoDao
 import pe.com.carwashperuapp.carwashapp.model.Local
+import pe.com.carwashperuapp.carwashapp.model.ServicioReserva
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
 import pe.com.carwashperuapp.carwashapp.ui.util.calcularDistanciaEnMetros
@@ -21,6 +24,7 @@ enum class GoStatus { GO_ADD, SHOW_DELETE, NORMAL }
 class ReserveViewModel(
     private val sesionData: SesionData,
     private val direccionDao: DireccionDao,
+    private val vehiculoDao: VehiculoDao,
 ) : ViewModel() {
     private val TAG = ReserveViewModel::class.simpleName
 
@@ -47,10 +51,21 @@ class ReserveViewModel(
     val selectedLocal: LiveData<Local> = _selectedLocal
     private var _distanceToLocal = MutableLiveData<String>()
     val distanceToLocal: LiveData<String> = _distanceToLocal
+    private var _vehiculos = MutableLiveData<List<Vehiculo>>()
+    val vehiculos: LiveData<List<Vehiculo>> = _vehiculos
+    private var _selectedVehiculo = MutableLiveData<Vehiculo>()
+    val selectedVehiculo: LiveData<Vehiculo> = _selectedVehiculo
+    private var _servicios = MutableLiveData<List<ServicioReserva>>()
+    val servicios: LiveData<List<ServicioReserva>> = _servicios
+    private var _selectedFecha = MutableLiveData<Date>()
+    val selectedFecha: LiveData<Date> = _selectedFecha
 
     fun nuevaReserva() {
         _errMsg.value = ""
+        _servicios.value = selectedLocal.value?.distrib?.servicios!!
+        _selectedFecha.value = Date()
         _editStatus.value = EditStatus.NEW
+        _goStatus.value = GoStatus.GO_ADD
         _mostrarEditar.value = true
     }
 
@@ -89,8 +104,45 @@ class ReserveViewModel(
         )
     }
 
+    private fun loadVehiculos() {
+        viewModelScope.launch {
+            val sesion = sesionData.getCurrentSesion()!!
+            var vehiculos = vehiculoDao.obtenerVehiculos2(sesion.usuario.id!!)
+            if (vehiculos.isEmpty()) {
+                vehiculos = listOf(
+                    Vehiculo(
+                        id = 0,
+                        marca = "",
+                        modelo = "",
+                        year = 0,
+                        placa = "",
+                        idCliente = 0,
+                        estado = false,
+                        path = ""
+                    )
+                )
+            }
+            _vehiculos.value = vehiculos
+        }
+    }
+
+    fun seleccionarVehiculo(vehiculo: Vehiculo) {
+        _selectedVehiculo.value = vehiculo
+    }
+
+    fun seleccionarFecha(date: Date){
+        _selectedFecha.value = date
+    }
+    init {
+        loadVehiculos()
+    }
+
     private fun clearErrs() {
         _errMsg.value = null
+    }
+
+    fun clearGoStatus() {
+        _goStatus.value = GoStatus.NORMAL
     }
 
 
@@ -105,11 +157,12 @@ class ReserveViewModel(
 class ReserveViewModelFactory(
     private val sesionData: SesionData,
     private val direccionDao: DireccionDao,
+    private val vehiculoDao: VehiculoDao,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ReserveViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ReserveViewModel(sesionData, direccionDao) as T
+            return ReserveViewModel(sesionData, direccionDao, vehiculoDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -13,10 +13,11 @@
     <com.google.android.material.checkbox.MaterialCheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checked="@={servicio.seleccionado}"
+        android:checked="@{servicio.seleccionado}"
         android:drawablePadding="@dimen/min_margin"
         android:gravity="center_vertical"
         android:layoutDirection="rtl"
+        android:onClick="@{()->servicio.cambiarSeleccion()}"
         android:text="@{servicio.getNombrePrecio()}"
         android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
         app:drawableEndCompat="@drawable/ic_baseline_home_repair_service_24"

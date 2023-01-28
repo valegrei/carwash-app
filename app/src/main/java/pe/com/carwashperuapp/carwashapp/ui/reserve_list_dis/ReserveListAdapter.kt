@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.com.carwashperuapp.carwashapp.databinding.ItemReserveListBinding
-import pe.com.carwashperuapp.carwashapp.model.Reserva
+import pe.com.carwashperuapp.carwashapp.model.Reserva1
 
 class ReserveListAdapter(
-    private val dataSet: Array<Reserva>,
-    private val onItemClicked: (Reserva) -> Unit
+    private val dataSet: Array<Reserva1>,
+    private val onItemClicked: (Reserva1) -> Unit
 ) :
     RecyclerView.Adapter<ReserveListAdapter.ViewHolder>() {
 
@@ -18,7 +18,7 @@ class ReserveListAdapter(
      */
     class ViewHolder(private val binding: ItemReserveListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: Reserva) {
+        fun bindData(data: Reserva1) {
             binding.reserva = data
         }
     }

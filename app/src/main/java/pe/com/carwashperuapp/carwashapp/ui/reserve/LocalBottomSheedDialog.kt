@@ -8,7 +8,6 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.database.SesionData
-import pe.com.carwashperuapp.carwashapp.databinding.BottomsheetDistribBinding
 import pe.com.carwashperuapp.carwashapp.databinding.BottomsheetLocalBinding
 
 class LocalBottomSheedDialog : BottomSheetDialogFragment() {
@@ -18,7 +17,8 @@ class LocalBottomSheedDialog : BottomSheetDialogFragment() {
     private val viewModel: ReserveViewModel by activityViewModels {
         ReserveViewModelFactory(
             SesionData(requireContext()),
-            (activity?.application as CarwashApplication).database.direccionDao()
+            (activity?.application as CarwashApplication).database.direccionDao(),
+            (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
     }
 

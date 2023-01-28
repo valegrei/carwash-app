@@ -77,8 +77,6 @@ fun bindRoundImage(imgView: ImageView, imgUrl: String?) {
         val sesion = SesionData(imgView.context).getCurrentSesion()
         imgView.load(it) {
             setHeader("Authorization", sesion?.getTokenBearer()!!)
-            placeholder(R.drawable.loading_animation)
-            error(R.drawable.ic_broken_image)
             transformations(CircleCropTransformation())
         }
     }

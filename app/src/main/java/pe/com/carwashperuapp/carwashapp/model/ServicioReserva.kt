@@ -14,4 +14,7 @@ class ServicioReserva(
     fun getNombreFormateado(): String = "Nombre: $nombre"
     fun getPrecioLabel(): String = "Precio: S/ ${getPrecioFormateado()}"
     fun getPrecioFormateado(): String = DecimalFormat("#,###.00").format(precio)
+    fun cambiarSeleccion() {
+        seleccionado != seleccionado
+    }
 }

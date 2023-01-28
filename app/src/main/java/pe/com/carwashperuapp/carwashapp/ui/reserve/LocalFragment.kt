@@ -19,6 +19,7 @@ class LocalFragment : Fragment() {
         ReserveViewModelFactory(
             SesionData(requireContext()),
             (activity?.application as CarwashApplication).database.direccionDao(),
+            (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
     }
 

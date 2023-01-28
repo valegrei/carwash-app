@@ -1,6 +1,8 @@
 package pe.com.carwashperuapp.carwashapp.ui.util
 
 import pe.com.carwashperuapp.carwashapp.model.Horario
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.*
 
 fun formatHora(hora: Int, min: Int): String {
@@ -60,10 +62,6 @@ fun generarHorariosPrevio(
                 fecha = "",
                 horaIni = minToTime(minutoHorarioInicio),
                 horaFin = minToTime(minutoHorarioFin),
-                estado = true,
-                idDistrib = 0,
-                idLocal = 0,
-                idHorarioConfig = 0,
             )
         )
         minutoHorarioInicio = minutoHorarioFin
@@ -109,4 +107,14 @@ fun calcularDistanciaEnMetros(
     )
     //En metros
     return (distance * 1.609344 * 1000).roundToInt()
+}
+
+fun formatoFecha(date: Date): String {
+    val format = SimpleDateFormat("dd/MM/YYYY")
+    return format.format(date)
+}
+
+fun formatoFechaDB(date: Date): String {
+    val format = SimpleDateFormat("YYYY-MM-dd")
+    return format.format(date)
 }

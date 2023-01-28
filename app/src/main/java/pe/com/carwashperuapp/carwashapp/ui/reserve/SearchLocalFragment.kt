@@ -22,6 +22,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -63,6 +64,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         ReserveViewModelFactory(
             SesionData(requireContext()),
             (activity?.application as CarwashApplication).database.direccionDao(),
+            (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
     }
 
@@ -124,6 +126,13 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             mostrarLocales(it)
         }
 
+        viewModel.goStatus.observe(viewLifecycleOwner){
+            when(it){
+                GoStatus.GO_ADD -> goNuevaReserva()
+                else -> {}
+            }
+        }
+
         //Recyclerview
         adapter = PlaceAutcompleteListAdapter { goPlace(it.placeId) }
         binding.rvPlacesList.adapter = adapter
@@ -137,13 +146,18 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
 
     }
 
+    private fun goNuevaReserva() {
+        findNavController().navigate(R.id.action_nav_reserve_to_reserveFragment)
+        viewModel.clearGoStatus()
+    }
+
     private fun mostrarLocales(locales: List<Local>) {
         val map = mutableMapOf<Marker, Local>()
         mMap.clear()
         locales.forEach {
             val markerOp = MarkerOptions()
                 .position(LatLng(it.latitud.toDouble(), it.longitud.toDouble()))
-                .title(it.distrib.razonSocial)
+                .title(it.distrib?.razonSocial)
             val marker = mMap.addMarker(markerOp)
             map[marker!!] = it
         }
