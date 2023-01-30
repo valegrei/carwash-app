@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.reserve.ReserveFragment">
+    tools:context=".ui.reserve.ReserveResumenFragment">
 
     <data>
         <import type="pe.com.carwashperuapp.carwashapp.ui.util.HelperKt"/>
         <variable
             name="fragment"
-            type="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveFragment" />
+            type="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveResumenFragment" />
 
         <variable
             name="viewModel"
@@ -49,7 +49,6 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/min_margin"
                     android:background="?android:attr/listDivider" />
 
                 <TextView
@@ -59,31 +58,13 @@
                     android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
 
-                <LinearLayout
+                <TextView
+                    android:text="@{viewModel.selectedVehiculo.toString()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/min_margin"
-                    android:clickable="true"
-                    android:onClick="@{()->fragment.mostrarSeleccionarVehiculo()}"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        roudendImageUrl="@{viewModel.selectedVehiculo.getUrlArchivo()}"
-                        android:layout_width="46dp"
-                        android:layout_height="46dp"
-                        android:scaleType="centerCrop"
-                        tools:srcCompat="@drawable/car" />
-
-                    <TextView
-                        android:text="@{viewModel.selectedVehiculo.toString()}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/min_margin"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-                        tools:text="Hyundai Tucson 2020\nABC 123" />
-                </LinearLayout>
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                    tools:text="Hyundai Tucson 2020\nABC 123" />
 
                 <View
                     android:layout_width="match_parent"
@@ -94,53 +75,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/reserve_fecha"
+                    android:text="@string/reserve_fecha_hora"
                     android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:drawablePadding="@dimen/min_margin"
-                    android:text="@{HelperKt.formatoFecha(viewModel.selectedFecha)}"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/reserve_doble_linea(HelperKt.formatoFecha(viewModel.selectedFecha),HelperKt.formatHora(viewModel.selectedHorario.horaIni))}"
                     android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-                    android:onClick="@{()->fragment.showDatePicker()}"
-                    app:drawableStartCompat="@drawable/ic_outline_calendar_month_24"
-                    tools:text="30/01/2023" />
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reserve_hora"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
-
-                <TextView
-                    android:id="@+id/tv_no_horarios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="@string/reserve_select_other"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"/>
-
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chg_horarios"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:singleLine="true"
-                        app:singleSelection="true" />
-                </HorizontalScrollView>
+                    android:layout_marginBottom="@dimen/min_margin"
+                    tools:text="30/01/2023\n11:00 AM" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/min_margin"
                     android:layout_marginBottom="@dimen/min_margin"
                     android:background="?android:attr/listDivider" />
 
@@ -154,14 +103,39 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_services"
                     android:layout_width="match_parent"
+                    android:layout_marginBottom="@dimen/min_margin"
                     android:layout_height="wrap_content"
+                    tools:itemCount="5"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_service_reserve" />
+                    tools:listitem="@layout/item_service_reserve_resumen" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/min_margin"
                     android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="@string/reserve_total_amount"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="@{HelperKt.formatoPrecio(viewModel.totalServicios)}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitlePrimary"
+                        tools:text="150.00" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -174,13 +148,14 @@
             app:layout_constraintBottom_toTopOf="@id/btn_reservar"
             tools:text="Error"
             android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
+
         <Button
             android:id="@+id/btn_reservar"
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btnsh_reserve"
-            android:onClick="@{()->fragment.reservar()}"
+            android:onClick="@{()->viewModel.confirmarReserva()}"
+            android:text="@string/btnsh_reserve_confirm"
             android:theme="@style/ThemeOverlay.CarwashApp.Button"
             app:layout_constraintBottom_toBottomOf="parent" />
 

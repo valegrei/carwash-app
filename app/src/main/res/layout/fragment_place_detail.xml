@@ -222,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="@string/place_select_map"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                         android:visibility="@{viewModel.selectedLatLng == null ? View.VISIBLE : View.GONE}" />
                 </RelativeLayout>
 

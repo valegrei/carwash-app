@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/min_margin"
                 android:text="@{horarioConfig.resumen()}"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 app:drawableStartCompat="@drawable/ic_baseline_schedule_24"
                 app:drawableTint="?attr/colorPrimary"
                 tools:text="Av. 8 de Enero, 206\nLun Mie Vie\n8:00 AM - 12:00PM\nIntervalo: 30 min" />

@@ -267,7 +267,14 @@
     <string name="label_about">Acerca</string>
     <string name="reserve_hora">Hora</string>
     <string name="reserve_fecha_hora">Fecha y Hora</string>
+    <string name="reserve_doble_linea">%s\n%s</string>
     <string name="reserve_fecha">Fecha</string>
     <string name="reserve_services">Servicios</string>
     <string name="reserve_no_disponible">No hay turnos disponibles</string>
+    <string name="reserve_total_amount">Monto total</string>
+    <string name="reserve_distrib">Distribuidor</string>
+    <string name="btnsh_reserve_confirm">Confirmar Reserva</string>
+    <string name="reserve_select_other">No hay horarios disponibles. Seleccione otra fecha.</string>
+    <string name="title_reserve">Reservar</string>
+    <string name="title_reserve_confirm">Confirmar Reserva</string>
 </resources>

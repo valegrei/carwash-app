@@ -1,5 +1,7 @@
 package pe.com.carwashperuapp.carwashapp.ui.util
 
+import android.icu.math.BigDecimal
+import android.icu.text.DecimalFormat
 import pe.com.carwashperuapp.carwashapp.model.Horario
 import java.text.SimpleDateFormat
 import java.util.*
@@ -109,12 +111,20 @@ fun calcularDistanciaEnMetros(
     return (distance * 1.609344 * 1000).roundToInt()
 }
 
-fun formatoFecha(date: Date): String {
-    val format = SimpleDateFormat("dd/MM/YYYY")
-    return format.format(date)
+fun formatoFecha(milisUtc: Long): String {
+    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+    calendar.timeInMillis = milisUtc
+    val format = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+    format.timeZone = TimeZone.getTimeZone("UTC")
+    return format.format(calendar.time)
 }
 
-fun formatoFechaDB(date: Date): String {
-    val format = SimpleDateFormat("YYYY-MM-dd")
-    return format.format(date)
+fun formatoFechaDB(milisUtc: Long): String {
+    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+    calendar.timeInMillis = milisUtc
+    val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    format.timeZone = TimeZone.getTimeZone("UTC")
+    return format.format(calendar.time)
 }
+
+fun formatoPrecio(precio: BigDecimal) = DecimalFormat("#,###.00").format(precio)

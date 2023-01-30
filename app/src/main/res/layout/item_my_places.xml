@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:text="@{local.ubigeoDireccion}"
                 android:drawablePadding="@dimen/min_margin"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 app:drawableStartCompat="@drawable/ic_baseline_place_24"
                 tools:text="Lima - Lima - Santa Rosa\nMz I2 Lot. 1, urb. Coovitiomar" />
         </LinearLayout>

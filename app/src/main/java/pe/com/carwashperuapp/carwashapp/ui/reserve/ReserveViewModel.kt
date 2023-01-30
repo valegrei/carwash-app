@@ -1,26 +1,31 @@
 package pe.com.carwashperuapp.carwashapp.ui.reserve
 
+import android.icu.math.BigDecimal
 import android.util.Log
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.VehiculoDao
+import pe.com.carwashperuapp.carwashapp.model.Horario
 import pe.com.carwashperuapp.carwashapp.model.Local
 import pe.com.carwashperuapp.carwashapp.model.ServicioReserva
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
+import pe.com.carwashperuapp.carwashapp.network.request.ReqReservar
 import pe.com.carwashperuapp.carwashapp.ui.util.calcularDistanciaEnMetros
 import pe.com.carwashperuapp.carwashapp.ui.util.formatearDistancia
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDB
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
 enum class EditStatus { EXIT, EDIT, NEW, VIEW }
-enum class GoStatus { GO_ADD, SHOW_DELETE, NORMAL }
+enum class GoStatus { GO_ADD, GO_CONFIRM, GO_LIST, NORMAL }
 class ReserveViewModel(
     private val sesionData: SesionData,
     private val direccionDao: DireccionDao,
@@ -57,13 +62,25 @@ class ReserveViewModel(
     val selectedVehiculo: LiveData<Vehiculo> = _selectedVehiculo
     private var _servicios = MutableLiveData<List<ServicioReserva>>()
     val servicios: LiveData<List<ServicioReserva>> = _servicios
-    private var _selectedFecha = MutableLiveData<Date>()
-    val selectedFecha: LiveData<Date> = _selectedFecha
+    private var _selectedServicios = MutableLiveData<List<ServicioReserva>>()
+    val selectedServicios: LiveData<List<ServicioReserva>> = _selectedServicios
+    private var _selectedFecha = MutableLiveData<Long>()
+    val selectedFecha: LiveData<Long> = _selectedFecha
+    private var _horarios = MutableLiveData<List<Horario>>()
+    val horarios: LiveData<List<Horario>> = _horarios
+    private var _horariosMap = MutableLiveData<Map<Int, Horario>>()
+    val horariosMap: LiveData<Map<Int, Horario>> = _horariosMap
+    private var _selectedHorario = MutableLiveData<Horario?>()
+    val selectedHorario: LiveData<Horario?> = _selectedHorario
+    private var _totalServicios = MutableLiveData<BigDecimal>()
+    val totalServicios: LiveData<BigDecimal> = _totalServicios
 
     fun nuevaReserva() {
         _errMsg.value = ""
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
-        _selectedFecha.value = Date()
+        _selectedFecha.value = MaterialDatePicker.todayInUtcMilliseconds()
+        _horarios.value = listOf()
+        _horariosMap.value = mapOf()
         _editStatus.value = EditStatus.NEW
         _goStatus.value = GoStatus.GO_ADD
         _mostrarEditar.value = true
@@ -112,7 +129,7 @@ class ReserveViewModel(
                 vehiculos = listOf(
                     Vehiculo(
                         id = 0,
-                        marca = "",
+                        marca = "No hay vehículos registrados.",
                         modelo = "",
                         year = 0,
                         placa = "",
@@ -123,6 +140,7 @@ class ReserveViewModel(
                 )
             }
             _vehiculos.value = vehiculos
+            _selectedVehiculo.value = this@ReserveViewModel.vehiculos.value?.get(0)
         }
     }
 
@@ -130,11 +148,39 @@ class ReserveViewModel(
         _selectedVehiculo.value = vehiculo
     }
 
-    fun seleccionarFecha(date: Date){
-        _selectedFecha.value = date
+    fun seleccionarFecha(milisUTC: Long) {
+        _selectedFecha.value = milisUTC
+        buscarHorarios()
     }
+
+    fun seleccionarHorario(horario: Horario?) {
+        _selectedHorario.value = horario
+    }
+
+    private fun buscarHorarios() {
+        viewModelScope.launch {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val fecha = formatoFechaDB(selectedFecha.value!!)
+            val idLocal = selectedLocal.value?.id!!
+            try {
+                val resp = Api.retrofitService.obtenerHorarios(
+                    idLocal, fecha, sesion?.getTokenBearer()!!
+                )
+                _horarios.value = resp.data.horarios
+            } catch (_: Exception) {
+                _horarios.value = listOf()
+            }
+            _status.value = Status.SUCCESS
+        }
+    }
+
     init {
         loadVehiculos()
+    }
+
+    fun setHorarioMap(map: Map<Int, Horario>) {
+        _horariosMap.value = map
     }
 
     private fun clearErrs() {
@@ -145,6 +191,59 @@ class ReserveViewModel(
         _goStatus.value = GoStatus.NORMAL
     }
 
+    fun validar(): Boolean {
+        clearErrs()
+        if ((selectedVehiculo.value?.id ?: 0) == 0) {
+            _errMsg.value = "Debe seleccionar un vehículo"
+            return false
+        }
+        if (selectedHorario.value == null) {
+            _errMsg.value = "Debe seleccionar un horario"
+            return false
+        }
+        if (selectedServicios.value?.isEmpty()!!) {
+            _errMsg.value = "Debe seleccionar servicios"
+            return false
+        }
+        return true
+    }
+
+    fun reservar() {
+        if (validar()) {
+            calcularTotalServicios()
+            _goStatus.value = GoStatus.GO_CONFIRM
+        }
+    }
+
+    private fun calcularTotalServicios() {
+        var total = BigDecimal.ZERO
+        selectedServicios.value?.forEach {
+            total = total.add(it.precio)
+        }
+        _totalServicios.value = total
+    }
+
+    fun confirmarReserva() {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val idHorario = selectedHorario.value?.id!!
+            val idCliente = sesion?.usuario?.id!!
+            val idVehiculo = selectedVehiculo.value?.id!!
+            val servicios = selectedServicios.value!!
+            val req = ReqReservar(idHorario, idCliente, idVehiculo, servicios)
+            Api.retrofitService.crearReserva(req, sesion.getTokenBearer())
+            _status.value = Status.SUCCESS
+            _goStatus.value = GoStatus.GO_LIST
+        }
+    }
+
+    fun seleccionadosServicios() {
+        val seleccionados = servicios.value?.filter {
+            it.seleccionado!!
+        }
+        _selectedServicios.value = seleccionados!!
+    }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
         Log.e(TAG, e.message, e)

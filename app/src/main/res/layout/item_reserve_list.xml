@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/min_margin"
                 android:text="@{reserva.client}"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 tools:text="Víctor Alegre Ibáñez" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{reserva.hora}"
                 android:layout_marginStart="@dimen/small_margin"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 tools:text="11:00" />
         </LinearLayout>
 

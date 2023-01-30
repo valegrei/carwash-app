@@ -2,26 +2,24 @@ package pe.com.carwashperuapp.carwashapp.ui.reserve
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.com.carwashperuapp.carwashapp.databinding.ItemServiceReserveBinding
+import pe.com.carwashperuapp.carwashapp.databinding.ItemServiceReserveResumenBinding
 import pe.com.carwashperuapp.carwashapp.model.ServicioReserva
 
-class ServiceListAdapter :
-    ListAdapter<ServicioReserva, ServiceListAdapter.ViewHolder>(DiffCallback) {
+class ServiceResumenListAdapter:
+    ListAdapter<ServicioReserva, ServiceResumenListAdapter.ViewHolder>(DiffCallback) {
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(private val binding: ItemServiceReserveBinding) :
+    class ViewHolder(private val binding: ItemServiceReserveResumenBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(servicio: ServicioReserva) {
             binding.apply {
                 binding.servicio = servicio
-                binding.chbServicio.setOnCheckedChangeListener { _, isChecked -> servicio.seleccionado = isChecked}
                 binding.executePendingBindings()
             }
         }
@@ -30,7 +28,7 @@ class ServiceListAdapter :
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ItemServiceReserveBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemServiceReserveResumenBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

@@ -15,4 +15,6 @@ class Local(
     @Json(name = "idUsuario") val idUsuario: Int,
     @Json(name = "Usuario") val distrib: Distrib? = null,
     @Json(name = "Favoritos") val favoritos: List<Favorito>? = null,
-)
+){
+    fun getRazSocDireccion(): String = "${distrib?.razonSocial?:""}\n$direccion"
+}

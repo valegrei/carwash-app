@@ -1,8 +1,8 @@
 package pe.com.carwashperuapp.carwashapp.model
 
 import android.icu.math.BigDecimal
-import android.icu.text.DecimalFormat
 import com.squareup.moshi.Json
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoPrecio
 
 class ServicioReserva(
     @Json(name = "id") val id: Int,
@@ -13,7 +13,7 @@ class ServicioReserva(
     fun getNombrePrecio(): String = "$nombre\nS/ ${getPrecioFormateado()}"
     fun getNombreFormateado(): String = "Nombre: $nombre"
     fun getPrecioLabel(): String = "Precio: S/ ${getPrecioFormateado()}"
-    fun getPrecioFormateado(): String = DecimalFormat("#,###.00").format(precio)
+    fun getPrecioFormateado(): String = formatoPrecio(precio)
     fun cambiarSeleccion() {
         seleccionado != seleccionado
     }

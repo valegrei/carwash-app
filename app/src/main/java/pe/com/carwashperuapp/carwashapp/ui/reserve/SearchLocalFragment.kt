@@ -84,6 +84,9 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         }
         mMap.uiSettings.setAllGesturesEnabled(true)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12.5F))
+        viewModel.locales.observe(viewLifecycleOwner) {
+            mostrarLocales(it)
+        }
         getLastLocation()
     }
 
@@ -117,13 +120,6 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         // Adding functionality to the button
         binding.btnCenter.setOnClickListener {
             getLastLocation()
-        }
-//        binding.btnSearchArea.setOnClickListener {
-//            searchLocales()
-//        }
-
-        viewModel.locales.observe(viewLifecycleOwner) {
-            mostrarLocales(it)
         }
 
         viewModel.goStatus.observe(viewLifecycleOwner){

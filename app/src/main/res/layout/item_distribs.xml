@@ -34,7 +34,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text="@{distrib.getRucRazSocial()}"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 tools:text="10709177864\nLavados de carros Santa Rosa" />
 
             <ImageView

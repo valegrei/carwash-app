@@ -38,7 +38,7 @@
                 android:drawablePadding="@dimen/min_margin"
                 android:gravity="center_vertical"
                 android:text="@{usuario.correo}"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 tools:drawableStart="@drawable/ic_baseline_person_purple_24"
                 tools:text="valegrei@outlook.com" />
 

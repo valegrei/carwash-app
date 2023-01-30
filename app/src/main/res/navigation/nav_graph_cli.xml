@@ -9,7 +9,7 @@
         android:id="@+id/nav_reserve"
         android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.SearchLocalFragment"
         android:label="@string/menu_reserve"
-        tools:layout="@layout/fragment_search_local" >
+        tools:layout="@layout/fragment_search_local">
         <action
             android:id="@+id/action_nav_reserve_to_reserveFragment"
             app:destination="@id/reserveFragment" />
@@ -23,7 +23,7 @@
         android:id="@+id/nav_my_cars"
         android:name="pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsFragment"
         android:label="@string/menu_my_cars"
-        tools:layout="@layout/fragment_my_cars" >
+        tools:layout="@layout/fragment_my_cars">
         <action
             android:id="@+id/action_nav_my_cars_to_nav_car_detail"
             app:destination="@id/nav_car_detail" />
@@ -32,7 +32,7 @@
         android:id="@+id/nav_my_places"
         android:name="pe.com.carwashperuapp.carwashapp.ui.my_places.MyPlacesFragment"
         android:label="@string/menu_my_places"
-        tools:layout="@layout/fragment_my_places" >
+        tools:layout="@layout/fragment_my_places">
         <action
             android:id="@+id/action_nav_my_places_to_nav_place_detail"
             app:destination="@id/nav_place_detail" />
@@ -41,7 +41,7 @@
         android:id="@+id/navigation_menu"
         android:name="pe.com.carwashperuapp.carwashapp.ui.menu_distrib.MenuDistribFragment"
         android:label="@string/menu"
-        tools:layout="@layout/fragment_menu_distrib" >
+        tools:layout="@layout/fragment_menu_distrib">
         <action
             android:id="@+id/action_navigation_menu_to_navigation_account"
             app:destination="@id/navigation_account" />
@@ -53,7 +53,7 @@
         android:id="@+id/navigation_account"
         android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountFragment"
         android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" >
+        tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_navigation_account_to_navigation_account_edit"
             app:destination="@id/navigation_account_edit" />
@@ -72,7 +72,7 @@
         android:id="@+id/nav_place_detail"
         android:name="pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceDetailFragment"
         android:label="@string/place_title_view"
-        tools:layout="@layout/fragment_place_detail" >
+        tools:layout="@layout/fragment_place_detail">
         <action
             android:id="@+id/action_nav_place_detail_to_nav_add_place"
             app:destination="@id/nav_add_place" />
@@ -90,7 +90,23 @@
     <fragment
         android:id="@+id/reserveFragment"
         android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveFragment"
-        android:label="Reservar"
-        tools:layout="@layout/fragment_reserve" />
+        android:label="@string/title_reserve"
+        tools:layout="@layout/fragment_reserve">
+        <action
+            android:id="@+id/action_reserveFragment_to_reserveResumenFragment"
+            app:destination="@id/reserveResumenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reserveResumenFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveResumenFragment"
+        android:label="@string/title_reserve_confirm"
+        tools:layout="@layout/fragment_reserve_resumen">
+        <action
+            android:id="@+id/action_reserveResumenFragment_to_nav_my_reserves"
+            app:destination="@id/nav_my_reserves"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/mobile_navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

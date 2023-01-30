@@ -92,11 +92,6 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="TextAppearance.CarwashApp.LabelPrimarySemibold" parent="TextAppearance.CarwashApp.LabelPrimary">
-        <item name="fontFamily">@font/opensans_semibold</item>
-        <item name="android:fontFamily">@font/opensans_semibold</item>
-    </style>
-
     <style name="TextAppearance.CarwashApp.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <item name="fontFamily">@font/opensans_regular</item>
         <item name="android:fontFamily">@font/opensans_regular</item>

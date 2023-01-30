@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_lbl_smtp_host"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_lbl_smtp_port"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -109,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_lbl_smtp_secure"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_lbl_email_address"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -194,7 +194,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_lbl_email_pass"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemibold" />
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -1,11 +1,11 @@
 package pe.com.carwashperuapp.carwashapp.database.servicio
 
 import android.icu.math.BigDecimal
-import android.icu.text.DecimalFormat
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoPrecio
 
 @Entity(tableName = "servicios")
 data class Servicio(
@@ -25,19 +25,9 @@ data class Servicio(
     @Json(name = "idDistrib")
     @ColumnInfo(name = "idDistrib")
     var idDistrib: Int,
-){
-    fun getNombrePrecio(): String{
-        return "$nombre\nS/ ${getPrecioFormateado()}"
-    }
-    fun getNombreFormateado(): String{
-        return "Nombre: $nombre"
-    }
-    fun getPrecioLabel(): String{
-        return "Precio: S/ ${getPrecioFormateado()}"
-    }
-
-    fun getPrecioFormateado(): String{
-        val df = DecimalFormat("#,###.00")
-        return df.format(precio)
-    }
+) {
+    fun getNombrePrecio(): String = "$nombre\nS/ ${getPrecioFormateado()}"
+    fun getNombreFormateado(): String = "Nombre: $nombre"
+    fun getPrecioLabel(): String = "Precio: S/ ${getPrecioFormateado()}"
+    fun getPrecioFormateado(): String = formatoPrecio(precio)
 }
