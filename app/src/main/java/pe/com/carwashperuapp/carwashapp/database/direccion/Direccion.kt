@@ -5,6 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
+enum class TipoDireccion(val id: Int, val nombre: String) {
+    LOCAL(1, "Local"),
+    CASA(2, "Casa"),
+    OFICINA(3, "Oficina"),
+    OTRO(4, "Otro")
+}
+
 @Entity(tableName = "direccion")
 data class Direccion(
     @PrimaryKey
@@ -38,7 +45,22 @@ data class Direccion(
     @ColumnInfo(name = "idUsuario")
     @Json(name = "idUsuario")
     val idUsuario: Int,
-){
-    fun getUbigeoDireccion(): String= "$departamento - $provincia - $distrito\n$direccion"
+    @ColumnInfo(name = "tipo")
+    @Json(name = "tipo")
+    val tipo: Int?,
+) {
+    fun getUbigeoDireccion(): String = if (tipo == TipoDireccion.LOCAL.id) {
+        "$departamento - $provincia - $distrito\n$direccion"
+    } else {
+        direccion
+    }
+
     override fun toString(): String = direccion
+    fun nombreTipo(): String = when (tipo) {
+        TipoDireccion.LOCAL.id -> TipoDireccion.LOCAL.nombre
+        TipoDireccion.CASA.id -> TipoDireccion.CASA.nombre
+        TipoDireccion.OFICINA.id -> TipoDireccion.OFICINA.nombre
+        TipoDireccion.OTRO.id -> TipoDireccion.OTRO.nombre
+        else -> ""
+    }
 }

@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
+import pe.com.carwashperuapp.carwashapp.database.direccion.TipoDireccion
 import pe.com.carwashperuapp.carwashapp.database.sesion.Sesion
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Departamento
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Distrito
@@ -51,6 +52,8 @@ class MyPlacesViewModel(
     val goStatus: LiveData<GoStatus> = _goStatus
     private var _mostrarEditar = MutableLiveData<Boolean>()
     val mostrarEditar: LiveData<Boolean> = _mostrarEditar
+    private var _isDistrib = MutableLiveData<Boolean>()
+    val isDistrib: LiveData<Boolean> = _isDistrib
 
     //seleccionados
     private var _selectedDepartamento = MutableLiveData<Departamento>()
@@ -64,6 +67,8 @@ class MyPlacesViewModel(
     val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
     private var _selectedDireccion = MutableLiveData<Direccion>()
     val selectedDireccion: LiveData<Direccion> = _selectedDireccion
+    private var _selectedTipo = MutableLiveData<Int?>()
+    val selectedTipo: LiveData<Int?> = _selectedTipo
 
     //campos
     private var _departamentos = MutableLiveData<List<Departamento>>()
@@ -79,6 +84,7 @@ class MyPlacesViewModel(
         _selectedProvincia.value = Provincia(0, "", 0)
         _selectedDistrito.value = Distrito(0, "", 0, "")
         cargarDepartamentos()
+        _selectedTipo.value = 0
         _provincias.value = listOf()
         _distritos.value = listOf()
         this.direccion.value = ""
@@ -99,16 +105,31 @@ class MyPlacesViewModel(
         val direccion = _selectedDireccion.value!!
         cargarUbigeo(direccion)
         this.direccion.value = direccion.direccion
+        _selectedTipo.value = direccion.tipo
         _errMsg.value = ""
         _editStatus.value = EditStatus.EDIT
         _mostrarEditar.value = true
     }
 
-    fun isDistrib(): Boolean {
-        val sesion = sesionData.getCurrentSesion()
-        return sesion?.usuario?.idTipoUsuario == TipoUsuario.DISTR.id
+    init {
+        setIsDistrib()
     }
 
+    private fun setIsDistrib() {
+        val sesion = sesionData.getCurrentSesion()
+        _isDistrib.value = sesion?.usuario?.idTipoUsuario == TipoUsuario.DISTR.id
+    }
+
+    fun selectCasa(){
+        _selectedTipo.value = TipoDireccion.CASA.id
+    }
+
+    fun selectOficina(){
+        _selectedTipo.value = TipoDireccion.OFICINA.id
+    }
+    fun selectOtro(){
+        _selectedTipo.value = TipoDireccion.OTRO.id
+    }
     fun setSelectedLatLng(latLng: LatLng?) {
         _selectedLatLng.value = latLng
     }
@@ -204,12 +225,13 @@ class MyPlacesViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
 
-            val departamento = selectedDepartamento.value?.departamento!!
-            val provincia = selectedProvincia.value?.provincia!!
-            val distrito = selectedDistrito.value?.distrito!!
-            val ubigeo = selectedDistrito.value?.codigo!!
+            val departamento = selectedDepartamento.value?.departamento
+            val provincia = selectedProvincia.value?.provincia
+            val distrito = selectedDistrito.value?.distrito
+            val ubigeo = selectedDistrito.value?.codigo
             val latitud = selectedLatLng.value?.latitude.toString()
             val longitud = selectedLatLng.value?.longitude.toString()
+            val tipo = selectedTipo.value!!
             val reqDireccion = ReqDireccion(
                 departamento,
                 provincia,
@@ -217,7 +239,8 @@ class MyPlacesViewModel(
                 ubigeo,
                 direccion,
                 latitud,
-                longitud
+                longitud,
+                tipo
             )
 
             Api.retrofitService.agregarDireccion(
@@ -246,17 +269,24 @@ class MyPlacesViewModel(
         _errDistrito.value = ""
         _errDireccion.value = ""
         _errMsg.value = ""
-        if ((selectedDepartamento.value?.departamento ?: "").isEmpty()) {
-            _errDepartamento.value = "Seleccione Departamento"
-            res = false
-        }
-        if ((selectedProvincia.value?.provincia ?: "").isEmpty()) {
-            _errProvincia.value = "Seleccione Provincia"
-            res = false
-        }
-        if ((selectedDistrito.value?.distrito ?: "").isEmpty()) {
-            _errDistrito.value = "Seleccione Distrito"
-            res = false
+        if (isDistrib.value!!) {
+            if ((selectedDepartamento.value?.departamento ?: "").isEmpty()) {
+                _errDepartamento.value = "Seleccione Departamento"
+                res = false
+            }
+            if ((selectedProvincia.value?.provincia ?: "").isEmpty()) {
+                _errProvincia.value = "Seleccione Provincia"
+                res = false
+            }
+            if ((selectedDistrito.value?.distrito ?: "").isEmpty()) {
+                _errDistrito.value = "Seleccione Distrito"
+                res = false
+            }
+        } else {
+            if ((selectedTipo.value ?: 0) == 0) {
+                _errMsg.value = "Seleccione tipo de dirección"
+                res = false
+            }
         }
         if (direccion.isEmpty()) {
             _errDireccion.value = "Ingrese su dirección"
@@ -302,12 +332,13 @@ class MyPlacesViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
 
-            val departamento = selectedDepartamento.value?.departamento!!
-            val provincia = selectedProvincia.value?.provincia!!
-            val distrito = selectedDistrito.value?.distrito!!
-            val ubigeo = selectedDistrito.value?.codigo!!
+            val departamento = selectedDepartamento.value?.departamento
+            val provincia = selectedProvincia.value?.provincia
+            val distrito = selectedDistrito.value?.distrito
+            val ubigeo = selectedDistrito.value?.codigo
             val latitud = selectedLatLng.value?.latitude.toString()
             val longitud = selectedLatLng.value?.longitude.toString()
+            val tipo = selectedTipo.value!!
             val reqDireccion = ReqDireccion(
                 departamento,
                 provincia,
@@ -315,7 +346,8 @@ class MyPlacesViewModel(
                 ubigeo,
                 direccion,
                 latitud,
-                longitud
+                longitud,
+                tipo
             )
 
             Api.retrofitService.modificarDireccion(

@@ -152,7 +152,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         mMap.clear()
         locales.forEach {
             val markerOp = MarkerOptions()
-                .position(LatLng(it.latitud.toDouble(), it.longitud.toDouble()))
+                .position(LatLng(it.latitud?.toDouble()!!, it.longitud?.toDouble()!!))
                 .title(it.distrib?.razonSocial)
             val marker = mMap.addMarker(markerOp)
             map[marker!!] = it

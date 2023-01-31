@@ -423,6 +423,7 @@ class MySchedulesViewModel(
                 "",
                 "",
                 false,
+                0,
                 0
             )
             if (horarioConfig != null) {

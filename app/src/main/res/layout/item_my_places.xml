@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="local"
             type="pe.com.carwashperuapp.carwashapp.database.direccion.Direccion" />
@@ -20,23 +21,18 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/small_margin">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/small_margin">
 
             <TextView
-                android:layout_width="0dp"
+                tipoDir="@{local.tipo}"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="@{local.ubigeoDireccion}"
+                android:padding="@dimen/small_margin"
                 android:drawablePadding="@dimen/min_margin"
+                android:text="@{local.ubigeoDireccion}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
-                app:drawableStartCompat="@drawable/ic_baseline_place_24"
-                tools:text="Lima - Lima - Santa Rosa\nMz I2 Lot. 1, urb. Coovitiomar" />
-        </LinearLayout>
+                tools:drawableStartCompat="@drawable/ic_baseline_place_24"
+                tools:text="Lima - Lima - Santa Rosa\nMz I2 Lot. 1, urb. Coovitiomar"
+                app:drawableTint="?attr/colorPrimary" />
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

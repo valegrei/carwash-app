@@ -116,7 +116,7 @@
     <string name="place_title_edit">Editar Local</string>
     <string name="place_title_view">Ver Local</string>
     <string name="place_select_map">Click para seleccionar en el mapa</string>
-    <string name="place_delete">Eliminar Local</string>
+    <string name="place_delete">Eliminar</string>
     <string name="place_delete_msg">Eliminar el local también anulará sus horarios correspondientes y afectará a futuras reservas.\n¿Desea eliminar el local?</string>
     <string name="place_save">Guardar</string>
     <string name="place_save_msg">Se guardará la información del local</string>
@@ -277,4 +277,14 @@
     <string name="reserve_select_other">No hay horarios disponibles. Seleccione otra fecha.</string>
     <string name="title_reserve">Reservar</string>
     <string name="title_reserve_confirm">Confirmar Reserva</string>
+    <string name="title_reserve_detail">Detalle de Reserva</string>
+    <string name="place_type">Tipo</string>
+    <string name="place_oficina">Oficina</string>
+    <string name="place_casa">Casa</string>
+    <string name="place_otro">Otro</string>
+    <string name="dir_title_view">Ver Dirección</string>
+    <string name="dir_title_edit">Editar Dirección</string>
+    <string name="dir_title_new">Nueva Dirección</string>
+    <string name="dir_delete_msg">¿Desea eliminar la dirección?</string>
+    <string name="dir_save_msg">Se guardará la información de dirección</string>
 </resources>

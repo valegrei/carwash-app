@@ -8,6 +8,7 @@ import coil.transform.CircleCropTransformation
 import com.google.android.gms.maps.model.LatLng
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.direccion.TipoDireccion
 import pe.com.carwashperuapp.carwashapp.database.usuario.EstadoUsuario
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoUsuario
 import pe.com.carwashperuapp.carwashapp.ui.announcement.TuplaImageEdit
@@ -133,4 +134,15 @@ fun bindStaticMapDireccion(imgView: ImageView, latLng: LatLng?) {
             error(R.drawable.ic_broken_image)
         }
     }
+}
+
+@BindingAdapter("tipoDir")
+fun bindTipoDir(textView: TextView, tipoDir: Int?) {
+    val resIcon = when (tipoDir) {
+        TipoDireccion.LOCAL.id -> R.drawable.ic_store_black_24
+        TipoDireccion.CASA.id -> R.drawable.outline_house_24
+        TipoDireccion.OFICINA.id -> R.drawable.outline_business_24
+        else -> R.drawable.ic_outline_place_24
+    }
+    textView.setCompoundDrawablesWithIntrinsicBounds(resIcon, 0, 0, 0);
 }

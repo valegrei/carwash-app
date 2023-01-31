@@ -2,6 +2,7 @@ package pe.com.carwashperuapp.carwashapp.model
 
 import com.squareup.moshi.Json
 import pe.com.carwashperuapp.carwashapp.ui.util.formatHora
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDBaHum
 
 data class Horario(
     @Json(name = "id") val id: Int,
@@ -12,7 +13,6 @@ data class Horario(
     @Json(name = "Distrib") val distrib: Distrib? = null,
     var selected: Boolean? = false,
 ) {
-    override fun toString(): String {
-        return "${formatHora(horaIni)} - ${formatHora(horaFin)}"
-    }
+    override fun toString(): String = "${formatHora(horaIni)} - ${formatHora(horaFin)}"
+    fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)}"
 }

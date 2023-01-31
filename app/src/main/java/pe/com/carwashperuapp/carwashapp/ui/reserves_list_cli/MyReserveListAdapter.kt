@@ -1,4 +1,4 @@
-package pe.com.carwashperuapp.carwashapp.ui.my_places
+package pe.com.carwashperuapp.carwashapp.ui.reserves_list_cli
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,19 +7,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.databinding.ItemMyPlacesBinding
+import pe.com.carwashperuapp.carwashapp.databinding.ItemReserveBinding
+import pe.com.carwashperuapp.carwashapp.model.Reserva
 
-class MyPlacesListAdapter(private val onItemClicked: (Direccion) -> Unit) :
-    ListAdapter<Direccion, MyPlacesListAdapter.ViewHolder>(DiffCallback) {
+class MyReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
+    ListAdapter<Reserva, MyReserveListAdapter.ViewHolder>(DiffCallback) {
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(private val binding: ItemMyPlacesBinding) :
+    class ViewHolder(private val binding: ItemReserveBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(direccion: Direccion) {
+        fun bind(reserva: Reserva) {
             binding.apply {
-                binding.local = direccion
+                binding.reserva = reserva
                 binding.executePendingBindings()
             }
         }
@@ -27,8 +29,8 @@ class MyPlacesListAdapter(private val onItemClicked: (Direccion) -> Unit) :
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemMyPlacesBinding =
-            ItemMyPlacesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemReserveBinding =
+            ItemReserveBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -40,18 +42,13 @@ class MyPlacesListAdapter(private val onItemClicked: (Direccion) -> Unit) :
         holder.itemView.setOnClickListener { onItemClicked(getItem(holder.adapterPosition)) }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Direccion>() {
-        override fun areItemsTheSame(oldItem: Direccion, newItem: Direccion): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Reserva>() {
+        override fun areItemsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Direccion, newItem: Direccion): Boolean {
-            return oldItem.departamento == newItem.departamento
-                    && oldItem.provincia == newItem.provincia
-                    && oldItem.distrito == newItem.distrito
-                    && oldItem.direccion == newItem.direccion
-                    && oldItem.estado == newItem.estado
-                    && oldItem.tipo == newItem.tipo
+        override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
+            return oldItem.id == newItem.id
         }
 
     }

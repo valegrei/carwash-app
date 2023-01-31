@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.direccion.TipoDireccion
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Departamento
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Distrito
 import pe.com.carwashperuapp.carwashapp.database.ubigeo.Provincia
@@ -76,35 +77,53 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
             val selectedDistrito = adapterView.getItemAtPosition(position) as Distrito
             viewModel.setSelectedDistrito(selectedDistrito)
         }
+        binding.toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            when (checkedId) {
+                R.id.btnCasa -> if (isChecked) viewModel.selectCasa()
+                R.id.btnOficina -> if (isChecked) viewModel.selectOficina()
+                R.id.btnOtro -> if (isChecked) viewModel.selectOtro()
+            }
+        }
 
         viewModel.apply {
-            departamentos.observe(viewLifecycleOwner) {
-                binding.acDepartamentos.setText(selectedDepartamento.value?.toString())
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    it
-                )
-                binding.acDepartamentos.setAdapter(adapter)
+            if (isDistrib.value == true) {
+                departamentos.observe(viewLifecycleOwner) {
+                    binding.acDepartamentos.setText(selectedDepartamento.value?.toString())
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_dropdown_item,
+                        it
+                    )
+                    binding.acDepartamentos.setAdapter(adapter)
+                }
+                provincias.observe(viewLifecycleOwner) {
+                    binding.acProvincias.setText(selectedProvincia.value?.toString())
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_dropdown_item,
+                        it
+                    )
+                    binding.acProvincias.setAdapter(adapter)
+                }
+                distritos.observe(viewLifecycleOwner) {
+                    binding.acDistritos.setText(selectedDistrito.value?.toString())
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_dropdown_item,
+                        it
+                    )
+                    binding.acDistritos.setAdapter(adapter)
+                }
+            } else {
+                selectedTipo.observe(viewLifecycleOwner) {
+                    when (it) {
+                        TipoDireccion.CASA.id -> binding.toggleButton.check(R.id.btnCasa)
+                        TipoDireccion.OFICINA.id -> binding.toggleButton.check(R.id.btnOficina)
+                        TipoDireccion.OTRO.id -> binding.toggleButton.check(R.id.btnOtro)
+                    }
+                }
             }
-            provincias.observe(viewLifecycleOwner) {
-                binding.acProvincias.setText(selectedProvincia.value?.toString())
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    it
-                )
-                binding.acProvincias.setAdapter(adapter)
-            }
-            distritos.observe(viewLifecycleOwner) {
-                binding.acDistritos.setText(selectedDistrito.value?.toString())
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    it
-                )
-                binding.acDistritos.setAdapter(adapter)
-            }
+
             editStatus.observe(viewLifecycleOwner) {
                 mostrarTitulo(it)
                 mostrarBotones(it)
@@ -146,14 +165,26 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
     }
 
     fun mostrarTitulo(status: EditStatus) {
-        when (status) {
-            EditStatus.VIEW -> (activity as AppCompatActivity).supportActionBar?.title =
-                getString(R.string.place_title_view)
-            EditStatus.EDIT -> (activity as AppCompatActivity).supportActionBar?.title =
-                getString(R.string.place_title_edit)
-            EditStatus.NEW -> (activity as AppCompatActivity).supportActionBar?.title =
-                getString(R.string.place_title_new)
-            else -> {}
+        if (viewModel.isDistrib.value == true) {
+            when (status) {
+                EditStatus.VIEW -> (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.place_title_view)
+                EditStatus.EDIT -> (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.place_title_edit)
+                EditStatus.NEW -> (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.place_title_new)
+                else -> {}
+            }
+        } else {
+            when (status) {
+                EditStatus.VIEW -> (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.dir_title_view)
+                EditStatus.EDIT -> (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.dir_title_edit)
+                EditStatus.NEW -> (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.dir_title_new)
+                else -> {}
+            }
         }
     }
 
@@ -226,7 +257,7 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
     private fun showEliminar() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.place_delete)
-            .setMessage(R.string.place_delete_msg)
+            .setMessage(if (viewModel.isDistrib.value == true) R.string.place_delete_msg else R.string.dir_delete_msg)
             .setCancelable(false)
             .setPositiveButton(R.string.accept) { _, _ ->
                 viewModel.eliminarDireccion()
@@ -238,7 +269,7 @@ class PlaceDetailFragment : Fragment(), MenuProvider {
     private fun showGuardar() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.place_save)
-            .setMessage(R.string.place_save_msg)
+            .setMessage(if (viewModel.isDistrib.value == true) R.string.place_save_msg else R.string.dir_save_msg)
             .setCancelable(false)
             .setPositiveButton(R.string.accept) { _, _ ->
                 viewModel.guardarDireccion()

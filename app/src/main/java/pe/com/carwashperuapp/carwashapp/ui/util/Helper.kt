@@ -126,5 +126,11 @@ fun formatoFechaDB(milisUtc: Long): String {
     format.timeZone = TimeZone.getTimeZone("UTC")
     return format.format(calendar.time)
 }
+fun formatoFechaDBaHum(fechaDB: String): String {
+    val year = fechaDB.substring(0,4)
+    val month = fechaDB.substring(5,7)
+    val day = fechaDB.substring(8,10)
+    return "$day/$month/$year"
+}
 
 fun formatoPrecio(precio: BigDecimal) = DecimalFormat("#,###.00").format(precio)
