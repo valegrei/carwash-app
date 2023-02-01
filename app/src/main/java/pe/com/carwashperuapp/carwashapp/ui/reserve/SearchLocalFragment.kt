@@ -83,7 +83,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             searchLocales()
         }
         mMap.uiSettings.setAllGesturesEnabled(true)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 12.5F))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
         viewModel.locales.observe(viewLifecycleOwner) {
             mostrarLocales(it)
         }
@@ -177,7 +177,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
                         mMap.animateCamera(
                             CameraUpdateFactory.newLatLngZoom(
                                 currentLocation,
-                                12.5F
+                                16F
                             )
                         )
                     }
@@ -362,7 +362,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
                 val place = response.place
                 showMap()
                 mMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(place.latLng!!, 12.5F),
+                    CameraUpdateFactory.newLatLngZoom(place.latLng!!, 16F),
                 )
             }.addOnFailureListener { exception: Exception ->
                 if (exception is ApiException) {
