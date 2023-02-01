@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/navigation_account"
         android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountFragment"
-        android:label="@string/title_account"
+        android:label="@string/title_admin"
         tools:layout="@layout/fragment_account">
         <action
             android:id="@+id/action_navigation_account_to_navigation_account_edit"
@@ -69,7 +69,7 @@
     <fragment
         android:id="@+id/navigation_menu"
         android:name="pe.com.carwashperuapp.carwashapp.ui.menu_admin.MenuAdminFragment"
-        android:label="@string/menu"
+        android:label="@string/title_admin"
         tools:layout="@layout/fragment_menu_admin" >
         <action
             android:id="@+id/action_navigation_menu_to_navigation_settings"

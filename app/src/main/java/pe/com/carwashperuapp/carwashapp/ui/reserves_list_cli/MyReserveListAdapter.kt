@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
-import pe.com.carwashperuapp.carwashapp.databinding.ItemMyPlacesBinding
 import pe.com.carwashperuapp.carwashapp.databinding.ItemReserveBinding
 import pe.com.carwashperuapp.carwashapp.model.Reserva
 
@@ -49,6 +47,24 @@ class MyReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
 
         override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
             return oldItem.id == newItem.id
+                    && (oldItem.horario?.distrib?.razonSocial
+                    == newItem.horario?.distrib?.razonSocial)
+                    && (oldItem.horario?.local?.direccion
+                    == newItem.horario?.local?.direccion)
+                    && (oldItem.vehiculo?.marca
+                    == newItem.vehiculo?.marca)
+                    && (oldItem.vehiculo?.modelo
+                    == newItem.vehiculo?.modelo)
+                    && (oldItem.vehiculo?.year
+                    == newItem.vehiculo?.year)
+                    && (oldItem.vehiculo?.placa
+                    == newItem.vehiculo?.placa)
+                    && (oldItem.horario?.fecha
+                    == newItem.horario?.fecha)
+                    && (oldItem.horario?.horaIni
+                    == newItem.horario?.horaIni)
+                    && (oldItem.horario?.horaFin
+                    == newItem.horario?.horaFin)
         }
 
     }

@@ -126,6 +126,13 @@ fun formatoFechaDB(milisUtc: Long): String {
     format.timeZone = TimeZone.getTimeZone("UTC")
     return format.format(calendar.time)
 }
+fun formatoFechaHoraDB(milisUtc: Long): String {
+    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+    calendar.timeInMillis = milisUtc
+    val format = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+    format.timeZone = TimeZone.getTimeZone("UTC")
+    return format.format(calendar.time)
+}
 fun formatoFechaDBaHum(fechaDB: String): String {
     val year = fechaDB.substring(0,4)
     val month = fechaDB.substring(5,7)

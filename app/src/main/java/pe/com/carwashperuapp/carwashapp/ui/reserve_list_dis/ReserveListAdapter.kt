@@ -2,31 +2,33 @@ package pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import pe.com.carwashperuapp.carwashapp.databinding.ItemReserveListBinding
-import pe.com.carwashperuapp.carwashapp.model.Reserva1
+import pe.com.carwashperuapp.carwashapp.databinding.ItemReserveDisBinding
+import pe.com.carwashperuapp.carwashapp.model.Reserva
 
-class ReserveListAdapter(
-    private val dataSet: Array<Reserva1>,
-    private val onItemClicked: (Reserva1) -> Unit
-) :
-    RecyclerView.Adapter<ReserveListAdapter.ViewHolder>() {
+class ReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
+    ListAdapter<Reserva, ReserveListAdapter.ViewHolder>(DiffCallback) {
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
-    class ViewHolder(private val binding: ItemReserveListBinding) :
+    class ViewHolder(private val binding: ItemReserveDisBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: Reserva1) {
-            binding.reserva = data
+        fun bind(reserva: Reserva) {
+            binding.apply {
+                binding.reserva = reserva
+                binding.executePendingBindings()
+            }
         }
     }
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemReserveListBinding =
-            ItemReserveListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemReserveDisBinding =
+            ItemReserveDisBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -34,11 +36,40 @@ class ReserveListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.bindData(dataSet[position])
-        holder.itemView.setOnClickListener{onItemClicked(dataSet[position])}
+        holder.bind(getItem(holder.adapterPosition))
+        holder.itemView.setOnClickListener { onItemClicked(getItem(holder.adapterPosition)) }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    companion object DiffCallback : DiffUtil.ItemCallback<Reserva>() {
+        override fun areItemsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
+            return oldItem.id == newItem.id
+        }
 
+        override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
+            return oldItem.id == newItem.id
+                    && (oldItem.cliente?.nombres
+                    == newItem.cliente?.nombres)
+                    && (oldItem.cliente?.apellidoPaterno
+                    == newItem.cliente?.apellidoPaterno)
+                    && (oldItem.cliente?.apellidoMaterno
+                    == newItem.cliente?.apellidoMaterno)
+                    && (oldItem.horario?.local?.direccion
+                    == newItem.horario?.local?.direccion)
+                    && (oldItem.vehiculo?.marca
+                    == newItem.vehiculo?.marca)
+                    && (oldItem.vehiculo?.modelo
+                    == newItem.vehiculo?.modelo)
+                    && (oldItem.vehiculo?.year
+                    == newItem.vehiculo?.year)
+                    && (oldItem.vehiculo?.placa
+                    == newItem.vehiculo?.placa)
+                    && (oldItem.horario?.fecha
+                    == newItem.horario?.fecha)
+                    && (oldItem.horario?.horaIni
+                    == newItem.horario?.horaIni)
+                    && (oldItem.horario?.horaFin
+                    == newItem.horario?.horaFin)
+        }
+
+    }
 }

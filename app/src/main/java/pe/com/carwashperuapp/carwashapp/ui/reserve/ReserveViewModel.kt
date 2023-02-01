@@ -21,6 +21,7 @@ import pe.com.carwashperuapp.carwashapp.network.request.ReqReservar
 import pe.com.carwashperuapp.carwashapp.ui.util.calcularDistanciaEnMetros
 import pe.com.carwashperuapp.carwashapp.ui.util.formatearDistancia
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDB
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaHoraDB
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
@@ -76,11 +77,13 @@ class ReserveViewModel(
     val totalServicios: LiveData<BigDecimal> = _totalServicios
 
     fun nuevaReserva() {
+        loadVehiculos()
         _errMsg.value = ""
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
         _selectedFecha.value = MaterialDatePicker.todayInUtcMilliseconds()
         _horarios.value = listOf()
         _horariosMap.value = mapOf()
+        buscarHorarios()
         _editStatus.value = EditStatus.NEW
         _goStatus.value = GoStatus.GO_ADD
         _mostrarEditar.value = true
@@ -162,10 +165,11 @@ class ReserveViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val fecha = formatoFechaDB(selectedFecha.value!!)
+            val fechaHora = formatoFechaHoraDB(Date().time)
             val idLocal = selectedLocal.value?.id!!
             try {
                 val resp = Api.retrofitService.obtenerHorarios(
-                    idLocal, fecha, sesion?.getTokenBearer()!!
+                    idLocal, fecha, fechaHora, sesion?.getTokenBearer()!!
                 )
                 _horarios.value = resp.data.horarios
             } catch (_: Exception) {
@@ -173,10 +177,6 @@ class ReserveViewModel(
             }
             _status.value = Status.SUCCESS
         }
-    }
-
-    init {
-        loadVehiculos()
     }
 
     fun setHorarioMap(map: Map<Int, Horario>) {

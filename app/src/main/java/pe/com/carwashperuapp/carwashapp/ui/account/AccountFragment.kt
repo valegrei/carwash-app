@@ -45,8 +45,8 @@ class AccountFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
-        (activity as AppCompatActivity).supportActionBar?.title =
-            mainViewModel.getTipoPerfilNombre()
+//        (activity as AppCompatActivity).supportActionBar?.title =
+//            mainViewModel.getTipoPerfilNombre()
     }
 
     override fun onDestroyView() {

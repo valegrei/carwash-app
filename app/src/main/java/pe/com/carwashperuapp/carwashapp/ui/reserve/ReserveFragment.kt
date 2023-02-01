@@ -115,7 +115,7 @@ class ReserveFragment : Fragment() {
         val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Seleccion fecha")
             .setSelection(viewModel.selectedFecha.value).build()
         datePicker.addOnPositiveButtonClickListener {
-            if (MaterialDatePicker.todayInUtcMilliseconds() < it) {
+            if (MaterialDatePicker.todayInUtcMilliseconds() <= it) {
                 viewModel.seleccionarFecha(it)
             } else {
                 Snackbar.make(

@@ -9,7 +9,7 @@
         android:id="@+id/nav_reserve_list"
         android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis.ReserveListFragment"
         android:label="@string/menu_reserve_list"
-        tools:layout="@layout/fragment_reserve_list" >
+        tools:layout="@layout/fragment_my_reserves_dis" >
         <action
             android:id="@+id/action_nav_reserve_list_to_serviceDetailsFragment"
             app:destination="@id/nav_reserve_details" />
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/navigation_account"
         android:name="pe.com.carwashperuapp.carwashapp.ui.account.AccountFragment"
-        android:label="@string/title_account"
+        android:label="@string/title_dist"
         tools:layout="@layout/fragment_account" >
         <action
             android:id="@+id/action_navigation_account_to_navigation_account_edit"
@@ -55,9 +55,9 @@
     </fragment>
     <fragment
         android:id="@+id/nav_reserve_details"
-        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_details.ReserveDetailsFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis.ReserveDetailDisFragment"
         android:label="@string/reserve_details"
-        tools:layout="@layout/fragment_reserve_details" />
+        tools:layout="@layout/fragment_reserve_detalle_dis" />
 
     <fragment
         android:id="@+id/navigation_account_edit"
@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/navigation_menu"
         android:name="pe.com.carwashperuapp.carwashapp.ui.menu_distrib.MenuDistribFragment"
-        android:label="@string/menu"
+        android:label="@string/title_dist"
         tools:layout="@layout/fragment_menu_distrib" >
         <action
             android:id="@+id/action_navigation_menu_to_navigation_account"
@@ -105,4 +105,9 @@
         android:name="pe.com.carwashperuapp.carwashapp.ui.my_schedules.ScheduleDetailFragment"
         android:label="@string/schedules_title_view"
         tools:layout="@layout/fragment_schedule_detail"/>
+    <fragment
+        android:id="@+id/reserveDetailDisFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis.ReserveDetailDisFragment"
+        android:label="fragment_reserve_detalle_dis"
+        tools:layout="@layout/fragment_reserve_detalle_dis" />
 </navigation>

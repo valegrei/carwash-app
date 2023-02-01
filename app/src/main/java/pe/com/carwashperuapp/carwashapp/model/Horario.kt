@@ -14,5 +14,5 @@ data class Horario(
     var selected: Boolean? = false,
 ) {
     override fun toString(): String = "${formatHora(horaIni)} - ${formatHora(horaFin)}"
-    fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)}"
+    fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)} - ${formatHora(horaFin)}"
 }

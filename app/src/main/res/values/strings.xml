@@ -287,4 +287,10 @@
     <string name="dir_title_new">Nueva Dirección</string>
     <string name="dir_delete_msg">¿Desea eliminar la dirección?</string>
     <string name="dir_save_msg">Se guardará la información de dirección</string>
+    <string name="new_dir">Nueva Dirección</string>
+    <string name="title_client">Cliente</string>
+    <string name="title_dist">Distribuidor</string>
+    <string name="title_admin">Administrador</string>
+    <string name="reserve_local">Local</string>
+    <string name="reserve_client">Cliente</string>
 </resources>

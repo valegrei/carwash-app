@@ -52,7 +52,7 @@ class MyReserveViewModel(
             val fecha = formatoFechaDB(time)
             try {
                 val res = Api.retrofitService.obtenerReservas(
-                    fecha,
+                    null,
                     sesion?.getTokenBearer()!!,
                 )
                 _reservas.value = res.data.reservas

@@ -9,6 +9,7 @@ class Reserva(
     @Json(name = "Horario") val horario: Horario? = null,
     @Json(name = "Servicios") val servicioReserva: List<ServicioReserva>? = null,
     @Json(name = "Vehiculo") val vehiculo: Vehiculo? = null,
+    @Json(name = "cliente") val cliente: Cliente? = null,
 ) {
     fun calcularTotalServicios(): BigDecimal {
         var total = BigDecimal.ZERO

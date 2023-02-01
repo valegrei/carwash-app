@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import kotlinx.coroutines.launch
@@ -70,13 +72,20 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             vehiculoDao.obtenerPathFotoVehiculo(sesion.usuario.id!!).collect {
                 val header = binding.navView.getHeaderView(0)
                 val imgCar = header.findViewById<ImageView>(R.id.img_car)
+                val tvEmail = header.findViewById<TextView>(R.id.tv_email)
+                tvEmail.text = sesion.usuario.correo
                 if (!it.isNullOrEmpty()) {
                     val url = "$BASE_URL$it"
+                    imgCar.scaleType = ImageView.ScaleType.CENTER_CROP
                     imgCar.load(url) {
                         setHeader("Authorization", sesion.getTokenBearer())
+                        transformations(CircleCropTransformation())
+                        placeholder(R.drawable.loading_animation)
+                        error(R.drawable.ic_broken_image)
                     }
-                } else {
-                    imgCar.setImageDrawable(null)
+                }  else {
+                    imgCar.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                    imgCar.load(R.drawable.logo)
                 }
             }
         }

@@ -239,6 +239,11 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): Response
 
+    @GET("api/distrib/reserva")
+    suspend fun obtenerReservasDistrib(
+        @Query("fecha") fecha: String?,
+        @Header("Authorization") authToken: String
+    ): RespReservas
     @GET("api/clientes/vehiculos")
     suspend fun obtenerVehiculos(
         @Query("lastSincro") lastSincro: Date,
@@ -288,6 +293,7 @@ interface ApiService {
     suspend fun obtenerHorarios(
         @Query("idLocal") idLocal: Int,
         @Query("fecha") fecha: String,
+        @Query("fechaHora") fechaHora: String,
         @Header("Authorization") authToken: String
     ): RespHorarios
 
@@ -299,7 +305,7 @@ interface ApiService {
 
     @GET("api/clientes/reserva")
     suspend fun obtenerReservas(
-        @Query("fecha") fecha: String,
+        @Query("fecha") fecha: String?,
         @Header("Authorization") authToken: String
     ): RespReservas
 

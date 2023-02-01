@@ -35,9 +35,10 @@ class MenuAdminFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fragment = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = mainViewModel
-        (activity as AppCompatActivity).supportActionBar?.title =
-            mainViewModel.getTipoPerfilNombre()
+//        (activity as AppCompatActivity).supportActionBar?.title =
+//            mainViewModel.getTipoPerfilNombre()
     }
 
     fun goToAccount() {

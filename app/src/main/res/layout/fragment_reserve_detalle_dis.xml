@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.reserve_list_dis.ReserveDetailDisFragment">
+
+    <data>
+
+        <import type="pe.com.carwashperuapp.carwashapp.ui.util.HelperKt" />
+
+        <variable
+            name="viewModel"
+            type="pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis.ReserveListViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/min_margin">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reserve_client"
+                android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.selectedReserva.cliente.nombreCompleto}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                tools:text="Victor Augusto Alegre Ibanez" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:text="@{viewModel.selectedReserva.cliente.nroDocFormateado}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                tools:text="DNI: 70917786" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reserve_local"
+                android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:text="@{viewModel.selectedReserva.horario.local.direccion}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                tools:text="Mz I2 Lote 1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/car_title_detail"
+                android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:text="@{viewModel.selectedReserva.vehiculo.toString()}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                tools:text="Hyundai Tucson 2020\nABC 123" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reserve_fecha_hora"
+                android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:text="@{@string/reserve_doble_linea(HelperKt.formatoFechaDBaHum(viewModel.selectedReserva.horario.fecha),HelperKt.formatHora(viewModel.selectedReserva.horario.horaIni))}"
+                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                tools:text="30/01/2023\n11:00 AM" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:background="?android:attr/listDivider" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/reserve_services"
+                android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/min_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_service_reserve_resumen" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:text="@string/reserve_total_amount"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@{HelperKt.formatoPrecio(viewModel.selectedReserva.calcularTotalServicios())}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitlePrimary"
+                    tools:text="150.00" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

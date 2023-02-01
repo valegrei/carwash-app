@@ -74,12 +74,20 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
  */
 @BindingAdapter("roudendImageUrl")
 fun bindRoundImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val sesion = SesionData(imgView.context).getCurrentSesion()
-        imgView.load(it) {
+    val sesion = SesionData(imgView.context).getCurrentSesion()
+    if (!(imgUrl).isNullOrEmpty()) {
+        imgView.colorFilter = null
+        imgView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imgView.load(imgUrl) {
             setHeader("Authorization", sesion?.getTokenBearer()!!)
             transformations(CircleCropTransformation())
+            placeholder(R.drawable.loading_animation)
+            error(R.drawable.ic_broken_image)
         }
+    } else {
+        imgView.setColorFilter(imgView.context.getColor(R.color.purple))
+        imgView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        imgView.load(R.drawable.logo)
     }
 }
 
