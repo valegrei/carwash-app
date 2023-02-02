@@ -2,6 +2,8 @@ package pe.com.carwashperuapp.carwashapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,8 +12,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -21,8 +25,10 @@ import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.ActivityMainCliBinding
 import pe.com.carwashperuapp.carwashapp.network.BASE_URL
+import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnuncioDialog
 import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModel
 import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModelFactory
+import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
 class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -30,6 +36,9 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainCliBinding
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(SesionData(this))
+    }
+    private val anuncionsViewModel: AnunciosViewModel by viewModels {
+        AnunciosViewModelFactory((application as CarwashApplication).database.anuncioDao())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +73,20 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
                 SesionStatus.CLOSED -> goLogin()
                 else -> {}
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mostrarAnuncios()
+    }
+    private fun mostrarAnuncios(){
+        if(anuncionsViewModel.mostrarAnuncios()){
+            Handler(Looper.getMainLooper()).postDelayed({
+                anuncionsViewModel.setVisto()
+                val dialog = AnuncioDialog()
+                dialog.show(supportFragmentManager, "anuncioDialog")
+            },2000)
         }
     }
 

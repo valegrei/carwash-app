@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnuncioDialog" />
+
+        <variable
+            name="anuncio"
+            type="pe.com.carwashperuapp.carwashapp.database.anuncio.Anuncio" />
+    </data>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:onClick="@{()->fragment.cerrar()}"
+                app:srcCompat="@drawable/ic_baseline_close_white_24"
+                app:tint="@color/grey" />
+
+            <ImageView
+                android:id="@+id/img_anuncio"
+                imageUrlGallery="@{anuncio.urlArchivo}"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitStart"
+                android:onClick="@{()->fragment.goUrl()}"
+                tools:srcCompat="@drawable/car" />
+        </LinearLayout>
+    </FrameLayout>
+
+
+</layout>

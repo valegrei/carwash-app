@@ -71,9 +71,6 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
     }
-    private val anuncionsViewModel: AnunciosViewModel by activityViewModels {
-        AnunciosViewModelFactory((activity?.application as CarwashApplication).database.anuncioDao())
-    }
 
     // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
     // and once again when the user makes a selection (for example when calling fetchPlace()).
@@ -148,22 +145,9 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         )
     }
 
-    override fun onResume() {
-        super.onResume()
-        mostrarAnuncios()
-    }
-
     private fun goNuevaReserva() {
         findNavController().navigate(R.id.action_nav_reserve_to_reserveFragment)
         viewModel.clearGoStatus()
-    }
-    private fun mostrarAnuncios(){
-        if(anuncionsViewModel.mostrarAnuncios()){
-            Handler(Looper.getMainLooper()).postDelayed({
-                anuncionsViewModel.setVisto()
-                findNavController().navigate(R.id.action_nav_reserve_to_nav_anuncios)
-            },2000)
-        }
     }
 
     private fun mostrarLocales(locales: List<Local>) {
