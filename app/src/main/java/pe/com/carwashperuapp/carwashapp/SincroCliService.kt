@@ -32,6 +32,7 @@ class SincroCliService : Service() {
         scope.async {
             sincroVehiculos(sesionData, sesion, dataBase)
             sincroDirecciones(sesionData, sesion, dataBase)
+            sincroAnuncios(sesionData, sesion, dataBase)
         }
     }
 
@@ -65,6 +66,23 @@ class SincroCliService : Service() {
             )
             dataBase.direccionDao().guardarDirecciones(respDirecciones.data.direcciones)
             sesionData.saveLastSincroDirecciones(respDirecciones.timeStamp)
+        } catch (_: Exception) {
+        }
+    }
+
+    private suspend fun sincroAnuncios(
+        sesionData: SesionData,
+        sesion: Sesion,
+        dataBase: AppDataBase
+    ) {
+        try {
+            val lastSincroAnuncios = sesionData.getLastSincroAnuncios()
+            val respAnuncios = Api.retrofitService.obtenerAnunciosCli(
+                lastSincroAnuncios,
+                sesion.getTokenBearer()
+            )
+            dataBase.anuncioDao().guardarAnuncios(respAnuncios.data.anuncios)
+            sesionData.saveLastSincroAnuncios(respAnuncios.timeStamp)
         } catch (_: Exception) {
         }
     }

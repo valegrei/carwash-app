@@ -2,8 +2,10 @@ package pe.com.carwashperuapp.carwashapp.model
 
 import android.icu.math.BigDecimal
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoPrecio
 
+@JsonClass(generateAdapter = true)
 class ServicioReserva(
     @Json(name = "id") val id: Int,
     @Json(name = "nombre") val nombre: String,

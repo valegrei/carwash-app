@@ -1,7 +1,9 @@
 package pe.com.carwashperuapp.carwashapp.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Distrib(
     @Json(name = "id") val id: Int,
     @Json(name = "razonSocial") val razonSocial: String,

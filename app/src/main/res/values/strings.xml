@@ -293,4 +293,7 @@
     <string name="title_admin">Administrador</string>
     <string name="reserve_local">Local</string>
     <string name="reserve_client">Cliente</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="tittle_announc">Anuncios</string>
 </resources>

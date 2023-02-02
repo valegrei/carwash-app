@@ -2,8 +2,10 @@ package pe.com.carwashperuapp.carwashapp.model
 
 import android.icu.math.BigDecimal
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
 
+@JsonClass(generateAdapter = true)
 class Reserva(
     @Json(name = "id") val id: Int,
     @Json(name = "Horario") val horario: Horario? = null,

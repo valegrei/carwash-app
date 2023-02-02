@@ -1,9 +1,11 @@
 package pe.com.carwashperuapp.carwashapp.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.ui.util.formatHora
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDBaHum
 
+@JsonClass(generateAdapter = true)
 data class Horario(
     @Json(name = "id") val id: Int,
     @Json(name = "fecha") val fecha: String,

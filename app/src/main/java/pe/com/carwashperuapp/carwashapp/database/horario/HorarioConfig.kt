@@ -2,9 +2,11 @@ package pe.com.carwashperuapp.carwashapp.database.horario
 
 import androidx.room.*
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.ui.util.formatHora
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "horario_config")
 data class HorarioConfig(
     @Json(name = "id") @PrimaryKey @ColumnInfo(name = "id") val id: Int,

@@ -5,8 +5,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoPrecio
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "servicios")
 data class Servicio(
     @PrimaryKey

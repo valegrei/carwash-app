@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 enum class TipoDireccion(val id: Int, val nombre: String) {
     LOCAL(1, "Local"),
@@ -12,6 +13,7 @@ enum class TipoDireccion(val id: Int, val nombre: String) {
     OTRO(4, "Otro")
 }
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "direccion")
 data class Direccion(
     @PrimaryKey

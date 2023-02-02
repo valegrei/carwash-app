@@ -69,6 +69,21 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
+
+/**
+ * Uses the Coil library to load an image by URL into an [ImageView]
+ */
+@BindingAdapter("imageUrlGallery")
+fun bindImageGallery(imgView: ImageView, imgUrl: String?) {
+    val sesion = SesionData(imgView.context).getCurrentSesion()
+    if (!(imgUrl).isNullOrEmpty()) {
+        imgView.load(imgUrl) {
+            setHeader("Authorization", sesion?.getTokenBearer()!!)
+        }
+    }
+}
+
+
 /**
  * Uses the Coil library to load an image by URL into an [ImageView]
  */

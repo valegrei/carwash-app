@@ -2,6 +2,7 @@ package pe.com.carwashperuapp.carwashapp.database.usuario
 
 import androidx.room.*
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.*
 
 enum class EstadoUsuario(val id: Int, val nombre: String) {
@@ -22,6 +23,7 @@ enum class TipoDocumento(val id: Int, val nombre: String, val digitos: Int) {
     CEXT(3, "CEXT", 12)
 }
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "usuario", indices = [Index(value = ["correo"], unique = true)])
 data class Usuario(
     @Json(name = "id")

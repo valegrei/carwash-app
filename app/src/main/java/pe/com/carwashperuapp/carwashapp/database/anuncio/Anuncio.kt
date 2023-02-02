@@ -5,8 +5,10 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.network.BASE_URL
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "anuncios")
 data class Anuncio(
     @PrimaryKey

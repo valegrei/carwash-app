@@ -9,7 +9,7 @@
     <color name="service_state_attended">#008A00</color>
     <color name="service_state_pending">#AE9100</color>
     <color name="service_state_canceled">#757575</color>
-<!--    filters-->
+    <!--    filters-->
     <color name="filter_no_editing">#0000</color>
     <color name="filter_editing">#80000000</color>
 
@@ -20,4 +20,10 @@
     <color name="shadow">#801B1B1B</color>
     <color name="bg_color">#EBECEF</color>
     <color name="red_light">#DA4949</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="transparente">#00000000</color>
 </resources>

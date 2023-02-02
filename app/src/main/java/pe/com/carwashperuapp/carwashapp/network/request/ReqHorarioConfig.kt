@@ -1,7 +1,9 @@
 package pe.com.carwashperuapp.carwashapp.network.request
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class ReqHorarioConfig(
     @Json(name = "lunes") val lunes: Boolean,
     @Json(name = "martes") val martes: Boolean,

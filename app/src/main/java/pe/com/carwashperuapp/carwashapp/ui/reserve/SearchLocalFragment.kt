@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
@@ -22,6 +23,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
@@ -41,6 +43,8 @@ import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentSearchLocalBinding
 import pe.com.carwashperuapp.carwashapp.model.Local
+import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModel
+import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModelFactory
 import pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceAutcompleteListAdapter
 
 class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
@@ -66,6 +70,9 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             (activity?.application as CarwashApplication).database.direccionDao(),
             (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
+    }
+    private val anuncionsViewModel: AnunciosViewModel by activityViewModels {
+        AnunciosViewModelFactory((activity?.application as CarwashApplication).database.anuncioDao())
     }
 
     // Create a new token for the autocomplete session. Pass this to FindAutocompletePredictionsRequest,
@@ -122,8 +129,8 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             getLastLocation()
         }
 
-        viewModel.goStatus.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.goStatus.observe(viewLifecycleOwner) {
+            when (it) {
                 GoStatus.GO_ADD -> goNuevaReserva()
                 else -> {}
             }
@@ -139,12 +146,24 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+    }
 
+    override fun onResume() {
+        super.onResume()
+        mostrarAnuncios()
     }
 
     private fun goNuevaReserva() {
         findNavController().navigate(R.id.action_nav_reserve_to_reserveFragment)
         viewModel.clearGoStatus()
+    }
+    private fun mostrarAnuncios(){
+        if(anuncionsViewModel.mostrarAnuncios()){
+            Handler(Looper.getMainLooper()).postDelayed({
+                anuncionsViewModel.setVisto()
+                findNavController().navigate(R.id.action_nav_reserve_to_nav_anuncios)
+            },2000)
+        }
     }
 
     private fun mostrarLocales(locales: List<Local>) {

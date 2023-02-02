@@ -1,8 +1,10 @@
 package pe.com.carwashperuapp.carwashapp.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 
+@JsonClass(generateAdapter = true)
 class Cliente(
     @Json(name = "id") val id: Int,
     @Json(name = "correo") val correo: String? = null,

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 const val PARAM_SERVER = 1
 const val PARAM_CLIENT = 2
@@ -14,6 +15,7 @@ const val EMAIL_SSL_TLS = "EMAIL_SSL_TLS"
 const val EMAIL_ADDR = "EMAIL_ADDR"
 const val EMAIL_PASS = "EMAIL_PASS"
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "parametro")
 data class Parametro(
     @Json(name = "clave")

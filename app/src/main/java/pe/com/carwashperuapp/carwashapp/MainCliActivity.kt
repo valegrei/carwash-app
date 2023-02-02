@@ -21,6 +21,8 @@ import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.ActivityMainCliBinding
 import pe.com.carwashperuapp.carwashapp.network.BASE_URL
+import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModel
+import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModelFactory
 
 class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -83,13 +85,14 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
                         placeholder(R.drawable.loading_animation)
                         error(R.drawable.ic_broken_image)
                     }
-                }  else {
+                } else {
                     imgCar.scaleType = ImageView.ScaleType.CENTER_INSIDE
                     imgCar.load(R.drawable.logo)
                 }
             }
         }
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main_cli)
