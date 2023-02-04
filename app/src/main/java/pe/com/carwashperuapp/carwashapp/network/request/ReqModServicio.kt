@@ -9,5 +9,6 @@ class ReqModServicio(
     @Json(name = "id") var id: Int,
     @Json(name = "nombre") var nombre: String,
     @Json(name = "precio") var precio: BigDecimal,
+    @Json(name = "duracion") var duracion: Int,
     @Json(name = "estado") var estado: Boolean,
 )

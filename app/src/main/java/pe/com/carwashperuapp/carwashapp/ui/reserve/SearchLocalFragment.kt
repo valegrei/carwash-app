@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
@@ -23,7 +22,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.findNavController
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
@@ -31,23 +30,24 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.*
+import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentSearchLocalBinding
 import pe.com.carwashperuapp.carwashapp.model.Local
-import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModel
-import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModelFactory
 import pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceAutcompleteListAdapter
 
-class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
+const val ZOOM = 16F
+
+class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener,
+    MenuItem.OnActionExpandListener {
     companion object {
         val TAG: String = SearchLocalFragment::class.java.name
     }
@@ -60,9 +60,12 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     lateinit var mMap: GoogleMap
     lateinit var placesClient: PlacesClient
     lateinit var adapter: PlaceAutcompleteListAdapter
+    lateinit var dirAdapter: SavedDirectionsListAdapter
 
     // Current location is set to Lima, this will be of no use
     var currentLocation: LatLng = LatLng(-12.046664, -77.0431219)
+    var currentCameraLocation: LatLng = currentLocation
+    var accuracyCircle: Circle? = null
 
     private val viewModel: ReserveViewModel by activityViewModels {
         ReserveViewModelFactory(
@@ -87,7 +90,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             searchLocales()
         }
         mMap.uiSettings.setAllGesturesEnabled(true)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM))
         viewModel.locales.observe(viewLifecycleOwner) {
             mostrarLocales(it)
         }
@@ -133,6 +136,16 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             }
         }
 
+        dirAdapter = SavedDirectionsListAdapter { goPlace(it) }
+        binding.rvDirecciones.adapter = dirAdapter
+
+        //Actualiza la vista en tiempo real
+        lifecycle.coroutineScope.launch {
+            viewModel.obtenerDirecciones().collect() {
+                dirAdapter.submitList(it)
+            }
+        }
+
         //Recyclerview
         adapter = PlaceAutcompleteListAdapter { goPlace(it.placeId) }
         binding.rvPlacesList.adapter = adapter
@@ -152,6 +165,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
 
     private fun mostrarLocales(locales: List<Local>) {
         val map = mutableMapOf<Marker, Local>()
+        //removeMarkers()
         mMap.clear()
         locales.forEach {
             val markerOp = MarkerOptions()
@@ -161,6 +175,13 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             map[marker!!] = it
         }
         viewModel.setMarkersData(map)
+    }
+
+    private fun removeMarkers() {
+        val markers = viewModel.markersData.value?.keys
+        markers?.forEach {
+            it.remove()
+        }
     }
 
     // Get current location
@@ -175,12 +196,13 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
                         requestNewLocationData()
                     } else {
                         currentLocation = LatLng(location.latitude, location.longitude)
+
                         //mMap.clear()
                         //mMap.addMarker(MarkerOptions().position(currentLocation))
                         mMap.animateCamera(
                             CameraUpdateFactory.newLatLngZoom(
                                 currentLocation,
-                                16F
+                                ZOOM
                             )
                         )
                     }
@@ -271,13 +293,36 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     }
 
     private var searchView: SearchView? = null
-
+    private var searchItem: MenuItem? = null
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.search_menu, menu)
-        val searchItem = menu.findItem(R.id.action_search)
-        searchView = searchItem.actionView as SearchView
+        searchItem = menu.findItem(R.id.action_search)
+        searchView = searchItem?.actionView as SearchView
         searchView?.queryHint = getString(R.string.action_search)
         searchView?.setOnQueryTextListener(this)
+        searchView?.setOnCloseListener {
+            false
+        }
+        searchItem?.setOnActionExpandListener(this)
+    }
+
+    private var colapsado = false
+
+    override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+        // Do something when action item collapses
+        colapsado = true
+        Log.d("SearchLocal", "Colapsado $colapsado")
+        showMap()
+        return true // Return true to collapse action view
+    }
+
+    override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+        // Do something when expanded
+        colapsado = false
+        Log.d("SearchLocal", "Expandido $colapsado")
+        showPlaceList()
+        showDirections()
+        return true // Return true to expand action view
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -285,23 +330,30 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        buscar(query)
+        Log.d("SearchLocal", "texto enviado")
+        if (isVisible)
+            buscar(query)
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        buscar(newText)
+        Log.d("SearchLocal", "cambiando texto")
+        if (isVisible)
+            buscar(newText)
         return true
     }
 
     private fun buscar(query: String?) {
-        if (query?.trim()!!.isNotEmpty()) {
-            if (token == null)
-                token = AutocompleteSessionToken.newInstance()
+        if (!colapsado) {
             showPlaceList()
-            autocompletar(query)
-        } else {
-            showMap()
+            if (query?.trim()!!.isNotEmpty()) {
+                hideDirections()
+                if (token == null)
+                    token = AutocompleteSessionToken.newInstance()
+                autocompletar(query)
+            } else {
+                showDirections()
+            }
         }
     }
 
@@ -331,12 +383,30 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             }
     }
 
+    private fun showDirections() {
+        if (!binding.lyDirecciones.isVisible) {
+            binding.lyDirecciones.visibility = View.VISIBLE
+        }
+        if (binding.rvPlacesList.isVisible) {
+            binding.rvPlacesList.visibility = View.GONE
+        }
+    }
+
+    private fun hideDirections() {
+        if (binding.lyDirecciones.isVisible) {
+            binding.lyDirecciones.visibility = View.GONE
+        }
+        if (!binding.rvPlacesList.isVisible) {
+            binding.rvPlacesList.visibility = View.VISIBLE
+        }
+    }
+
     private fun showMap() {
         if (!binding.lyMap.isVisible) {
             binding.lyMap.visibility = View.VISIBLE
         }
-        if (binding.rvPlacesList.isVisible) {
-            binding.rvPlacesList.visibility = View.GONE
+        if (binding.lyBusqueda.isVisible) {
+            binding.lyBusqueda.visibility = View.GONE
         }
         //ocultar teclado
         val imm: InputMethodManager =
@@ -348,9 +418,22 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         if (binding.lyMap.isVisible) {
             binding.lyMap.visibility = View.GONE
         }
-        if (!binding.rvPlacesList.isVisible) {
-            binding.rvPlacesList.visibility = View.VISIBLE
+        if (!binding.lyBusqueda.isVisible) {
+            binding.lyBusqueda.visibility = View.VISIBLE
         }
+    }
+
+    private fun goPlace(dir: Direccion) {
+        searchItem?.collapseActionView()
+        showMap()
+        mMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    dir.latitud.toDouble(),
+                    dir.longitud.toDouble()
+                ), ZOOM
+            )
+        )
     }
 
     private fun goPlace(placeId: String) {
@@ -363,9 +446,10 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         placesClient.fetchPlace(request)
             .addOnSuccessListener { response: FetchPlaceResponse ->
                 val place = response.place
+                searchItem?.collapseActionView()
                 showMap()
                 mMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(place.latLng!!, 16F),
+                    CameraUpdateFactory.newLatLngZoom(place.latLng!!, ZOOM),
                 )
             }.addOnFailureListener { exception: Exception ->
                 if (exception is ApiException) {

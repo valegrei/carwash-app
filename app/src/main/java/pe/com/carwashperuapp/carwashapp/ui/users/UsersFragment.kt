@@ -68,7 +68,7 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
         viewModel.goStatus.observe(viewLifecycleOwner) {
             when (it) {
                 GoStatus.SHOW_DELETE -> showEliminar()
-                GoStatus.SHOW_CHANGE_PASSWORD  -> showChangePassword()
+                GoStatus.SHOW_CHANGE_PASSWORD -> showChangePassword()
                 else -> {}
             }
         }
@@ -109,8 +109,9 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        (binding.rvUsers.adapter as UsersListAdapter).filter.filter(newText)
-        return false
+        if (isVisible)
+            (binding.rvUsers.adapter as UsersListAdapter).filter.filter(newText)
+        return true
     }
 
     private fun showEliminar() {

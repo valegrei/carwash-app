@@ -11,16 +11,15 @@
             type="pe.com.carwashperuapp.carwashapp.ui.recover.RecoverViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/purple"
-        android:fillViewport="true">
+        android:background="@color/purple">
 
         <LinearLayout
             android:id="@+id/ly_login"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/medium_margin"
             android:paddingTop="@dimen/large_margin">
@@ -101,5 +100,5 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 </layout>

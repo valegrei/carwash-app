@@ -16,7 +16,7 @@ import pe.com.carwashperuapp.carwashapp.network.request.ReqAddServicio
 import pe.com.carwashperuapp.carwashapp.network.request.ReqModServicio
 import java.util.*
 
-enum class Status { LOADING, SUCCESS, ERROR , NORMAL}
+enum class Status { LOADING, SUCCESS, ERROR, NORMAL }
 enum class EditStatus { NEW, EDIT, DELETE, NORMAL }
 enum class GoStatus { GO_ADD, SHOW_DELETE, NORMAL }
 class MyServicesViewModel(
@@ -27,6 +27,7 @@ class MyServicesViewModel(
 
     //Datos para editar cuenta
     var precio = MutableLiveData<String>()
+    var duracion = MutableLiveData<String>()
     var nombre = MutableLiveData<String>()
 
     private var _errMsg = MutableLiveData<String>()
@@ -60,6 +61,7 @@ class MyServicesViewModel(
         val selServ = selectedService.value!!
         nombre.value = selServ.nombre
         precio.value = selServ.getPrecioFormateado()
+        duracion.value = selServ.duracion.toString()
         _editStatus.value = EditStatus.EDIT
         _status.value = Status.NORMAL
         _goStatus.value = GoStatus.GO_ADD
@@ -104,18 +106,21 @@ class MyServicesViewModel(
     private fun agregarServicio() {
         val nombre = (this.nombre.value ?: "").trim()
         val precio = (this.precio.value ?: "").trim()
-        if (validar(nombre, precio)) {
-            agregarServicio(nombre, precio)
+        val duracion = (this.duracion.value ?: "").trim()
+        if (validar(nombre, precio, duracion)) {
+            agregarServicio(nombre, precio, duracion)
         }
     }
 
     private fun modificarServicio() {
         val nombre = (this.nombre.value ?: "").trim()
         val precio = (this.precio.value ?: "").trim()
-        if (validar(nombre, precio)) {
+        val duracion = (this.duracion.value ?: "").trim()
+        if (validar(nombre, precio, duracion)) {
             val modServicio = selectedService.value!!
             modServicio.nombre = nombre
             modServicio.precio = BigDecimal(precio)
+            modServicio.duracion = duracion.toInt()
             modificarServicio(modServicio, false)
         }
     }
@@ -126,7 +131,7 @@ class MyServicesViewModel(
         modificarServicio(modServicio, true)
     }
 
-    private fun validar(nombre: String, precio: String): Boolean {
+    private fun validar(nombre: String, precio: String, duracion: String): Boolean {
         _errMsg.value = ""
         if (nombre.isEmpty()) {
             _errMsg.value = "Campo Servicio vacío"
@@ -136,21 +141,22 @@ class MyServicesViewModel(
             _errMsg.value = "Campo Precio vacío"
             return false
         }
+        if (duracion.isEmpty()) {
+            _errMsg.value = "Campo Duración vacío"
+            return false
+        }
         return true
     }
 
-    private fun agregarServicio(nombre: String, precio: String) {
+    private fun agregarServicio(nombre: String, precio: String, duracion: String) {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroServicios()
-            val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio))
+            val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio), duracion.toInt())
             //guarda lo cambiado
             Api.retrofitService.agregarServicio(
                 reqAddServicio, sesion?.getTokenBearer()!!
             )
-            //Trae los cambios
-            //descargarServicios(sesion, lastSincro)
             _editStatus.value = EditStatus.NORMAL
             _status.value = Status.SUCCESS
         }
@@ -165,6 +171,7 @@ class MyServicesViewModel(
                 modServicio.id,
                 modServicio.nombre,
                 modServicio.precio,
+                modServicio.duracion,
                 modServicio.estado
             )
             //guarda lo cambiado

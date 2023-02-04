@@ -63,6 +63,10 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
                 R.id.navigation_menu,
             ), drawerLayout
         )
+        //Limpio subtitulos al cambiar de fragment
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            binding.appBarMainCli.toolbar.subtitle = null
+        }
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)

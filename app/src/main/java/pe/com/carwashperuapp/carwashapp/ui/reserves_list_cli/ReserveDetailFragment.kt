@@ -1,21 +1,26 @@
 package pe.com.carwashperuapp.carwashapp.ui.reserves_list_cli
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveDetalleBinding
 import pe.com.carwashperuapp.carwashapp.ui.reserve.ServiceResumenListAdapter
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaHoraDB
+import java.util.*
 
-class ReserveDetailFragment : Fragment() {
+class ReserveDetailFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentReserveDetalleBinding? = null
     private val binding get() = _binding!!
@@ -58,7 +63,20 @@ class ReserveDetailFragment : Fragment() {
                     else -> {}
                 }
             }
+            editStatus.observe(viewLifecycleOwner){
+                when(it){
+                    EditStatus.EXIT -> exit()
+                    else -> {}
+                }
+            }
         }
+
+        //Configura el menu del fragment
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
 
@@ -91,5 +109,38 @@ class ReserveDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private var deleteItem: MenuItem? = null
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.delete_item_menu, menu)
+        deleteItem = menu.findItem(R.id.action_delete)
+        ocultarBoton()
+    }
+
+    private fun ocultarBoton() {
+        val fechaHora = formatoFechaHoraDB(Date().time)
+        val fechaHorario = viewModel.selectedReserva.value?.horario?.fechaHoraDB()!!
+        deleteItem?.isVisible = fechaHorario > fechaHora
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return if (menuItem.itemId == R.id.action_delete) {
+            anularReserva()
+            true
+        } else false
+    }
+
+    private fun anularReserva() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.reserve_delete)
+            .setMessage(R.string.reserve_delete_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.anularReserva()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }

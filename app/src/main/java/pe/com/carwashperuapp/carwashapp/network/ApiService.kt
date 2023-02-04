@@ -20,9 +20,9 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-//const val BASE_URL = "http://192.168.100.9:3000"
+const val BASE_URL = "http://192.168.100.9:3000"
 //const val BASE_URL = "http://192.168.100.9"
-const val BASE_URL = "https://www.carwashperuapp.com"
+//const val BASE_URL = "https://www.carwashperuapp.com"
 
 object BigDecimalAdapter {
     @FromJson

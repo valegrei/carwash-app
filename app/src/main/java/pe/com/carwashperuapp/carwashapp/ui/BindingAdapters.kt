@@ -162,10 +162,21 @@ fun bindStaticMapDireccion(imgView: ImageView, latLng: LatLng?) {
 @BindingAdapter("tipoDir")
 fun bindTipoDir(textView: TextView, tipoDir: Int?) {
     val resIcon = when (tipoDir) {
-        TipoDireccion.LOCAL.id -> R.drawable.ic_store_black_24
-        TipoDireccion.CASA.id -> R.drawable.outline_house_24
+        TipoDireccion.LOCAL.id -> R.drawable.baseline_store_24
+        TipoDireccion.CASA.id -> R.drawable.baseline_house_24
         TipoDireccion.OFICINA.id -> R.drawable.outline_business_24
-        else -> R.drawable.ic_outline_place_24
+        else -> R.drawable.ic_baseline_place_24
     }
     textView.setCompoundDrawablesWithIntrinsicBounds(resIcon, 0, 0, 0);
+}
+
+@BindingAdapter("tipoDir")
+fun bindTipoDir(imageView: ImageView, tipoDir: Int?) {
+    val resIcon = when (tipoDir) {
+        TipoDireccion.LOCAL.id -> R.drawable.baseline_store_24
+        TipoDireccion.CASA.id -> R.drawable.baseline_house_24
+        TipoDireccion.OFICINA.id -> R.drawable.outline_business_24
+        else -> R.drawable.ic_baseline_place_24
+    }
+    imageView.setImageResource(resIcon)
 }

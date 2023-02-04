@@ -1,18 +1,22 @@
 package pe.com.carwashperuapp.carwashapp.ui.reserves_list_cli
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.MaterialDatePicker
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentMyReservesBinding
 import pe.com.carwashperuapp.carwashapp.model.Reserva
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFecha
 
-class MyReservesFragment : Fragment() {
+class MyReservesFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentMyReservesBinding? = null
 
@@ -30,7 +34,7 @@ class MyReservesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMyReservesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -56,9 +60,29 @@ class MyReservesFragment : Fragment() {
                     else -> binding.swipeReserves.isRefreshing = false
                 }
             }
+            selectedFecha.observe(viewLifecycleOwner) {
+                manejarFiltroFecha(it)
+            }
         }
-        viewModel.consultarReservas()
 
+        //Configura el menu del fragment
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
+    }
+
+    private fun manejarFiltroFecha(it: Long?) {
+        if (it != null) {
+            setSubTitle(formatoFecha(it))
+            showMenuClear()
+            viewModel.consultarReservas()
+        } else {
+            setSubTitle(null)
+            hideMenuClear()
+            viewModel.consultarReservas()
+        }
     }
 
     private fun goView(reserva: Reserva) {
@@ -69,5 +93,49 @@ class MyReservesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private var menuClear: MenuItem?=null
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.search_date, menu)
+        menuClear = menu.findItem(R.id.action_clear)
+        manejarFiltroFecha(viewModel.selectedFecha.value)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if (menuItem.itemId == R.id.action_search_date) {
+            showDatePicker()
+            return true
+        }else if(menuItem.itemId == R.id.action_clear){
+            viewModel.limpiarFecha()
+            return true
+        }
+        return false
+    }
+
+    //Muestra el selector de fechas
+    private fun showDatePicker() {
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Seleccion fecha")
+                .setSelection(viewModel.selectedFecha.value?: MaterialDatePicker.todayInUtcMilliseconds())
+                .build()
+        datePicker.addOnPositiveButtonClickListener {
+            viewModel.seleccionrFecha(it)
+        }
+
+        datePicker.show(childFragmentManager, "date_picker")
+    }
+
+    private fun setSubTitle(subTitle: String?) {
+        (activity as AppCompatActivity).supportActionBar?.subtitle = subTitle
+    }
+
+    private fun hideMenuClear(){
+        menuClear?.isVisible = false
+    }
+
+    private fun showMenuClear(){
+        menuClear?.isVisible = true
     }
 }

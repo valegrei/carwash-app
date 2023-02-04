@@ -2,7 +2,6 @@ package pe.com.carwashperuapp.carwashapp.ui.reserves_list_cli
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -36,6 +35,8 @@ class MyReserveViewModel(
     val reservas: LiveData<List<Reserva>> = _reservas
     private var _selectedReserva = MutableLiveData<Reserva>()
     val selectedReserva: LiveData<Reserva> = _selectedReserva
+    private var _selectedFecha = MutableLiveData<Long?>()
+    val selectedFecha: LiveData<Long?> = _selectedFecha
 
     fun verReserva(reserva: Reserva) {
         _errMsg.value = ""
@@ -44,15 +45,28 @@ class MyReserveViewModel(
         _mostrarEditar.value = true
     }
 
+    init {
+        limpiarFecha()
+    }
+    fun seleccionrFecha(time: Long) {
+        _selectedFecha.value = time
+    }
+
+    fun limpiarFecha() {
+        _selectedFecha.value = null
+    }
+
     fun consultarReservas() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val time = MaterialDatePicker.todayInUtcMilliseconds()
-            val fecha = formatoFechaDB(time)
+            val time = selectedFecha.value
+            var fecha: String? = null
+            if (time != null)
+                fecha = formatoFechaDB(time)
             try {
                 val res = Api.retrofitService.obtenerReservas(
-                    null,
+                    fecha,
                     sesion?.getTokenBearer()!!,
                 )
                 _reservas.value = res.data.reservas

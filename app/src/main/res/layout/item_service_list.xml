@@ -36,7 +36,6 @@
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 app:drawableStartCompat="@drawable/ic_baseline_home_repair_service_24"
                 tools:text="Lavado de Carro\nS/ 30.00" />
-
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

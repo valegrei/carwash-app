@@ -233,7 +233,7 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
         }
     }
 
-    private var searchView : SearchView?=null
+    private var searchView: SearchView? = null
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.search_menu, menu)
@@ -248,12 +248,14 @@ class AddPlaceFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListene
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        buscar(query)
+        if (isVisible)
+            buscar(query)
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        buscar(newText)
+        if (isVisible)
+            buscar(newText)
         return true
     }
 

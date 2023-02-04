@@ -106,8 +106,9 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        (binding.rvDistrib.adapter as DistribsListAdapter).filter.filter(newText)
-        return false
+        if (isVisible)
+            (binding.rvDistrib.adapter as DistribsListAdapter).filter.filter(newText)
+        return true
     }
 
     private fun showConfirmar() {

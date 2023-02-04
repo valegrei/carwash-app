@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_reserve_list"
-        android:icon="@drawable/ic_outline_home_24"
+        android:icon="@drawable/ic_outline_calendar_month_24"
         android:title="@string/menu_reserve_list" />
     <item
         android:id="@+id/nav_my_places"

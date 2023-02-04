@@ -17,4 +17,5 @@ data class Horario(
 ) {
     override fun toString(): String = "${formatHora(horaIni)} - ${formatHora(horaFin)}"
     fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)} - ${formatHora(horaFin)}"
+    fun fechaHoraDB(): String = "$fecha $horaIni"
 }

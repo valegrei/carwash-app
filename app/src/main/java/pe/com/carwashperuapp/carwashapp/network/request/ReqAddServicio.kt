@@ -8,4 +8,5 @@ import com.squareup.moshi.JsonClass
 class ReqAddServicio(
     @Json(name = "nombre") var nombre: String,
     @Json(name = "precio") var precio: BigDecimal,
+    @Json(name = "duracion") var duracion: Int,
 )

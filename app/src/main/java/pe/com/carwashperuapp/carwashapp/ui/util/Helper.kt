@@ -129,7 +129,7 @@ fun formatoFechaDB(milisUtc: Long): String {
 fun formatoFechaHoraDB(milisUtc: Long): String {
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
     calendar.timeInMillis = milisUtc
-    val format = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+    val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
     format.timeZone = TimeZone.getTimeZone("UTC")
     return format.format(calendar.time)
 }
@@ -140,4 +140,4 @@ fun formatoFechaDBaHum(fechaDB: String): String {
     return "$day/$month/$year"
 }
 
-fun formatoPrecio(precio: BigDecimal) = DecimalFormat("#,###.00").format(precio)
+fun formatoPrecio(precio: BigDecimal?): String = DecimalFormat("#,###.00").format(precio)

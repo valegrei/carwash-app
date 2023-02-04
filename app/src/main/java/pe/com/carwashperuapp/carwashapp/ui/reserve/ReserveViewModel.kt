@@ -7,8 +7,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.VehiculoDao
@@ -122,6 +124,11 @@ class ReserveViewModel(
                 currentLocation.latitude, currentLocation.longitude
             )
         )
+    }
+
+    fun obtenerDirecciones(): Flow<List<Direccion>> {
+        val sesion = sesionData.getCurrentSesion()!!
+        return direccionDao.obtenerDirecciones(sesion.usuario.id!!)
     }
 
     private fun loadVehiculos() {

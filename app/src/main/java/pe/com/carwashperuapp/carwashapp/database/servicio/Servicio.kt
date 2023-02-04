@@ -21,6 +21,9 @@ data class Servicio(
     @Json(name = "precio")
     @ColumnInfo(name = "precio")
     var precio: BigDecimal,
+    @Json(name = "duracion")
+    @ColumnInfo(name = "duracion")
+    var duracion: Int,
     @Json(name = "estado")
     @ColumnInfo(name = "estado")
     var estado: Boolean,
@@ -32,4 +35,5 @@ data class Servicio(
     fun getNombreFormateado(): String = "Nombre: $nombre"
     fun getPrecioLabel(): String = "Precio: S/ ${getPrecioFormateado()}"
     fun getPrecioFormateado(): String = formatoPrecio(precio)
+    fun getDuracionFormateado(): String = "Duración: $duracion minutos"
 }
