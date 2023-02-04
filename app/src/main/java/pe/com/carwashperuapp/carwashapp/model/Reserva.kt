@@ -16,7 +16,7 @@ class Reserva(
     fun calcularTotalServicios(): BigDecimal {
         var total = BigDecimal.ZERO
         servicioReserva?.forEach {
-            total = total.add(it.precio)
+            total = total.add(it.detalle?.precio)
         }
         return total
     }

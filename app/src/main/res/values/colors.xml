@@ -6,9 +6,9 @@
     <color name="error2">#FFBF00</color>
     <color name="grey">#E6E6E6</color>
     <!--    State Colors-->
-    <color name="service_state_attended">#008A00</color>
-    <color name="service_state_pending">#AE9100</color>
-    <color name="service_state_canceled">#757575</color>
+    <color name="service_state_attended">#007700</color>
+    <color name="service_state_pending">#757575</color>
+    <color name="service_state_canceled">#A30000</color>
     <!--    filters-->
     <color name="filter_no_editing">#0000</color>
     <color name="filter_editing">#80000000</color>

@@ -245,6 +245,12 @@ interface ApiService {
         @Query("fecha") fecha: String?,
         @Header("Authorization") authToken: String
     ): RespReservas
+    @PUT("api/distrib/reserva/{idReserva}")
+    suspend fun atenderReserva(
+        @Path("idReserva") idReserva: Int,
+        @Body reqAtenderReserva: ReqAtenderReserva,
+        @Header("Authorization") authToken: String
+    ): Response
     @GET("api/clientes/vehiculos")
     suspend fun obtenerVehiculos(
         @Query("lastSincro") lastSincro: Date,

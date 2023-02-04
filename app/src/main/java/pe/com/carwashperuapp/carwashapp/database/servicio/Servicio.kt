@@ -31,7 +31,7 @@ data class Servicio(
     @ColumnInfo(name = "idDistrib")
     var idDistrib: Int,
 ) {
-    fun getNombrePrecio(): String = "$nombre\nS/ ${getPrecioFormateado()}"
+    fun getNombrePrecio(): String = "$nombre\nS/ ${getPrecioFormateado()} - $duracion min"
     fun getNombreFormateado(): String = "Nombre: $nombre"
     fun getPrecioLabel(): String = "Precio: S/ ${getPrecioFormateado()}"
     fun getPrecioFormateado(): String = formatoPrecio(precio)

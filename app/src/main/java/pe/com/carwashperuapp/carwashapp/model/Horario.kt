@@ -15,7 +15,7 @@ data class Horario(
     @Json(name = "Distrib") val distrib: Distrib? = null,
     var selected: Boolean? = false,
 ) {
-    override fun toString(): String = "${formatHora(horaIni)} - ${formatHora(horaFin)}"
+    override fun toString(): String = formatHora(horaIni)
     fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)} - ${formatHora(horaFin)}"
     fun fechaHoraDB(): String = "$fecha $horaIni"
 }

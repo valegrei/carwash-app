@@ -11,6 +11,7 @@ import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.TipoDireccion
 import pe.com.carwashperuapp.carwashapp.database.usuario.EstadoUsuario
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoUsuario
+import pe.com.carwashperuapp.carwashapp.model.ServicioEstado
 import pe.com.carwashperuapp.carwashapp.ui.announcement.TuplaImageEdit
 import pe.com.carwashperuapp.carwashapp.ui.util.UrlSigner
 import java.net.URL
@@ -179,4 +180,25 @@ fun bindTipoDir(imageView: ImageView, tipoDir: Int?) {
         else -> R.drawable.ic_baseline_place_24
     }
     imageView.setImageResource(resIcon)
+}
+
+@BindingAdapter("estadoServColor")
+fun bindEstadoServ(textView: TextView, estado: Int?) {
+    val context = textView.context
+    var resColor: Int?
+    resColor = when (estado) {
+        ServicioEstado.NO_ATENDIDO.id -> {
+            R.color.service_state_pending
+        }
+        ServicioEstado.ATENDIDO.id -> {
+            R.color.service_state_attended
+        }
+        ServicioEstado.ANULADO.id -> {
+            R.color.service_state_canceled
+        }
+        else -> {
+            0
+        }
+    }
+    textView.setTextColor(context.getColor(resColor))
 }

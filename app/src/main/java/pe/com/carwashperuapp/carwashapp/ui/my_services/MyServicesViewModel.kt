@@ -50,6 +50,7 @@ class MyServicesViewModel(
     fun goNuevo() {
         nombre.value = ""
         precio.value = ""
+        duracion.value = ""
         _errMsg.value = ""
         _editStatus.value = EditStatus.NEW
         _status.value = Status.NORMAL

@@ -1,21 +1,25 @@
 package pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveDetalleDisBinding
-import pe.com.carwashperuapp.carwashapp.ui.reserve.ServiceResumenListAdapter
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaHoraDB
+import java.util.*
 
-class ReserveDetailDisFragment : Fragment() {
+class ReserveDetailDisFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentReserveDetalleDisBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +45,7 @@ class ReserveDetailDisFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        val adapter = ServiceResumenListAdapter()
+        val adapter = ServiceDisListAdapter(seMuestraBoton())
         binding.rvServices.adapter = adapter
 
         viewModel.apply {
@@ -58,7 +62,19 @@ class ReserveDetailDisFragment : Fragment() {
                     else -> {}
                 }
             }
+            editStatus.observe(viewLifecycleOwner) {
+                when (it) {
+                    EditStatus.EXIT -> exit()
+                    else -> {}
+                }
+            }
         }
+        //Configura el menu del fragment
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
 
@@ -91,5 +107,43 @@ class ReserveDetailDisFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+
+    private var saveItem: MenuItem? = null
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.save_menu, menu)
+        saveItem = menu.findItem(R.id.action_save)
+        ocultarBoton()
+    }
+
+    private fun seMuestraBoton(): Boolean {
+        val fechaHora = formatoFechaHoraDB(Date().time)
+        val fechaHorario = viewModel.selectedReserva.value?.horario?.fechaHoraDB()!!
+        return fechaHorario > fechaHora
+    }
+
+    private fun ocultarBoton() {
+        saveItem?.isVisible = seMuestraBoton()
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return if (menuItem.itemId == R.id.action_save) {
+            guardarReserva()
+            true
+        } else false
+    }
+
+    private fun guardarReserva() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.reserve_save)
+            .setMessage(R.string.reserve_save_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.editarReserva()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }

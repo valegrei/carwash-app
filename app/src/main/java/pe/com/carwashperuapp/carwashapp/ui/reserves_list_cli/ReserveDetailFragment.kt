@@ -46,7 +46,7 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
             lifecycleOwner = viewLifecycleOwner
         }
 
-        val adapter = ServiceResumenListAdapter()
+        val adapter = ServiceCliListAdapter()
         binding.rvServices.adapter = adapter
 
         viewModel.apply {

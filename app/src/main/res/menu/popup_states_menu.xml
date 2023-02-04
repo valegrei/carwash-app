@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/opt_atendido"
+        android:title="@string/opt_atendido" />
+    <item android:id="@+id/opt_anulado"
+        android:title="@string/opt_anulado" />
+    <item android:id="@+id/opt_no_atendido"
+        android:title="@string/opt_no_atendido" />
+</menu>

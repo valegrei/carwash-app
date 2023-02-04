@@ -2,13 +2,13 @@ package pe.com.carwashperuapp.carwashapp.ui.reserve_list_dis
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.model.Reserva
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
+import pe.com.carwashperuapp.carwashapp.network.request.ReqAtenderReserva
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDB
 import java.util.*
 
@@ -49,6 +49,7 @@ class ReserveListViewModel(
     init {
         limpiarFecha()
     }
+
     fun seleccionrFecha(time: Long) {
         _selectedFecha.value = time
     }
@@ -80,6 +81,24 @@ class ReserveListViewModel(
 
     private fun clearErrs() {
         _errMsg.value = null
+    }
+
+    fun editarReserva() {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            val idReserva = selectedReserva.value?.id!!
+            val reqAtenderReserva = ReqAtenderReserva(
+                selectedReserva.value?.servicioReserva!!
+            )
+            Api.retrofitService.atenderReserva(
+                idReserva,
+                reqAtenderReserva,
+                sesion?.getTokenBearer()!!
+            )
+            _status.value = Status.SUCCESS
+            _editStatus.value = EditStatus.EXIT
+        }
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
