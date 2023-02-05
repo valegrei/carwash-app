@@ -7,10 +7,12 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import pe.com.carwashperuapp.carwashapp.R
+import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentRegisterBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
@@ -37,13 +39,29 @@ class RegisterFragment : Fragment() {
             viewModel = registerViewModel
         }
 
-        registerViewModel.status.observe(viewLifecycleOwner) {
-            when (it) {
-                Status.LOADING -> showLoading()
-                Status.ERROR -> hideLoading()
-                Status.GO_VERIFY -> goVerify()
-                Status.GO_LOGIN -> goLogin()
-                else -> {}
+        binding.acTipoDoc.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedTipoDoc = adapterView.getItemAtPosition(position) as TipoDocumento
+            registerViewModel.setSelectedTipoDoc(selectedTipoDoc)
+        }
+
+        registerViewModel.apply {
+            tiposDoc.observe(viewLifecycleOwner) {
+                binding.acTipoDoc.setText(selectedTipoDoc.value?.toString())
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_dropdown_item,
+                    it
+                )
+                binding.acTipoDoc.setAdapter(adapter)
+            }
+            status.observe(viewLifecycleOwner) {
+                when (it) {
+                    Status.LOADING -> showLoading()
+                    Status.ERROR -> hideLoading()
+                    Status.GO_VERIFY -> goVerify()
+                    Status.GO_LOGIN -> goLogin()
+                    else -> {}
+                }
             }
         }
     }

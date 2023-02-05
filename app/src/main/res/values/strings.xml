@@ -306,4 +306,9 @@
     <string name="opt_no_atendido">No atendido</string>
     <string name="reserve_save">Guardar</string>
     <string name="reserve_save_msg">¿Desea guardar los cambios?</string>
+    <string name="reserve_completar">Completar Datos</string>
+    <string name="reserve_completar_msg">Antes de reservar debe de completar sus datos.</string>
+    <string name="my_data_nro_doc">Nro. Documento</string>
+    <string name="my_data_tipo_doc">Tipo Doc.</string>
+    <string name="register_nro_doc">Nro. Documento</string>
 </resources>

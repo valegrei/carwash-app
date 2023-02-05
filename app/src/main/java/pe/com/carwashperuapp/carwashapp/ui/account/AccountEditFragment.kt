@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.*
+import android.widget.ArrayAdapter
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import pe.com.carwashperuapp.carwashapp.MainViewModel
 import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentAccountEditBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
@@ -51,6 +53,10 @@ class AccountEditFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+        binding.acTipoDoc.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedTipoDoc = adapterView.getItemAtPosition(position) as TipoDocumento
+            sharedViewModel.setSelectedTipoDoc(selectedTipoDoc)
+        }
 
         sharedViewModel.apply {
             status.observe(viewLifecycleOwner) {
@@ -60,6 +66,36 @@ class AccountEditFragment : Fragment(), MenuProvider {
                     EditStatus.SUCCESS -> exit()
                     else -> {}
                 }
+            }
+            tiposDoc.observe(viewLifecycleOwner) {
+                binding.acTipoDoc.setText(selectedTipoDoc.value?.toString())
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_dropdown_item,
+                    it
+                )
+                binding.acTipoDoc.setAdapter(adapter)
+            }
+            errNombres.observe(viewLifecycleOwner) {
+                binding.tiNombres.error = it
+            }
+            errApePat.observe(viewLifecycleOwner) {
+                binding.tiApePat.error = it
+            }
+            errApeMat.observe(viewLifecycleOwner) {
+                binding.tiApeMat.error = it
+            }
+            errRazSoc.observe(viewLifecycleOwner) {
+                binding.tiRazSoc.error = it
+            }
+            errNroDoc.observe(viewLifecycleOwner) {
+                binding.tiNroDoc.error = it
+            }
+            errNroTelef.observe(viewLifecycleOwner) {
+                binding.tiNroTelef.error = it
+            }
+            errNroWhatsapp.observe(viewLifecycleOwner) {
+                binding.tiNroWhtasapp.error = it
             }
         }
 

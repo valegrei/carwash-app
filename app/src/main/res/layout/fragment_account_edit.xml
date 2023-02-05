@@ -54,20 +54,20 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_nombres"
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:hint="@string/my_data_nombres"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
-                    app:boxBackgroundColor="@color/white">
+                    app:boxBackgroundColor="@color/white"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="10"
-                        android:hint="@string/my_data_nombres"
                         android:inputType="text"
                         android:text="@={viewModel.nombres}"
                         tools:ignore="TextContrastCheck"
@@ -75,20 +75,20 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_ape_pat"
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:hint="@string/my_data_ape_pat"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
-                    app:boxBackgroundColor="@color/white">
+                    app:boxBackgroundColor="@color/white"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="10"
-                        android:hint="@string/my_data_ape_pat"
                         android:inputType="text"
                         android:text="@={viewModel.apePat}"
                         tools:ignore="TextContrastCheck"
@@ -96,10 +96,12 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_ape_mat"
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
+                    android:hint="@string/my_data_ape_mat"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario != TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
                     app:boxBackgroundColor="@color/white">
 
@@ -107,9 +109,7 @@
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="10"
-                        android:hint="@string/my_data_ape_mat"
                         android:inputType="text"
                         android:text="@={viewModel.apeMat}"
                         tools:ignore="TextContrastCheck"
@@ -118,58 +118,87 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_raz_soc"
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:hint="@string/my_data_razon_social"
                     android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
-                    app:boxBackgroundColor="@color/white">
+                    app:boxBackgroundColor="@color/white"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="10"
-                        android:hint="@string/my_data_razon_social"
                         android:inputType="text"
                         android:text="@={viewModel.razSoc}"
                         tools:ignore="TextContrastCheck"
                         tools:text="Lavados de Carros Santa Rosa" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_nro_doc"
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/my_data_nro_doc"
+                        app:errorEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            style="@style/Style.CarwashApp.TextInputLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:text="@={viewModel.nroDoc}"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="10709582864" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_tipo_doc"
+                        style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_margin"
+                        android:layout_weight="0"
+                        app:boxBackgroundColor="@color/white">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/ac_tipo_doc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="@string/my_data_tipo_doc"
+                            android:inputType="none"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="DNI" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_nro_telef"
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:hint="@{viewModel.getTipoDoc()}">
+                    android:hint="@string/my_data_cellphone"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="number"
-                        android:text="@={viewModel.nroDoc}"
-                        tools:ignore="TextContrastCheck"
-                        tools:text="10709582864" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Style.CarwashApp.TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/Style.CarwashApp.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:hint="@string/my_data_cellphone"
                         android:inputType="phone"
                         android:text="@={viewModel.nroCel1}"
                         tools:ignore="TextContrastCheck"
@@ -177,18 +206,18 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_nro_whtasapp"
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp">
+                    android:hint="@string/my_data_whatsapp"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:ems="10"
-                        android:hint="@string/my_data_whatsapp"
                         android:inputType="phone"
                         android:text="@={viewModel.nroCel2}"
                         tools:ignore="TextContrastCheck"

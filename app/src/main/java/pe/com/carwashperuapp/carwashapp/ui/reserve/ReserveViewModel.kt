@@ -28,7 +28,7 @@ import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
 enum class EditStatus { EXIT, EDIT, NEW, VIEW }
-enum class GoStatus { GO_ADD, GO_CONFIRM, GO_LIST, NORMAL }
+enum class GoStatus { GO_ADD, GO_CONFIRM, GO_LIST, SHOW_COMPLETAR, NORMAL }
 class ReserveViewModel(
     private val sesionData: SesionData,
     private val direccionDao: DireccionDao,
@@ -78,7 +78,19 @@ class ReserveViewModel(
     private var _totalServicios = MutableLiveData<BigDecimal>()
     val totalServicios: LiveData<BigDecimal> = _totalServicios
 
-    fun nuevaReserva() {
+    fun completarOReservar(){
+        if(datosCompletos()){
+            nuevaReserva()
+        }else{
+            mostrarCompletarDatos()
+        }
+    }
+
+    private fun mostrarCompletarDatos() {
+        _goStatus.value = GoStatus.SHOW_COMPLETAR
+    }
+
+    private fun nuevaReserva() {
         loadVehiculos()
         _errMsg.value = ""
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
@@ -250,6 +262,14 @@ class ReserveViewModel(
             it.seleccionado!!
         }
         _selectedServicios.value = seleccionados!!
+    }
+
+    fun datosCompletos(): Boolean {
+        val sesion = sesionData.getCurrentSesion()
+        val usu = sesion?.usuario
+        return !usu?.nombres.isNullOrEmpty()
+                && !usu?.apellidoPaterno.isNullOrEmpty()
+                && !usu?.nroDocumento.isNullOrEmpty()
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->

@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.view.MenuHost
@@ -132,6 +133,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         viewModel.goStatus.observe(viewLifecycleOwner) {
             when (it) {
                 GoStatus.GO_ADD -> goNuevaReserva()
+                GoStatus.SHOW_COMPLETAR -> mostrarCompletarDatos()
                 else -> {}
             }
         }
@@ -468,5 +470,20 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun mostrarCompletarDatos(){
+        viewModel.clearGoStatus()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.reserve_completar)
+            .setMessage(R.string.reserve_completar_msg)
+            .setCancelable(true)
+            .setPositiveButton(R.string.ok){_,_->
+                goDatos()
+            }.show()
+    }
+
+    private fun goDatos(){
+        findNavController().navigate(R.id.action_nav_reserve_to_navigation_account)
     }
 }

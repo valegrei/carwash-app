@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_reserve_to_reserveFragment"
             app:destination="@id/reserveFragment" />
+        <action
+            android:id="@+id/action_nav_reserve_to_navigation_account"
+            app:destination="@id/navigation_account" />
     </fragment>
     <fragment
         android:id="@+id/nav_my_reserves"

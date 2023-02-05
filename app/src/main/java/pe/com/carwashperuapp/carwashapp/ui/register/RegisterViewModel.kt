@@ -26,7 +26,9 @@ class RegisterViewModel : ViewModel() {
     fun setIsDistrib(boolean: Boolean) {
         _isDistrib.value = boolean
     }
-
+    //fields
+    private var _usuario = MutableLiveData<Usuario>()
+    val usuario: LiveData<Usuario> = _usuario
     var correo = MutableLiveData<String>()
     var clave = MutableLiveData<String>()
     var repClave = MutableLiveData<String>()
@@ -34,6 +36,11 @@ class RegisterViewModel : ViewModel() {
     var nroDoc = MutableLiveData<String>()
     var nroCel1 = MutableLiveData<String>()
     var nroCel2 = MutableLiveData<String>()
+    private var _tiposDoc = MutableLiveData<Array<TipoDocumento>>()
+    var tiposDoc: LiveData<Array<TipoDocumento>> = _tiposDoc
+    private var _selectedTipoDoc = MutableLiveData<TipoDocumento>()
+    var selectedTipoDoc: LiveData<TipoDocumento> = _selectedTipoDoc
+    //errores
     private var _errCorreo = MutableLiveData<String>()
     val errCorreo: LiveData<String> = _errCorreo
     private var _errClave = MutableLiveData<String>()
@@ -50,10 +57,9 @@ class RegisterViewModel : ViewModel() {
     val errNroCel2: LiveData<String> = _errNroCel2
     private var _errMsg = MutableLiveData<String>()
     val errMsg: LiveData<String> = _errMsg
+    //status
     private var _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
-    private var _usuario = MutableLiveData<Usuario>()
-    val usuario: LiveData<Usuario> = _usuario
 
     init {
         correo.value = ""
@@ -64,6 +70,8 @@ class RegisterViewModel : ViewModel() {
         nroDoc.value = ""
         nroCel1.value = ""
         nroCel2.value = ""
+        _tiposDoc.value = arrayOf(TipoDocumento.RUC, TipoDocumento.DNI, TipoDocumento.CEXT)
+        _selectedTipoDoc.value = TipoDocumento.RUC
         _errCorreo.value = ""
         _errClave.value = ""
         _errRepClave.value = ""
@@ -141,10 +149,10 @@ class RegisterViewModel : ViewModel() {
             if (nroDoc.isEmpty()) {
                 _errNroDoc.value = "Campo vacío"
                 res = false
-            }/* else if (nroDoc.length != TipoDocumento.RUC.digitos) {//RUC
-                _errNroDoc.value = "RUC inválido"
+            } else if (nroDoc.length != selectedTipoDoc.value?.digitos) {//RUC
+                _errNroDoc.value = "Doc. Inválido"
                 res = false
-            }*/
+            }
             if (nroCel1.isNotEmpty() && !Patterns.PHONE.matcher(nroCel1).matches()) {
                 _errNroCel1.value = "Nro. inválido"
                 res = false
@@ -155,6 +163,9 @@ class RegisterViewModel : ViewModel() {
             }
         }
         return res
+    }
+    fun setSelectedTipoDoc(selectedTipoDoc: TipoDocumento) {
+        _selectedTipoDoc.value = selectedTipoDoc
     }
 
     fun registrar() {
@@ -188,7 +199,7 @@ class RegisterViewModel : ViewModel() {
             nuevoUsuario.clave = clave
             if (isDistrib) {
                 nuevoUsuario.idTipoUsuario = TipoUsuario.DISTR.id
-                nuevoUsuario.idTipoDocumento = TipoDocumento.RUC.id
+                nuevoUsuario.idTipoDocumento = selectedTipoDoc.value?.id!!
                 nuevoUsuario.razonSocial = razSoc
                 nuevoUsuario.nroDocumento = nroDoc
                 nuevoUsuario.nroCel1 = nroCel1

@@ -19,8 +19,9 @@ enum class TipoUsuario(val id: Int, val nombre: String) {
 
 enum class TipoDocumento(val id: Int, val nombre: String, val digitos: Int) {
     DNI(1, "DNI", 8),
-    RUC(2, "DNI / CEXT / RUC", 11),
-    CEXT(3, "CEXT", 12)
+    RUC(2, "RUC", 11),
+    CEXT(3, "CEXT", 12);
+    override fun toString(): String = nombre
 }
 
 @JsonClass(generateAdapter = true)
