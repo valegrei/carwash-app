@@ -30,23 +30,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="112dp"
-                android:background="?attr/colorPrimary"
-                android:paddingBottom="16dp">
-
-                <ImageView
-                    android:id="@+id/img_logo"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:layout_centerHorizontal="true"
-                    android:contentDescription="@string/my_data_dis_logo"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/logo" />
-
-            </RelativeLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -222,6 +205,30 @@
                         android:text="@={viewModel.nroCel2}"
                         tools:ignore="TextContrastCheck"
                         tools:text="958412963" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_acerca_de"
+                    style="@style/Style.CarwashApp.TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200"
+                    android:hint="@string/my_data_acerca_de"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
+                    app:boxBackgroundColor="@color/white"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:maxLines="4"
+                        android:inputType="textMultiLine"
+                        android:text="@={viewModel.acercaDe}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="lorem ipsum dolor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>

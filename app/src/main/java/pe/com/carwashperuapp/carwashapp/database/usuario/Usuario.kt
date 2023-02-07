@@ -3,8 +3,7 @@ package pe.com.carwashperuapp.carwashapp.database.usuario
 import androidx.room.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.nio.file.Path
-import java.util.*
+import pe.com.carwashperuapp.carwashapp.network.BASE_URL
 
 enum class EstadoUsuario(val id: Int, val nombre: String) {
     INACTIVO(0, "Inactivo"),
@@ -22,6 +21,7 @@ enum class TipoDocumento(val id: Int, val nombre: String, val digitos: Int) {
     DNI(1, "DNI", 8),
     RUC(2, "RUC", 11),
     CEXT(3, "CEXT", 12);
+
     override fun toString(): String = nombre
 }
 
@@ -68,10 +68,10 @@ data class Usuario(
     @Json(name = "idTipoDocumento")
     @ColumnInfo(name = "id_tipo_documento")
     var idTipoDocumento: Int,
-    @Json(name="acercaDe")
-    var acercaDe: String?=null,
-    @Json(name="path")
-    var path: String?=null
+    @Json(name = "acercaDe")
+    var acercaDe: String? = null,
+    @Json(name = "path")
+    var path: String? = null
 ) {
     constructor() : this(
         0, "", "", "", "", "",
@@ -138,5 +138,10 @@ data class Usuario(
             TipoUsuario.CLIENTE.id -> TipoUsuario.CLIENTE.nombre
             else -> ""
         }
+    }
+
+    fun getURLFoto(): String? {
+        return if (path.isNullOrEmpty()) null
+        else "$BASE_URL$path"
     }
 }

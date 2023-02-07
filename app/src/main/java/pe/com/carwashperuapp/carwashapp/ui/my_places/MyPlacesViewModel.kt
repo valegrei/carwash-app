@@ -84,7 +84,7 @@ class MyPlacesViewModel(
         _selectedProvincia.value = Provincia(0, "", 0)
         _selectedDistrito.value = Distrito(0, "", 0, "")
         cargarDepartamentos()
-        _selectedTipo.value = 0
+        _selectedTipo.value = 1
         _provincias.value = listOf()
         _distritos.value = listOf()
         this.direccion.value = ""
@@ -285,7 +285,7 @@ class MyPlacesViewModel(
                 res = false
             }
         } else {
-            if ((selectedTipo.value ?: 0) == 0) {
+            if ((selectedTipo.value ?: 1) > 1) {
                 _errMsg.value = "Seleccione tipo de dirección"
                 res = false
             }

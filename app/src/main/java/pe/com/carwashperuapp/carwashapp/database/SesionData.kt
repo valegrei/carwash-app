@@ -108,7 +108,7 @@ class SesionData(context: Context) {
                 pref.getInt(USU_ID_TIPO_KEY, 0),
                 pref.getInt(USU_ID_TIPO_DOC_KEY, 0),
                 pref.getString(USU_ACERCA_DE, null),
-                pref.getString(USU_BANNER_PATH, null),
+                pref.getString(USU_BANNER_PATH, ""),
             ),
             true
         )

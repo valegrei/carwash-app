@@ -13,6 +13,7 @@ import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentMenuDistribBinding
+import pe.com.carwashperuapp.carwashapp.ui.bindImageBanner
 
 class MenuDistribFragment : Fragment() {
 
@@ -25,7 +26,7 @@ class MenuDistribFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMenuDistribBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,6 +39,14 @@ class MenuDistribFragment : Fragment() {
         binding.viewModel = mainViewModel
         (activity as AppCompatActivity).supportActionBar?.title =
             mainViewModel.getTipoPerfilNombre()
+
+        mainViewModel.sesion.observe(viewLifecycleOwner) {
+            if (mainViewModel.mostrarBanner())
+                bindImageBanner(
+                    requireActivity().findViewById(R.id.img_banner),
+                    it.usuario.getURLFoto()
+                )
+        }
     }
 
     fun goToAccount() {

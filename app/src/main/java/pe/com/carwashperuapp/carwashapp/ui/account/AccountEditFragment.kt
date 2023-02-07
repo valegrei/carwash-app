@@ -1,5 +1,8 @@
 package pe.com.carwashperuapp.carwashapp.ui.account
 
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,13 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import pe.com.carwashperuapp.carwashapp.EditStatus
-import pe.com.carwashperuapp.carwashapp.MainViewModel
-import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
+import com.canhub.cropper.*
+import pe.com.carwashperuapp.carwashapp.*
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentAccountEditBinding
+import pe.com.carwashperuapp.carwashapp.ui.bindImageEdit
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
 class AccountEditFragment : Fragment(), MenuProvider {
@@ -97,26 +100,39 @@ class AccountEditFragment : Fragment(), MenuProvider {
             errNroWhatsapp.observe(viewLifecycleOwner) {
                 binding.tiNroWhtasapp.error = it
             }
+            addFotoStatus.observe(viewLifecycleOwner) {
+                when (it) {
+                    AddFotoStatus.LAUNCH -> {
+                        startCameraWithoutUri()
+                        ocultarAddFoto()
+                    }
+                    else -> {}
+                }
+            }
+            ternaFoto.observe(viewLifecycleOwner) {
+                if (sharedViewModel.mostrarBanner())
+                    bindImageEdit(requireActivity().findViewById(R.id.img_banner), it)
+            }
         }
 
     }
 
-    /*fun startCameraWithoutUri() {
+    private fun startCameraWithoutUri() {
         customCropImage.launch(
             CropImageContractOptions(
                 uri = null,
                 cropImageOptions = CropImageOptions(
                     imageSourceIncludeCamera = false,
                     imageSourceIncludeGallery = true,
-                    cropShape = CropImageView.CropShape.OVAL,
-                    fixAspectRatio = true,
-                    aspectRatioX = 1,
-                    aspectRatioY = 1,
+                    cropShape = CropImageView.CropShape.RECTANGLE,
+                    fixAspectRatio = false,
+                    //aspectRatioX = 1,
+                    //aspectRatioY = 1,
                     outputCompressFormat = Bitmap.CompressFormat.JPEG,
                     outputCompressQuality = 90,
-                    outputRequestWidth = 165,
-                    outputRequestHeight = 165,
-                    outputRequestSizeOptions = CropImageView.RequestSizeOptions.RESIZE_FIT,
+                    //outputRequestWidth = 165,
+                    //outputRequestHeight = 165,
+                    //outputRequestSizeOptions = CropImageView.RequestSizeOptions.RESIZE_FIT,
                     showIntentChooser = false,
                     autoZoomEnabled = false,
                     multiTouchEnabled = true,
@@ -131,17 +147,17 @@ class AccountEditFragment : Fragment(), MenuProvider {
                 ),
             ),
         )
-    }*/
+    }
 
-    /*private val customCropImage = registerForActivityResult(CropImageContract()) {
+    private val customCropImage = registerForActivityResult(CropImageContract()) {
         if (it !is CropImage.CancelledResult) {
             handleCropImageResult(it.uriContent, it.getUriFilePath(requireContext()))
         }
-    }*/
+    }
 
-    /*private fun handleCropImageResult(uri: Uri?, filePath: String?) {
+    private fun handleCropImageResult(uri: Uri?, filePath: String?) {
         sharedViewModel.nuevaFoto(uri, filePath)
-    }*/
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -149,19 +165,28 @@ class AccountEditFragment : Fragment(), MenuProvider {
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.save_menu, menu)
+        menuInflater.inflate(R.menu.acc_dist_menu, menu)
+        if (!sharedViewModel.mostrarBanner()) {
+            val menuBanner = menu.findItem(R.id.action_add_banner)
+            menuBanner.isVisible = false
+        }
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.action_save) {
             sharedViewModel.guardarCambios()
+        } else if (menuItem.itemId == R.id.action_add_banner) {
+            mostrarEditarFotoOpc()
         }
         return false
     }
 
-    /*fun mostrarEditarFotoOpc() {
-        EditPhotoBottomSheetDialog().show(childFragmentManager, EditPhotoBottomSheetDialog.TAG)
-    }*/
+    fun mostrarEditarFotoOpc() {
+        EditPhotoBannerBottomSheetDialog().show(
+            childFragmentManager,
+            EditPhotoBannerBottomSheetDialog.TAG
+        )
+    }
 
     var progressDialog = ProgressDialog()
 
@@ -181,4 +206,6 @@ class AccountEditFragment : Fragment(), MenuProvider {
             findNavController().popBackStack()
         }, 500)
     }
+
+
 }

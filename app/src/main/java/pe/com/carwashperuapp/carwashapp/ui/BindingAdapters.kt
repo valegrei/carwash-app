@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.gms.maps.model.LatLng
+import pe.com.carwashperuapp.carwashapp.EstrEditFoto
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.TipoDireccion
@@ -201,4 +202,34 @@ fun bindEstadoServ(textView: TextView, estado: Int?) {
         }
     }
     textView.setTextColor(context.getColor(resColor))
+}
+fun bindImageBanner(imgView: ImageView, imgUrl: String?) {
+    val sesion = SesionData(imgView.context).getCurrentSesion()
+    if (!(imgUrl).isNullOrEmpty()) {
+        imgView.load(imgUrl) {
+            setHeader("Authorization", sesion?.getTokenBearer()!!)
+        }
+    } else {
+        imgView.setImageDrawable(null)
+    }
+}
+fun bindImageEdit(imgBanner: ImageView, editFoto: EstrEditFoto?) {
+    editFoto?.let {
+        if (it.eliminarFoto) {
+            imgBanner.setImageDrawable(null)
+            return
+        }
+        if (it.uriFile != null) {
+            imgBanner.load(it.uriFile)
+            return
+        }
+        if ((it.urlOriginal ?: "").isNotEmpty()) {
+            val sesion = SesionData(imgBanner.context).getCurrentSesion()
+            imgBanner.load(it.urlOriginal) {
+                setHeader("Authorization", sesion?.getTokenBearer()!!)
+            }
+        } else {
+            imgBanner.setImageDrawable(null)
+        }
+    }
 }

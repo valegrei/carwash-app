@@ -89,9 +89,20 @@ interface ApiService {
         @Header("Authorization") authToken: String
     ): RespUsuario*/
 
+    @Multipart
     @PUT("api/usuarios/account")
     suspend fun actualizarUsuario(
-        @Body usuario: Usuario,
+        @Part("nombres") nombres: RequestBody,
+        @Part("apellidoPaterno") apellidoPaterno: RequestBody,
+        @Part("apellidoMaterno") apellidoMaterno: RequestBody,
+        @Part("razonSocial") razonSocial: RequestBody,
+        @Part("idTipoDocumento") idTipoDocumento: RequestBody,
+        @Part("nroDocumento") nroDocumento: RequestBody,
+        @Part("nroCel1") nroCel1: RequestBody,
+        @Part("nroCel2") nroCel2: RequestBody,
+        @Part("acercaDe") acercaDe: RequestBody?,
+        @Part foto: MultipartBody.Part?,
+        @Part("borrarFoto") borrarFoto: RequestBody?,
         @Header("Authorization") authToken: String
     ): RespUsuario
 

@@ -180,7 +180,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="@string/place_departamento"
-                            android:inputType="none"
+                            android:inputType="text"
                             tools:ignore="TextContrastCheck"
                             tools:text="LIMA" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -200,7 +200,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="@string/place_provincia"
-                            android:inputType="none"
+                            android:inputType="text"
                             tools:ignore="TextContrastCheck"
                             tools:text="LIMA" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -220,7 +220,7 @@
                             android:layout_weight="1"
                             android:ems="10"
                             android:hint="@string/place_distrito"
-                            android:inputType="none"
+                            android:inputType="text"
                             tools:ignore="TextContrastCheck"
                             tools:text="SAN JUAN DE LURIGANCHO" />
                     </com.google.android.material.textfield.TextInputLayout>

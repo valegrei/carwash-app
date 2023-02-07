@@ -26,26 +26,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/ly_portrait"
-                android:layout_width="match_parent"
-                android:layout_height="112dp"
-                android:background="?attr/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/img_logo"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    android:layout_centerHorizontal="true"
-                    android:contentDescription="@string/my_data_dis_logo"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/logo" />
-
-            </RelativeLayout>
-
             <LinearLayout
                 android:id="@+id/ly_show_data"
                 android:layout_width="match_parent"
@@ -54,7 +34,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ly_portrait">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -177,6 +157,21 @@
                     android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     tools:text="example@gmail.com" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_data_acerca_de"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.sesion.usuario.acercaDe}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                    android:visibility="@{(viewModel.sesion.usuario.idTipoUsuario == TipoUsuario.DISTR.id) ? View.VISIBLE : View.GONE}"
+                    tools:text="Lorem ipsum dolor" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

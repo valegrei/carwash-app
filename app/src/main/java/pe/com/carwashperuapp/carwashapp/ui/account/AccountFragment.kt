@@ -2,7 +2,6 @@ package pe.com.carwashperuapp.carwashapp.ui.account
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentAccountBinding
+import pe.com.carwashperuapp.carwashapp.ui.bindImageBanner
 
 class AccountFragment : Fragment(), MenuProvider {
 
@@ -45,6 +45,13 @@ class AccountFragment : Fragment(), MenuProvider {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+        mainViewModel.sesion.observe(viewLifecycleOwner) {
+            if (mainViewModel.mostrarBanner())
+                bindImageBanner(
+                    requireActivity().findViewById(R.id.img_banner),
+                    it.usuario.getURLFoto()
+                )
+        }
 //        (activity as AppCompatActivity).supportActionBar?.title =
 //            mainViewModel.getTipoPerfilNombre()
     }

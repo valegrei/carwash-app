@@ -14,87 +14,91 @@
             name="viewModel"
             type="pe.com.carwashperuapp.carwashapp.MainViewModel" />
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ly_linear"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/ly_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/small_margin"
-                android:paddingTop="@dimen/small_margin"
-                android:paddingBottom="@dimen/min_margin"
-                android:text="@string/menu"
-                android:textAppearance="@style/TextAppearance.CarwashApp.TitlePrimary" />
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="?android:attr/listDivider" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/small_margin"
+                    android:paddingTop="@dimen/small_margin"
+                    android:paddingBottom="@dimen/min_margin"
+                    android:text="@string/menu"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitlePrimary" />
 
-            <TextView
-                android:layout_width="match_parent"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="@dimen/small_margin"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()-> fragment.goToAccount()}"
+                    android:padding="@dimen/small_margin"
+                    android:text="@string/menu_my_data"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                    app:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="@dimen/small_margin"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->fragment.goToChangePass()}"
+                    android:padding="@dimen/small_margin"
+                    android:text="@string/menu_change_pass"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+                    app:drawableStartCompat="@drawable/ic_baseline_security_24" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:drawablePadding="@dimen/small_margin"
-                android:gravity="center_vertical"
-                android:onClick="@{()-> fragment.goToAccount()}"
-                android:padding="@dimen/small_margin"
-                android:text="@string/menu_my_data"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-                app:drawableStartCompat="@drawable/ic_baseline_account_circle_24" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:drawablePadding="@dimen/small_margin"
-                android:gravity="center_vertical"
-                android:onClick="@{()->fragment.goToChangePass()}"
-                android:padding="@dimen/small_margin"
-                android:text="@string/menu_change_pass"
-                android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-                app:drawableStartCompat="@drawable/ic_baseline_security_24" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:background="?android:attr/listDivider" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.Material3.Button.Icon"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginHorizontal="@dimen/large_margin"
-            android:layout_marginTop="16dp"
-            android:onClick="@{()->viewModel.cerrarSesion()}"
-            android:text="@string/menu_logout"
-            android:theme="@style/ThemeOverlay.CarwashApp.Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ly_linear" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_gravity="bottom"
+                android:layout_marginHorizontal="@dimen/large_margin"
+                android:layout_marginTop="16dp"
+                android:onClick="@{()->viewModel.cerrarSesion()}"
+                android:text="@string/menu_logout"
+                android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ly_linear" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>
