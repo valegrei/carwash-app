@@ -62,7 +62,7 @@ class MyPlacesViewModel(
     val selectedProvincia: LiveData<Provincia> = _selectedProvincia
     private var _selectedDistrito = MutableLiveData<Distrito>()
     val selectedDistrito: LiveData<Distrito> = _selectedDistrito
-    val direccion = MutableLiveData<String>();
+    val direccion = MutableLiveData<String>()
     private var _selectedLatLng = MutableLiveData<LatLng?>()
     val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
     private var _selectedDireccion = MutableLiveData<Direccion>()
@@ -120,16 +120,18 @@ class MyPlacesViewModel(
         _isDistrib.value = sesion?.usuario?.idTipoUsuario == TipoUsuario.DISTR.id
     }
 
-    fun selectCasa(){
+    fun selectCasa() {
         _selectedTipo.value = TipoDireccion.CASA.id
     }
 
-    fun selectOficina(){
+    fun selectOficina() {
         _selectedTipo.value = TipoDireccion.OFICINA.id
     }
-    fun selectOtro(){
+
+    fun selectOtro() {
         _selectedTipo.value = TipoDireccion.OTRO.id
     }
+
     fun setSelectedLatLng(latLng: LatLng?) {
         _selectedLatLng.value = latLng
     }

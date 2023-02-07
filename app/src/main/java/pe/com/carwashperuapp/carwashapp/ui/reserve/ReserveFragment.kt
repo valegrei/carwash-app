@@ -55,9 +55,6 @@ class ReserveFragment : Fragment() {
             horarios.observe(viewLifecycleOwner) { it ->
                 cargarChips(it)
             }
-            goStatus.observe(viewLifecycleOwner) {
-                if (it == GoStatus.GO_CONFIRM) goConfirmarReserva()
-            }
             errMsg.observe(viewLifecycleOwner) {
                 showErrMsg(it)
             }
@@ -103,11 +100,6 @@ class ReserveFragment : Fragment() {
     private fun cargarHorarioSeleccionado() {
         val seleccionado = viewModel.horariosMap.value?.get(binding.chgHorarios.checkedChipId)
         viewModel.seleccionarHorario(seleccionado)
-    }
-
-    private fun goConfirmarReserva() {
-        viewModel.clearGoStatus()
-        findNavController().navigate(R.id.action_reserveFragment_to_reserveResumenFragment)
     }
 
     //Muestra el selector de fechas

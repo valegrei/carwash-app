@@ -83,8 +83,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     private val callback = OnMapReadyCallback { googleMap ->
         mMap = googleMap
         mMap.setOnMarkerClickListener {
-            viewModel.selectLocal(it, currentLocation)
-            LocalBottomSheedDialog().show(childFragmentManager, LocalBottomSheedDialog.TAG)
+            mostrarInfoLocal(it)
             true
         }
         mMap.setOnCameraIdleListener {
@@ -96,6 +95,11 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             mostrarLocales(it)
         }
         getLastLocation()
+    }
+
+    private fun mostrarInfoLocal(marker: Marker) {
+        viewModel.selectLocal(marker, currentLocation)
+        LocalBottomSheedDialog().show(childFragmentManager, LocalBottomSheedDialog.TAG)
     }
 
     override fun onCreateView(
@@ -161,7 +165,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
     }
 
     private fun goNuevaReserva() {
-        findNavController().navigate(R.id.action_nav_reserve_to_reserveFragment)
+        findNavController().navigate(R.id.action_nav_reserve_to_localFragment)
         viewModel.clearGoStatus()
     }
 
@@ -472,18 +476,18 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
         _binding = null
     }
 
-    private fun mostrarCompletarDatos(){
+    private fun mostrarCompletarDatos() {
         viewModel.clearGoStatus()
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.reserve_completar)
             .setMessage(R.string.reserve_completar_msg)
             .setCancelable(true)
-            .setPositiveButton(R.string.ok){_,_->
+            .setPositiveButton(R.string.ok) { _, _ ->
                 goDatos()
             }.show()
     }
 
-    private fun goDatos(){
+    private fun goDatos() {
         findNavController().navigate(R.id.action_nav_reserve_to_navigation_account)
     }
 }

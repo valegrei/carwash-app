@@ -19,282 +19,277 @@
             type="pe.com.carwashperuapp.carwashapp.ui.my_places.PlaceDetailFragment" />
     </data>
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_color">
+        android:background="@color/bg_color"
+        android:fillViewport="true">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/small_margin"
+                android:visibility="@{viewModel.mostrarEditar ? View.GONE : View.VISIBLE}">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/small_margin"
-                    android:visibility="@{viewModel.mostrarEditar ? View.GONE : View.VISIBLE}">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="@{viewModel.isDistrib() ? View.VISIBLE: View.GONE}">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/place_departamento"
-                            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/small_margin"
-                            android:text="@{viewModel.selectedDireccion.departamento}"
-                            android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                            tools:text="LIMA" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/place_provincia"
-                            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/small_margin"
-                            android:text="@{viewModel.selectedDireccion.provincia}"
-                            android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                            tools:text="LIMA" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/place_distrito"
-                            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/small_margin"
-                            android:text="@{viewModel.selectedDireccion.distrito}"
-                            android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                            tools:text="SAN JUAN DE LURIGANCHO" />
-                    </LinearLayout>
-
+                    android:visibility="@{viewModel.isDistrib() ? View.VISIBLE: View.GONE}">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/place_type"
+                        android:text="@string/place_departamento"
                         android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:text="@{viewModel.selectedDireccion.nombreTipo()}"
+                        android:text="@{viewModel.selectedDireccion.departamento}"
                         android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                        tools:text="Local" />
+                        tools:text="LIMA" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/place_address"
+                        android:text="@string/place_provincia"
                         android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.selectedDireccion.direccion}"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="@{viewModel.selectedDireccion.provincia}"
                         android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                        tools:text="Av. Las Flores 400, Urb Mi Casita" />
+                        tools:text="LIMA" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_distrito"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:text="@{viewModel.selectedDireccion.distrito}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                        tools:text="SAN JUAN DE LURIGANCHO" />
                 </LinearLayout>
 
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/place_type"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:text="@{viewModel.selectedDireccion.nombreTipo()}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                    tools:text="Local" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/place_address"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.selectedDireccion.direccion}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                    tools:text="Av. Las Flores 400, Urb Mi Casita" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/small_margin"
+                android:paddingTop="@dimen/small_margin"
+                android:visibility="@{viewModel.mostrarEditar ? View.VISIBLE:  View.GONE}">
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:visibility="@{viewModel.isDistrib ? View.GONE: View.VISIBLE}"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btnCasa"
+                        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_casa"
+                        app:icon="@drawable/outline_house_24" />
+
+                    <Button
+                        android:id="@+id/btnOficina"
+                        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_oficina"
+                        app:icon="@drawable/outline_business_24" />
+
+                    <Button
+                        android:id="@+id/btnOtro"
+                        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_otro"
+                        app:icon="@drawable/ic_outline_place_24" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
                 <LinearLayout
+                    android:id="@+id/ly_ubigeo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/small_margin"
-                    android:paddingTop="@dimen/small_margin"
-                    android:visibility="@{viewModel.mostrarEditar ? View.VISIBLE:  View.GONE}">
-
-                    <com.google.android.material.button.MaterialButtonToggleGroup
-                        android:id="@+id/toggleButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/small_margin"
-                        android:visibility="@{viewModel.isDistrib ? View.GONE: View.VISIBLE}"
-                        app:selectionRequired="true"
-                        app:singleSelection="true">
-
-                        <Button
-                            android:id="@+id/btnCasa"
-                            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/place_casa"
-                            app:icon="@drawable/outline_house_24" />
-
-                        <Button
-                            android:id="@+id/btnOficina"
-                            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/place_oficina"
-                            app:icon="@drawable/outline_business_24" />
-
-                        <Button
-                            android:id="@+id/btnOtro"
-                            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/place_otro"
-                            app:icon="@drawable/ic_outline_place_24" />
-                    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                    <LinearLayout
-                        android:id="@+id/ly_ubigeo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="@{viewModel.isDistrib ? View.VISIBLE :View.GONE}">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/ti_departamento"
-                            style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:boxBackgroundColor="@color/white"
-                            app:errorEnabled="true">
-
-                            <AutoCompleteTextView
-                                android:id="@+id/ac_departamentos"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:hint="@string/place_departamento"
-                                android:inputType="none"
-                                tools:ignore="TextContrastCheck"
-                                tools:text="LIMA" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/ti_provincia"
-                            style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:boxBackgroundColor="@color/white"
-                            app:errorEnabled="true">
-
-                            <AutoCompleteTextView
-                                android:id="@+id/ac_provincias"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:hint="@string/place_provincia"
-                                android:inputType="none"
-                                tools:ignore="TextContrastCheck"
-                                tools:text="LIMA" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/ti_distrito"
-                            style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:boxBackgroundColor="@color/white"
-                            app:errorEnabled="true">
-
-                            <AutoCompleteTextView
-                                android:id="@+id/ac_distritos"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:ems="10"
-                                android:hint="@string/place_distrito"
-                                android:inputType="none"
-                                tools:ignore="TextContrastCheck"
-                                tools:text="SAN JUAN DE LURIGANCHO" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
+                    android:visibility="@{viewModel.isDistrib ? View.VISIBLE :View.GONE}">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/ti_direccion"
-                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:id="@+id/ti_departamento"
+                        style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:boxBackgroundColor="@color/white"
-                        app:counterEnabled="true"
-                        app:counterMaxLength="200"
                         app:errorEnabled="true">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            style="@style/Style.CarwashApp.TextInputLayout"
+                        <AutoCompleteTextView
+                            android:id="@+id/ac_departamentos"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="@string/place_address"
-                            android:inputType="textMultiLine"
-                            android:maxLines="3"
-                            android:text="@={viewModel.direccion}"
+                            android:hint="@string/place_departamento"
+                            android:inputType="none"
                             tools:ignore="TextContrastCheck"
-                            tools:text="Av. Las Flores 400, Urb Mi Casita" />
+                            tools:text="LIMA" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_provincia"
+                        style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.errMsg}"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
+                        app:boxBackgroundColor="@color/white"
+                        app:errorEnabled="true">
 
+                        <AutoCompleteTextView
+                            android:id="@+id/ac_provincias"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="@string/place_provincia"
+                            android:inputType="none"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="LIMA" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti_distrito"
+                        style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxBackgroundColor="@color/white"
+                        app:errorEnabled="true">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/ac_distritos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:hint="@string/place_distrito"
+                            android:inputType="none"
+                            tools:ignore="TextContrastCheck"
+                            tools:text="SAN JUAN DE LURIGANCHO" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/divider6"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_direccion"
+                    style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_height="wrap_content"
+                    app:boxBackgroundColor="@color/white"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200"
+                    app:errorEnabled="true">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="@{()->fragment.showMapOrEdit()}">
-
-                    <ImageView
-                        staticMapDireccion="@{viewModel.selectedLatLng}"
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:visibility="@{viewModel.selectedLatLng == null ? View.GONE : View.VISIBLE}"
-                        tools:srcCompat="@drawable/mapa_ejemplo" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="@string/place_select_map"
-                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
-                        android:visibility="@{viewModel.selectedLatLng == null ? View.VISIBLE : View.GONE}" />
-                </RelativeLayout>
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/place_address"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:text="@={viewModel.direccion}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="Av. Las Flores 400, Urb Mi Casita" />
+                </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.errMsg}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
 
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
 
-    </FrameLayout>
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{()->fragment.showMapOrEdit()}">
+
+                <ImageView
+                    staticMapDireccion="@{viewModel.selectedLatLng}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="@{viewModel.selectedLatLng == null ? View.GONE : View.VISIBLE}"
+                    tools:srcCompat="@drawable/mapa_ejemplo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/place_select_map"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
+                    android:visibility="@{viewModel.selectedLatLng == null ? View.VISIBLE : View.GONE}" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
 </layout>

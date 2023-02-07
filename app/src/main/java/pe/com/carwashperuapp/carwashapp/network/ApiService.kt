@@ -331,7 +331,7 @@ interface ApiService {
     suspend fun agregarFavorito(
         @Body reqFavorito: ReqFavorito,
         @Header("Authorization") authToken: String
-    ): Response
+    ): RespFavorito
 
     @DELETE("api/clientes/favoritos/{idFavorito}")
     suspend fun eliminarFavorito(

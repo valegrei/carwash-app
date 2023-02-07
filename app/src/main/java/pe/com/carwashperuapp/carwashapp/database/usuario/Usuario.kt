@@ -3,6 +3,7 @@ package pe.com.carwashperuapp.carwashapp.database.usuario
 import androidx.room.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.nio.file.Path
 import java.util.*
 
 enum class EstadoUsuario(val id: Int, val nombre: String) {
@@ -67,17 +68,15 @@ data class Usuario(
     @Json(name = "idTipoDocumento")
     @ColumnInfo(name = "id_tipo_documento")
     var idTipoDocumento: Int,
-    @Json(name = "createdAt")
-    @ColumnInfo(name = "created_at")
-    var createdAt: Date?,
-    @Json(name = "updatedAt")
-    @ColumnInfo(name = "updated_at")
-    var updatedAt: Date?,
+    @Json(name="acercaDe")
+    var acercaDe: String?=null,
+    @Json(name="path")
+    var path: String?=null
 ) {
     constructor() : this(
         0, "", "", "", "", "",
         "", "", "", "", 0,
-        0, 0, null, null
+        0, 0
     )
 
     fun getNombreCompleto(): String {

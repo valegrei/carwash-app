@@ -35,26 +35,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/reserve_distrib"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
-
-                <TextView
-                    android:text="@{viewModel.selectedLocal.getRazSocDireccion()}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/min_margin"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-                    tools:text="Lavado de Autos Sta Rosa\nMz I2 Lote 1" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/min_margin"
-                    android:background="?android:attr/listDivider" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/car_title_detail"
                     android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 

@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_outline_calendar_month_24"
             android:title="@string/menu_my_reserves" />
         <item
+            android:id="@+id/nav_favoritos"
+            android:icon="@drawable/baseline_favorite_border_24"
+            android:title="@string/menu_favoritos" />
+        <item
             android:id="@+id/nav_my_cars"
             android:icon="@drawable/ic_outline_directions_car_24"
             android:title="@string/menu_my_cars" />

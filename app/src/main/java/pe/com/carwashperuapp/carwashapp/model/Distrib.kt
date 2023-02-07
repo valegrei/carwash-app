@@ -11,5 +11,7 @@ class Distrib(
     @Json(name = "nroCel1") val nroCel1: String?,
     @Json(name = "nroCel2") val nroCel2: String?,
     @Json(name = "idTipoDocumento") val idTipoDocumento: Int?,
+    @Json(name = "acercaDe") val acercaDe: String?,
+    @Json(name = "path") val path: String?,
     @Json(name = "Servicios") val servicios: List<ServicioReserva>? = null,
 )

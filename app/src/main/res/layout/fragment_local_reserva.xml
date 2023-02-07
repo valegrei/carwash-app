@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.reserve.LocalFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,23 +17,35 @@
         android:background="@color/bg_color"
         android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabLayout
+        <TextView
+            android:layout_marginTop="@dimen/min_margin"
             android:layout_width="match_parent"
-            app:tabBackground="?attr/colorPrimary"
-            app:tabTextColor="@color/grey"
-            app:tabIndicatorColor="@color/white"
-            app:tabSelectedTextColor="@color/white"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/min_margin"
+            android:singleLine="true"
+            android:text="@{viewModel.selectedLocal.distrib.razonSocial}"
+            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
+            tools:text="Lavado de Autos Sta Rosa" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnsh_reserve" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/min_margin"
+            android:paddingHorizontal="@dimen/min_margin"
+            android:singleLine="true"
+            android:text="@{viewModel.selectedLocal.direccion}"
+            android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+            tools:text="Mz I2 Lote 1, COOVITIOMAR" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_about" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabBackground="@color/bg_color"
+            app:tabIndicatorColor="?attr/colorPrimary"
+            app:tabSelectedTextColor="@color/black"
+            android:elevation="4dp"
+            app:tabTextColor="@color/quantum_grey700">
 
         </com.google.android.material.tabs.TabLayout>
 

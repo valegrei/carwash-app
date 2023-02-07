@@ -2,7 +2,6 @@ package pe.com.carwashperuapp.carwashapp.ui.my_schedules
 
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.sqlite.db.SimpleSQLiteQuery
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -321,7 +320,7 @@ class MySchedulesViewModel(
             _errMsg.value = "Ingrese una cantidad correcta"
             return false
         }
-        val query = buildQuery(
+        /*val query = buildQuery(
             lunes = lunes.value!!,
             martes = martes.value!!,
             miercoles = miercoles.value!!,
@@ -334,9 +333,13 @@ class MySchedulesViewModel(
             idLocal = local.value?.id ?: 0,
             idHorarioConfig = idHorarioConfig,
         )
-        val cant = horarioDao.verificarInterseciones(query)
+        val cant = horarioDao.verificarInterseciones(query)*/
+        val cant = horarioDao.verificarConflictos(
+            local.value?.id ?: 0, idHorarioConfig ?: 0
+        )
         if (cant > 0) {
-            _errMsg.value = "$cant conflictos con otros horarios"
+            //_errMsg.value = "$cant conflictos con otros horarios"
+            _errMsg.value = "Ya se registró un horario para este local"
             return false
         }
         return true
@@ -356,7 +359,7 @@ class MySchedulesViewModel(
                 idHorarioConfig,
                 sesion?.getTokenBearer()!!
             )
-
+            horarioDao.eliminarHorarioConfig(selectedHorarioConfig.value!!)
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
@@ -450,7 +453,7 @@ class MySchedulesViewModel(
         sesionData.saveLastSincroDirecciones(res.timeStamp)
     }
 
-    private fun buildQuery(
+    /*private fun buildQuery(
         lunes: Boolean, martes: Boolean, miercoles: Boolean,
         jueves: Boolean, viernes: Boolean, sabado: Boolean, domingo: Boolean,
         horaIni: Int, horaFin: Int, idLocal: Int, idHorarioConfig: Int?
@@ -468,7 +471,7 @@ class MySchedulesViewModel(
         query += "1=0) AND "
         query += "( MAX(horaIni, $horaIni) - MIN(horaFin, $horaFin) ) <= 0 "
         return SimpleSQLiteQuery(query)
-    }
+    }*/
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
         Log.e(TAG, e.message, e)

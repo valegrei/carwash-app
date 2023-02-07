@@ -11,11 +11,11 @@
         android:label="@string/menu_reserve"
         tools:layout="@layout/fragment_search_local">
         <action
-            android:id="@+id/action_nav_reserve_to_reserveFragment"
-            app:destination="@id/reserveFragment" />
-        <action
             android:id="@+id/action_nav_reserve_to_navigation_account"
             app:destination="@id/navigation_account" />
+        <action
+            android:id="@+id/action_nav_reserve_to_localFragment"
+            app:destination="@id/localFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_my_reserves"
@@ -95,15 +95,6 @@
         android:label="@string/car_title_detail"
         tools:layout="@layout/fragment_car_detail" />
     <fragment
-        android:id="@+id/reserveFragment"
-        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveFragment"
-        android:label="@string/title_reserve"
-        tools:layout="@layout/fragment_reserve">
-        <action
-            android:id="@+id/action_reserveFragment_to_reserveResumenFragment"
-            app:destination="@id/reserveResumenFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/reserveResumenFragment"
         android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveResumenFragment"
         android:label="@string/title_reserve_confirm"
@@ -120,5 +111,26 @@
         android:name="pe.com.carwashperuapp.carwashapp.ui.reserves_list_cli.ReserveDetailFragment"
         android:label="@string/title_reserve_detail"
         tools:layout="@layout/fragment_reserve_detalle" />
+    <fragment
+        android:id="@+id/nav_favoritos"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.FavoritesFragment"
+        android:label="@string/menu_favoritos"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_nav_favoritos_to_navigation_account"
+            app:destination="@id/navigation_account" />
+        <action
+            android:id="@+id/action_nav_favoritos_to_localFragment"
+            app:destination="@id/localFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/localFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.LocalFragment"
+        android:label="fragment_local_reserva"
+        tools:layout="@layout/fragment_local_reserva" >
+        <action
+            android:id="@+id/action_localFragment_to_reserveResumenFragment"
+            app:destination="@id/reserveResumenFragment" />
+    </fragment>
 
 </navigation>

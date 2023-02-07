@@ -15,7 +15,13 @@ interface HorarioDao {
 
     @RawQuery
     fun verificarInterseciones(query: SupportSQLiteQuery): Int
+    @Transaction
+    @Query("SELECT COUNT(*) FROM horario_config WHERE idLocal = :idLocal AND id != :idHorarioConfig AND estado = 1")
+    fun verificarConflictos(idLocal: Int, idHorarioConfig: Int): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun guardarHorarioConfig(horarioConfigs: List<HorarioConfig>)
+
+    @Delete
+    suspend fun eliminarHorarioConfig(horarioConfig: HorarioConfig)
 }

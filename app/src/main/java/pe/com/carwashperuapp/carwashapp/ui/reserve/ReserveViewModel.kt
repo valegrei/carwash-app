@@ -14,11 +14,13 @@ import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.VehiculoDao
+import pe.com.carwashperuapp.carwashapp.model.Favorito
 import pe.com.carwashperuapp.carwashapp.model.Horario
 import pe.com.carwashperuapp.carwashapp.model.Local
 import pe.com.carwashperuapp.carwashapp.model.ServicioReserva
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
+import pe.com.carwashperuapp.carwashapp.network.request.ReqFavorito
 import pe.com.carwashperuapp.carwashapp.network.request.ReqReservar
 import pe.com.carwashperuapp.carwashapp.ui.util.calcularDistanciaEnMetros
 import pe.com.carwashperuapp.carwashapp.ui.util.formatearDistancia
@@ -77,11 +79,17 @@ class ReserveViewModel(
     val selectedHorario: LiveData<Horario?> = _selectedHorario
     private var _totalServicios = MutableLiveData<BigDecimal>()
     val totalServicios: LiveData<BigDecimal> = _totalServicios
+    private var _favorito = MutableLiveData<Favorito?>()
+    val favorito: LiveData<Favorito?> = _favorito
+    private var _mostrarFavorito = MutableLiveData<Boolean>()
+    val mostrarFavorito: LiveData<Boolean> = _mostrarFavorito
+    private var _selectedLatLng = MutableLiveData<LatLng?>()
+    val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
 
-    fun completarOReservar(){
-        if(datosCompletos()){
+    fun completarOReservar() {
+        if (datosCompletos()) {
             nuevaReserva()
-        }else{
+        } else {
             mostrarCompletarDatos()
         }
     }
@@ -92,15 +100,78 @@ class ReserveViewModel(
 
     private fun nuevaReserva() {
         loadVehiculos()
+        cargarFavorito()
         _errMsg.value = ""
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
         _selectedFecha.value = MaterialDatePicker.todayInUtcMilliseconds()
+        _selectedLatLng.value = LatLng(
+            selectedLocal.value?.latitud!!.toDouble(),
+            selectedLocal.value?.longitud!!.toDouble()
+        )
         _horarios.value = listOf()
         _horariosMap.value = mapOf()
         buscarHorarios()
         _editStatus.value = EditStatus.NEW
         _goStatus.value = GoStatus.GO_ADD
         _mostrarEditar.value = true
+    }
+
+    private fun cargarFavorito() {
+        val favs = selectedLocal.value?.favoritos
+        if (favs.isNullOrEmpty()) {
+            _favorito.value = null
+            _mostrarFavorito.value = false
+        } else {
+            _favorito.value = favs[0]
+            _mostrarFavorito.value = true
+        }
+    }
+
+    fun marcarFavorito() {
+        _mostrarFavorito.value = true
+    }
+
+    fun desmarcarFavorito() {
+        _mostrarFavorito.value = false
+    }
+
+    fun guardarFavorito() {
+        if (mostrarFavorito.value!!) {
+            // revisar si antes no estaba marcado
+            if (favorito.value == null) agregarFavorito()
+        } else {
+            // revisar si antes estaba marcado
+            if (favorito.value != null) eliminarFavorito()
+        }
+    }
+
+    private fun eliminarFavorito() {
+        viewModelScope.launch(exceptionHandler) {
+            val sesion = sesionData.getCurrentSesion()
+            try {
+                Api.retrofitService.eliminarFavorito(
+                    favorito.value?.id!!,
+                    sesion?.getTokenBearer()!!,
+                )
+                _favorito.value = null
+            } catch (_: Exception) {
+            }
+        }
+    }
+
+    private fun agregarFavorito() {
+        viewModelScope.launch(exceptionHandler) {
+            val sesion = sesionData.getCurrentSesion()
+            try {
+                val res = Api.retrofitService.agregarFavorito(
+                    ReqFavorito(selectedLocal.value?.id!!),
+                    sesion?.getTokenBearer()!!,
+                )
+                _favorito.value = res.data.favorito
+            } catch (e: Exception) {
+                _favorito.value = null
+            }
+        }
     }
 
     fun consultarLocales(cornerNE: LatLng, cornerSW: LatLng) {
@@ -113,6 +184,22 @@ class ReserveViewModel(
                     cornerNE.longitude.toString(),
                     cornerSW.latitude.toString(),
                     cornerSW.longitude.toString(),
+                    sesion?.getTokenBearer()!!,
+                )
+                _locales.value = res.data.locales
+            } catch (e: Exception) {
+                _locales.value = listOf()
+            }
+            _status.value = Status.SUCCESS
+        }
+    }
+
+    fun obtenerFavoritos() {
+        viewModelScope.launch(exceptionHandler) {
+            _status.value = Status.LOADING
+            val sesion = sesionData.getCurrentSesion()
+            try {
+                val res = Api.retrofitService.obtenerLocalesFavoritos(
                     sesion?.getTokenBearer()!!,
                 )
                 _locales.value = res.data.locales
@@ -136,6 +223,10 @@ class ReserveViewModel(
                 currentLocation.latitude, currentLocation.longitude
             )
         )
+    }
+
+    fun selectLocal(local: Local) {
+        _selectedLocal.value = local
     }
 
     fun obtenerDirecciones(): Flow<List<Direccion>> {

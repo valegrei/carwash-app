@@ -22,8 +22,8 @@ private const val USU_NRO_CEL2_KEY = "usu_nro_cel2"
 private const val USU_ESTADO_KEY = "usu_estado_act"
 private const val USU_ID_TIPO_KEY = "usu_id_tipo"
 private const val USU_ID_TIPO_DOC_KEY = "usu_id_tipo_doc"
-private const val USU_CREATED_AT_KEY = "usu_created_at"
-private const val USU_UPDATED_AT_KEY = "usu_updated_at"
+private const val USU_ACERCA_DE = "usu_acerca_de"
+private const val USU_BANNER_PATH = "usu_banner_path"
 private const val SINCRO_USUARIOS = "sincro_usuarios"
 private const val SINCRO_ANUNCIOS = "sincro_anuncios"
 private const val SINCRO_PARAMETROS = "sincro_parametros"
@@ -81,8 +81,8 @@ class SesionData(context: Context) {
         editor.putInt(USU_ESTADO_KEY, sesion.usuario.estado)
         editor.putInt(USU_ID_TIPO_KEY, sesion.usuario.idTipoUsuario)
         editor.putInt(USU_ID_TIPO_DOC_KEY, sesion.usuario.idTipoDocumento)
-        editor.putLong(USU_CREATED_AT_KEY, sesion.usuario.createdAt?.time!!)
-        editor.putLong(USU_UPDATED_AT_KEY, sesion.usuario.updatedAt?.time!!)
+        editor.putString(USU_ACERCA_DE, sesion.usuario.acercaDe)
+        editor.putString(USU_BANNER_PATH, sesion.usuario.path)
         editor.apply()
     }
 
@@ -107,8 +107,8 @@ class SesionData(context: Context) {
                 pref.getInt(USU_ESTADO_KEY, 0),
                 pref.getInt(USU_ID_TIPO_KEY, 0),
                 pref.getInt(USU_ID_TIPO_DOC_KEY, 0),
-                Date(pref.getLong(USU_CREATED_AT_KEY, 0)),
-                Date(pref.getLong(USU_UPDATED_AT_KEY, 0)),
+                pref.getString(USU_ACERCA_DE, null),
+                pref.getString(USU_BANNER_PATH, null),
             ),
             true
         )

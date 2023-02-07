@@ -15,7 +15,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.CarwashApp.NoActionBar">
+    <style name="Theme.CarwashApp.NoActionBar" >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
