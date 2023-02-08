@@ -98,10 +98,14 @@ class ReserveViewModel(
         _goStatus.value = GoStatus.SHOW_COMPLETAR
     }
 
+    fun clearErr(){
+        _errMsg.value = ""
+    }
+
     private fun nuevaReserva() {
         loadVehiculos()
         cargarFavorito()
-        _errMsg.value = ""
+        clearErr()
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
         _selectedFecha.value = MaterialDatePicker.todayInUtcMilliseconds()
         _selectedLatLng.value = LatLng(
@@ -268,6 +272,10 @@ class ReserveViewModel(
 
     fun seleccionarHorario(horario: Horario?) {
         _selectedHorario.value = horario
+    }
+
+    fun clearLocales(){
+        _locales.value = listOf()
     }
 
     private fun buscarHorarios() {

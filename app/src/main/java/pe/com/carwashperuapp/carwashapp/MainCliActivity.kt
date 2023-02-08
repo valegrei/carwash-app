@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -12,11 +13,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupWithNavController
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.navigation.NavigationView
@@ -28,7 +30,6 @@ import pe.com.carwashperuapp.carwashapp.network.BASE_URL
 import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnuncioDialog
 import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModel
 import pe.com.carwashperuapp.carwashapp.ui.announcement_cli.AnunciosViewModelFactory
-import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
 class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
@@ -58,16 +59,37 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             setOf(
                 R.id.nav_reserve,
                 R.id.nav_my_reserves,
+                R.id.nav_favoritos,
                 R.id.nav_my_cars,
                 R.id.nav_my_places,
                 R.id.navigation_menu,
             ), drawerLayout
         )
         //Limpio subtitulos al cambiar de fragment
-        navController.addOnDestinationChangedListener { _, _, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.localFragment -> {
+                    binding.appBarMainCli.lyBanner.visibility = View.VISIBLE
+                    binding.appBarMainCli.collapsingToolbar.isTitleEnabled = true
+                    binding.appBarMainCli.appbar.setExpanded(true, true)
+                }
+                else -> {
+                    binding.appBarMainCli.fabReservar.visibility = View.GONE
+                    binding.appBarMainCli.collapsingToolbar.isTitleEnabled = false
+                    binding.appBarMainCli.lyBanner.visibility = View.GONE
+                    binding.appBarMainCli.appbar.setExpanded(false, true)
+                    supportActionBar?.title = destination.label
+                }
+            }
             binding.appBarMainCli.toolbar.subtitle = null
         }
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(
+            binding.appBarMainCli.collapsingToolbar,
+            binding.appBarMainCli.toolbar,
+            navController,
+            appBarConfiguration
+        )
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
@@ -84,13 +106,14 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         super.onResume()
         mostrarAnuncios()
     }
-    private fun mostrarAnuncios(){
-        if(anuncionsViewModel.mostrarAnuncios()){
+
+    private fun mostrarAnuncios() {
+        if (anuncionsViewModel.mostrarAnuncios()) {
             Handler(Looper.getMainLooper()).postDelayed({
                 anuncionsViewModel.setVisto()
                 val dialog = AnuncioDialog()
                 dialog.show(supportFragmentManager, "anuncioDialog")
-            },2000)
+            }, 2000)
         }
     }
 

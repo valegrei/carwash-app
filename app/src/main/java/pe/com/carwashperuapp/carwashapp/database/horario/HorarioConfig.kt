@@ -49,6 +49,7 @@ data class HorarioConfig(
     fun horario(): String = "${horarioIni()} - ${horarioFin()}"
     fun intervaloMin(): String = "$intervalo min"
     fun resumen(): String = "${dias()}\nInicio - Fin: ${horario()}\nIntervalo: ${intervaloMin()}"
+    fun resumenLocal(): String = "${dias()}\n${horario()}"
 }
 
 data class HorarioConfigLocal(

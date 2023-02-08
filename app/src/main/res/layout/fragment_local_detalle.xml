@@ -4,9 +4,11 @@
     tools:context=".ui.reserve.LocalDetalleFragment">
 
     <data>
+
         <variable
             name="fragment"
             type="pe.com.carwashperuapp.carwashapp.ui.reserve.LocalDetalleFragment" />
+
         <variable
             name="viewModel"
             type="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveViewModel" />
@@ -29,6 +31,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/min_margin"
                     android:paddingHorizontal="@dimen/min_margin"
                     android:text="@string/place_atencion"
                     android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
@@ -39,9 +42,9 @@
                     android:layout_marginBottom="@dimen/min_margin"
                     android:maxLength="200"
                     android:paddingHorizontal="@dimen/min_margin"
-                    android:text="Lun - Vie 8:00 am - 4:00 pm"
+                    android:text="@{viewModel.selectedLocal.horario.resumen()}"
                     android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                    tools:text="Lun - Vie 8:00 am - 4:00 pm" />
+                    tools:text="Lun - Vie\n8:00 am - 4:00 pm" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -56,8 +59,9 @@
                     android:layout_marginBottom="@dimen/min_margin"
                     android:maxLength="200"
                     android:paddingHorizontal="@dimen/min_margin"
-                    android:text="@string/lorem_ipsum"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge" />
+                    android:text="@{viewModel.selectedLocal.distrib.acercaDe}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                    tools:text="@tools:sample/lorem/random" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -76,10 +80,10 @@
                     tools:text="Av. Las Flores 400, Urb Mi Casita" />
 
                 <ImageView
-                    android:onClick="@{()->fragment.showMap()}"
                     staticMapDireccion="@{viewModel.selectedLatLng}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:onClick="@{()->fragment.showMap()}"
                     android:scaleType="centerCrop"
                     tools:srcCompat="@drawable/mapa_ejemplo" />
 

@@ -126,7 +126,7 @@
     <fragment
         android:id="@+id/localFragment"
         android:name="pe.com.carwashperuapp.carwashapp.ui.reserve.LocalFragment"
-        android:label="fragment_local_reserva"
+        android:label=""
         tools:layout="@layout/fragment_local_reserva" >
         <action
             android:id="@+id/action_localFragment_to_reserveResumenFragment"

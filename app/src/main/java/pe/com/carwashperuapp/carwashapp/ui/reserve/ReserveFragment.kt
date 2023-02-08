@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
-import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveBinding
 import pe.com.carwashperuapp.carwashapp.model.Horario
@@ -56,13 +54,19 @@ class ReserveFragment : Fragment() {
                 cargarChips(it)
             }
             errMsg.observe(viewLifecycleOwner) {
-                showErrMsg(it)
+                //showErrMsg(it)
+                showSnackBar(it)
             }
+        }
+        binding.chgHorarios.setOnCheckedStateChangeListener { group, _ ->
+            val seleccionado = viewModel.horariosMap.value?.get(group.checkedChipId)
+            viewModel.seleccionarHorario(seleccionado)
         }
     }
 
     private fun cargarChips(horarios: List<Horario>?) {
         binding.chgHorarios.removeAllViews()
+        viewModel.seleccionarHorario(null)
         val map = mutableMapOf<Int, Horario>()
         if (horarios.isNullOrEmpty()) {
             binding.tvNoHorarios.visibility = View.VISIBLE
@@ -85,16 +89,6 @@ class ReserveFragment : Fragment() {
         viewModel.seleccionadosServicios()
         cargarHorarioSeleccionado()
         viewModel.reservar()
-    }
-
-    private fun showErrMsg(errMsg: String?) {
-        if (errMsg.isNullOrEmpty()) {
-            binding.tvErrMsg.text = null
-            binding.tvErrMsg.visibility = View.GONE
-        } else {
-            binding.tvErrMsg.text = errMsg
-            binding.tvErrMsg.visibility = View.VISIBLE
-        }
     }
 
     private fun cargarHorarioSeleccionado() {
@@ -124,8 +118,11 @@ class ReserveFragment : Fragment() {
         _binding = null
     }
 
-    fun showSnackBar(msg: String) {
-        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
+    private fun showSnackBar(msg: String?) {
+        if (!msg.isNullOrEmpty()) {
+            Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
+            viewModel.clearErr()
+        }
     }
 
     fun mostrarSeleccionarVehiculo() {

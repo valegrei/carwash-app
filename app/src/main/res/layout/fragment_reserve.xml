@@ -15,16 +15,11 @@
             type="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
+            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/tvErrMsg"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -144,26 +139,4 @@
                     android:background="?android:attr/listDivider" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-        <TextView
-            android:id="@+id/tvErrMsg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/min_margin"
-            android:text="@{viewModel.errMsg}"
-            app:layout_constraintBottom_toTopOf="@id/btn_reservar"
-            tools:text="Error"
-            android:textAppearance="@style/TextAppearance.CarwashApp.LabelError" />
-        <Button
-            android:id="@+id/btn_reservar"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btnsh_reserve"
-            android:onClick="@{()->fragment.reservar()}"
-            android:theme="@style/ThemeOverlay.CarwashApp.Button"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

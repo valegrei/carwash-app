@@ -2,6 +2,7 @@ package pe.com.carwashperuapp.carwashapp.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import pe.com.carwashperuapp.carwashapp.network.BASE_URL
 
 @JsonClass(generateAdapter = true)
 class Distrib(
@@ -14,4 +15,9 @@ class Distrib(
     @Json(name = "acercaDe") val acercaDe: String?,
     @Json(name = "path") val path: String?,
     @Json(name = "Servicios") val servicios: List<ServicioReserva>? = null,
-)
+) {
+    fun getURLFoto(): String? {
+        return if (path.isNullOrEmpty()) null
+        else "$BASE_URL$path"
+    }
+}

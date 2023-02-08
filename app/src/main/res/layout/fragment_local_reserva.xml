@@ -17,26 +17,6 @@
         android:background="@color/bg_color"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="@dimen/min_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/min_margin"
-            android:singleLine="true"
-            android:text="@{viewModel.selectedLocal.distrib.razonSocial}"
-            android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium"
-            tools:text="Lavado de Autos Sta Rosa" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/min_margin"
-            android:paddingHorizontal="@dimen/min_margin"
-            android:singleLine="true"
-            android:text="@{viewModel.selectedLocal.direccion}"
-            android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
-            tools:text="Mz I2 Lote 1, COOVITIOMAR" />
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"

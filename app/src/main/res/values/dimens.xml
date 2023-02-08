@@ -12,4 +12,5 @@
     <dimen name="small_margin">16dp</dimen>
     <dimen name="min_margin">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="banner_height">200dp</dimen>
 </resources>

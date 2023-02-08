@@ -64,7 +64,10 @@ class MainDisActivity : AppCompatActivity() {
 
         //setupActionBarWithNavController(navController, appBarConfiguration)
         NavigationUI.setupWithNavController(
-            binding.collapsingToolbar, binding.toolbar, navController, appBarConfiguration
+            binding.collapsingToolbar,
+            binding.toolbar,
+            navController,
+            appBarConfiguration
         )
         navView.setupWithNavController(navController)
 
