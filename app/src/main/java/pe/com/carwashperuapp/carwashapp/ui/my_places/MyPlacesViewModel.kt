@@ -285,7 +285,7 @@ class MyPlacesViewModel(
                 res = false
             }
         } else {
-            if ((selectedTipo.value ?: 1) > 1) {
+            if ((selectedTipo.value ?: 1) <= 1) {
                 _errMsg.value = "Seleccione tipo de dirección"
                 res = false
             }
