@@ -203,7 +203,7 @@ class LocalFragment : Fragment(), MenuProvider {
             Uri.parse(uriGoogle)
         ).setPackage("com.google.android.apps.maps")
 
-        val title: String = "Hola"
+        val title: String = "Seleccione"
         val chooserIntent = Intent.createChooser(intentGoogleNav, title)
         val arr = arrayOfNulls<Intent>(1)
         arr[0] = intentWaze
