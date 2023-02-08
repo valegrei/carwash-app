@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -139,6 +140,10 @@ class ReserveViewModel(
         _mostrarFavorito.value = false
     }
 
+    fun mostrarLlamar(): Boolean{
+        return (selectedLocal.value?.distrib?.nroCel1?:"").isNotEmpty()
+    }
+
     fun guardarFavorito() {
         if (mostrarFavorito.value!!) {
             // revisar si antes no estaba marcado
@@ -158,7 +163,9 @@ class ReserveViewModel(
                     sesion?.getTokenBearer()!!,
                 )
                 _favorito.value = null
+                _mostrarFavorito.value = false
             } catch (_: Exception) {
+                _mostrarFavorito.value = true
             }
         }
     }
@@ -172,8 +179,10 @@ class ReserveViewModel(
                     sesion?.getTokenBearer()!!,
                 )
                 _favorito.value = res.data.favorito
+                _mostrarFavorito.value = true
             } catch (e: Exception) {
                 _favorito.value = null
+                _mostrarFavorito.value = false
             }
         }
     }
