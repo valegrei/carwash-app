@@ -43,45 +43,55 @@
                     tools:text="Lavado de salón" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Style.CarwashApp.TextInputLayout"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxBackgroundColor="@color/white">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
                     style="@style/Style.CarwashApp.TextInputLayout"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/service_price"
-                    android:inputType="numberDecimal"
-                    android:text="@={viewModel.precio}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="30.00" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="8dp"
+                    app:boxBackgroundColor="@color/white">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Style.CarwashApp.TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxBackgroundColor="@color/white">
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/Style.CarwashApp.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/service_price"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.precio}"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="30.00" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    style="@style/Style.CarwashApp.TextInputLayout"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Style.CarwashApp.TextInputLayout.ExposedDropdownMenu"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10"
+                    android:layout_marginStart="8dp"
                     android:hint="@string/service_duracion"
-                    android:inputType="number"
-                    android:text="@={viewModel.duracion}"
-                    tools:ignore="TextContrastCheck"
-                    tools:text="30" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="16dp"
+                    app:boxBackgroundColor="@color/white">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/ac_duracion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="none"
+                        tools:ignore="TextContrastCheck"
+                        tools:text="15" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -26,8 +26,9 @@ class ServicioListAdapter(private val onItemClicked: (Servicio) -> Unit) :
         }
 
         override fun areContentsTheSame(oldItem: Servicio, newItem: Servicio): Boolean {
-            return oldItem.nombre == newItem.nombre && oldItem.precio == newItem.precio
-                    && oldItem.estado == newItem.estado
+            return oldItem.nombre == newItem.nombre
+                    && oldItem.precio == newItem.precio
+                    && oldItem.duracion == newItem.duracion
         }
 
     }

@@ -2,6 +2,7 @@ package pe.com.carwashperuapp.carwashapp.ui.my_services
 
 import android.os.Bundle
 import android.view.*
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentAddServiceBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 
@@ -47,12 +49,26 @@ class AddServiceFragment : Fragment(), MenuProvider {
             viewModel = this@AddServiceFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        viewModel.status.observe(viewLifecycleOwner) {
-            when (it) {
-                Status.LOADING -> showLoading()
-                Status.SUCCESS -> exit()
-                else -> hideLoading()
+        binding.acDuracion.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedDuracion = adapterView.getItemAtPosition(position) as String
+            viewModel.duracion.value = selectedDuracion
+        }
+        viewModel.apply {
+            binding.acDuracion.setText(duracion.value)
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                arrayOf("15","30","45","60")
+            )
+            binding.acDuracion.setAdapter(adapter)
+            status.observe(viewLifecycleOwner) {
+                when (it) {
+                    Status.LOADING -> showLoading()
+                    Status.SUCCESS -> exit()
+                    else -> hideLoading()
+                }
             }
+
         }
 
         //Configura el menu del fragment

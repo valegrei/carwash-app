@@ -58,7 +58,18 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
             val selectedLocal = adapterView.getItemAtPosition(position) as Direccion
             viewModel.setSelectedLocal(selectedLocal)
         }
+        binding.acNroAtenciones.setOnItemClickListener { adapterView, _, position, _ ->
+            val selectedNroAtenciones = adapterView.getItemAtPosition(position) as String
+            viewModel.nroAtenciones.value = selectedNroAtenciones
+        }
         viewModel.apply {
+            binding.acNroAtenciones.setText(nroAtenciones.value)
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                arrayOf("1","2","3","4","5")
+            )
+            binding.acNroAtenciones.setAdapter(adapter)
             locales.observe(viewLifecycleOwner) {
                 binding.acLocal.setText(local.value?.toString())
                 val adapter = ArrayAdapter(
