@@ -7,7 +7,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -23,10 +22,7 @@ import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
 import pe.com.carwashperuapp.carwashapp.network.request.ReqFavorito
 import pe.com.carwashperuapp.carwashapp.network.request.ReqReservar
-import pe.com.carwashperuapp.carwashapp.ui.util.calcularDistanciaEnMetros
-import pe.com.carwashperuapp.carwashapp.ui.util.formatearDistancia
-import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDB
-import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaHoraDB
+import pe.com.carwashperuapp.carwashapp.ui.util.*
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
@@ -74,18 +70,26 @@ class ReserveViewModel(
     val selectedFecha: LiveData<Long> = _selectedFecha
     private var _horarios = MutableLiveData<List<Horario>>()
     val horarios: LiveData<List<Horario>> = _horarios
+    private var _horarios2 = MutableLiveData<Array<MutableList<Horario>>>()
+    val horarios2: LiveData<Array<MutableList<Horario>>> = _horarios2
     private var _horariosMap = MutableLiveData<Map<Int, Horario>>()
     val horariosMap: LiveData<Map<Int, Horario>> = _horariosMap
     private var _selectedHorario = MutableLiveData<Horario?>()
     val selectedHorario: LiveData<Horario?> = _selectedHorario
     private var _totalServicios = MutableLiveData<BigDecimal>()
     val totalServicios: LiveData<BigDecimal> = _totalServicios
+    private var _totalDuracion = MutableLiveData<Int>()
+    val totalDuracion: LiveData<Int> = _totalDuracion
     private var _favorito = MutableLiveData<Favorito?>()
     val favorito: LiveData<Favorito?> = _favorito
     private var _mostrarFavorito = MutableLiveData<Boolean>()
     val mostrarFavorito: LiveData<Boolean> = _mostrarFavorito
     private var _selectedLatLng = MutableLiveData<LatLng?>()
     val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
+    private var _selectedTurno = MutableLiveData<Int>()
+    val selectedTurno: LiveData<Int> = _selectedTurno
+    private var _turnoMap = MutableLiveData<Map<Int, Int>>()
+    val turnoMap: LiveData<Map<Int, Int>> = _turnoMap
 
     fun completarOReservar() {
         if (datosCompletos()) {
@@ -99,7 +103,7 @@ class ReserveViewModel(
         _goStatus.value = GoStatus.SHOW_COMPLETAR
     }
 
-    fun clearErr(){
+    fun clearErr() {
         _errMsg.value = ""
     }
 
@@ -113,7 +117,9 @@ class ReserveViewModel(
             selectedLocal.value?.latitud!!.toDouble(),
             selectedLocal.value?.longitud!!.toDouble()
         )
+        _selectedTurno.value = 0
         _horarios.value = listOf()
+        _horarios2.value = arrayOf()
         _horariosMap.value = mapOf()
         buscarHorarios()
         _editStatus.value = EditStatus.NEW
@@ -140,8 +146,8 @@ class ReserveViewModel(
         _mostrarFavorito.value = false
     }
 
-    fun mostrarLlamar(): Boolean{
-        return (selectedLocal.value?.distrib?.nroCel1?:"").isNotEmpty()
+    fun mostrarLlamar(): Boolean {
+        return (selectedLocal.value?.distrib?.nroCel1 ?: "").isNotEmpty()
     }
 
     fun guardarFavorito() {
@@ -283,7 +289,7 @@ class ReserveViewModel(
         _selectedHorario.value = horario
     }
 
-    fun clearLocales(){
+    fun clearLocales() {
         _locales.value = listOf()
     }
 
@@ -298,16 +304,44 @@ class ReserveViewModel(
                 val resp = Api.retrofitService.obtenerHorarios(
                     idLocal, fecha, fechaHora, sesion?.getTokenBearer()!!
                 )
-                _horarios.value = resp.data.horarios
+                setHorarios(resp.data.horarios)
             } catch (_: Exception) {
-                _horarios.value = listOf()
+                setHorarios(listOf())
             }
             _status.value = Status.SUCCESS
         }
     }
 
+    private fun setHorarios(horarios: List<Horario>) {
+        val nroAtenciones = selectedLocal.value?.horario?.nroAtenciones!!
+        val nuevosHorarios = Array<MutableList<Horario>>(nroAtenciones) { mutableListOf() }
+        for (horario in horarios) {
+            nuevosHorarios[horario.nro].add(horario)
+        }
+        _horarios2.value = nuevosHorarios
+        selectHorariosByTurno()
+    }
+
+    fun selectTurno(turno: Int) {
+        _selectedTurno.value = turno
+        selectHorariosByTurno()
+    }
+
+    private fun selectHorariosByTurno() {
+        val turno = selectedTurno.value!!
+        if(_horarios2.value.isNullOrEmpty()){
+            _horarios.value =listOf()
+        }else {
+            _horarios.value = _horarios2.value?.get(turno)
+        }
+    }
+
     fun setHorarioMap(map: Map<Int, Horario>) {
         _horariosMap.value = map
+    }
+
+    fun setTurnoMap(map: Map<Int, Int>) {
+        _turnoMap.value = map
     }
 
     private fun clearErrs() {
@@ -327,12 +361,53 @@ class ReserveViewModel(
         if (selectedHorario.value == null) {
             _errMsg.value = "Debe seleccionar un horario"
             return false
+        } else if (!validarRango()) {
+            _errMsg.value = "No se puede reservar debido a tiempo insuficiente"
+            return false
         }
         if (selectedServicios.value?.isEmpty()!!) {
             _errMsg.value = "Debe seleccionar servicios"
             return false
         }
         return true
+    }
+
+    private fun validarRango(): Boolean {
+        val rangoHorarios = obtenerRangoHorarios()
+        return !rangoHorarios.isNullOrEmpty()
+    }
+
+    private fun obtenerRangoHorarios(): List<Horario>? {
+        calcularDuracionServicios()
+        val horarioIni = selectedHorario.value!!
+        val horaFin = obtenerHoraFin(horarioIni.horaIni, totalDuracion.value!!)
+        val indIni = horarios.value?.indexOf(horarioIni)!!
+        val lista = mutableListOf<Horario>()
+        lista.add(horarioIni)
+        if (horarioIni.horaFin >= horaFin) {
+            return lista    //cumple duracion
+        }
+        for (i in indIni + 1 until horarios.value?.size!!) {
+            val horario = horarios.value?.get(i)!!
+            val horarioAnt = lista.get(lista.size-1)
+            //Comprabando continuidad
+            if (horarioAnt.horaFin != horario.horaIni) {
+                return null //no es continuo
+            }
+            lista.add(horario)
+            if (horario.horaFin >= horaFin) {
+                return lista    //cumple duracion
+            }
+        }
+        return null
+    }
+
+    private fun calcularDuracionServicios() {
+        var total = 0
+        selectedServicios.value?.forEach {
+            total += it.duracion!!
+        }
+        _totalDuracion.value = total
     }
 
     fun reservar() {
@@ -353,12 +428,28 @@ class ReserveViewModel(
     fun confirmarReserva() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
+            val horarioIni = selectedHorario.value!!
+            val rangoHorarios = obtenerRangoHorarios()!!
+            val idHorarios = rangoHorarios.map { it.id }
+            val duracionTotal = totalDuracion.value!!
             val sesion = sesionData.getCurrentSesion()
-            val idHorario = selectedHorario.value?.id!!
             val idCliente = sesion?.usuario?.id!!
             val idVehiculo = selectedVehiculo.value?.id!!
+            val idDistrib = selectedLocal.value?.distrib?.id!!
+            val idLocal = selectedLocal.value?.id!!
             val servicios = selectedServicios.value!!
-            val req = ReqReservar(idHorario, idCliente, idVehiculo, servicios)
+            val req = ReqReservar(
+                idHorarios,
+                idCliente,
+                idVehiculo,
+                idDistrib,
+                idLocal,
+                horarioIni.fecha,
+                horarioIni.horaIni,
+                horarioIni.fechaHoraDB(),
+                duracionTotal,
+                servicios
+            )
             Api.retrofitService.crearReserva(req, sesion.getTokenBearer())
             _status.value = Status.SUCCESS
             _goStatus.value = GoStatus.GO_LIST

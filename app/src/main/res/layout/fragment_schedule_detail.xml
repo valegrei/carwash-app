@@ -84,16 +84,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/schedules_label_intervalo"
+                        android:text="@string/schedules_label_nro_atenciones"
                         android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:text="@{viewModel.selectedHorarioConfig.intervaloMin()}"
+                        android:text="@{viewModel.selectedHorarioConfig.atenciones()}"
                         android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
-                        tools:text="30 min" />
+                        tools:text="1" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -254,7 +254,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/schedules_label_intervalo_min"
+                        android:text="@string/schedules_label_nro_atenciones"
                         android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
 
                     <LinearLayout
@@ -263,7 +263,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/ti_intervalo"
+                            android:id="@+id/ti_nro_atenciones"
                             style="@style/Style.CarwashApp.TextInputLayout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -279,9 +279,9 @@
                                 android:layout_weight="1"
                                 android:ems="10"
                                 android:inputType="number"
-                                android:text="@={viewModel.intervalo}"
+                                android:text="@={viewModel.nroAtenciones}"
                                 tools:ignore="TextContrastCheck"
-                                tools:text="30" />
+                                tools:text="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView

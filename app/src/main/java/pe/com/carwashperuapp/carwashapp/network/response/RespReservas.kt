@@ -2,7 +2,6 @@ package pe.com.carwashperuapp.carwashapp.network.response
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import pe.com.carwashperuapp.carwashapp.model.Horario
 import pe.com.carwashperuapp.carwashapp.model.Reserva
 import java.util.*
 

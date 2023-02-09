@@ -170,7 +170,6 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = EditStatus.LOADING
             //armar usuario con cambios
-            val usuario = sesion.value?.usuario!!
             val sesion = sesion.value!!
 
             val rbNombres = RequestBody.create(MediaType.parse("text/plain"), nombres.value ?: "")

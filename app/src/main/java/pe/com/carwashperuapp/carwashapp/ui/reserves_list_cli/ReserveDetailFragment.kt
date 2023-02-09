@@ -121,7 +121,7 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
 
     private fun ocultarBoton() {
         val fechaHora = formatoFechaHoraDB(Date().time)
-        val fechaHorario = viewModel.selectedReserva.value?.horario?.fechaHoraDB()!!
+        val fechaHorario = viewModel.selectedReserva.value?.fechaHoraDB()!!
         deleteItem?.isVisible = fechaHorario > fechaHora
     }
 

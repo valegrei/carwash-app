@@ -268,6 +268,7 @@
     <string name="reserve_hora">Hora</string>
     <string name="reserve_fecha_hora">Fecha y Hora</string>
     <string name="reserve_doble_linea">%s\n%s</string>
+    <string name="reserve_doble_linea2">%s\n%s - %s</string>
     <string name="reserve_fecha">Fecha</string>
     <string name="reserve_services">Servicios</string>
     <string name="reserve_no_disponible">No hay turnos disponibles</string>
@@ -321,4 +322,6 @@
     <string name="action_del_fav">Eliminar Favorito</string>
     <string name="action_navigation">Ruta a Local</string>
     <string name="action_call">Llamar</string>
+    <string name="schedules_label_nro_atenciones">Nro. de atenciones</string>
+    <string name="reserve_turno">Turno</string>
 </resources>

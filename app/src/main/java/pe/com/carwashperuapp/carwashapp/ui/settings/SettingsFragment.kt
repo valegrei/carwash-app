@@ -131,7 +131,7 @@ class SettingsFragment : Fragment() {
                 selected = which
             }
             .setCancelable(true)
-            .setPositiveButton(R.string.accept) { d, _ ->
+            .setPositiveButton(R.string.accept) { _, _ ->
                 viewModel.setSecure(selected)
             }
             .setNegativeButton(R.string.cancel, null)

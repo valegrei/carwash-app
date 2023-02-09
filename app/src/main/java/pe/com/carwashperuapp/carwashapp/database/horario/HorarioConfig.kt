@@ -21,7 +21,7 @@ data class HorarioConfig(
     @Json(name = "minIni") @ColumnInfo(name = "minIni") val minIni: Int,
     @Json(name = "horaFin") @ColumnInfo(name = "horaFin") val horaFin: Int,
     @Json(name = "minFin") @ColumnInfo(name = "minFin") val minFin: Int,
-    @Json(name = "intervalo") @ColumnInfo(name = "intervalo") val intervalo: Int,
+    @Json(name = "nroAtenciones") @ColumnInfo(name = "nroAtenciones") val nroAtenciones: Int,
     @Json(name = "estado") @ColumnInfo(name = "estado") val estado: Boolean,
     @Json(name = "idDistrib") @ColumnInfo(name = "idDistrib") val idDistrib: Int,
     @Json(name = "idLocal") @ColumnInfo(name = "idLocal") val idLocal: Int,
@@ -47,9 +47,8 @@ data class HorarioConfig(
     fun horarioIni(): String = formatHora(horaIni, minIni)
     fun horarioFin(): String = formatHora(horaFin, minFin)
     fun horario(): String = "${horarioIni()} - ${horarioFin()}"
-    fun intervaloMin(): String = "$intervalo min"
-    fun resumen(): String = "${dias()}\nInicio - Fin: ${horario()}\nIntervalo: ${intervaloMin()}"
-    fun resumenLocal(): String = "${dias()}\n${horario()}"
+    fun resumen(): String = "${dias()}\nInicio - Fin: ${horario()}\nNro. Atenciones: $nroAtenciones"
+    fun atenciones(): String = "$nroAtenciones"
 }
 
 data class HorarioConfigLocal(

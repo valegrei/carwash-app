@@ -16,6 +16,6 @@ class ReqHorarioConfig(
     @Json(name = "minIni") val minIni: Int,
     @Json(name = "horaFin") val horaFin: Int,
     @Json(name = "minFin") val minFin: Int,
-    @Json(name = "intervalo") val intervalo: Int,
+    @Json(name = "nroAtenciones") val nroAtenciones: Int,
     @Json(name = "idLocal") val idLocal: Int,
 )

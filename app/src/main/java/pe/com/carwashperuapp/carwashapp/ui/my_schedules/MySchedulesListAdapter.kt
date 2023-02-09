@@ -61,7 +61,7 @@ class MySchedulesListAdapter(private val onItemClicked: (HorarioConfigLocal) -> 
                     && oldItem.horarioConfig.domingo == newItem.horarioConfig.domingo
                     && oldItem.horarioConfig.horaIni == newItem.horarioConfig.horaIni
                     && oldItem.horarioConfig.horaFin == newItem.horarioConfig.horaFin
-                    && oldItem.horarioConfig.intervalo == newItem.horarioConfig.intervalo
+                    && oldItem.horarioConfig.nroAtenciones == newItem.horarioConfig.nroAtenciones
                     && oldItem.horarioConfig.estado == newItem.horarioConfig.estado
         }
 

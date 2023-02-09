@@ -8,6 +8,7 @@ import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDBaHum
 @JsonClass(generateAdapter = true)
 data class Horario(
     @Json(name = "id") val id: Int,
+    @Json(name = "nro") val nro: Int,
     @Json(name = "fecha") val fecha: String,
     @Json(name = "horaIni") val horaIni: String,
     @Json(name = "horaFin") val horaFin: String,
@@ -16,6 +17,5 @@ data class Horario(
     var selected: Boolean? = false,
 ) {
     override fun toString(): String = formatHora(horaIni)
-    fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)} - ${formatHora(horaFin)}"
     fun fechaHoraDB(): String = "$fecha $horaIni"
 }

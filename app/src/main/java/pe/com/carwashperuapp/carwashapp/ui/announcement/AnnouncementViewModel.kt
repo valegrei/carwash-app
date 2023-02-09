@@ -121,7 +121,6 @@ class AnnouncementViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroAnuncios()
 
             Api.retrofitService.eliminarAnuncios(
                 ReqAnuncioEliminar(listOf(idAnuncio)),
@@ -147,7 +146,6 @@ class AnnouncementViewModel(
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val lastSincro = sesionData.getLastSincroAnuncios()
 
             Api.retrofitService.actualizarAnuncio(
                 idAnuncio,

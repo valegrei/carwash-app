@@ -33,7 +33,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:text="@{reserva.horario.distrib.razonSocial}"
+                    android:text="@{reserva.distrib.razonSocial}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -41,7 +41,7 @@
                     tools:text="Servicios Quickwash" />
 
                 <TextView
-                    android:text="@{reserva.horario.local.direccion}"
+                    android:text="@{reserva.local.direccion}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -57,7 +57,7 @@
                     tools:text="Hyundai Tucson 2020 - BCU 312" />
 
                 <TextView
-                    android:text="@{reserva.horario.fechaHoraIni()}"
+                    android:text="@{reserva.fechaHoraIni()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

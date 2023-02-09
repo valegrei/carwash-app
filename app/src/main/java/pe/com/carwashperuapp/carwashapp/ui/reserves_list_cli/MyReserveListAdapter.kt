@@ -47,10 +47,10 @@ class MyReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
 
         override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
             return oldItem.id == newItem.id
-                    && (oldItem.horario?.distrib?.razonSocial
-                    == newItem.horario?.distrib?.razonSocial)
-                    && (oldItem.horario?.local?.direccion
-                    == newItem.horario?.local?.direccion)
+                    && (oldItem.distrib?.razonSocial
+                    == newItem.distrib?.razonSocial)
+                    && (oldItem.local?.direccion
+                    == newItem.local?.direccion)
                     && (oldItem.vehiculo?.marca
                     == newItem.vehiculo?.marca)
                     && (oldItem.vehiculo?.modelo
@@ -59,12 +59,10 @@ class MyReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
                     == newItem.vehiculo?.year)
                     && (oldItem.vehiculo?.placa
                     == newItem.vehiculo?.placa)
-                    && (oldItem.horario?.fecha
-                    == newItem.horario?.fecha)
-                    && (oldItem.horario?.horaIni
-                    == newItem.horario?.horaIni)
-                    && (oldItem.horario?.horaFin
-                    == newItem.horario?.horaFin)
+                    && (oldItem.fecha
+                    == newItem.fecha)
+                    && (oldItem.horaIni
+                    == newItem.horaIni)
         }
 
     }

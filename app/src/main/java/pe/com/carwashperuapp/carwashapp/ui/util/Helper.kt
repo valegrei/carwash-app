@@ -44,6 +44,23 @@ fun formatHora(horaSrc: String): String {
     }
 }
 
+fun formatHoraFin(horaIni: String, duracionMin: Int): String {
+    var hora = horaIni.substring(0, 2).toInt()
+    var min = horaIni.substring(3, 5).toInt()
+    val horaAdd = duracionMin / 60
+    val minAdd = duracionMin % 60
+    min += minAdd
+    hora += horaAdd + min / 60
+    min %= 60
+    return formatHora(hora, min)
+}
+
+fun obtenerHoraFin(horaIni: String, duracionMin: Int): String {
+    var hora = horaIni.substring(0, 2).toInt()
+    var min = horaIni.substring(3, 5).toInt()
+    return minToTime(hora * 60 + min + duracionMin)
+}
+
 fun generarHorariosPrevio(
     horaIni: Int,
     minIni: Int,
@@ -60,7 +77,7 @@ fun generarHorariosPrevio(
     while (minutoHorarioFin <= minutosFin) {
         nuevosHorarios.add(
             Horario(
-                id = 0,
+                id = 0, 0,
                 fecha = "",
                 horaIni = minToTime(minutoHorarioInicio),
                 horaFin = minToTime(minutoHorarioFin),
@@ -126,6 +143,7 @@ fun formatoFechaDB(milisUtc: Long): String {
     format.timeZone = TimeZone.getTimeZone("UTC")
     return format.format(calendar.time)
 }
+
 fun formatoFechaHoraDB(milisUtc: Long): String {
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
     calendar.timeInMillis = milisUtc
@@ -133,10 +151,11 @@ fun formatoFechaHoraDB(milisUtc: Long): String {
     format.timeZone = TimeZone.getTimeZone("UTC")
     return format.format(calendar.time)
 }
+
 fun formatoFechaDBaHum(fechaDB: String): String {
-    val year = fechaDB.substring(0,4)
-    val month = fechaDB.substring(5,7)
-    val day = fechaDB.substring(8,10)
+    val year = fechaDB.substring(0, 4)
+    val month = fechaDB.substring(5, 7)
+    val day = fechaDB.substring(8, 10)
     return "$day/$month/$year"
 }
 

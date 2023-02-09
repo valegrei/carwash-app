@@ -46,7 +46,18 @@ class ReserveFragment : Fragment() {
         val adapter = ServiceListAdapter()
         binding.rvServices.adapter = adapter
 
+        binding.chgHorarios.setOnCheckedStateChangeListener { group, _ ->
+            val seleccionado = viewModel.horariosMap.value?.get(group.checkedChipId)
+            viewModel.seleccionarHorario(seleccionado)
+        }
+        binding.chgTurnos.setOnCheckedStateChangeListener{group, _ ->
+            val seleccionado = viewModel.turnoMap.value?.get(group.checkedChipId)?:0
+            viewModel.selectTurno(seleccionado)
+        }
         viewModel.apply {
+            selectedLocal.observe(viewLifecycleOwner){
+                mostrarChipsTurno(it.horario?.nroAtenciones!!)
+            }
             servicios.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
@@ -54,14 +65,23 @@ class ReserveFragment : Fragment() {
                 cargarChips(it)
             }
             errMsg.observe(viewLifecycleOwner) {
-                //showErrMsg(it)
                 showSnackBar(it)
             }
         }
-        binding.chgHorarios.setOnCheckedStateChangeListener { group, _ ->
-            val seleccionado = viewModel.horariosMap.value?.get(group.checkedChipId)
-            viewModel.seleccionarHorario(seleccionado)
+    }
+
+    private fun mostrarChipsTurno(nroAtenciones: Int) {
+        binding.chgHorarios.removeAllViews()
+        val map = mutableMapOf<Int, Int>()
+        for (i in 0 until nroAtenciones){
+            val chip= Chip(requireContext())
+            chip.text= "Turno ${i+1}"
+            chip.isCheckable = true
+            binding.chgTurnos.addView(chip)
+            map[chip.id] = i
         }
+        viewModel.setTurnoMap(map)
+        binding.chgTurnos.check(map.keys.toList()[0])   //selecciona el primero
     }
 
     private fun cargarChips(horarios: List<Horario>?) {
@@ -83,17 +103,6 @@ class ReserveFragment : Fragment() {
             binding.chgHorarios.visibility = View.VISIBLE
         }
         viewModel.setHorarioMap(map)
-    }
-
-    fun reservar() {
-        viewModel.seleccionadosServicios()
-        cargarHorarioSeleccionado()
-        viewModel.reservar()
-    }
-
-    private fun cargarHorarioSeleccionado() {
-        val seleccionado = viewModel.horariosMap.value?.get(binding.chgHorarios.checkedChipId)
-        viewModel.seleccionarHorario(seleccionado)
     }
 
     //Muestra el selector de fechas

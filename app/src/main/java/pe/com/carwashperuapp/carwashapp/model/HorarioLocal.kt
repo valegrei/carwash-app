@@ -18,6 +18,7 @@ data class HorarioLocal(
     @Json(name = "minIni") val minIni: Int,
     @Json(name = "horaFin") val horaFin: Int,
     @Json(name = "minFin") val minFin: Int,
+    @Json(name = "nroAtenciones") val nroAtenciones: Int,
 ) {
     fun dias(): String {
         var dias = ""

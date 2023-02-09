@@ -53,8 +53,8 @@ class ReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
                     == newItem.cliente?.apellidoPaterno)
                     && (oldItem.cliente?.apellidoMaterno
                     == newItem.cliente?.apellidoMaterno)
-                    && (oldItem.horario?.local?.direccion
-                    == newItem.horario?.local?.direccion)
+                    && (oldItem.local?.direccion
+                    == newItem.local?.direccion)
                     && (oldItem.vehiculo?.marca
                     == newItem.vehiculo?.marca)
                     && (oldItem.vehiculo?.modelo
@@ -63,12 +63,10 @@ class ReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
                     == newItem.vehiculo?.year)
                     && (oldItem.vehiculo?.placa
                     == newItem.vehiculo?.placa)
-                    && (oldItem.horario?.fecha
-                    == newItem.horario?.fecha)
-                    && (oldItem.horario?.horaIni
-                    == newItem.horario?.horaIni)
-                    && (oldItem.horario?.horaFin
-                    == newItem.horario?.horaFin)
+                    && (oldItem.fecha
+                    == newItem.fecha)
+                    && (oldItem.horaIni
+                    == newItem.horaIni)
         }
 
     }

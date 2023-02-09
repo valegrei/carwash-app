@@ -81,7 +81,7 @@ class MySchedulesViewModel(
     val minFin: LiveData<Int> = _minFin
     private var _horarioFin = MutableLiveData<String>()
     val horarioFin: LiveData<String> = _horarioFin
-    val intervalo = MutableLiveData<String>()
+    val nroAtenciones = MutableLiveData<String>()
     private var _locales = MutableLiveData<List<Direccion>>()
     val locales: LiveData<List<Direccion>> = _locales
     private var _local = MutableLiveData<Direccion>()
@@ -106,7 +106,7 @@ class MySchedulesViewModel(
         _horaFin.value = 0
         _minFin.value = 0
         _horarioFin.value = ""
-        intervalo.value = ""
+        nroAtenciones.value = "1"
         _errMsg.value = ""
         _editStatus.value = EditStatus.NEW
         _mostrarEditar.value = true
@@ -132,7 +132,7 @@ class MySchedulesViewModel(
         setFreqs()
         setHorarioIni(horarioConfig.horaIni, horarioConfig.minIni)
         setHorarioFin(horarioConfig.horaFin, horarioConfig.minFin)
-        intervalo.value = horarioConfig.intervalo.toString()
+        nroAtenciones.value = horarioConfig.nroAtenciones.toString()
         _errMsg.value = ""
         _editStatus.value = EditStatus.EDIT
         _mostrarEditar.value = true
@@ -286,7 +286,7 @@ class MySchedulesViewModel(
                 minIni = minIni.value!!,
                 horaFin = horaFin.value!!,
                 minFin = minFin.value!!,
-                intervalo = (intervalo.value ?: "0").toInt(),
+                nroAtenciones = (nroAtenciones.value ?: "0").toInt(),
                 idLocal = local.value?.id ?: 0,
             )
 
@@ -316,29 +316,15 @@ class MySchedulesViewModel(
             _errMsg.value = "Seleccione horas de inicio y fin correctos"
             return false
         }
-        if ((intervalo.value ?: "0").toInt() <= 15) {
+        val nroAtenc = (nroAtenciones.value ?: "0").toInt()
+        if ( nroAtenc <= 0 || nroAtenc > 10) {
             _errMsg.value = "Ingrese una cantidad correcta"
             return false
         }
-        /*val query = buildQuery(
-            lunes = lunes.value!!,
-            martes = martes.value!!,
-            miercoles = miercoles.value!!,
-            jueves = jueves.value!!,
-            viernes = viernes.value!!,
-            sabado = sabado.value!!,
-            domingo = domingo.value!!,
-            horaIni = horaIni.value ?: 0,
-            horaFin = horaFin.value ?: 0,
-            idLocal = local.value?.id ?: 0,
-            idHorarioConfig = idHorarioConfig,
-        )
-        val cant = horarioDao.verificarInterseciones(query)*/
         val cant = horarioDao.verificarConflictos(
             local.value?.id ?: 0, idHorarioConfig ?: 0
         )
         if (cant > 0) {
-            //_errMsg.value = "$cant conflictos con otros horarios"
             _errMsg.value = "Ya se registró un horario para este local"
             return false
         }
@@ -389,7 +375,7 @@ class MySchedulesViewModel(
                 minIni = minIni.value!!,
                 horaFin = horaFin.value!!,
                 minFin = minFin.value!!,
-                intervalo = (intervalo.value ?: "0").toInt(),
+                nroAtenciones = (nroAtenciones.value ?: "0").toInt(),
                 idLocal = local.value?.id ?: 0,
             )
 

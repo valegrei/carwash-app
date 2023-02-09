@@ -120,7 +120,7 @@ class ReserveDetailDisFragment : Fragment(), MenuProvider {
 
     private fun seMuestraBoton(): Boolean {
         val fechaHora = formatoFechaHoraDB(Date().time)
-        val fechaHorario = viewModel.selectedReserva.value?.horario?.fechaHoraDB()!!
+        val fechaHorario = viewModel.selectedReserva.value?.fechaHoraDB()!!
         return fechaHorario > fechaHora
     }
 

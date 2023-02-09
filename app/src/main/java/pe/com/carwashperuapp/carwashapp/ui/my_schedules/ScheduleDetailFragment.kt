@@ -100,7 +100,7 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
                 horarioConfig.minIni,
                 horarioConfig.horaFin,
                 horarioConfig.minFin,
-                horarioConfig.intervalo
+                30
             )
             horarios.forEach {
                 val chip = Chip(requireContext())
@@ -110,7 +110,7 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
         }
     }
 
-    fun salir(editStatus: EditStatus) {
+    private fun salir(editStatus: EditStatus) {
         if (editStatus == EditStatus.EXIT)
             findNavController().popBackStack()
     }

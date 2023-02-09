@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/min_margin"
-                android:text="@{viewModel.selectedReserva.horario.local.direccion}"
+                android:text="@{viewModel.selectedReserva.local.direccion}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
                 tools:text="Mz I2 Lote 1" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/min_margin"
-                android:text="@{@string/reserve_doble_linea(HelperKt.formatoFechaDBaHum(viewModel.selectedReserva.horario.fecha),HelperKt.formatHora(viewModel.selectedReserva.horario.horaIni))}"
+                android:text="@{viewModel.selectedReserva.fechaHoraIni2()}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
                 tools:text="30/01/2023\n11:00 AM" />
 
