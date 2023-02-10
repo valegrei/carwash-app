@@ -1,5 +1,6 @@
 package pe.com.carwashperuapp.carwashapp.ui
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -12,6 +13,7 @@ import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.direccion.TipoDireccion
 import pe.com.carwashperuapp.carwashapp.database.usuario.EstadoUsuario
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoUsuario
+import pe.com.carwashperuapp.carwashapp.model.ReservaEstado
 import pe.com.carwashperuapp.carwashapp.model.ServicioEstado
 import pe.com.carwashperuapp.carwashapp.ui.announcement.TuplaImageEdit
 import pe.com.carwashperuapp.carwashapp.ui.util.UrlSigner
@@ -186,8 +188,7 @@ fun bindTipoDir(imageView: ImageView, tipoDir: Int?) {
 @BindingAdapter("estadoServColor")
 fun bindEstadoServ(textView: TextView, estado: Int?) {
     val context = textView.context
-    var resColor: Int?
-    resColor = when (estado) {
+    var resColor = when (estado) {
         ServicioEstado.NO_ATENDIDO.id -> {
             R.color.service_state_pending
         }
@@ -198,38 +199,64 @@ fun bindEstadoServ(textView: TextView, estado: Int?) {
             R.color.service_state_canceled
         }
         else -> {
-            0
+            R.color.service_state_pending
         }
     }
     textView.setTextColor(context.getColor(resColor))
 }
+
+@BindingAdapter("estadoReservaColor")
+fun bindEstadoReserva(textView: TextView, estado: Int?) {
+    val context = textView.context
+    var resColor = when (estado) {
+        ReservaEstado.NO_ATENDIDO.id -> {
+            R.color.service_state_pending
+        }
+        ReservaEstado.ATENDIDO.id -> {
+            R.color.service_state_attended
+        }
+        ReservaEstado.ATENDIENDO.id -> {
+            R.color.service_state_attendeding
+        }
+        else -> {
+            R.color.service_state_pending
+        }
+    }
+    textView.setTextColor(context.getColor(resColor))
+}
+
 fun bindImageBanner(imgView: ImageView, imgUrl: String?) {
     val sesion = SesionData(imgView.context).getCurrentSesion()
     if (!(imgUrl).isNullOrEmpty()) {
+        imgView.visibility = View.VISIBLE
         imgView.load(imgUrl) {
             setHeader("Authorization", sesion?.getTokenBearer()!!)
         }
     } else {
-        imgView.setImageDrawable(null)
+        //imgView.setImageDrawable(null)
+        imgView.visibility = View.GONE
     }
 }
+
 fun bindImageEdit(imgBanner: ImageView, editFoto: EstrEditFoto?) {
     editFoto?.let {
         if (it.eliminarFoto) {
-            imgBanner.setImageDrawable(null)
+            imgBanner.visibility = View.GONE //setImageDrawable(null)
             return
         }
         if (it.uriFile != null) {
+            imgBanner.visibility = View.VISIBLE
             imgBanner.load(it.uriFile)
             return
         }
         if ((it.urlOriginal ?: "").isNotEmpty()) {
+            imgBanner.visibility = View.VISIBLE
             val sesion = SesionData(imgBanner.context).getCurrentSesion()
             imgBanner.load(it.urlOriginal) {
                 setHeader("Authorization", sesion?.getTokenBearer()!!)
             }
         } else {
-            imgBanner.setImageDrawable(null)
+            imgBanner.visibility = View.GONE
         }
     }
 }

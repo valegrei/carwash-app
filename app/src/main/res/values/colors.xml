@@ -6,9 +6,11 @@
     <color name="error2">#FFBF00</color>
     <color name="grey">#E6E6E6</color>
     <!--    State Colors-->
-    <color name="service_state_attended">#007700</color>
-    <color name="service_state_pending">#757575</color>
-    <color name="service_state_canceled">#A30000</color>
+    <color name="service_state_attended">#006700</color>
+    <color name="service_state_pending">@color/black</color>
+    <color name="service_state_canceled">#800000</color>
+    <color name="service_state_attendeding">#C15300</color>
+    <color name="service_state_pending2">@color/purple</color>
     <!--    filters-->
     <color name="filter_no_editing">#0000</color>
     <color name="filter_editing">#80000000</color>
@@ -24,6 +26,6 @@
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
-    <color name="black_overlay">#66000000</color>
+    <color name="black_overlay">#aa000000</color>
     <color name="transparente">#00000000</color>
 </resources>

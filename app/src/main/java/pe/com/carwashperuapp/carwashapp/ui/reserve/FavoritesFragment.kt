@@ -42,7 +42,7 @@ class FavoritesFragment : Fragment() {
         //Adapter de RV
         val adapter = FavoritesListAdapter {
             viewModel.selectLocal(it)
-            viewModel.completarOReservar()
+            viewModel.goLocal()
         }
 
         binding.rvFavoriteList.adapter = adapter
@@ -64,7 +64,6 @@ class FavoritesFragment : Fragment() {
             goStatus.observe(viewLifecycleOwner) {
                 when (it) {
                     GoStatus.GO_ADD -> goNuevaReserva()
-                    GoStatus.SHOW_COMPLETAR -> mostrarCompletarDatos()
                     else -> {}
                 }
             }
@@ -72,25 +71,11 @@ class FavoritesFragment : Fragment() {
         viewModel.obtenerFavoritos()
     }
 
-    private fun mostrarCompletarDatos() {
-        viewModel.clearGoStatus()
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.reserve_completar)
-            .setMessage(R.string.reserve_completar_msg)
-            .setCancelable(true)
-            .setPositiveButton(R.string.ok) { _, _ ->
-                goDatos()
-            }.show()
-    }
-
     private fun goNuevaReserva() {
         findNavController().navigate(R.id.action_nav_favoritos_to_localFragment)
         viewModel.clearGoStatus()
     }
 
-    private fun goDatos() {
-        findNavController().navigate(R.id.action_nav_favoritos_to_navigation_account)
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

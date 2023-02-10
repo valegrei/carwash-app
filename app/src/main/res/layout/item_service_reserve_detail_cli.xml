@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
+            estadoServColor="@{servicio.detalle.estado}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -24,6 +25,7 @@
             tools:text="Lavado de Carro" />
 
         <TextView
+            estadoServColor="@{servicio.detalle.estado}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -32,6 +34,7 @@
             android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
             tools:text="30 min" />
         <TextView
+            estadoServColor="@{servicio.detalle.estado}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"

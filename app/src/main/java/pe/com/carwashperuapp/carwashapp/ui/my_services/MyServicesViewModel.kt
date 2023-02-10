@@ -188,7 +188,7 @@ class MyServicesViewModel(
     }
 
 
-    private suspend fun descargarServicios(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarServicios(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerServicios(
             lastSincro,
             sesion?.getTokenBearer()!!

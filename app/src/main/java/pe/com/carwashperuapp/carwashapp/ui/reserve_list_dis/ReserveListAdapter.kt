@@ -67,6 +67,8 @@ class ReserveListAdapter(private val onItemClicked: (Reserva) -> Unit) :
                     == newItem.fecha)
                     && (oldItem.horaIni
                     == newItem.horaIni)
+                    && (oldItem.estadoAtencion
+                    == newItem.estadoAtencion)
         }
 
     }

@@ -94,7 +94,7 @@ class AnnouncementViewModel(
         }
     }
 
-    private suspend fun descargarAnuncios(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarAnuncios(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerAnuncios(lastSincro, sesion?.getTokenBearer()!!)
         val anuncios = res.data.anuncios
         if (anuncios.isNotEmpty()) {

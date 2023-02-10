@@ -8,12 +8,19 @@ import pe.com.carwashperuapp.carwashapp.ui.util.formatHora
 import pe.com.carwashperuapp.carwashapp.ui.util.formatHoraFin
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDBaHum
 
+enum class ReservaEstado(val id: Int, val nombre: String) {
+    NO_ATENDIDO(1, "No atendido"),
+    ATENDIDO(2, "Atendido"),
+    ATENDIENDO(3, "Atendiendo")
+}
+
 @JsonClass(generateAdapter = true)
 class Reserva(
     @Json(name = "id") val id: Int,
     @Json(name = "fecha") val fecha: String,
     @Json(name = "horaIni") val horaIni: String,
     @Json(name = "duracionTotal") val duracionTotal: Int,
+    @Json(name = "estadoAtencion") val estadoAtencion: Int? = null,
     @Json(name = "Servicios") val servicioReserva: List<ServicioReserva>? = null,
     @Json(name = "Vehiculo") val vehiculo: Vehiculo? = null,
     @Json(name = "cliente") val cliente: Cliente? = null,
@@ -32,8 +39,16 @@ class Reserva(
     fun fechaHoraIni(): String = "${formatoFechaDBaHum(fecha)}, ${formatHora(horaIni)} - ${
         formatHoraFin(horaIni, duracionTotal)
     }"
+
     fun fechaHoraIni2(): String = "${formatoFechaDBaHum(fecha)}\n${formatHora(horaIni)} - ${
         formatHoraFin(horaIni, duracionTotal)
     }"
+
     fun fechaHoraDB(): String = "$fecha $horaIni"
+    fun getEstadoNombre(): String = when (estadoAtencion) {
+        ReservaEstado.NO_ATENDIDO.id -> ReservaEstado.NO_ATENDIDO.nombre
+        ReservaEstado.ATENDIDO.id -> ReservaEstado.ATENDIDO.nombre
+        ReservaEstado.ATENDIENDO.id -> ReservaEstado.ATENDIENDO.nombre
+        else -> ""
+    }
 }

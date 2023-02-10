@@ -91,9 +91,14 @@ class ReserveViewModel(
     private var _turnoMap = MutableLiveData<Map<Int, Int>>()
     val turnoMap: LiveData<Map<Int, Int>> = _turnoMap
 
+    fun goLocal() {
+        nuevaReserva()
+    }
+
+
     fun completarOReservar() {
         if (datosCompletos()) {
-            nuevaReserva()
+            reservar()
         } else {
             mostrarCompletarDatos()
         }
@@ -329,9 +334,9 @@ class ReserveViewModel(
 
     private fun selectHorariosByTurno() {
         val turno = selectedTurno.value!!
-        if(_horarios2.value.isNullOrEmpty()){
-            _horarios.value =listOf()
-        }else {
+        if (_horarios2.value.isNullOrEmpty()) {
+            _horarios.value = listOf()
+        } else {
             _horarios.value = _horarios2.value?.get(turno)
         }
     }
@@ -389,7 +394,7 @@ class ReserveViewModel(
         }
         for (i in indIni + 1 until horarios.value?.size!!) {
             val horario = horarios.value?.get(i)!!
-            val horarioAnt = lista.get(lista.size-1)
+            val horarioAnt = lista.get(lista.size - 1)
             //Comprabando continuidad
             if (horarioAnt.horaFin != horario.horaIni) {
                 return null //no es continuo

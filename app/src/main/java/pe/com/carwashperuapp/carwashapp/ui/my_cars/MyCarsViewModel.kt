@@ -142,7 +142,7 @@ class MyCarsViewModel(
         _addFotoStatud.value = AddFotoStatus.NORMAL
     }
 
-    private suspend fun descargarVehiculos(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarVehiculos(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerVehiculos(
             lastSincro,
             sesion?.getTokenBearer()!!

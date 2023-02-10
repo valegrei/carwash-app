@@ -139,6 +139,14 @@
         <item name="fontFamily">@font/opensans_regular</item>
     </style>
 
+    <style name="ThemeOverlay.CarwashApp.Checkbox" parent="">
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorPrimary">@color/green_light</item>
+        <item name="colorSurface">@color/green_light</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="fontFamily">@font/opensans_regular</item>
+    </style>
+
     <style name="ThemeOverlay.CarwashApp.Button" parent="">
         <item name="colorPrimary">@color/green_light</item>
         <item name="colorOnPrimary">@color/white</item>

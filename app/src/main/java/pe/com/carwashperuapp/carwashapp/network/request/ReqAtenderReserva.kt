@@ -7,4 +7,5 @@ import pe.com.carwashperuapp.carwashapp.model.ServicioReserva
 @JsonClass(generateAdapter = true)
 class ReqAtenderReserva(
     @Json(name = "servicios") val servicios: List<ServicioReserva>,
+    @Json(name = "estadoAtencion") val estadoAtencion: Int,
 )

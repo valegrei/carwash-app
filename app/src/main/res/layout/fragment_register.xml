@@ -171,11 +171,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
+                android:theme="@style/ThemeOverlay.CarwashApp.Checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:checked="@{viewModel.isDistrib()}"
-                android:fontFamily="@font/opensans_regular"
                 android:onClick="@{() -> viewModel.setIsDistrib(!viewModel.isDistrib)}"
                 android:text="@string/register_check_dis"
                 android:textColor="@color/white" />

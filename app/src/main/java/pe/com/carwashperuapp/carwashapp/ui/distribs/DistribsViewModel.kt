@@ -67,7 +67,7 @@ class DistribsViewModel(
         }
     }
 
-    private suspend fun descargarDistribuidores(sesion: Sesion?, lastSincro: Date){
+    private suspend fun descargarDistribuidores(sesion: Sesion?, lastSincro: String?){
         val res = Api.retrofitService.obtenerUsuarios(lastSincro,sesion?.getTokenBearer()!!)
         val usuarios = res.data.usuarios
         if(usuarios.isNotEmpty()){

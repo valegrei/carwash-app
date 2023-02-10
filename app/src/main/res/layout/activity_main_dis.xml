@@ -52,6 +52,7 @@
                         app:srcCompat="@drawable/logo" />
 
                     <ImageView
+                        android:foreground="@drawable/banner_gradient"
                         android:id="@+id/img_banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

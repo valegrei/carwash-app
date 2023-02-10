@@ -33,6 +33,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.cliente.nombreCompleto}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -41,6 +42,7 @@
                     tools:text="Víctor Augusto Alegre Ibáñez" />
 
                 <TextView
+                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.local.direccion}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,6 +51,7 @@
                     tools:text="1413, Silver Street, Hedferenson" />
 
                 <TextView
+                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.vehiculo.nombreLinea()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,6 +60,7 @@
                     tools:text="Hyundai Tucson 2020 - BCU 312" />
 
                 <TextView
+                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.fechaHoraIni()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

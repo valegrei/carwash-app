@@ -42,5 +42,4 @@ class ServicioReservaDetalle(
         ServicioEstado.ANULADO.id -> ServicioEstado.ANULADO.nombre
         else -> ""
     }
-
 }

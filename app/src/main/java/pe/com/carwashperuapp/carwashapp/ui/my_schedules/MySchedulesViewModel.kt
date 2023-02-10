@@ -251,7 +251,7 @@ class MySchedulesViewModel(
         }
     }
 
-    private suspend fun descargarHorarioConfigs(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarHorarioConfigs(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerHorarioConfigs(
             lastSincro,
             sesion?.getTokenBearer()!!
@@ -427,7 +427,7 @@ class MySchedulesViewModel(
         _local.value = local
     }
 
-    private suspend fun descargarDirecciones(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarDirecciones(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerDirecciones(
             lastSincro,
             sesion?.getTokenBearer()!!

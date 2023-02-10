@@ -203,7 +203,7 @@ class MyPlacesViewModel(
         }
     }
 
-    private suspend fun descargarDirecciones(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarDirecciones(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerDirecciones(
             lastSincro,
             sesion?.getTokenBearer()!!

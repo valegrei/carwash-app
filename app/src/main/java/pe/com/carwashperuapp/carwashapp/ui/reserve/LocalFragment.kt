@@ -3,8 +3,8 @@ package pe.com.carwashperuapp.carwashapp.ui.reserve
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -60,7 +60,11 @@ class LocalFragment : Fragment(), MenuProvider {
 
         viewModel.apply {
             goStatus.observe(viewLifecycleOwner) {
-                if (it == GoStatus.GO_CONFIRM) goConfirmarReserva()
+                when (it) {
+                    GoStatus.SHOW_COMPLETAR -> mostrarCompletarDatos()
+                    GoStatus.GO_CONFIRM -> goConfirmarReserva()
+                    else -> {}
+                }
             }
             selectedLocal.observe(viewLifecycleOwner) {
                 setTitle(it.distrib?.razonSocial)
@@ -95,7 +99,7 @@ class LocalFragment : Fragment(), MenuProvider {
 
     fun reservar() {
         viewModel.seleccionadosServicios()
-        viewModel.reservar()
+        viewModel.completarOReservar()
     }
 
     fun mostrarBotonReserva() {
@@ -143,9 +147,9 @@ class LocalFragment : Fragment(), MenuProvider {
         viewModel.guardarFavorito()
     }
 
-    private var menuAddFav: MenuItem?=null
-    private var menuDelFav: MenuItem?=null
-    private var menuCall: MenuItem?=null
+    private var menuAddFav: MenuItem? = null
+    private var menuDelFav: MenuItem? = null
+    private var menuCall: MenuItem? = null
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.local_menu, menu)
         menuAddFav = menu.findItem(R.id.action_add_fav)
@@ -218,5 +222,20 @@ class LocalFragment : Fragment(), MenuProvider {
             intent.data = Uri.parse("tel:$nroCel")
             startActivity(intent)
         }
+    }
+
+    private fun mostrarCompletarDatos() {
+        viewModel.clearGoStatus()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.reserve_completar)
+            .setMessage(R.string.reserve_completar_msg)
+            .setCancelable(true)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                goDatos()
+            }.show()
+    }
+
+    private fun goDatos() {
+        findNavController().navigate(R.id.action_localFragment_to_navigation_account)
     }
 }

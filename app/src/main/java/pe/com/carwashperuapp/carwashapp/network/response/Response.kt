@@ -13,5 +13,5 @@ open class Response(
     @Json(name = "message")
     val message: String,
     @Json(name = "timeStamp")
-    val timeStamp: Date,
+    val timeStamp: String,
 )

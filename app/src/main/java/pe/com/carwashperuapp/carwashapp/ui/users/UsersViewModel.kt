@@ -73,7 +73,7 @@ class UsersViewModel(
         }
     }
 
-    private suspend fun descargarUsuarios(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarUsuarios(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerUsuarios(lastSincro, sesion?.getTokenBearer()!!)
         val usuarios = res.data.usuarios
         if (usuarios.isNotEmpty()) {

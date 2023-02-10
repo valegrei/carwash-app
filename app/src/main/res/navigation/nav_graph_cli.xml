@@ -11,9 +11,6 @@
         android:label="@string/menu_reserve"
         tools:layout="@layout/fragment_search_local">
         <action
-            android:id="@+id/action_nav_reserve_to_navigation_account"
-            app:destination="@id/navigation_account" />
-        <action
             android:id="@+id/action_nav_reserve_to_localFragment"
             app:destination="@id/localFragment" />
     </fragment>
@@ -117,9 +114,6 @@
         android:label="@string/menu_favoritos"
         tools:layout="@layout/fragment_favorites" >
         <action
-            android:id="@+id/action_nav_favoritos_to_navigation_account"
-            app:destination="@id/navigation_account" />
-        <action
             android:id="@+id/action_nav_favoritos_to_localFragment"
             app:destination="@id/localFragment" />
     </fragment>
@@ -131,6 +125,9 @@
         <action
             android:id="@+id/action_localFragment_to_reserveResumenFragment"
             app:destination="@id/reserveResumenFragment" />
+        <action
+            android:id="@+id/action_localFragment_to_navigation_account"
+            app:destination="@id/navigation_account" />
     </fragment>
 
 </navigation>

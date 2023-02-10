@@ -20,9 +20,9 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-//const val BASE_URL = "http://192.168.100.9:3000"
+const val BASE_URL = "http://192.168.100.9:3000"
 //const val BASE_URL = "http://192.168.100.9"
-const val BASE_URL = "https://www.carwashperuapp.com"
+//const val BASE_URL = "https://www.carwashperuapp.com"
 
 object BigDecimalAdapter {
     @FromJson
@@ -73,7 +73,7 @@ interface ApiService {
     /* Usuarios */
     @GET("api/admin/usuarios")
     suspend fun obtenerUsuarios(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespUsuarios
 
@@ -130,7 +130,7 @@ interface ApiService {
 
     @GET("api/admin/anuncios")
     suspend fun obtenerAnuncios(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespAnuncio
 
@@ -177,7 +177,7 @@ interface ApiService {
 
     @GET("api/admin/parametros")
     suspend fun obtenerParametros(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespParams
 
@@ -185,7 +185,7 @@ interface ApiService {
 
     @GET("api/distrib/servicio")
     suspend fun obtenerServicios(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespServicios
 
@@ -203,7 +203,7 @@ interface ApiService {
 
     @GET("api/usuarios/direccion")
     suspend fun obtenerDirecciones(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespDireccion
 
@@ -228,7 +228,7 @@ interface ApiService {
 
     @GET("api/distrib/horarioConfig")
     suspend fun obtenerHorarioConfigs(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespHorarioConfig
 
@@ -256,15 +256,17 @@ interface ApiService {
         @Query("fecha") fecha: String?,
         @Header("Authorization") authToken: String
     ): RespReservas
+
     @PUT("api/distrib/reserva/{idReserva}")
     suspend fun atenderReserva(
         @Path("idReserva") idReserva: Int,
         @Body reqAtenderReserva: ReqAtenderReserva,
         @Header("Authorization") authToken: String
     ): Response
+
     @GET("api/clientes/vehiculos")
     suspend fun obtenerVehiculos(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespVehiculos
 
@@ -349,9 +351,10 @@ interface ApiService {
         @Path("idFavorito") idFavorito: Int,
         @Header("Authorization") authToken: String
     ): Response
+
     @GET("api/clientes/anuncios")
     suspend fun obtenerAnunciosCli(
-        @Query("lastSincro") lastSincro: Date,
+        @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespAnuncio
 }

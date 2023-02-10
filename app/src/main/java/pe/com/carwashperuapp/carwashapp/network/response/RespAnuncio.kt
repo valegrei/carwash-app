@@ -10,7 +10,7 @@ class RespAnuncio(
     statusCode: Int,
     httpStatus: String,
     message: String,
-    timeStamp: Date,
+    timeStamp: String,
     @Json(name = "data")
     val data: Data
 ) : Response(statusCode, httpStatus, message, timeStamp) {

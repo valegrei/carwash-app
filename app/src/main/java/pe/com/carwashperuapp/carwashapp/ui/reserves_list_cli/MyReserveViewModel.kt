@@ -5,9 +5,11 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.model.Favorito
 import pe.com.carwashperuapp.carwashapp.model.Reserva
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
+import pe.com.carwashperuapp.carwashapp.network.request.ReqFavorito
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDB
 import java.util.*
 
@@ -37,10 +39,15 @@ class MyReserveViewModel(
     val selectedReserva: LiveData<Reserva> = _selectedReserva
     private var _selectedFecha = MutableLiveData<Long?>()
     val selectedFecha: LiveData<Long?> = _selectedFecha
+    private var _favorito = MutableLiveData<Favorito?>()
+    val favorito: LiveData<Favorito?> = _favorito
+    private var _mostrarFavorito = MutableLiveData<Boolean>()
+    val mostrarFavorito: LiveData<Boolean> = _mostrarFavorito
 
     fun verReserva(reserva: Reserva) {
         _errMsg.value = ""
         _selectedReserva.value = reserva
+        cargarFavorito()
         _editStatus.value = EditStatus.VIEW
         _mostrarEditar.value = true
     }
@@ -91,6 +98,68 @@ class MyReserveViewModel(
             _editStatus.value = EditStatus.EXIT
         }
     }
+
+    private fun cargarFavorito() {
+        val favs = selectedReserva.value?.local?.favoritos
+        if (favs.isNullOrEmpty()) {
+            _favorito.value = null
+            _mostrarFavorito.value = false
+        } else {
+            _favorito.value = favs[0]
+            _mostrarFavorito.value = true
+        }
+    }
+
+    fun marcarFavorito() {
+        _mostrarFavorito.value = true
+    }
+
+    fun desmarcarFavorito() {
+        _mostrarFavorito.value = false
+    }
+    fun guardarFavorito() {
+        if (mostrarFavorito.value!!) {
+            // revisar si antes no estaba marcado
+            if (favorito.value == null) agregarFavorito()
+        } else {
+            // revisar si antes estaba marcado
+            if (favorito.value != null) eliminarFavorito()
+        }
+    }
+
+    private fun eliminarFavorito() {
+        viewModelScope.launch(exceptionHandler) {
+            val sesion = sesionData.getCurrentSesion()
+            try {
+                Api.retrofitService.eliminarFavorito(
+                    favorito.value?.id!!,
+                    sesion?.getTokenBearer()!!,
+                )
+                _favorito.value = null
+                _mostrarFavorito.value = false
+            } catch (_: Exception) {
+                _mostrarFavorito.value = true
+            }
+        }
+    }
+
+    private fun agregarFavorito() {
+        viewModelScope.launch(exceptionHandler) {
+            val sesion = sesionData.getCurrentSesion()
+            try {
+                val res = Api.retrofitService.agregarFavorito(
+                    ReqFavorito(selectedReserva.value?.local?.id!!),
+                    sesion?.getTokenBearer()!!,
+                )
+                _favorito.value = res.data.favorito
+                _mostrarFavorito.value = true
+            } catch (e: Exception) {
+                _favorito.value = null
+                _mostrarFavorito.value = false
+            }
+        }
+    }
+
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
         Log.e(TAG, e.message, e)

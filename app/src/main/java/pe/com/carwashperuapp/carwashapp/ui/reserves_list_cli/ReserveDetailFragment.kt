@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveDetalleBinding
-import pe.com.carwashperuapp.carwashapp.ui.reserve.ServiceResumenListAdapter
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
 import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaHoraDB
 import java.util.*
@@ -63,11 +62,14 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
                     else -> {}
                 }
             }
-            editStatus.observe(viewLifecycleOwner){
-                when(it){
+            editStatus.observe(viewLifecycleOwner) {
+                when (it) {
                     EditStatus.EXIT -> exit()
                     else -> {}
                 }
+            }
+            mostrarFavorito.observe(viewLifecycleOwner) {
+                mostrarFav(it)
             }
         }
 
@@ -111,12 +113,32 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.guardarFavorito()
+    }
+
     private var deleteItem: MenuItem? = null
+    private var menuAddFav: MenuItem? = null
+    private var menuDelFav: MenuItem? = null
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.delete_item_menu, menu)
+        menuInflater.inflate(R.menu.reserva_cli_detail_menu, menu)
         deleteItem = menu.findItem(R.id.action_delete)
+        menuAddFav = menu.findItem(R.id.action_add_fav)
+        menuDelFav = menu.findItem(R.id.action_del_fav)
+        mostrarFav(viewModel.mostrarFavorito.value!!)
         ocultarBoton()
+    }
+
+    private fun mostrarFav(mostrar: Boolean) {
+        if (mostrar) {
+            menuDelFav?.isVisible = true
+            menuAddFav?.isVisible = false
+        } else {
+            menuDelFav?.isVisible = false
+            menuAddFav?.isVisible = true
+        }
     }
 
     private fun ocultarBoton() {
@@ -126,10 +148,21 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return if (menuItem.itemId == R.id.action_delete) {
-            anularReserva()
-            true
-        } else false
+        return when (menuItem.itemId) {
+            R.id.action_add_fav -> {
+                viewModel.marcarFavorito()
+                true
+            }
+            R.id.action_del_fav -> {
+                viewModel.desmarcarFavorito()
+                true
+            }
+            R.id.action_delete -> {
+                anularReserva()
+                true
+            }
+            else -> false
+        }
     }
 
     private fun anularReserva() {

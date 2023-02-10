@@ -82,7 +82,7 @@
                     style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.completarOReservar()}"
+                    android:onClick="@{()->viewModel.goLocal()}"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginEnd="@dimen/small_margin"
                     android:text="@string/btnsh_reserve"

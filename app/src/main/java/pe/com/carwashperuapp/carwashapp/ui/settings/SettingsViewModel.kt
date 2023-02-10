@@ -97,7 +97,7 @@ class SettingsViewModel(
         }
     }
 
-    private suspend fun descargarParams(sesion: Sesion?, lastSincro: Date) {
+    private suspend fun descargarParams(sesion: Sesion?, lastSincro: String?) {
         val res = Api.retrofitService.obtenerParametros(lastSincro, sesion?.getTokenBearer()!!)
         val parametros = res.data.parametros
         if (parametros.isNotEmpty()) {

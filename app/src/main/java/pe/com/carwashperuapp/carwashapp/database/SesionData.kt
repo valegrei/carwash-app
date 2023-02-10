@@ -51,13 +51,13 @@ class SesionData(context: Context) {
             //Nueva version de DB, se tuvo que limpiar, por lo tanto reiniciar sincronizacion
             val editor = pref.edit()
             editor.putInt(DB_VERSION_NUM, DB_VERSION)
-            editor.putLong(SINCRO_USUARIOS, 0)
-            editor.putLong(SINCRO_ANUNCIOS, 0)
-            editor.putLong(SINCRO_PARAMETROS, 0)
-            editor.putLong(SINCRO_SERVICIOS, 0)
-            editor.putLong(SINCRO_DIRECCIONES, 0)
-            editor.putLong(SINCRO_HORARIO_CONFIG, 0)
-            editor.putLong(SINCRO_VEHICULOS, 0)
+            editor.putString(SINCRO_USUARIOS, null)
+            editor.putString(SINCRO_ANUNCIOS, null)
+            editor.putString(SINCRO_PARAMETROS, null)
+            editor.putString(SINCRO_SERVICIOS, null)
+            editor.putString(SINCRO_DIRECCIONES, null)
+            editor.putString(SINCRO_HORARIO_CONFIG, null)
+            editor.putString(SINCRO_VEHICULOS, null)
             editor.apply()
         }
     }
@@ -116,114 +116,114 @@ class SesionData(context: Context) {
 
     fun clearLastSincroUsuarios() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_USUARIOS, 0)
+        edit.putString(SINCRO_USUARIOS, null)
         edit.apply()
     }
 
-    fun saveLastSincroUsuarios(lastSincro: Date) {
+    fun saveLastSincroUsuarios(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_USUARIOS, lastSincro.time)
+        edit.putString(SINCRO_USUARIOS, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroUsuarios(): Date {
-        return Date(pref.getLong(SINCRO_USUARIOS, 0))
+    fun getLastSincroUsuarios(): String? {
+        return pref.getString(SINCRO_USUARIOS, null)
     }
 
     fun clearLastSincroAnuncios() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_ANUNCIOS, 0)
+        edit.putString(SINCRO_ANUNCIOS, null)
         edit.apply()
     }
 
-    fun saveLastSincroAnuncios(lastSincro: Date) {
+    fun saveLastSincroAnuncios(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_ANUNCIOS, lastSincro.time)
+        edit.putString(SINCRO_ANUNCIOS, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroAnuncios(): Date {
-        return Date(pref.getLong(SINCRO_ANUNCIOS, 0))
+    fun getLastSincroAnuncios(): String? {
+        return pref.getString(SINCRO_ANUNCIOS, null)
     }
 
     fun clearLastSincroParametros() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_PARAMETROS, 0)
+        edit.putString(SINCRO_PARAMETROS, null)
         edit.apply()
     }
 
-    fun saveLastSincroParametros(lastSincro: Date) {
+    fun saveLastSincroParametros(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_PARAMETROS, lastSincro.time)
+        edit.putString(SINCRO_PARAMETROS, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroParametros(): Date {
-        return Date(pref.getLong(SINCRO_PARAMETROS, 0))
+    fun getLastSincroParametros(): String? {
+        return pref.getString(SINCRO_PARAMETROS, null)
     }
 
 
     fun clearLastSincroServicios() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_SERVICIOS, 0)
+        edit.putString(SINCRO_SERVICIOS, null)
         edit.apply()
     }
 
-    fun saveLastSincroServicios(lastSincro: Date) {
+    fun saveLastSincroServicios(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_SERVICIOS, lastSincro.time)
+        edit.putString(SINCRO_SERVICIOS, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroServicios(): Date {
-        return Date(pref.getLong(SINCRO_SERVICIOS, 0))
+    fun getLastSincroServicios(): String? {
+        return pref.getString(SINCRO_SERVICIOS, null)
     }
 
     fun clearLastSincroDirecciones() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_DIRECCIONES, 0)
+        edit.putString(SINCRO_DIRECCIONES, null)
         edit.apply()
     }
 
-    fun saveLastSincroDirecciones(lastSincro: Date) {
+    fun saveLastSincroDirecciones(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_DIRECCIONES, lastSincro.time)
+        edit.putString(SINCRO_DIRECCIONES, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroDirecciones(): Date {
-        return Date(pref.getLong(SINCRO_DIRECCIONES, 0))
+    fun getLastSincroDirecciones(): String? {
+        return pref.getString(SINCRO_DIRECCIONES, null)
     }
 
     fun clearLastSincroHorarioConfigs() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_HORARIO_CONFIG, 0)
+        edit.putString(SINCRO_HORARIO_CONFIG, null)
         edit.apply()
     }
 
-    fun saveLastSincroHorarioConfigs(lastSincro: Date) {
+    fun saveLastSincroHorarioConfigs(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_HORARIO_CONFIG, lastSincro.time)
+        edit.putString(SINCRO_HORARIO_CONFIG, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroHorarioConfigs(): Date {
-        return Date(pref.getLong(SINCRO_HORARIO_CONFIG, 0))
+    fun getLastSincroHorarioConfigs(): String? {
+        return pref.getString(SINCRO_HORARIO_CONFIG, null)
     }
 
     fun clearLastSincroVehiculos() {
         val edit = pref.edit()
-        edit.putLong(SINCRO_VEHICULOS, 0)
+        edit.putString(SINCRO_VEHICULOS, null)
         edit.apply()
     }
 
-    fun saveLastSincroVehiculos(lastSincro: Date) {
+    fun saveLastSincroVehiculos(lastSincro: String?) {
         val edit = pref.edit()
-        edit.putLong(SINCRO_VEHICULOS, lastSincro.time)
+        edit.putString(SINCRO_VEHICULOS, lastSincro)
         edit.apply()
     }
 
-    fun getLastSincroVehiculos(): Date {
-        return Date(pref.getLong(SINCRO_VEHICULOS, 0))
+    fun getLastSincroVehiculos(): String? {
+        return pref.getString(SINCRO_VEHICULOS, null)
     }
 }

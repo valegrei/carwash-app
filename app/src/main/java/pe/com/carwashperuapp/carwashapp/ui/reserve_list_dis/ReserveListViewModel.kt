@@ -6,6 +6,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.model.Reserva
+import pe.com.carwashperuapp.carwashapp.model.ReservaEstado
+import pe.com.carwashperuapp.carwashapp.model.ServicioEstado
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
 import pe.com.carwashperuapp.carwashapp.network.request.ReqAtenderReserva
@@ -83,13 +85,29 @@ class ReserveListViewModel(
         _errMsg.value = null
     }
 
+    private fun calcularEstadoAtencion(): Int {
+        val detalleServs = selectedReserva.value?.servicioReserva!!
+        var cantAtendidosAnulados = 0
+        detalleServs.forEach {
+            cantAtendidosAnulados += if (it.detalle?.estado != ServicioEstado.NO_ATENDIDO.id) 1 else 0
+        }
+        if(cantAtendidosAnulados == 0)
+            return ReservaEstado.NO_ATENDIDO.id
+        else if(cantAtendidosAnulados == detalleServs.size)
+            return ReservaEstado.ATENDIDO.id
+        else
+            return ReservaEstado.ATENDIENDO.id
+    }
+
     fun editarReserva() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val idReserva = selectedReserva.value?.id!!
+            val estadoAtencion = calcularEstadoAtencion()
             val reqAtenderReserva = ReqAtenderReserva(
-                selectedReserva.value?.servicioReserva!!
+                selectedReserva.value?.servicioReserva!!,
+                estadoAtencion
             )
             Api.retrofitService.atenderReserva(
                 idReserva,
