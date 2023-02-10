@@ -17,10 +17,14 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.tabs.TabLayoutMediator
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
+import pe.com.carwashperuapp.carwashapp.MainViewModel
+import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentLocalReservaBinding
 import pe.com.carwashperuapp.carwashapp.ui.bindImageBanner
+import pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModel
+import pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModelFactory
 
 
 class LocalFragment : Fragment(), MenuProvider {
@@ -35,6 +39,15 @@ class LocalFragment : Fragment(), MenuProvider {
             (activity?.application as CarwashApplication).database.vehiculoDao(),
         )
     }
+    private val vehiculosVM: MyCarsViewModel by activityViewModels {
+        MyCarsViewModelFactory(
+            SesionData(requireContext()),
+            (activity?.application as CarwashApplication).database.vehiculoDao(),
+        )
+    }
+    private val mainViewModel: MainViewModel by activityViewModels {
+        MainViewModelFactory(SesionData(requireContext()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,32 +59,26 @@ class LocalFragment : Fragment(), MenuProvider {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.apply {
             viewModel = this@LocalFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        //Configura el menu del fragment
-        (requireActivity() as MenuHost).addMenuProvider(
-            this,
-            viewLifecycleOwner,
-            Lifecycle.State.RESUMED
-        )
 
         viewModel.apply {
-            goStatus.observe(viewLifecycleOwner) {
-                when (it) {
-                    GoStatus.SHOW_COMPLETAR -> mostrarCompletarDatos()
-                    GoStatus.GO_CONFIRM -> goConfirmarReserva()
-                    else -> {}
-                }
-            }
             selectedLocal.observe(viewLifecycleOwner) {
                 setTitle(it.distrib?.razonSocial)
                 bindImageBanner(
                     requireActivity().findViewById(R.id.img_banner),
                     it.distrib?.getURLFoto()
                 )
+            }
+            goStatus.observe(viewLifecycleOwner) {
+                when (it) {
+                    GoStatus.SHOW_COMPLETAR -> mostrarCompletarDatos()
+                    GoStatus.SHOW_VEHICULOS -> goVehiculos()
+                    GoStatus.GO_CONFIRM -> goConfirmarReserva()
+                    else -> {}
+                }
             }
             mostrarFavorito.observe(viewLifecycleOwner) {
                 mostrarFav(it)
@@ -95,6 +102,12 @@ class LocalFragment : Fragment(), MenuProvider {
                 }
             }
         })
+        //Configura el menu del fragment
+        (requireActivity() as MenuHost).addMenuProvider(
+            this,
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     fun reservar() {
@@ -134,6 +147,12 @@ class LocalFragment : Fragment(), MenuProvider {
     private fun goConfirmarReserva() {
         viewModel.clearGoStatus()
         findNavController().navigate(R.id.action_localFragment_to_reserveResumenFragment)
+    }
+
+    private fun goVehiculos(){
+        viewModel.clearGoStatus()
+        vehiculosVM.nuevoVehiculo()
+        findNavController().navigate(R.id.action_localFragment_to_nav_car_detail)
     }
 
     private fun setTitle(title: String?) {
@@ -236,6 +255,7 @@ class LocalFragment : Fragment(), MenuProvider {
     }
 
     private fun goDatos() {
-        findNavController().navigate(R.id.action_localFragment_to_navigation_account)
+        mainViewModel.cargarCamposEdit()
+        findNavController().navigate(R.id.action_localFragment_to_navigation_account_edit)
     }
 }

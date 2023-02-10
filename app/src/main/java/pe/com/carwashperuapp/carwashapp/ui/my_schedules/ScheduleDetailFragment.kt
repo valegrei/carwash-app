@@ -226,7 +226,7 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
                 .setTimeFormat(TimeFormat.CLOCK_12H)
                 .setHour(viewModel.horaFin.value!!)
                 .setMinute(viewModel.minFin.value!!)
-                .setTitleText(R.string.schedules_label_start_sel)
+                .setTitleText(R.string.schedules_label_end_sel)
                 .setPositiveButtonText(R.string.accept)
                 .setNegativeButtonText(R.string.cancel)
                 .build()

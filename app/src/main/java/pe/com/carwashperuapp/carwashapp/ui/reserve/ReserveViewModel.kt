@@ -24,7 +24,7 @@ import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
 enum class EditStatus { EXIT, EDIT, NEW, VIEW }
-enum class GoStatus { GO_ADD, GO_CONFIRM, GO_LIST, SHOW_COMPLETAR, NORMAL }
+enum class GoStatus { GO_ADD, GO_CONFIRM, GO_LIST, SHOW_COMPLETAR, SHOW_VEHICULOS, NORMAL }
 class ReserveViewModel(
     private val sesionData: SesionData,
     private val direccionDao: DireccionDao,
@@ -107,12 +107,15 @@ class ReserveViewModel(
         _goStatus.value = GoStatus.SHOW_COMPLETAR
     }
 
+    fun mostrarAgregarVehiculos() {
+        _goStatus.value = GoStatus.SHOW_VEHICULOS
+    }
+
     fun clearErr() {
         _errMsg.value = ""
     }
 
     private fun nuevaReserva() {
-        loadVehiculos()
         cargarFavorito()
         clearErr()
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
@@ -131,15 +134,15 @@ class ReserveViewModel(
         _mostrarEditar.value = true
     }
 
-    private fun seleccionarHorarioLocal(){
+    private fun seleccionarHorarioLocal() {
         //Por dia de semana
         val fecha = _selectedFecha.value!!
         val calendar = Calendar.getInstance()
         val horarioLocalList = _selectedLocal.value?.horarios!!
         calendar.timeInMillis = fecha
-        var selHorLoc : HorarioLocal?=null
+        var selHorLoc: HorarioLocal? = null
         horarioLocalList.forEach {
-            val esElDia = when(calendar.get(Calendar.DAY_OF_WEEK)){
+            val esElDia = when (calendar.get(Calendar.DAY_OF_WEEK)) {
                 1 -> it.lunes
                 2 -> it.martes
                 3 -> it.miercoles
@@ -149,15 +152,15 @@ class ReserveViewModel(
                 7 -> it.domingo
                 else -> false
             }
-            if(esElDia){
+            if (esElDia) {
                 selHorLoc = it
                 return@forEach
             }
         }
         _selectedHorarioLocal.value = selHorLoc
-        if(selHorLoc!=null){
+        if (selHorLoc != null) {
             _selectedTurno.value = 0
-        }else{
+        } else {
             _selectedTurno.value = null
         }
     }
@@ -288,27 +291,53 @@ class ReserveViewModel(
         return direccionDao.obtenerDirecciones(sesion.usuario.id!!)
     }
 
-    private fun loadVehiculos() {
-        viewModelScope.launch {
-            val sesion = sesionData.getCurrentSesion()!!
-            var vehiculos = vehiculoDao.obtenerVehiculos2(sesion.usuario.id!!)
-            if (vehiculos.isEmpty()) {
-                vehiculos = listOf(
-                    Vehiculo(
-                        id = 0,
-                        marca = "No hay vehículos registrados.",
-                        modelo = "",
-                        year = 0,
-                        placa = "",
-                        idCliente = 0,
-                        estado = false,
-                        path = ""
-                    )
+    fun loadVehiculos(): Flow<List<Vehiculo>> {
+        val sesion = sesionData.getCurrentSesion()!!
+        return vehiculoDao.obtenerVehiculos(sesion.usuario.id!!)
+    }
+
+    fun loadVehiculos2(vehiculos: List<Vehiculo>) {
+        var lista = mutableListOf<Vehiculo>()
+        if (vehiculos.isEmpty()) {
+            lista += listOf(
+                Vehiculo(
+                    id = 0,
+                    marca = "",
+                    modelo = "",
+                    year = 0,
+                    placa = "",
+                    idCliente = 0,
+                    estado = false,
+                    path = ""
+                ),
+                Vehiculo(
+                    id = -1,
+                    marca = "",
+                    modelo = "",
+                    year = 0,
+                    placa = "",
+                    idCliente = 0,
+                    estado = false,
+                    path = ""
                 )
-            }
-            _vehiculos.value = vehiculos
-            _selectedVehiculo.value = this@ReserveViewModel.vehiculos.value?.get(0)
+            )
+        } else {
+            lista += vehiculos + listOf(
+                Vehiculo(
+                    id = -1,
+                    marca = "",
+                    modelo = "",
+                    year = 0,
+                    placa = "",
+                    idCliente = 0,
+                    estado = false,
+                    path = ""
+                )
+            )
         }
+        _vehiculos.value = lista
+        _selectedVehiculo.value = this@ReserveViewModel.vehiculos.value?.get(0)
+
     }
 
     fun seleccionarVehiculo(vehiculo: Vehiculo) {
@@ -328,14 +357,16 @@ class ReserveViewModel(
     fun clearLocales() {
         _locales.value = listOf()
     }
+
     private fun buscarHorarios() {
-        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones?:0
-        if(nroAtenciones>0){
+        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones ?: 0
+        if (nroAtenciones > 0) {
             buscarHorarios2()
-        }else{
+        } else {
             setHorarios(listOf())
         }
     }
+
     private fun buscarHorarios2() {
         viewModelScope.launch {
             _status.value = Status.LOADING
@@ -356,9 +387,9 @@ class ReserveViewModel(
     }
 
     private fun setHorarios(horarios: List<Horario>) {
-        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones?:0
+        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones ?: 0
         val nuevosHorarios = Array<MutableList<Horario>>(nroAtenciones) { mutableListOf() }
-        if(nroAtenciones>0) {
+        if (nroAtenciones > 0) {
             for (horario in horarios) {
                 nuevosHorarios[horario.nro].add(horario)
             }
@@ -374,7 +405,7 @@ class ReserveViewModel(
 
     private fun selectHorariosByTurno() {
         val turno = selectedTurno.value
-        if (_horarios2.value.isNullOrEmpty() || turno==null) {
+        if (_horarios2.value.isNullOrEmpty() || turno == null) {
             _horarios.value = listOf()
         } else {
             _horarios.value = _horarios2.value?.get(turno)

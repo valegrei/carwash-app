@@ -19,7 +19,11 @@ data class Vehiculo(
     @Json(name = "estado") @ColumnInfo(name = "estado") val estado: Boolean?,
     @Json(name = "idCliente") @ColumnInfo(name = "id_cliente") val idCliente: Int?,
 ){
-    override fun toString(): String = "$marca $modelo $year\n$placa"
+    override fun toString(): String = when(id){
+        -1 -> "Agregar vehículo"
+        0 -> "No hay vehículos disponibles"
+        else -> "$marca $modelo $year\n$placa"
+    }
     fun nombreLinea(): String = "$marca $modelo $year - $placa"
     fun getUrlArchivo(): String? = if(path.isNullOrEmpty()) null else "$BASE_URL$path"
     fun getYearStr(): String = year.toString()

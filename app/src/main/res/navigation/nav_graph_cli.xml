@@ -126,8 +126,11 @@
             android:id="@+id/action_localFragment_to_reserveResumenFragment"
             app:destination="@id/reserveResumenFragment" />
         <action
-            android:id="@+id/action_localFragment_to_navigation_account"
-            app:destination="@id/navigation_account" />
+            android:id="@+id/action_localFragment_to_nav_car_detail"
+            app:destination="@id/nav_car_detail" />
+        <action
+            android:id="@+id/action_localFragment_to_navigation_account_edit"
+            app:destination="@id/navigation_account_edit" />
     </fragment>
 
 </navigation>

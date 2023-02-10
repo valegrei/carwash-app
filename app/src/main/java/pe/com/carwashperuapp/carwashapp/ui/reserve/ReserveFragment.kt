@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveBinding
 import pe.com.carwashperuapp.carwashapp.model.Horario
+import pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModel
+import pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModelFactory
 
 class ReserveFragment : Fragment() {
 
@@ -41,6 +45,11 @@ class ReserveFragment : Fragment() {
             fragment = this@ReserveFragment
             viewModel = this@ReserveFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
+        }
+        lifecycle.coroutineScope.launch {
+            viewModel.loadVehiculos().collect {
+                viewModel.loadVehiculos2(it)
+            }
         }
 
         val adapter = ServiceListAdapter()
@@ -145,7 +154,13 @@ class ReserveFragment : Fragment() {
         val adapter = VehiculoAdapter(requireContext(), viewModel.vehiculos.value!!)
         AlertDialog.Builder(requireContext()).setAdapter(adapter) { _, which ->
             val seleccionado = adapter.getItem(which)
-            viewModel.seleccionarVehiculo(seleccionado!!)
+            if(seleccionado?.id==-1){
+                //ir a agregar vehiculo
+                viewModel.mostrarAgregarVehiculos()
+            }else {
+                viewModel.seleccionarVehiculo(seleccionado!!)
+            }
         }.setTitle("Seleccionar Vehículo").show()
     }
+
 }

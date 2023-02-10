@@ -194,7 +194,7 @@ class MyCarsViewModel(
                 rbImagen,
                 sesion?.getTokenBearer()!!
             )
-
+            descargarVehiculos(sesion, sesionData.getLastSincroVehiculos())
             _status.value = Status.SUCCESS
             _editStatus.value = EditStatus.EXIT
         }
