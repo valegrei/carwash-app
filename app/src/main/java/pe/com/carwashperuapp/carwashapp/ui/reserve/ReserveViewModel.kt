@@ -138,7 +138,6 @@ class ReserveViewModel(
         val horarioLocalList = _selectedLocal.value?.horarios!!
         calendar.timeInMillis = fecha
         var selHorLoc : HorarioLocal?=null
-        Log.d("ESTADO",calendar.get(Calendar.DAY_OF_WEEK).toString())
         horarioLocalList.forEach {
             val esElDia = when(calendar.get(Calendar.DAY_OF_WEEK)){
                 1 -> it.lunes
