@@ -14,10 +14,7 @@ import pe.com.carwashperuapp.carwashapp.database.direccion.Direccion
 import pe.com.carwashperuapp.carwashapp.database.direccion.DireccionDao
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.Vehiculo
 import pe.com.carwashperuapp.carwashapp.database.vehiculo.VehiculoDao
-import pe.com.carwashperuapp.carwashapp.model.Favorito
-import pe.com.carwashperuapp.carwashapp.model.Horario
-import pe.com.carwashperuapp.carwashapp.model.Local
-import pe.com.carwashperuapp.carwashapp.model.ServicioReserva
+import pe.com.carwashperuapp.carwashapp.model.*
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
 import pe.com.carwashperuapp.carwashapp.network.request.ReqFavorito
@@ -86,8 +83,10 @@ class ReserveViewModel(
     val mostrarFavorito: LiveData<Boolean> = _mostrarFavorito
     private var _selectedLatLng = MutableLiveData<LatLng?>()
     val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
-    private var _selectedTurno = MutableLiveData<Int>()
-    val selectedTurno: LiveData<Int> = _selectedTurno
+    private var _selectedHorarioLocal = MutableLiveData<HorarioLocal?>()
+    val selectedHorarioLocal: LiveData<HorarioLocal?> = _selectedHorarioLocal
+    private var _selectedTurno = MutableLiveData<Int?>()
+    val selectedTurno: LiveData<Int?> = _selectedTurno
     private var _turnoMap = MutableLiveData<Map<Int, Int>>()
     val turnoMap: LiveData<Map<Int, Int>> = _turnoMap
 
@@ -118,11 +117,11 @@ class ReserveViewModel(
         clearErr()
         _servicios.value = selectedLocal.value?.distrib?.servicios!!
         _selectedFecha.value = MaterialDatePicker.todayInUtcMilliseconds()
+        seleccionarHorarioLocal()
         _selectedLatLng.value = LatLng(
             selectedLocal.value?.latitud!!.toDouble(),
             selectedLocal.value?.longitud!!.toDouble()
         )
-        _selectedTurno.value = 0
         _horarios.value = listOf()
         _horarios2.value = arrayOf()
         _horariosMap.value = mapOf()
@@ -130,6 +129,38 @@ class ReserveViewModel(
         _editStatus.value = EditStatus.NEW
         _goStatus.value = GoStatus.GO_ADD
         _mostrarEditar.value = true
+    }
+
+    private fun seleccionarHorarioLocal(){
+        //Por dia de semana
+        val fecha = _selectedFecha.value!!
+        val calendar = Calendar.getInstance()
+        val horarioLocalList = _selectedLocal.value?.horarios!!
+        calendar.timeInMillis = fecha
+        var selHorLoc : HorarioLocal?=null
+        Log.d("ESTADO",calendar.get(Calendar.DAY_OF_WEEK).toString())
+        horarioLocalList.forEach {
+            val esElDia = when(calendar.get(Calendar.DAY_OF_WEEK)){
+                1 -> it.lunes
+                2 -> it.martes
+                3 -> it.miercoles
+                4 -> it.jueves
+                5 -> it.viernes
+                6 -> it.sabado
+                7 -> it.domingo
+                else -> false
+            }
+            if(esElDia){
+                selHorLoc = it
+                return@forEach
+            }
+        }
+        _selectedHorarioLocal.value = selHorLoc
+        if(selHorLoc!=null){
+            _selectedTurno.value = 0
+        }else{
+            _selectedTurno.value = null
+        }
     }
 
     private fun cargarFavorito() {
@@ -287,6 +318,7 @@ class ReserveViewModel(
 
     fun seleccionarFecha(milisUTC: Long) {
         _selectedFecha.value = milisUTC
+        seleccionarHorarioLocal()
         buscarHorarios()
     }
 
@@ -297,8 +329,15 @@ class ReserveViewModel(
     fun clearLocales() {
         _locales.value = listOf()
     }
-
     private fun buscarHorarios() {
+        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones?:0
+        if(nroAtenciones>0){
+            buscarHorarios2()
+        }else{
+            setHorarios(listOf())
+        }
+    }
+    private fun buscarHorarios2() {
         viewModelScope.launch {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
@@ -318,10 +357,12 @@ class ReserveViewModel(
     }
 
     private fun setHorarios(horarios: List<Horario>) {
-        val nroAtenciones = selectedLocal.value?.horario?.nroAtenciones!!
+        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones?:0
         val nuevosHorarios = Array<MutableList<Horario>>(nroAtenciones) { mutableListOf() }
-        for (horario in horarios) {
-            nuevosHorarios[horario.nro].add(horario)
+        if(nroAtenciones>0) {
+            for (horario in horarios) {
+                nuevosHorarios[horario.nro].add(horario)
+            }
         }
         _horarios2.value = nuevosHorarios
         selectHorariosByTurno()
@@ -333,8 +374,8 @@ class ReserveViewModel(
     }
 
     private fun selectHorariosByTurno() {
-        val turno = selectedTurno.value!!
-        if (_horarios2.value.isNullOrEmpty()) {
+        val turno = selectedTurno.value
+        if (_horarios2.value.isNullOrEmpty() || turno==null) {
             _horarios.value = listOf()
         } else {
             _horarios.value = _horarios2.value?.get(turno)

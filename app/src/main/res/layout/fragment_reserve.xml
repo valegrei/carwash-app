@@ -90,6 +90,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/reserve_turno"
                     android:textAppearance="@style/TextAppearance.CarwashApp.TitleMedium" />
+                <TextView
+                    android:id="@+id/tv_no_turnos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/reserve_select_turno"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"/>
 
 
                 <HorizontalScrollView

@@ -55,8 +55,8 @@ class ReserveFragment : Fragment() {
             viewModel.selectTurno(seleccionado)
         }
         viewModel.apply {
-            selectedLocal.observe(viewLifecycleOwner){
-                mostrarChipsTurno(it.horario?.nroAtenciones!!)
+            selectedHorarioLocal.observe(viewLifecycleOwner){
+                mostrarChipsTurno(it?.nroAtenciones)
             }
             servicios.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
@@ -70,18 +70,25 @@ class ReserveFragment : Fragment() {
         }
     }
 
-    private fun mostrarChipsTurno(nroAtenciones: Int) {
-        binding.chgHorarios.removeAllViews()
+    private fun mostrarChipsTurno(nroAtenciones: Int?) {
+        binding.chgTurnos.removeAllViews()
         val map = mutableMapOf<Int, Int>()
-        for (i in 0 until nroAtenciones){
-            val chip= Chip(requireContext())
-            chip.text= "Turno ${i+1}"
-            chip.isCheckable = true
-            binding.chgTurnos.addView(chip)
-            map[chip.id] = i
+        if((nroAtenciones ?: 0) > 0) {
+            for (i in 0 until nroAtenciones!!) {
+                val chip = Chip(requireContext())
+                chip.text = "${i + 1}"
+                chip.isCheckable = true
+                binding.chgTurnos.addView(chip)
+                map[chip.id] = i
+            }
+            binding.tvNoTurnos.visibility = View.GONE
+            binding.chgTurnos.visibility = View.VISIBLE
+            binding.chgTurnos.check(map.keys.toList()[0])   //selecciona el primero
+        }else{
+            binding.tvNoTurnos.visibility = View.VISIBLE
+            binding.chgTurnos.visibility = View.GONE
         }
         viewModel.setTurnoMap(map)
-        binding.chgTurnos.check(map.keys.toList()[0])   //selecciona el primero
     }
 
     private fun cargarChips(horarios: List<Horario>?) {

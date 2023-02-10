@@ -323,5 +323,6 @@
     <string name="action_navigation">Ruta a Local</string>
     <string name="action_call">Llamar</string>
     <string name="schedules_label_nro_atenciones">Nro. de atenciones</string>
-    <string name="reserve_turno">Turno</string>
+    <string name="reserve_turno">Nro. Atención</string>
+    <string name="reserve_select_turno">No hay atenciones disponibles. Seleccione otra fecha.</string>
 </resources>

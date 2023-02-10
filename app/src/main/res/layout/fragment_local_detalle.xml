@@ -42,7 +42,7 @@
                     android:layout_marginBottom="@dimen/min_margin"
                     android:maxLength="200"
                     android:paddingHorizontal="@dimen/min_margin"
-                    android:text="@{viewModel.selectedLocal.horario.resumen()}"
+                    android:text="@{viewModel.selectedLocal.resumenHorarios}"
                     android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
                     tools:text="Lun - Vie\n8:00 am - 4:00 pm" />
 
