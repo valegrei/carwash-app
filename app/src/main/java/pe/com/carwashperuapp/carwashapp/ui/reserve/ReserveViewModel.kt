@@ -67,8 +67,6 @@ class ReserveViewModel(
     val selectedFecha: LiveData<Long> = _selectedFecha
     private var _horarios = MutableLiveData<List<Horario>>()
     val horarios: LiveData<List<Horario>> = _horarios
-    private var _horarios2 = MutableLiveData<Array<MutableList<Horario>>>()
-    val horarios2: LiveData<Array<MutableList<Horario>>> = _horarios2
     private var _horariosMap = MutableLiveData<Map<Int, Horario>>()
     val horariosMap: LiveData<Map<Int, Horario>> = _horariosMap
     private var _selectedHorario = MutableLiveData<Horario?>()
@@ -85,10 +83,8 @@ class ReserveViewModel(
     val selectedLatLng: LiveData<LatLng?> = _selectedLatLng
     private var _selectedHorarioLocal = MutableLiveData<HorarioLocal?>()
     val selectedHorarioLocal: LiveData<HorarioLocal?> = _selectedHorarioLocal
-    private var _selectedTurno = MutableLiveData<Int?>()
-    val selectedTurno: LiveData<Int?> = _selectedTurno
-    private var _turnoMap = MutableLiveData<Map<Int, Int>>()
-    val turnoMap: LiveData<Map<Int, Int>> = _turnoMap
+    private var _selectedHorarioHelper = MutableLiveData<HorarioHelper>()
+    val selectedHorarioHelper: LiveData<HorarioHelper> = _selectedHorarioHelper
 
     fun goLocal() {
         nuevaReserva()
@@ -126,7 +122,6 @@ class ReserveViewModel(
             selectedLocal.value?.longitud!!.toDouble()
         )
         _horarios.value = listOf()
-        _horarios2.value = arrayOf()
         _horariosMap.value = mapOf()
         buscarHorarios()
         _editStatus.value = EditStatus.NEW
@@ -158,11 +153,6 @@ class ReserveViewModel(
             }
         }
         _selectedHorarioLocal.value = selHorLoc
-        if (selHorLoc != null) {
-            _selectedTurno.value = 0
-        } else {
-            _selectedTurno.value = null
-        }
     }
 
     private fun cargarFavorito() {
@@ -297,7 +287,7 @@ class ReserveViewModel(
     }
 
     fun loadVehiculos2(vehiculos: List<Vehiculo>) {
-        var lista = mutableListOf<Vehiculo>()
+        val lista = mutableListOf<Vehiculo>()
         if (vehiculos.isEmpty()) {
             lista += listOf(
                 Vehiculo(
@@ -337,7 +327,6 @@ class ReserveViewModel(
         }
         _vehiculos.value = lista
         _selectedVehiculo.value = this@ReserveViewModel.vehiculos.value?.get(0)
-
     }
 
     fun seleccionarVehiculo(vehiculo: Vehiculo) {
@@ -363,7 +352,7 @@ class ReserveViewModel(
         if (nroAtenciones > 0) {
             buscarHorarios2()
         } else {
-            setHorarios(listOf())
+            setHorarios(null)
         }
     }
 
@@ -386,38 +375,14 @@ class ReserveViewModel(
         }
     }
 
-    private fun setHorarios(horarios: List<Horario>) {
-        val nroAtenciones = selectedHorarioLocal.value?.nroAtenciones ?: 0
-        val nuevosHorarios = Array<MutableList<Horario>>(nroAtenciones) { mutableListOf() }
-        if (nroAtenciones > 0) {
-            for (horario in horarios) {
-                nuevosHorarios[horario.nro].add(horario)
-            }
-        }
-        _horarios2.value = nuevosHorarios
-        selectHorariosByTurno()
-    }
-
-    fun selectTurno(turno: Int) {
-        _selectedTurno.value = turno
-        selectHorariosByTurno()
-    }
-
-    private fun selectHorariosByTurno() {
-        val turno = selectedTurno.value
-        if (_horarios2.value.isNullOrEmpty() || turno == null) {
-            _horarios.value = listOf()
-        } else {
-            _horarios.value = _horarios2.value?.get(turno)
-        }
+    private fun setHorarios(horarios: List<Horario>?) {
+        val horarioHelper = HorarioHelper(selectedHorarioLocal.value, horarios)
+        _horarios.value = horarioHelper.obtenerListaHorarios()
+        _selectedHorarioHelper.value = horarioHelper
     }
 
     fun setHorarioMap(map: Map<Int, Horario>) {
         _horariosMap.value = map
-    }
-
-    fun setTurnoMap(map: Map<Int, Int>) {
-        _turnoMap.value = map
     }
 
     private fun clearErrs() {
@@ -449,34 +414,14 @@ class ReserveViewModel(
     }
 
     private fun validarRango(): Boolean {
-        val rangoHorarios = obtenerRangoHorarios()
+        calcularDuracionServicios()
+        val horarioHelper = selectedHorarioHelper.value
+        val selHorario = selectedHorario.value!!
+        val duracion = totalDuracion.value!!
+        val rangoHorarios = horarioHelper?.obtenerRangoHorarioValido(selHorario,duracion)
         return !rangoHorarios.isNullOrEmpty()
     }
 
-    private fun obtenerRangoHorarios(): List<Horario>? {
-        calcularDuracionServicios()
-        val horarioIni = selectedHorario.value!!
-        val horaFin = obtenerHoraFin(horarioIni.horaIni, totalDuracion.value!!)
-        val indIni = horarios.value?.indexOf(horarioIni)!!
-        val lista = mutableListOf<Horario>()
-        lista.add(horarioIni)
-        if (horarioIni.horaFin >= horaFin) {
-            return lista    //cumple duracion
-        }
-        for (i in indIni + 1 until horarios.value?.size!!) {
-            val horario = horarios.value?.get(i)!!
-            val horarioAnt = lista.get(lista.size - 1)
-            //Comprabando continuidad
-            if (horarioAnt.horaFin != horario.horaIni) {
-                return null //no es continuo
-            }
-            lista.add(horario)
-            if (horario.horaFin >= horaFin) {
-                return lista    //cumple duracion
-            }
-        }
-        return null
-    }
 
     private fun calcularDuracionServicios() {
         var total = 0
@@ -504,10 +449,11 @@ class ReserveViewModel(
     fun confirmarReserva() {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
+            val horarioHelper = selectedHorarioHelper.value
             val horarioIni = selectedHorario.value!!
-            val rangoHorarios = obtenerRangoHorarios()!!
-            val idHorarios = rangoHorarios.map { it.id }
             val duracionTotal = totalDuracion.value!!
+            val rangoHorarios = horarioHelper?.obtenerRangoHorarioValido(horarioIni,duracionTotal)!!
+            val idHorarios = rangoHorarios.map { it.id }
             val sesion = sesionData.getCurrentSesion()
             val idCliente = sesion?.usuario?.id!!
             val idVehiculo = selectedVehiculo.value?.id!!

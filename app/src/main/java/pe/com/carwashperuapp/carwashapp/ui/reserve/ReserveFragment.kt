@@ -16,8 +16,6 @@ import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveBinding
 import pe.com.carwashperuapp.carwashapp.model.Horario
-import pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModel
-import pe.com.carwashperuapp.carwashapp.ui.my_cars.MyCarsViewModelFactory
 
 class ReserveFragment : Fragment() {
 
@@ -59,45 +57,17 @@ class ReserveFragment : Fragment() {
             val seleccionado = viewModel.horariosMap.value?.get(group.checkedChipId)
             viewModel.seleccionarHorario(seleccionado)
         }
-        binding.chgTurnos.setOnCheckedStateChangeListener{group, _ ->
-            val seleccionado = viewModel.turnoMap.value?.get(group.checkedChipId)?:0
-            viewModel.selectTurno(seleccionado)
-        }
         viewModel.apply {
-            selectedHorarioLocal.observe(viewLifecycleOwner){
-                mostrarChipsTurno(it?.nroAtenciones)
-            }
             servicios.observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
-            horarios.observe(viewLifecycleOwner) { it ->
+            horarios.observe(viewLifecycleOwner) {
                 cargarChips(it)
             }
             errMsg.observe(viewLifecycleOwner) {
                 showSnackBar(it)
             }
         }
-    }
-
-    private fun mostrarChipsTurno(nroAtenciones: Int?) {
-        binding.chgTurnos.removeAllViews()
-        val map = mutableMapOf<Int, Int>()
-        if((nroAtenciones ?: 0) > 0) {
-            for (i in 0 until nroAtenciones!!) {
-                val chip = Chip(requireContext())
-                chip.text = "${i + 1}"
-                chip.isCheckable = true
-                binding.chgTurnos.addView(chip)
-                map[chip.id] = i
-            }
-            binding.tvNoTurnos.visibility = View.GONE
-            binding.chgTurnos.visibility = View.VISIBLE
-            binding.chgTurnos.check(map.keys.toList()[0])   //selecciona el primero
-        }else{
-            binding.tvNoTurnos.visibility = View.VISIBLE
-            binding.chgTurnos.visibility = View.GONE
-        }
-        viewModel.setTurnoMap(map)
     }
 
     private fun cargarChips(horarios: List<Horario>?) {
@@ -154,10 +124,10 @@ class ReserveFragment : Fragment() {
         val adapter = VehiculoAdapter(requireContext(), viewModel.vehiculos.value!!)
         AlertDialog.Builder(requireContext()).setAdapter(adapter) { _, which ->
             val seleccionado = adapter.getItem(which)
-            if(seleccionado?.id==-1){
+            if (seleccionado?.id == -1) {
                 //ir a agregar vehiculo
                 viewModel.mostrarAgregarVehiculos()
-            }else {
+            } else {
                 viewModel.seleccionarVehiculo(seleccionado!!)
             }
         }.setTitle("Seleccionar Vehículo").show()

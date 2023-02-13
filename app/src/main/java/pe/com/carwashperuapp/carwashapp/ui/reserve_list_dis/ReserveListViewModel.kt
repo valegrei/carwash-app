@@ -87,16 +87,22 @@ class ReserveListViewModel(
 
     private fun calcularEstadoAtencion(): Int {
         val detalleServs = selectedReserva.value?.servicioReserva!!
-        var cantAtendidosAnulados = 0
+        var cantServicios = detalleServs.size
+        var cantAtendidos = 0
+        var cantAnulados = 0
+        var cantNoAtendidos = 0
         detalleServs.forEach {
-            cantAtendidosAnulados += if (it.detalle?.estado != ServicioEstado.NO_ATENDIDO.id) 1 else 0
+            cantAtendidos += if (it.detalle?.estado == ServicioEstado.ATENDIDO.id) 1 else 0
+            cantAnulados += if (it.detalle?.estado == ServicioEstado.ANULADO.id) 1 else 0
+            cantNoAtendidos += if (it.detalle?.estado == ServicioEstado.NO_ATENDIDO.id) 1 else 0
         }
-        if(cantAtendidosAnulados == 0)
+        if (cantNoAtendidos == cantServicios)
             return ReservaEstado.NO_ATENDIDO.id
-        else if(cantAtendidosAnulados == detalleServs.size)
+        if (cantAnulados == cantServicios)
+            return ReservaEstado.ANULADO.id
+        if (cantAtendidos == cantServicios || (cantAnulados + cantAtendidos) == cantServicios)
             return ReservaEstado.ATENDIDO.id
-        else
-            return ReservaEstado.ATENDIENDO.id
+        return ReservaEstado.ATENDIENDO.id
     }
 
     fun editarReserva() {

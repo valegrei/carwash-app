@@ -278,7 +278,7 @@
     <string name="reserve_select_other">No hay horarios disponibles. Seleccione otra fecha.</string>
     <string name="title_reserve">Reservar</string>
     <string name="title_reserve_confirm">Confirmar Reserva</string>
-    <string name="title_reserve_detail">Detalle de Reserva</string>
+    <string name="title_reserve_detail">Reserva</string>
     <string name="place_type">Tipo</string>
     <string name="place_oficina">Oficina</string>
     <string name="place_casa">Casa</string>

@@ -16,7 +16,7 @@ import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentReserveDetalleDisBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
-import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaHoraDB
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDB
 import java.util.*
 
 class ReserveDetailDisFragment : Fragment(), MenuProvider {
@@ -119,9 +119,9 @@ class ReserveDetailDisFragment : Fragment(), MenuProvider {
     }
 
     private fun seMuestraBoton(): Boolean {
-        val fechaHora = formatoFechaHoraDB(Date().time)
-        val fechaHorario = viewModel.selectedReserva.value?.fechaHoraDB()!!
-        return fechaHorario > fechaHora
+        val fechaHora = formatoFechaDB(Date().time)
+        val fechaHorario = viewModel.selectedReserva.value?.fecha!!
+        return fechaHorario >= fechaHora
     }
 
     private fun ocultarBoton() {

@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.card.MaterialCardView
 import pe.com.carwashperuapp.carwashapp.EstrEditFoto
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -206,23 +207,26 @@ fun bindEstadoServ(textView: TextView, estado: Int?) {
 }
 
 @BindingAdapter("estadoReservaColor")
-fun bindEstadoReserva(textView: TextView, estado: Int?) {
-    val context = textView.context
+fun bindEstadoReserva(cardView: MaterialCardView, estado: Int?) {
+    val context = cardView.context
     var resColor = when (estado) {
         ReservaEstado.NO_ATENDIDO.id -> {
-            R.color.service_state_pending
+            R.color.service_state_pending_bg
         }
         ReservaEstado.ATENDIDO.id -> {
-            R.color.service_state_attended
+            R.color.service_state_attended_bg
         }
         ReservaEstado.ATENDIENDO.id -> {
-            R.color.service_state_attendeding
+            R.color.service_state_attendeding_bg
+        }
+        ReservaEstado.ANULADO.id -> {
+            R.color.service_state_canceled_bg
         }
         else -> {
-            R.color.service_state_pending
+            R.color.service_state_pending_bg
         }
     }
-    textView.setTextColor(context.getColor(resColor))
+    cardView.setCardBackgroundColor(context.getColor(resColor))
 }
 
 fun bindImageBanner(imgView: ImageView, imgUrl: String?) {

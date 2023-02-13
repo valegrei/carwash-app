@@ -98,6 +98,9 @@ class MyReserveViewModel(
             _editStatus.value = EditStatus.EXIT
         }
     }
+    fun mostrarLlamar(): Boolean {
+        return (selectedReserva.value?.distrib?.nroCel1 ?: "").isNotEmpty()
+    }
 
     private fun cargarFavorito() {
         val favs = selectedReserva.value?.local?.favoritos

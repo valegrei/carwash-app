@@ -15,9 +15,10 @@
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/min_margin"
+        android:layout_marginVertical="4dp"
         android:clickable="true"
         android:focusable="true"
+        estadoReservaColor="@{reserva.estadoAtencion}"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/small_margin">
 
@@ -33,7 +34,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.distrib.razonSocial}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -42,7 +42,6 @@
                     tools:text="Servicios Quickwash" />
 
                 <TextView
-                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.local.direccion}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
                     tools:text="1413, Silver Street, Hedferenson" />
 
                 <TextView
-                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.vehiculo.nombreLinea()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -60,7 +58,6 @@
                     tools:text="Hyundai Tucson 2020 - BCU 312" />
 
                 <TextView
-                    estadoReservaColor="@{reserva.estadoAtencion}"
                     android:text="@{reserva.fechaHoraIni()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

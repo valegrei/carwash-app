@@ -14,9 +14,21 @@
         android:title="@string/action_del_fav"
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_navigation"
+        android:orderInCategory="100"
+        android:icon="@drawable/baseline_navigation_24"
+        android:title="@string/action_navigation"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_call"
+        android:orderInCategory="100"
+        android:icon="@drawable/baseline_call_24"
+        android:title="@string/action_call"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_delete"
         android:orderInCategory="100"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/action_delete"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

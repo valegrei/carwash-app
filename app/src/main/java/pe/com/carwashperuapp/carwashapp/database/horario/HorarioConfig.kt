@@ -27,20 +27,23 @@ data class HorarioConfig(
     @Json(name = "idLocal") @ColumnInfo(name = "idLocal") val idLocal: Int,
 ) {
     fun dias(): String {
-        var dias = ""
         if (lunes && martes && miercoles && jueves && viernes && sabado && domingo) {
-            dias = "Todos los días"
-        } else if (lunes && martes && miercoles && jueves && viernes) {
-            dias = "Lun - Vie"
-        } else {
-            dias += if (lunes) "Lun " else ""
-            dias += if (martes) "Mar " else ""
-            dias += if (miercoles) "Mie " else ""
-            dias += if (jueves) "Jue " else ""
-            dias += if (viernes) "Vie " else ""
-            dias += if (sabado) "Sab " else ""
-            dias += if (domingo) "Dom " else ""
+            return "Todos los días"
         }
+        if (lunes && martes && miercoles && jueves && viernes && !sabado) {
+            return "Lun - Vie"
+        }
+        if (lunes && martes && miercoles && jueves && viernes && sabado) {
+            return "Lun - Sab"
+        }
+        var dias = ""
+        dias += if (lunes) "Lun " else ""
+        dias += if (martes) "Mar " else ""
+        dias += if (miercoles) "Mie " else ""
+        dias += if (jueves) "Jue " else ""
+        dias += if (viernes) "Vie " else ""
+        dias += if (sabado) "Sab " else ""
+        dias += if (domingo) "Dom " else ""
         return dias
     }
 
@@ -58,6 +61,6 @@ data class HorarioConfigLocal(
         entityColumn = "id"
     )
     val local: Direccion
-){
+) {
     fun resumen(): String = "${local.direccion}\n${horarioConfig.resumen()}"
 }

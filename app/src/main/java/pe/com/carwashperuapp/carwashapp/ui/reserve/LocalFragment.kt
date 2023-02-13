@@ -66,7 +66,7 @@ class LocalFragment : Fragment(), MenuProvider {
 
         viewModel.apply {
             selectedLocal.observe(viewLifecycleOwner) {
-                setTitle(it.distrib?.razonSocial)
+                setTitle(" ")
                 bindImageBanner(
                     requireActivity().findViewById(R.id.img_banner),
                     it.distrib?.getURLFoto()
@@ -218,10 +218,10 @@ class LocalFragment : Fragment(), MenuProvider {
         val latitude = viewModel.selectedLocal.value?.latitud
         val longitude = viewModel.selectedLocal.value?.longitud
         val url = "waze://?ll=$latitude, $longitude&navigate=yes"
-        var intentWaze = Intent(Intent.ACTION_VIEW, Uri.parse(url)).setPackage("com.waze")
+        val intentWaze = Intent(Intent.ACTION_VIEW, Uri.parse(url)).setPackage("com.waze")
 
         val uriGoogle = "google.navigation:q=$latitude,$longitude"
-        var intentGoogleNav = Intent(
+        val intentGoogleNav = Intent(
             Intent.ACTION_VIEW,
             Uri.parse(uriGoogle)
         ).setPackage("com.google.android.apps.maps")

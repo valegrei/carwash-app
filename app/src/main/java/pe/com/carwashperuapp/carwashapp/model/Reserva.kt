@@ -11,7 +11,8 @@ import pe.com.carwashperuapp.carwashapp.ui.util.formatoFechaDBaHum
 enum class ReservaEstado(val id: Int, val nombre: String) {
     NO_ATENDIDO(1, "No atendido"),
     ATENDIDO(2, "Atendido"),
-    ATENDIENDO(3, "Atendiendo")
+    ATENDIENDO(3, "Atendiendo"),
+    ANULADO(0, "Anulado"),
 }
 
 @JsonClass(generateAdapter = true)

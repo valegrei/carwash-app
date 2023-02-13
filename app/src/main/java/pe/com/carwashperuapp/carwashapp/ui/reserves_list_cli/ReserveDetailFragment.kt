@@ -1,6 +1,8 @@
 package pe.com.carwashperuapp.carwashapp.ui.reserves_list_cli
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -121,13 +123,16 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
     private var deleteItem: MenuItem? = null
     private var menuAddFav: MenuItem? = null
     private var menuDelFav: MenuItem? = null
+    private var menuCall: MenuItem? = null
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.reserva_cli_detail_menu, menu)
         deleteItem = menu.findItem(R.id.action_delete)
         menuAddFav = menu.findItem(R.id.action_add_fav)
         menuDelFav = menu.findItem(R.id.action_del_fav)
+        menuCall = menu.findItem(R.id.action_call)
         mostrarFav(viewModel.mostrarFavorito.value!!)
+        mostrarLlamar()
         ocultarBoton()
     }
 
@@ -147,6 +152,9 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
         deleteItem?.isVisible = fechaHorario > fechaHora
     }
 
+    private fun mostrarLlamar() {
+        menuCall?.isVisible = viewModel.mostrarLlamar()
+    }
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
             R.id.action_add_fav -> {
@@ -159,6 +167,14 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
             }
             R.id.action_delete -> {
                 anularReserva()
+                true
+            }
+            R.id.action_navigation -> {
+                mostrarRuta()
+                true
+            }
+            R.id.action_call -> {
+                llamar()
                 true
             }
             else -> false
@@ -175,5 +191,35 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+
+    private fun mostrarRuta() {
+        val latitude = viewModel.selectedReserva.value?.local?.latitud
+        val longitude = viewModel.selectedReserva.value?.local?.longitud
+        val url = "waze://?ll=$latitude, $longitude&navigate=yes"
+        val intentWaze = Intent(Intent.ACTION_VIEW, Uri.parse(url)).setPackage("com.waze")
+
+        val uriGoogle = "google.navigation:q=$latitude,$longitude"
+        val intentGoogleNav = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(uriGoogle)
+        ).setPackage("com.google.android.apps.maps")
+
+        val title: String = "Seleccione"
+        val chooserIntent = Intent.createChooser(intentGoogleNav, title)
+        val arr = arrayOfNulls<Intent>(1)
+        arr[0] = intentWaze
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arr)
+        startActivity(chooserIntent)
+    }
+
+    private fun llamar() {
+        if (viewModel.mostrarLlamar()) {
+            val nroCel = viewModel.selectedReserva.value?.distrib?.nroCel1
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:$nroCel")
+            startActivity(intent)
+        }
     }
 }

@@ -17,14 +17,35 @@
         android:background="@color/bg_color"
         android:orientation="vertical">
 
+        <TextView
+            android:paddingTop="@dimen/min_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/min_margin"
+            android:text="@{viewModel.selectedLocal.distrib.razonSocial}"
+            android:textAppearance="@style/TextAppearance.CarwashApp.Title"
+            android:textColor="@color/black"
+            tools:text="Razon Social de Distribuidor" />
+
+        <TextView
+            android:paddingBottom="@dimen/min_margin"
+            android:id="@+id/tv_no_horarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/min_margin"
+            android:text="@{viewModel.selectedLocal.direccion}"
+            android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+            tools:text="Dirección del distribuidor" />
+
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="4dp"
             app:tabBackground="@color/bg_color"
             app:tabIndicatorColor="?attr/colorPrimary"
             app:tabSelectedTextColor="@color/black"
-            android:elevation="4dp"
             app:tabTextColor="@color/quantum_grey700">
 
         </com.google.android.material.tabs.TabLayout>

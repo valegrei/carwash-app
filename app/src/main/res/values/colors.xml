@@ -11,6 +11,11 @@
     <color name="service_state_canceled">#800000</color>
     <color name="service_state_attendeding">#C15300</color>
     <color name="service_state_pending2">@color/purple</color>
+    <color name="service_state_attended_bg">#BDFFBD</color>
+    <color name="service_state_pending_bg">@color/white</color>
+    <color name="service_state_canceled_bg">#FFB1B1</color>
+    <color name="service_state_attendeding_bg">#FFF1AB</color>
+    <color name="service_state_pending2_bg">@color/purple</color>
     <!--    filters-->
     <color name="filter_no_editing">#0000</color>
     <color name="filter_editing">#80000000</color>
