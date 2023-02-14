@@ -301,7 +301,7 @@
     <string name="reserve_delete">Anular Reserva</string>
     <string name="reserve_delete_msg">¿Desea anular la actual reserva?</string>
     <string name="action_clear">Limpiar</string>
-    <string name="service_duracion">Duración (min.)</string>
+    <string name="service_duracion">Duración</string>
     <string name="opt_atendido">Atendido</string>
     <string name="opt_anulado">Anulado</string>
     <string name="opt_no_atendido">No atendido</string>

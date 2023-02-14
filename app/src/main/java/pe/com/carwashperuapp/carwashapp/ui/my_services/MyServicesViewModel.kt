@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.servicio.Duracion
 import pe.com.carwashperuapp.carwashapp.database.servicio.Servicio
 import pe.com.carwashperuapp.carwashapp.database.servicio.ServicioDao
 import pe.com.carwashperuapp.carwashapp.database.sesion.Sesion
@@ -27,7 +28,7 @@ class MyServicesViewModel(
 
     //Datos para editar cuenta
     var precio = MutableLiveData<String>()
-    var duracion = MutableLiveData<String>()
+    var duracion = MutableLiveData<Duracion>()
     var nombre = MutableLiveData<String>()
 
     private var _errMsg = MutableLiveData<String>()
@@ -50,7 +51,7 @@ class MyServicesViewModel(
     fun goNuevo() {
         nombre.value = ""
         precio.value = ""
-        duracion.value = ""
+        duracion.value = Duracion.MIN_15
         _errMsg.value = ""
         _editStatus.value = EditStatus.NEW
         _status.value = Status.NORMAL
@@ -62,7 +63,7 @@ class MyServicesViewModel(
         val selServ = selectedService.value!!
         nombre.value = selServ.nombre
         precio.value = selServ.getPrecioFormateado()
-        duracion.value = selServ.duracion.toString()
+        duracion.value = selServ.getDuracionEnum()
         _editStatus.value = EditStatus.EDIT
         _status.value = Status.NORMAL
         _goStatus.value = GoStatus.GO_ADD
@@ -107,21 +108,21 @@ class MyServicesViewModel(
     private fun agregarServicio() {
         val nombre = (this.nombre.value ?: "").trim()
         val precio = (this.precio.value ?: "").trim()
-        val duracion = (this.duracion.value ?: "").trim()
-        if (validar(nombre, precio, duracion)) {
-            agregarServicio(nombre, precio, duracion)
+        val duracion = this.duracion.value?.duracion
+        if (validar(nombre, precio)) {
+            agregarServicio(nombre, precio, duracion!!)
         }
     }
 
     private fun modificarServicio() {
         val nombre = (this.nombre.value ?: "").trim()
         val precio = (this.precio.value ?: "").trim()
-        val duracion = (this.duracion.value ?: "").trim()
-        if (validar(nombre, precio, duracion)) {
+        val duracion = this.duracion.value?.duracion!!
+        if (validar(nombre, precio)) {
             val modServicio = selectedService.value!!
             modServicio.nombre = nombre
             modServicio.precio = BigDecimal(precio)
-            modServicio.duracion = duracion.toInt()
+            modServicio.duracion = duracion
             modificarServicio(modServicio, false)
         }
     }
@@ -132,7 +133,7 @@ class MyServicesViewModel(
         modificarServicio(modServicio, true)
     }
 
-    private fun validar(nombre: String, precio: String, duracion: String): Boolean {
+    private fun validar(nombre: String, precio: String): Boolean {
         _errMsg.value = ""
         if (nombre.isEmpty()) {
             _errMsg.value = "Campo Servicio vacío"
@@ -142,18 +143,18 @@ class MyServicesViewModel(
             _errMsg.value = "Campo Precio vacío"
             return false
         }
-        if (duracion.isEmpty()) {
+        /*if (duracion.isEmpty()) {
             _errMsg.value = "Campo Duración vacío"
             return false
-        }
+        }*/
         return true
     }
 
-    private fun agregarServicio(nombre: String, precio: String, duracion: String) {
+    private fun agregarServicio(nombre: String, precio: String, duracion: Int) {
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
-            val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio), duracion.toInt())
+            val reqAddServicio = ReqAddServicio(nombre, BigDecimal(precio), duracion)
             //guarda lo cambiado
             Api.retrofitService.agregarServicio(
                 reqAddServicio, sesion?.getTokenBearer()!!

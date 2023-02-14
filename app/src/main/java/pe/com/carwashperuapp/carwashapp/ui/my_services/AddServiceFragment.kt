@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.servicio.Duracion
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentAddServiceBinding
 import pe.com.carwashperuapp.carwashapp.ui.util.ProgressDialog
@@ -50,15 +51,24 @@ class AddServiceFragment : Fragment(), MenuProvider {
             lifecycleOwner = viewLifecycleOwner
         }
         binding.acDuracion.setOnItemClickListener { adapterView, _, position, _ ->
-            val selectedDuracion = adapterView.getItemAtPosition(position) as String
+            val selectedDuracion = adapterView.getItemAtPosition(position) as Duracion
             viewModel.duracion.value = selectedDuracion
         }
         viewModel.apply {
-            binding.acDuracion.setText(duracion.value)
+            binding.acDuracion.setText(duracion.value.toString())
             val adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                arrayOf("15","30","45","60")
+                arrayOf(
+                    Duracion.MIN_15,
+                    Duracion.MIN_30,
+                    Duracion.MIN_45,
+                    Duracion.MIN_60,
+                    Duracion.MIN_90,
+                    Duracion.MIN_120,
+                    Duracion.MIN_150,
+                    Duracion.MIN_180,
+                )
             )
             binding.acDuracion.setAdapter(adapter)
             status.observe(viewLifecycleOwner) {

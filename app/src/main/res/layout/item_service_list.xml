@@ -35,7 +35,7 @@
                 android:text="@{servicio.getNombrePrecio()}"
                 android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
                 app:drawableStartCompat="@drawable/ic_baseline_home_repair_service_24"
-                tools:text="Lavado de Carro\nS/ 30.00" />
+                tools:text="Lavado de Carro\nS/ 30.00 - 2h 30m" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
