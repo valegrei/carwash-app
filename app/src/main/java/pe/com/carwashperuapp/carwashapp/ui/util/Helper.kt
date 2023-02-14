@@ -140,7 +140,7 @@ fun formatoFechaDB(milisUtc: Long): String {
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
     calendar.timeInMillis = milisUtc
     val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    format.timeZone = TimeZone.getTimeZone("UTC")
+    format.timeZone = TimeZone.getTimeZone("America/Lima")
     return format.format(calendar.time)
 }
 
