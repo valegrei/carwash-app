@@ -29,7 +29,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:layout_marginEnd="36dp"
+            android:layout_marginEnd="12dp"
+            android:text="@{servicio.detalle.estadoNombre}"
+            android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
+            tools:text="No Atendido" />
+        <TextView
+            estadoServColor="@{servicio.detalle.estado}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_marginEnd="24dp"
             android:text="@{servicio.detalle.duracionFormateado}"
             android:textAppearance="@style/TextAppearance.CarwashApp.LabelBlack"
             tools:text="30 min" />

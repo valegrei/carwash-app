@@ -50,6 +50,7 @@ class Reserva(
         ReservaEstado.NO_ATENDIDO.id -> ReservaEstado.NO_ATENDIDO.nombre
         ReservaEstado.ATENDIDO.id -> ReservaEstado.ATENDIDO.nombre
         ReservaEstado.ATENDIENDO.id -> ReservaEstado.ATENDIENDO.nombre
+        ReservaEstado.ANULADO.id -> ReservaEstado.ANULADO.nombre
         else -> ""
     }
 }

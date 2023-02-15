@@ -13,12 +13,12 @@
 
     <com.google.android.material.card.MaterialCardView
         style="?attr/materialCardViewElevatedStyle"
+        estadoReservaColor="@{reserva.estadoAtencion}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"
         android:clickable="true"
         android:focusable="true"
-        estadoReservaColor="@{reserva.estadoAtencion}"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/small_margin">
 
@@ -33,35 +33,53 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:text="@{reserva.distrib.razonSocial}"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
-                    tools:text="Servicios Quickwash" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="@{reserva.distrib.razonSocial}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
+                        tools:text="Servicios Quickwash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0"
+                        android:text="@{reserva.estadoNombre}"
+                        android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
+                        tools:text="No Atendido" />
+                </LinearLayout>
+
 
                 <TextView
-                    android:text="@{reserva.local.direccion}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@{reserva.local.direccion}"
                     android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
                     tools:text="1413, Silver Street, Hedferenson" />
 
                 <TextView
-                    android:text="@{reserva.vehiculo.nombreLinea()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@{reserva.vehiculo.nombreLinea()}"
                     android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
                     tools:text="Hyundai Tucson 2020 - BCU 312" />
 
                 <TextView
-                    android:text="@{reserva.fechaHoraIni()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="@{reserva.fechaHoraIni()}"
                     android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
                     tools:text="20/02/2023, 10:00 AM" />
 
