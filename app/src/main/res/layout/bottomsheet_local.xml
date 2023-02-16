@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="fragment"
+            type="pe.com.carwashperuapp.carwashapp.ui.reserve.LocalBottomSheedDialog" />
+        <variable
             name="viewModel"
             type="pe.com.carwashperuapp.carwashapp.ui.reserve.ReserveViewModel" />
     </data>
@@ -90,6 +93,31 @@
 
             </LinearLayout>
 
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/tv_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:drawablePadding="@dimen/min_margin"
+                android:text="@string/reserve_services_offered"
+                android:textAppearance="@style/TextAppearance.CarwashApp.BodyLarge"
+                app:drawableStartCompat="@drawable/ic_outline_home_repair_service_24"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/rv_services_offered"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/item_service_offered"
+                android:layout_height="150dp"/>
+
         </LinearLayout>
+
     </LinearLayout>
 </layout>
