@@ -33,6 +33,21 @@ class UsersViewModel(
     private var _goStatus = MutableLiveData<GoStatus>()
     val goStatus: LiveData<GoStatus> = _goStatus
 
+    private var _showAdmin = MutableLiveData<Boolean>()
+    val showAdmin: LiveData<Boolean> = _showAdmin
+
+    private var _showCli = MutableLiveData<Boolean>()
+    val showCli: LiveData<Boolean> = _showCli
+
+    private var _showDis = MutableLiveData<Boolean>()
+    val showDis: LiveData<Boolean> = _showDis
+
+    init {
+        _showAdmin.value = true
+        _showCli.value = true
+        _showDis.value = true
+    }
+
     fun setSelectedUsu(usuario: Usuario) {
         _selectedUsu.value = usuario.copy()
     }
@@ -61,7 +76,13 @@ class UsersViewModel(
         return true
     }
 
-    fun cargarUsuarios(): Flow<List<Usuario>> = usuarioDao.obtenerUsuarios()
+    fun cargarUsuarios(): Flow<List<Usuario>> {
+        val lista = mutableListOf<Int>()
+        if(showAdmin.value!!) lista.add(TipoUsuario.ADMIN.id)
+        if(showCli.value!!) lista.add(TipoUsuario.CLIENTE.id)
+        if(showDis.value!!) lista.add(TipoUsuario.DISTR.id)
+        return usuarioDao.obtenerUsuarios(lista)
+    }
 
     fun descargarUsuarios() {
         viewModelScope.launch(exceptionHandler) {
@@ -148,6 +169,12 @@ class UsersViewModel(
             )
             _status.value = Status.SUCCESS
         }
+    }
+
+    fun setFiltros(checkedItems: BooleanArray) {
+        _showAdmin.value = checkedItems[0]
+        _showCli.value = checkedItems[1]
+        _showDis.value = checkedItems[2]
     }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->

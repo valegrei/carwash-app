@@ -326,4 +326,9 @@
     <string name="reserve_turno">Nro. Atención</string>
     <string name="reserve_select_turno">No hay atenciones disponibles. Seleccione otra fecha.</string>
     <string name="reserve_services_offered">Servicios ofrecidos:</string>
+    <string name="action_show_admin">Administradores</string>
+    <string name="action_show_cli">Clientes</string>
+    <string name="action_show_dis">Distribuidores</string>
+    <string name="action_filter_by">Filtrar por</string>
+    <string name="users_filter_by">Filtrar por</string>
 </resources>

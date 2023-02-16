@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UsuarioDao {
-    @Query("SELECT * FROM usuario WHERE estado != :inactivo")
-    fun obtenerUsuarios(inactivo: Int = EstadoUsuario.INACTIVO.id): Flow<List<Usuario>>
+    @Query("SELECT * FROM usuario WHERE estado != :inactivo AND id_tipo_usuario IN (:tipoUsuarios)")
+    fun obtenerUsuarios(tipoUsuarios : List<Int>, inactivo: Int = EstadoUsuario.INACTIVO.id ): Flow<List<Usuario>>
 
     @Query("SELECT * FROM usuario WHERE id_tipo_usuario = :tipoDist AND estado != :inactivo")
     fun obtenerDistribuidores(

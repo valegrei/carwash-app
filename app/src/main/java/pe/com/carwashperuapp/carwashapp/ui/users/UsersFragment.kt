@@ -2,6 +2,8 @@ package pe.com.carwashperuapp.carwashapp.ui.users
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
@@ -11,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
@@ -21,6 +25,8 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
 
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
+    private lateinit var job: Job
+    private lateinit var usuariosAdapter: UsersListAdapter
 
     private val viewModel: UsersViewModel by activityViewModels {
         UsersViewModelFactory(
@@ -40,7 +46,7 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val usuariosAdapter = UsersListAdapter {
+        usuariosAdapter = UsersListAdapter {
             viewModel.setSelectedUsu(it)
             UsersBottomSheedDialog().show(childFragmentManager, UsersBottomSheedDialog.TAG)
         }
@@ -48,11 +54,7 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
         binding.rvUsers.adapter = usuariosAdapter
 
         //Actualiza la vista en tiempo real
-        lifecycle.coroutineScope.launch {
-            viewModel.cargarUsuarios().collect() {
-                usuariosAdapter.submitList(it)
-            }
-        }
+        cargarUsuarios()
 
         binding.swipeUsers.setColorSchemeResources(R.color.purple)
         binding.swipeUsers.setOnRefreshListener {
@@ -83,23 +85,43 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
         viewModel.descargarUsuarios()
     }
 
+    private fun cargarUsuarios() {
+        job = lifecycle.coroutineScope.launch {
+            viewModel.cargarUsuarios().cancellable().collect() {
+                usuariosAdapter.submitList(it)
+                onQueryTextChange(searchView?.query?.toString())
+            }
+        }
+    }
+
+    private fun cancelarCargaUsuarios(){
+        job.cancel()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    private var searchView: SearchView?=null
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.search_usu_menu, menu)
         val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        searchView.queryHint = getString(R.string.action_search)
-        searchView.setOnQueryTextListener(this)
+        searchView = searchItem.actionView as SearchView
+        searchView?.queryHint = getString(R.string.action_search)
+        searchView?.setOnQueryTextListener(this)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.action_add_admin) {
-            findNavController().navigate(R.id.action_navigation_users_to_addAdminFragment)
-            return true
+        when(menuItem.itemId){
+            R.id.action_add_admin -> {
+                findNavController().navigate(R.id.action_navigation_users_to_addAdminFragment)
+                return true
+            }
+            R.id.action_filter_by -> {
+                mostrarFiltros()
+                return true
+            }
         }
         return false
     }
@@ -130,6 +152,36 @@ class UsersFragment : Fragment(), MenuProvider, SearchView.OnQueryTextListener {
     private fun showChangePassword() {
         findNavController().navigate(R.id.action_navigation_users_to_usersChangePassFragment)
         viewModel.clearGoStatus()
+    }
+
+    fun mostrarFiltros() {
+        val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle(R.string.users_filter_by)
+        val items = arrayOf(
+            getString(R.string.action_show_admin),
+            getString(R.string.action_show_cli),
+            getString(R.string.action_show_dis),
+        )
+        val checkedItems = booleanArrayOf(
+            viewModel.showAdmin.value ?: false,
+            viewModel.showCli.value ?: false,
+            viewModel.showDis.value ?: false,
+        )
+        alertDialog.setMultiChoiceItems(items, checkedItems) { _, which, isChecked ->
+            checkedItems[which] = isChecked
+        }
+        alertDialog.setPositiveButton(R.string.accept) { _, _ ->
+            viewModel.setFiltros(checkedItems)
+            volverCargarUsuarios()
+        }
+        alertDialog.setNegativeButton(R.string.cancel, null)
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+    private fun volverCargarUsuarios(){
+        cancelarCargaUsuarios()
+        cargarUsuarios()
     }
 
 }
