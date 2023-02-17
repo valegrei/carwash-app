@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="reserva"
+            type="pe.com.carwashperuapp.carwashapp.model.Reserva" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        estadoReservaColor="@{reserva.estadoAtencion}"
+        android:layout_marginVertical="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/small_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/small_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                    android:text="@{reserva.distrib.razonSocial}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
+                    tools:text="Mi Taller Fantastico" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0"
+                    android:text="@{reserva.estadoNombre}"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
+                    tools:text="No Atendido" />
+                </LinearLayout>
+                <TextView
+                    android:text="@{reserva.distrib.nroDocFormateado}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
+                    tools:text="RUC: 20708596412" />
+                <TextView
+                    android:text="@{reserva.local.direccion}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
+                    tools:text="1413, Silver Street, Hedferenson" />
+
+                <TextView
+                    android:text="@{reserva.cliente.nombreCompleto}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimarySemiBold"
+                    tools:text="Víctor Augusto Alegre Ibáñez" />
+                <TextView
+                    android:text="@{reserva.cliente.nroDocFormateado}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
+                    tools:text="DNI: 70859641" />
+                <TextView
+                    android:text="@{reserva.vehiculo.nombreLinea()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
+                    tools:text="Hyundai Tucson 2020 - BCU 312" />
+
+                <TextView
+                    android:text="@{reserva.fechaHoraIni()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.CarwashApp.LabelPrimary"
+                    tools:text="20/02/2023, 10:00 am - 11:00 am" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

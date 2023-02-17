@@ -331,4 +331,12 @@
     <string name="action_show_dis">Distribuidores</string>
     <string name="action_filter_by">Filtrar por</string>
     <string name="users_filter_by">Filtrar por</string>
+    <string name="btnsh_deshab">Deshabilitar</string>
+    <string name="btnsh_deshab_msg">¿Deshabilitar el distribuidor seleccionado?</string>
+    <string name="title_reserves">Reservas</string>
+    <string name="title_reserve_filter">Buscar Reservas</string>
+    <string name="reserve_date">Fecha</string>
+    <string name="reserve_nro_cli">Nro. Doc. Cliente</string>
+    <string name="reserve_nro_dis">Nro. Doc. Distribuidor</string>
+    <string name="reserve_limpiar">Limpiar</string>
 </resources>

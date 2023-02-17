@@ -91,4 +91,18 @@
         android:name="pe.com.carwashperuapp.carwashapp.ui.users.UsersChangePassFragment"
         android:label="@string/title_change_pass_user"
         tools:layout="@layout/fragment_change_pass_admin" />
+    <fragment
+        android:id="@+id/navigation_reserves"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_list_admin.ReserveListAdminFragment"
+        android:label="@string/title_reserves"
+        tools:layout="@layout/fragment_my_reserves_admin" >
+        <action
+            android:id="@+id/action_navigation_reserves_to_reserveDetailAdminFragment"
+            app:destination="@id/reserveDetailAdminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reserveDetailAdminFragment"
+        android:name="pe.com.carwashperuapp.carwashapp.ui.reserve_list_admin.ReserveDetailAdminFragment"
+        android:label="@string/title_reserve_detail"
+        tools:layout="@layout/fragment_reserve_detalle_admin" />
 </navigation>

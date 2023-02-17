@@ -39,7 +39,8 @@ const val DB_VERSION = 8
         HorarioConfig::class,
         Vehiculo::class,
     ],
-    version = DB_VERSION
+    version = DB_VERSION,
+    exportSchema = false
 )
 @TypeConverters(DateConverters::class, BigDecimalConverter::class)
 abstract class AppDataBase : RoomDatabase() {

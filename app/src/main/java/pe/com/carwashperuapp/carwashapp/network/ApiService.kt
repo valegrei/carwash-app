@@ -20,9 +20,9 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-//const val BASE_URL = "http://192.168.100.9:3000"
+const val BASE_URL = "http://192.168.100.9:3000"
 //const val BASE_URL = "http://192.168.100.9"
-const val BASE_URL = "https://www.carwashperuapp.com"
+//const val BASE_URL = "https://www.carwashperuapp.com"
 
 object BigDecimalAdapter {
     @FromJson
@@ -145,10 +145,14 @@ interface ApiService {
     ): Response
 
 
+    @Multipart
     @PUT("api/admin/anuncios/{id}")
     suspend fun actualizarAnuncio(
-        @Path("id") descripcion: Int,
-        @Body reqAnuncio: ReqAnuncioActualizar,
+        @Path("id") id: Int,
+        @Part("descripcion") descripcion: RequestBody?,
+        @Part("url") url: RequestBody?,
+        @Part("mostrar") mostrar: RequestBody?,
+        @Part imagen: MultipartBody.Part?,
         @Header("Authorization") authToken: String
     ): Response
 
@@ -180,6 +184,19 @@ interface ApiService {
         @Query("lastSincro") lastSincro: String?,
         @Header("Authorization") authToken: String
     ): RespParams
+    @GET("api/admin/reserva")
+    suspend fun obtenerReservasAdmin(
+        @Query("fecha") fecha: String?,
+        @Header("Authorization") authToken: String
+    ): RespReservas
+
+    @PUT("api/admin/reserva/{idReserva}")
+    suspend fun atenderReservaAdmin(
+        @Path("idReserva") idReserva: Int,
+        @Body reqAtenderReserva: ReqAtenderReserva,
+        @Header("Authorization") authToken: String
+    ): Response
+
 
     /* Distribuidor */
 

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
+import pe.com.carwashperuapp.carwashapp.database.usuario.EstadoUsuario
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentDistribsBinding
 
 class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
@@ -70,6 +71,7 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
             when (it) {
                 GoStatus.SHOW_CONFIRM -> showConfirmar()
                 GoStatus.SHOW_DENEG -> showDenegar()
+                GoStatus.SHOW_DESHAB -> showDeshabilitar()
                 else -> {}
             }
         }
@@ -117,7 +119,7 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
             .setMessage(R.string.btnsh_aprove_msg)
             .setCancelable(false)
             .setPositiveButton(R.string.accept) { _, _ ->
-                viewModel.aprobarDist(true)
+                viewModel.cambiarEstadoDist(EstadoUsuario.ACTIVO)
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
@@ -130,7 +132,20 @@ class DistribsFragment : Fragment(), MenuProvider, OnQueryTextListener {
             .setMessage(R.string.btnsh_reject_msg)
             .setCancelable(false)
             .setPositiveButton(R.string.accept) { _, _ ->
-                viewModel.aprobarDist(false)
+                viewModel.cambiarEstadoDist(EstadoUsuario.INACTIVO)
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+        viewModel.clearGoStatus()
+    }
+
+    private fun showDeshabilitar() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.btnsh_deshab)
+            .setMessage(R.string.btnsh_deshab_msg)
+            .setCancelable(false)
+            .setPositiveButton(R.string.accept) { _, _ ->
+                viewModel.cambiarEstadoDist(EstadoUsuario.VERIFICANDO)
             }
             .setNegativeButton(R.string.cancel, null)
             .show()

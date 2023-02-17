@@ -1,6 +1,9 @@
 package pe.com.carwashperuapp.carwashapp.ui.announcement
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.canhub.cropper.CropImage
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -148,5 +155,39 @@ class AnnouncementNewFragment : Fragment(), MenuProvider {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+
+    fun mostrarEscogerImagen() {
+        if (viewModel.editStatus.value == EditStatus.EDIT || viewModel.editStatus.value == EditStatus.NEW) {
+            customCropImage.launch(
+                CropImageContractOptions(
+                    uri = null,
+                    cropImageOptions = CropImageOptions(
+                        imageSourceIncludeCamera = false,
+                        imageSourceIncludeGallery = true,
+                        outputCompressFormat = Bitmap.CompressFormat.JPEG,
+                        outputCompressQuality = 90,
+                        skipEditing = true,
+                        activityTitle = getString(R.string.announc_title_new),
+                        activityBackgroundColor = resources.getColor(R.color.bg_color, null),
+                        toolbarColor = resources.getColor(R.color.purple, null),
+                        toolbarBackButtonColor = Color.WHITE,
+                        toolbarTitleColor = Color.WHITE,
+                        toolbarTintColor = Color.WHITE
+                    ),
+                ),
+            )
+        }
+    }
+
+    private val customCropImage = registerForActivityResult(CropImageContract()) {
+        if (it !is CropImage.CancelledResult) {
+            handleCropImageResult(it.uriContent, it.getUriFilePath(requireContext()))
+        }
+    }
+
+    private fun handleCropImageResult(uri: Uri?, filePath: String?) {
+        viewModel.cambiarImagen(uri, filePath)
     }
 }

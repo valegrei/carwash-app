@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_groups_black_24"
         android:title="@string/title_usuarios" />
     <item
+        android:id="@+id/navigation_reserves"
+        android:icon="@drawable/ic_outline_calendar_month_24"
+        android:title="@string/title_reserves" />
+    <item
         android:id="@+id/navigation_announcement"
         android:icon="@drawable/ic_announcement_black_24"
         android:title="@string/title_publicidad" />

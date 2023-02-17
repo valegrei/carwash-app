@@ -88,8 +88,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/small_margin"
-            android:paddingBottom="@dimen/small_margin"
-            android:visibility="@{viewModel.mostrarAprobar() ? View.VISIBLE: View.GONE}">
+            android:paddingBottom="@dimen/small_margin">
 
             <TextView
                 android:layout_width="match_parent"
@@ -112,6 +111,7 @@
                     android:onClick="@{()->viewModel.showConfirmar()}"
                     android:text="@string/btnsh_aprove"
                     android:theme="@style/ThemeOverlay.CarwashApp.Button"
+                    android:visibility="@{viewModel.mostrarAprobar() ? View.VISIBLE: View.GONE}"
                     app:icon="@drawable/ic_baseline_check_24" />
 
                 <Button
@@ -123,7 +123,20 @@
                     android:onClick="@{()->viewModel.showDenegar()}"
                     android:text="@string/btnsh_reject"
                     android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
+                    android:visibility="@{viewModel.mostrarAprobar() ? View.VISIBLE: View.GONE}"
                     app:icon="@drawable/ic_baseline_close_white_24" />
+
+                <Button
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="@{()->viewModel.showDeshabilitar()}"
+                    android:text="@string/btnsh_deshab"
+                    android:theme="@style/ThemeOverlay.CarwashApp.ButtonCancel"
+                    android:visibility="@{viewModel.mostrarAprobar() ? View.GONE: View.VISIBLE}"
+                    app:icon="@drawable/ic_baseline_close_white_24"
+                    tools:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

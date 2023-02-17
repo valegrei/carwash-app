@@ -37,6 +37,7 @@ class MainAdminActivity : AppCompatActivity() {
             setOf(
                 R.id.navigation_distrib,
                 R.id.navigation_users,
+                R.id.navigation_reserves,
                 R.id.navigation_announcement,
                 R.id.navigation_menu,
             )

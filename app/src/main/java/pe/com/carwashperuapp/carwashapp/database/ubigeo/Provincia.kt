@@ -20,7 +20,7 @@ data class Provincia(
     val idProvincia: Int,
     @ColumnInfo(name = "provincia")
     val provincia: String,
-    @ColumnInfo(name = "id_departamento")
+    @ColumnInfo(name = "id_departamento", index = true)
     val idDepartamento: Int,
 ){
     override fun toString(): String {

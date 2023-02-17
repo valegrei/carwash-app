@@ -116,7 +116,8 @@
             android:background="?android:attr/listDivider" />
 
         <ImageView
-            imageUrlEdit="@{viewModel.imagen}"
+            android:onClick="@{()->fragment.mostrarEscogerImagen()}"
+            imageUrlEdit2="@{viewModel.imagen}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"

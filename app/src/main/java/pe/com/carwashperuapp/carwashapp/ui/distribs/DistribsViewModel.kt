@@ -15,7 +15,7 @@ import pe.com.carwashperuapp.carwashapp.network.handleThrowable
 import java.util.*
 
 enum class Status { LOADING, SUCCESS, ERROR }
-enum class GoStatus { SHOW_CONFIRM, SHOW_DENEG, NORMAL }
+enum class GoStatus { SHOW_CONFIRM, SHOW_DENEG,SHOW_DESHAB, NORMAL }
 
 class DistribsViewModel(
     private val sesionData: SesionData, private val usuarioDao: UsuarioDao
@@ -50,6 +50,9 @@ class DistribsViewModel(
     fun showDenegar() {
         _goStatus.value = GoStatus.SHOW_DENEG
     }
+    fun showDeshabilitar() {
+        _goStatus.value = GoStatus.SHOW_DESHAB
+    }
 
     fun clearGoStatus(){
         _goStatus.value = GoStatus.NORMAL
@@ -76,16 +79,13 @@ class DistribsViewModel(
         sesionData.saveLastSincroUsuarios(res.timeStamp)
     }
 
-    fun aprobarDist(apruebo: Boolean){
+    fun cambiarEstadoDist(estado: EstadoUsuario){
         viewModelScope.launch(exceptionHandler) {
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val lastSincro = sesionData.getLastSincroUsuarios()
             val distrib = selectedDistrib.value!!
-            if(apruebo)
-                distrib.estado = EstadoUsuario.ACTIVO.id
-            else
-                distrib.estado = EstadoUsuario.INACTIVO.id
+            distrib.estado = estado.id
             //guarda lo cambiado
             Api.retrofitService.modificarUsuario(distrib.id!!,distrib, sesion?.getTokenBearer()!!)
             //Trae los cambios

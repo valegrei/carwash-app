@@ -16,7 +16,6 @@ import pe.com.carwashperuapp.carwashapp.database.anuncio.AnuncioDao
 import pe.com.carwashperuapp.carwashapp.database.sesion.Sesion
 import pe.com.carwashperuapp.carwashapp.network.Api
 import pe.com.carwashperuapp.carwashapp.network.handleThrowable
-import pe.com.carwashperuapp.carwashapp.network.request.ReqAnuncioActualizar
 import pe.com.carwashperuapp.carwashapp.network.request.ReqAnuncioEliminar
 import java.io.File
 import java.util.*
@@ -80,6 +79,10 @@ class AnnouncementViewModel(
         _imagen.value = TuplaImageEdit(selectedAnuncio.value?.getUrlArchivo(), null, null)
         _editStatus.value = EditStatus.EDIT
         _mostrarEditar.value = true
+    }
+
+    fun cambiarImagen(uriFile: Uri?, pathFile: String?){
+        _imagen.value = TuplaImageEdit(null, uriFile, pathFile)
     }
 
     fun cargarAnuncios(): Flow<List<Anuncio>> = anuncioDao.obtenerAnuncios()
@@ -147,9 +150,27 @@ class AnnouncementViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
 
+            val rbDescr = RequestBody.create(MediaType.parse("text/plain"), descr)
+            val rbUrl = RequestBody.create(MediaType.parse("text/plain"), url)
+            val rbMostrar = RequestBody.create(MediaType.parse("text/plain"), mostrar.toString())
+
+            var rbImagen: MultipartBody.Part? = null
+            if (imagen.value?.pathFile != null) {
+                val file = File(imagen.value?.pathFile!!)
+
+                if (file.exists())
+                    rbImagen = MultipartBody.Part.createFormData(
+                        "imagen",
+                        file.name,
+                        RequestBody.create(MediaType.parse("image/*"), file)
+                    )
+            }
             Api.retrofitService.actualizarAnuncio(
                 idAnuncio,
-                ReqAnuncioActualizar(descr, url, mostrar),
+                rbDescr,
+                rbUrl,
+                rbMostrar,
+                rbImagen,
                 sesion?.getTokenBearer()!!
             )
 

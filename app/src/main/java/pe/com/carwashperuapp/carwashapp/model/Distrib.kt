@@ -2,6 +2,7 @@ package pe.com.carwashperuapp.carwashapp.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
 import pe.com.carwashperuapp.carwashapp.network.BASE_URL
 
 @JsonClass(generateAdapter = true)
@@ -19,5 +20,20 @@ class Distrib(
     fun getURLFoto(): String? {
         return if (path.isNullOrEmpty()) null
         else "$BASE_URL$path"
+    }
+
+    fun getNroDocFormateado(): String = when (idTipoDocumento) {
+        TipoDocumento.RUC.id -> {
+            "${TipoDocumento.RUC.nombre}: $nroDocumento"
+        }
+        TipoDocumento.DNI.id -> {
+            "${TipoDocumento.DNI.nombre}: $nroDocumento"
+        }
+        TipoDocumento.CEXT.id -> {
+            "${TipoDocumento.CEXT.nombre}: $nroDocumento"
+        }
+        else -> {
+            "$nroDocumento"
+        }
     }
 }

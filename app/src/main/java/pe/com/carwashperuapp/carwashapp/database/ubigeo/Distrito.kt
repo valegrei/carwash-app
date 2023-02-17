@@ -20,7 +20,7 @@ data class Distrito(
     val idDistrito: Int,
     @ColumnInfo(name = "distrito")
     val distrito: String,
-    @ColumnInfo(name = "id_provincia")
+    @ColumnInfo(name = "id_provincia", index = true)
     val idProvincia: Int,
     @ColumnInfo(name = "codigo")
     val codigo: String,

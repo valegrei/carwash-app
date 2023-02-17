@@ -138,6 +138,25 @@ fun bindImageEdit(imgView: ImageView, imageEdit: TuplaImageEdit?) {
     }
 }
 
+@BindingAdapter("imageUrlEdit2")
+fun bindImageEdit2(imgView: ImageView, imageEdit: TuplaImageEdit?) {
+    imageEdit?.let {
+        if ((it.urlImagen ?: "").isNotEmpty()) {
+            val sesion = SesionData(imgView.context).getCurrentSesion()
+            imgView.load(it.urlImagen) {
+                setHeader("Authorization", sesion?.getTokenBearer()!!)
+                placeholder(R.drawable.loading_animation)
+                error(R.drawable.ic_broken_image)
+            }
+            return
+        }
+        if (it.uriFile != null) {
+            imgView.load(it.uriFile)
+            return
+        }
+    }
+}
+
 /**
  * Uses the Coil library to load an image by URL into an [ImageView]
  */
