@@ -37,9 +37,9 @@ class ReserveListAdminViewModel(
     private var _reservas = MutableLiveData<List<Reserva>>()
     val reservas: LiveData<List<Reserva>> = _reservas
     private var _selectedReserva = MutableLiveData<Reserva>()
-    val selectedReserva: LiveData<Reserva> = _selectedReserva
-    private var _selectedFecha = MutableLiveData<Long?>()
-    val selectedFecha: LiveData<Long?> = _selectedFecha
+    val selectedReserva : LiveData<Reserva> = _selectedReserva
+    private var _selectedFecha = MutableLiveData<androidx.core.util.Pair<Long, Long>?>()
+    val selectedFecha: LiveData<androidx.core.util.Pair<Long, Long>?> = _selectedFecha
     private var _filtroDis = MutableLiveData<String>()
     val filtroDis: LiveData<String> = _filtroDis
     private var _filtroCli = MutableLiveData<String>()
@@ -53,25 +53,27 @@ class ReserveListAdminViewModel(
     }
 
     init {
-        limpiarFecha()
+        limpiarFiltros()
         _filtroDis.value = ""
         _filtroCli.value = ""
     }
 
-    fun seleccionrFecha(time: Long) {
+    fun seleccionrFecha(time: androidx.core.util.Pair<Long, Long>?) {
         _selectedFecha.value = time
     }
 
-    fun limpiarFecha() {
+    fun limpiarFiltros() {
         _selectedFecha.value = null
+        _filtroCli.value = ""
+        _filtroDis.value = ""
     }
 
-    fun setFiltroDis(filtroDis: String) {
-        _filtroDis.value = filtroDis.trim()
+    fun setFiltroDis(filtroDis: String?) {
+        _filtroDis.value = filtroDis?:"".trim()
     }
 
-    fun setFiltroCli(filtroCli: String) {
-        _filtroCli.value = filtroCli.trim()
+    fun setFiltroCli(filtroCli: String?) {
+        _filtroCli.value = filtroCli?:"".trim()
     }
 
     fun consultarReservas() {
@@ -79,12 +81,20 @@ class ReserveListAdminViewModel(
             _status.value = Status.LOADING
             val sesion = sesionData.getCurrentSesion()
             val time = selectedFecha.value
+            val filtroDis = this@ReserveListAdminViewModel.filtroDis.value
+            val filtroCli = this@ReserveListAdminViewModel.filtroCli.value
             var fecha: String? = null
-            if (time != null)
-                fecha = formatoFechaDB(time)
+            var fechaFin: String? = null
+            if (time != null) {
+                fecha = formatoFechaDB(time.first)
+                fechaFin = formatoFechaDB(time.second)
+            }
             try {
                 val res = Api.retrofitService.obtenerReservasAdmin(
                     fecha,
+                    fechaFin,
+                    filtroDis,
+                    filtroCli,
                     sesion?.getTokenBearer()!!,
                 )
                 _reservas.value = res.data.reservas

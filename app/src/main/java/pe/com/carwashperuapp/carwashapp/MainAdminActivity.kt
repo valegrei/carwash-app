@@ -42,6 +42,11 @@ class MainAdminActivity : AppCompatActivity() {
                 R.id.navigation_menu,
             )
         )
+
+        navController.addOnDestinationChangedListener{_,_,_ ->
+            binding.toolbar.subtitle = null
+        }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

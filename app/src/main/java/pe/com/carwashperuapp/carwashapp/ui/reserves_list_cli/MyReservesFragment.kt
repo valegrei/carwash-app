@@ -73,9 +73,9 @@ class MyReservesFragment : Fragment(), MenuProvider {
         )
     }
 
-    private fun manejarFiltroFecha(it: Long?) {
+    private fun manejarFiltroFecha(it: androidx.core.util.Pair<Long,Long>?) {
         if (it != null) {
-            setSubTitle(formatoFecha(it))
+            setSubTitle("${formatoFecha(it.first)} - ${formatoFecha(it.second)}")
             showMenuClear()
             viewModel.consultarReservas()
         } else {
@@ -95,7 +95,7 @@ class MyReservesFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
-    private var menuClear: MenuItem?=null
+    private var menuClear: MenuItem? = null
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.search_date, menu)
         menuClear = menu.findItem(R.id.action_clear)
@@ -106,7 +106,7 @@ class MyReservesFragment : Fragment(), MenuProvider {
         if (menuItem.itemId == R.id.action_search_date) {
             showDatePicker()
             return true
-        }else if(menuItem.itemId == R.id.action_clear){
+        } else if (menuItem.itemId == R.id.action_clear) {
             viewModel.limpiarFecha()
             return true
         }
@@ -116,9 +116,14 @@ class MyReservesFragment : Fragment(), MenuProvider {
     //Muestra el selector de fechas
     private fun showDatePicker() {
         val datePicker =
-            MaterialDatePicker.Builder.datePicker()
+            MaterialDatePicker.Builder.dateRangePicker()
                 .setTitleText("Seleccion fecha")
-                .setSelection(viewModel.selectedFecha.value?: MaterialDatePicker.todayInUtcMilliseconds())
+                .setSelection(
+                    viewModel.selectedFecha.value ?: androidx.core.util.Pair(
+                        MaterialDatePicker.todayInUtcMilliseconds(),
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                    )
+                )
                 .build()
         datePicker.addOnPositiveButtonClickListener {
             viewModel.seleccionrFecha(it)
@@ -131,11 +136,11 @@ class MyReservesFragment : Fragment(), MenuProvider {
         (activity as AppCompatActivity).supportActionBar?.subtitle = subTitle
     }
 
-    private fun hideMenuClear(){
+    private fun hideMenuClear() {
         menuClear?.isVisible = false
     }
 
-    private fun showMenuClear(){
+    private fun showMenuClear() {
         menuClear?.isVisible = true
     }
 }

@@ -38,8 +38,8 @@ class ReserveListViewModel(
     val reservas: LiveData<List<Reserva>> = _reservas
     private var _selectedReserva = MutableLiveData<Reserva>()
     val selectedReserva: LiveData<Reserva> = _selectedReserva
-    private var _selectedFecha = MutableLiveData<Long?>()
-    val selectedFecha: LiveData<Long?> = _selectedFecha
+    private var _selectedFecha = MutableLiveData<androidx.core.util.Pair<Long, Long>?>()
+    val selectedFecha: LiveData<androidx.core.util.Pair<Long, Long>?> = _selectedFecha
 
     fun verReserva(reserva: Reserva) {
         _errMsg.value = ""
@@ -52,7 +52,7 @@ class ReserveListViewModel(
         limpiarFecha()
     }
 
-    fun seleccionrFecha(time: Long) {
+    fun seleccionrFecha(time: androidx.core.util.Pair<Long, Long>) {
         _selectedFecha.value = time
     }
 
@@ -66,11 +66,15 @@ class ReserveListViewModel(
             val sesion = sesionData.getCurrentSesion()
             val time = selectedFecha.value
             var fecha: String? = null
-            if (time != null)
-                fecha = formatoFechaDB(time)
+            var fechaFin: String? = null
+            if (time != null) {
+                fecha = formatoFechaDB(time.first)
+                fechaFin = formatoFechaDB(time.second)
+            }
             try {
                 val res = Api.retrofitService.obtenerReservasDistrib(
                     fecha,
+                    fechaFin,
                     sesion?.getTokenBearer()!!,
                 )
                 _reservas.value = res.data.reservas

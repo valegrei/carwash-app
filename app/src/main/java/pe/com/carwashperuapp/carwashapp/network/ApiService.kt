@@ -20,9 +20,9 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
 
-const val BASE_URL = "http://192.168.100.9:3000"
+//const val BASE_URL = "http://192.168.100.9:3000"
 //const val BASE_URL = "http://192.168.100.9"
-//const val BASE_URL = "https://www.carwashperuapp.com"
+const val BASE_URL = "https://www.carwashperuapp.com"
 
 object BigDecimalAdapter {
     @FromJson
@@ -187,6 +187,9 @@ interface ApiService {
     @GET("api/admin/reserva")
     suspend fun obtenerReservasAdmin(
         @Query("fecha") fecha: String?,
+        @Query("fechaFin") fechaFin: String?,
+        @Query("filtroDis") filtroDis: String?,
+        @Query("filtroCli") filtroCli: String?,
         @Header("Authorization") authToken: String
     ): RespReservas
 
@@ -271,6 +274,7 @@ interface ApiService {
     @GET("api/distrib/reserva")
     suspend fun obtenerReservasDistrib(
         @Query("fecha") fecha: String?,
+        @Query("fechaFin") fechaFin: String?,
         @Header("Authorization") authToken: String
     ): RespReservas
 
@@ -343,6 +347,7 @@ interface ApiService {
     @GET("api/clientes/reserva")
     suspend fun obtenerReservas(
         @Query("fecha") fecha: String?,
+        @Query("fechaFin") fechaFin: String?,
         @Header("Authorization") authToken: String
     ): RespReservas
 

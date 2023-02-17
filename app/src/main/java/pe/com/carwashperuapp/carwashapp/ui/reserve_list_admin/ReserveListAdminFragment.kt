@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.MaterialDatePicker
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.FragmentMyReservesAdminBinding
@@ -82,9 +81,9 @@ class ReserveListAdminFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
-    private fun manejarFiltroFecha(it: Long?) {
+    private fun manejarFiltroFecha(it: androidx.core.util.Pair<Long,Long>?) {
         if (it != null) {
-            setSubTitle(formatoFecha(it))
+            setSubTitle("${formatoFecha(it.first)} - ${formatoFecha(it.second)}")
             showMenuClear()
             viewModel.consultarReservas()
         } else {
@@ -103,29 +102,18 @@ class ReserveListAdminFragment : Fragment(), MenuProvider {
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if (menuItem.itemId == R.id.action_search_date) {
-            showDatePicker()
+            showFiltroDialog()
             return true
         } else if (menuItem.itemId == R.id.action_clear) {
-            viewModel.limpiarFecha()
+            viewModel.limpiarFiltros()
             return true
         }
         return false
     }
 
-    //Muestra el selector de fechas
-    private fun showDatePicker() {
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Seleccion fecha")
-                .setSelection(
-                    viewModel.selectedFecha.value ?: MaterialDatePicker.todayInUtcMilliseconds()
-                )
-                .build()
-        datePicker.addOnPositiveButtonClickListener {
-            viewModel.seleccionrFecha(it)
-        }
-
-        datePicker.show(childFragmentManager, "date_picker")
+    private fun showFiltroDialog() {
+        val dialog = DialogFiltroReservas()
+        dialog.show(childFragmentManager, dialog.tag)
     }
 
     private fun setSubTitle(subTitle: String?) {

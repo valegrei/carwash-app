@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.datepicker.MaterialDatePicker
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.databinding.DialogFiltroReservasFullBinding
+import pe.com.carwashperuapp.carwashapp.ui.util.formatoFecha
 
 class DialogFiltroReservas : DialogFragment() {
     private var _binding: DialogFiltroReservasFullBinding? = null
@@ -18,6 +20,10 @@ class DialogFiltroReservas : DialogFragment() {
             SesionData(requireContext())
         )
     }
+
+    private var fecha: androidx.core.util.Pair<Long, Long>? = null
+    private var filtroDis: String? = null
+    private var filtroCli: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,22 +41,76 @@ class DialogFiltroReservas : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.apply {
+            fecha = selectedFecha.value
+            this@DialogFiltroReservas.filtroDis = filtroDis.value
+            this@DialogFiltroReservas.filtroCli = filtroCli.value
+        }
+
         binding.apply {
             fragment = this@DialogFiltroReservas
         }
+
+        setFields()
     }
 
-    fun close(){
+    private fun setFields() {
+        binding.edtFecha.setText(
+            if (fecha == null) "" else "${formatoFecha(fecha?.first!!)} - ${
+                formatoFecha(
+                    fecha?.second!!
+                )
+            }"
+        )
+        binding.edtNroDis.setText(filtroDis)
+        binding.edtNroCli.setText(filtroCli)
+    }
+
+    fun close() {
         dismiss()
     }
 
-    fun clear(){
-
+    fun clear() {
+        fecha = null
+        filtroDis = null
+        filtroCli = null
+        setFields()
     }
 
-    fun search(){
-
+    fun search() {
+        filtroDis = binding.edtNroDis.text.toString()
+        filtroCli = binding.edtNroCli.text.toString()
+        viewModel.seleccionrFecha(fecha)
+        viewModel.setFiltroDis(filtroDis)
+        viewModel.setFiltroCli(filtroCli)
+        dismiss()
     }
+
+    fun showDatePicker() {
+        val datePicker =
+            MaterialDatePicker.Builder.dateRangePicker()
+                .setTitleText("Seleccion fecha")
+                .setSelection(
+                    fecha ?: androidx.core.util.Pair(
+                        MaterialDatePicker.todayInUtcMilliseconds(),
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                    )
+                )
+                .build()
+        datePicker.addOnPositiveButtonClickListener {
+            fecha = it
+            binding.edtFecha.setText(
+                if (fecha == null) "" else "${formatoFecha(fecha?.first!!)} - ${
+                    formatoFecha(
+                        fecha?.second!!
+                    )
+                }"
+            )
+        }
+
+        datePicker.show(childFragmentManager, "date_picker")
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -37,8 +37,8 @@ class MyReserveViewModel(
     val reservas: LiveData<List<Reserva>> = _reservas
     private var _selectedReserva = MutableLiveData<Reserva>()
     val selectedReserva: LiveData<Reserva> = _selectedReserva
-    private var _selectedFecha = MutableLiveData<Long?>()
-    val selectedFecha: LiveData<Long?> = _selectedFecha
+    private var _selectedFecha = MutableLiveData<androidx.core.util.Pair<Long, Long>?>()
+    val selectedFecha: LiveData<androidx.core.util.Pair<Long, Long>?> = _selectedFecha
     private var _favorito = MutableLiveData<Favorito?>()
     val favorito: LiveData<Favorito?> = _favorito
     private var _mostrarFavorito = MutableLiveData<Boolean>()
@@ -55,7 +55,8 @@ class MyReserveViewModel(
     init {
         limpiarFecha()
     }
-    fun seleccionrFecha(time: Long) {
+
+    fun seleccionrFecha(time: androidx.core.util.Pair<Long, Long>) {
         _selectedFecha.value = time
     }
 
@@ -69,11 +70,15 @@ class MyReserveViewModel(
             val sesion = sesionData.getCurrentSesion()
             val time = selectedFecha.value
             var fecha: String? = null
-            if (time != null)
-                fecha = formatoFechaDB(time)
+            var fechaFin: String? = null
+            if (time != null) {
+                fecha = formatoFechaDB(time.first)
+                fechaFin = formatoFechaDB(time.second)
+            }
             try {
                 val res = Api.retrofitService.obtenerReservas(
                     fecha,
+                    fechaFin,
                     sesion?.getTokenBearer()!!,
                 )
                 _reservas.value = res.data.reservas
@@ -98,6 +103,7 @@ class MyReserveViewModel(
             _editStatus.value = EditStatus.EXIT
         }
     }
+
     fun mostrarLlamar(): Boolean {
         return (selectedReserva.value?.distrib?.nroCel1 ?: "").isNotEmpty()
     }
@@ -120,6 +126,7 @@ class MyReserveViewModel(
     fun desmarcarFavorito() {
         _mostrarFavorito.value = false
     }
+
     fun guardarFavorito() {
         if (mostrarFavorito.value!!) {
             // revisar si antes no estaba marcado

@@ -69,17 +69,21 @@
                     style="@style/Style.CarwashApp.TextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->fragment.showDatePicker()}"
                     android:hint="@string/reserve_date"
                     app:boxBackgroundColor="@color/white"
-                    app:endIconMode="clear_text"
                     app:errorEnabled="true"
                     app:startIconDrawable="@drawable/ic_baseline_calendar_month_24">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_fecha"
                         style="@style/Style.CarwashApp.TextInputLayout"
+                        android:onClick="@{()->fragment.showDatePicker()}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:focusable="false"
+                        android:cursorVisible="false"
                         android:inputType="none"
                         tools:ignore="TextContrastCheck"
                         tools:text="15/02/2022" />
@@ -92,10 +96,10 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/reserve_nro_dis"
                     app:boxBackgroundColor="@color/white"
-                    app:endIconMode="clear_text"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_nro_dis"
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -112,10 +116,10 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/reserve_nro_cli"
                     app:boxBackgroundColor="@color/white"
-                    app:endIconMode="clear_text"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edt_nro_cli"
                         style="@style/Style.CarwashApp.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

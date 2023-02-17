@@ -82,9 +82,9 @@ class ReserveListFragment : Fragment(), MenuProvider {
         _binding = null
     }
 
-    private fun manejarFiltroFecha(it: Long?) {
+    private fun manejarFiltroFecha(it: androidx.core.util.Pair<Long,Long>?) {
         if (it != null) {
-            setSubTitle(formatoFecha(it))
+            setSubTitle("${formatoFecha(it.first)} - ${formatoFecha(it.second)}")
             showMenuClear()
             viewModel.consultarReservas()
         } else {
@@ -115,10 +115,13 @@ class ReserveListFragment : Fragment(), MenuProvider {
     //Muestra el selector de fechas
     private fun showDatePicker() {
         val datePicker =
-            MaterialDatePicker.Builder.datePicker()
+            MaterialDatePicker.Builder.dateRangePicker()
                 .setTitleText("Seleccion fecha")
                 .setSelection(
-                    viewModel.selectedFecha.value ?: MaterialDatePicker.todayInUtcMilliseconds()
+                    viewModel.selectedFecha.value ?: androidx.core.util.Pair(
+                        MaterialDatePicker.todayInUtcMilliseconds(),
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                    )
                 )
                 .build()
         datePicker.addOnPositiveButtonClickListener {
