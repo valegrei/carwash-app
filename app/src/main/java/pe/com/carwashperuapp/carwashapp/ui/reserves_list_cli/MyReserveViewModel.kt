@@ -108,6 +108,9 @@ class MyReserveViewModel(
         return (selectedReserva.value?.distrib?.nroCel1 ?: "").isNotEmpty()
     }
 
+    fun mostrarWhatsapp(): Boolean{
+        return (selectedReserva.value?.distrib?.nroCel2 ?: "").isNotEmpty()
+    }
     private fun cargarFavorito() {
         val favs = selectedReserva.value?.local?.favoritos
         if (favs.isNullOrEmpty()) {

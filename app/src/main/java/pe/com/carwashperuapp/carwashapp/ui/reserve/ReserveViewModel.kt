@@ -178,6 +178,10 @@ class ReserveViewModel(
         return (selectedLocal.value?.distrib?.nroCel1 ?: "").isNotEmpty()
     }
 
+    fun mostrarWhatsapp(): Boolean{
+        return (selectedLocal.value?.distrib?.nroCel2 ?: "").isNotEmpty()
+    }
+
     fun guardarFavorito() {
         if (mostrarFavorito.value!!) {
             // revisar si antes no estaba marcado

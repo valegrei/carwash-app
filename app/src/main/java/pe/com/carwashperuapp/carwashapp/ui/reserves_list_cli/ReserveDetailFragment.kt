@@ -153,7 +153,7 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
     }
 
     private fun mostrarLlamar() {
-        menuCall?.isVisible = viewModel.mostrarLlamar()
+        menuCall?.isVisible = viewModel.mostrarLlamar() || viewModel.mostrarWhatsapp()
     }
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
@@ -214,12 +214,37 @@ class ReserveDetailFragment : Fragment(), MenuProvider {
         startActivity(chooserIntent)
     }
 
+
     private fun llamar() {
-        if (viewModel.mostrarLlamar()) {
-            val nroCel = viewModel.selectedReserva.value?.distrib?.nroCel1
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:$nroCel")
-            startActivity(intent)
+        if (viewModel.mostrarLlamar() && viewModel.mostrarWhatsapp()) {
+            val intentLlamar = crearIntentLlamar()
+            val intentWhatsapp = crearIntentWhatsapp()
+            val title = "Seleccione"
+            val chooserIntent = Intent.createChooser(intentLlamar, title)
+            val arr = arrayOfNulls<Intent>(1)
+            arr[0] = intentWhatsapp
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arr)
+            startActivity(chooserIntent)
+        }else if(viewModel.mostrarLlamar()){
+            startActivity(crearIntentLlamar())
+        }else if(viewModel.mostrarWhatsapp()){
+            startActivity(crearIntentWhatsapp())
         }
+    }
+
+    private fun crearIntentLlamar(): Intent {
+        val nroCel = viewModel.selectedReserva.value?.distrib?.nroCel1
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$nroCel")
+        return intent
+    }
+
+    private fun crearIntentWhatsapp(): Intent {
+        val phone = viewModel.selectedReserva.value?.distrib?.nroCel2
+        val intent = Intent(Intent.ACTION_VIEW)
+        val url = "https://api.whatsapp.com/send?phone=$phone"
+        intent.setPackage("com.whatsapp")
+        intent.data = Uri.parse(url)
+        return intent
     }
 }

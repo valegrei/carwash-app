@@ -13,10 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.canhub.cropper.CropImage
-import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.CropImageContractOptions
-import com.canhub.cropper.CropImageOptions
+import com.canhub.cropper.*
 import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.R
 import pe.com.carwashperuapp.carwashapp.database.SesionData
@@ -167,14 +164,16 @@ class AnnouncementNewFragment : Fragment(), MenuProvider {
                         imageSourceIncludeCamera = false,
                         imageSourceIncludeGallery = true,
                         outputCompressFormat = Bitmap.CompressFormat.JPEG,
-                        outputCompressQuality = 90,
+                        outputCompressQuality = 98,
+                        outputRequestWidth = 1000,
+                        outputRequestSizeOptions = CropImageView.RequestSizeOptions.RESIZE_FIT,
                         skipEditing = true,
                         activityTitle = getString(R.string.announc_title_new),
                         activityBackgroundColor = resources.getColor(R.color.bg_color, null),
                         toolbarColor = resources.getColor(R.color.purple, null),
                         toolbarBackButtonColor = Color.WHITE,
                         toolbarTitleColor = Color.WHITE,
-                        toolbarTintColor = Color.WHITE
+                        toolbarTintColor = Color.WHITE,
                     ),
                 ),
             )

@@ -149,7 +149,7 @@ class LocalFragment : Fragment(), MenuProvider {
         findNavController().navigate(R.id.action_localFragment_to_reserveResumenFragment)
     }
 
-    private fun goVehiculos(){
+    private fun goVehiculos() {
         viewModel.clearGoStatus()
         vehiculosVM.nuevoVehiculo()
         findNavController().navigate(R.id.action_localFragment_to_nav_car_detail)
@@ -189,7 +189,7 @@ class LocalFragment : Fragment(), MenuProvider {
     }
 
     private fun mostrarLlamar() {
-        menuCall?.isVisible = viewModel.mostrarLlamar()
+        menuCall?.isVisible = viewModel.mostrarLlamar() || viewModel.mostrarWhatsapp()
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -226,7 +226,7 @@ class LocalFragment : Fragment(), MenuProvider {
             Uri.parse(uriGoogle)
         ).setPackage("com.google.android.apps.maps")
 
-        val title: String = "Seleccione"
+        val title= "Seleccione"
         val chooserIntent = Intent.createChooser(intentGoogleNav, title)
         val arr = arrayOfNulls<Intent>(1)
         arr[0] = intentWaze
@@ -235,12 +235,36 @@ class LocalFragment : Fragment(), MenuProvider {
     }
 
     private fun llamar() {
-        if (viewModel.mostrarLlamar()) {
-            val nroCel = viewModel.selectedLocal.value?.distrib?.nroCel1
-            val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:$nroCel")
-            startActivity(intent)
+        if (viewModel.mostrarLlamar() && viewModel.mostrarWhatsapp()) {
+            val intentLlamar = crearIntentLlamar()
+            val intentWhatsapp = crearIntentWhatsapp()
+            val title = "Seleccione"
+            val chooserIntent = Intent.createChooser(intentLlamar, title)
+            val arr = arrayOfNulls<Intent>(1)
+            arr[0] = intentWhatsapp
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arr)
+            startActivity(chooserIntent)
+        }else if(viewModel.mostrarLlamar()){
+            startActivity(crearIntentLlamar())
+        }else if(viewModel.mostrarWhatsapp()){
+            startActivity(crearIntentWhatsapp())
         }
+    }
+
+    private fun crearIntentLlamar(): Intent {
+        val nroCel = viewModel.selectedLocal.value?.distrib?.nroCel1
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$nroCel")
+        return intent
+    }
+
+    private fun crearIntentWhatsapp(): Intent {
+        val phone = viewModel.selectedLocal.value?.distrib?.nroCel2
+        val intent = Intent(Intent.ACTION_VIEW)
+        val url = "https://api.whatsapp.com/send?phone=$phone"
+        intent.setPackage("com.whatsapp")
+        intent.data = Uri.parse(url)
+        return intent
     }
 
     private fun mostrarCompletarDatos() {

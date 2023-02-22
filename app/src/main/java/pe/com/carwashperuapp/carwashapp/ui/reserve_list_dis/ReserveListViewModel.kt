@@ -129,6 +129,14 @@ class ReserveListViewModel(
         }
     }
 
+    fun mostrarLlamar(): Boolean {
+        return (selectedReserva.value?.cliente?.nroCel1 ?: "").isNotEmpty()
+    }
+
+    fun mostrarWhatsapp(): Boolean{
+        return (selectedReserva.value?.cliente?.nroCel2 ?: "").isNotEmpty()
+    }
+
     private val exceptionHandler = CoroutineExceptionHandler { _, e ->
         Log.e(TAG, e.message, e)
         val exceptionError = e.handleThrowable()
