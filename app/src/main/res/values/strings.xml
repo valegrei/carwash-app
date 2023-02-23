@@ -7,7 +7,7 @@
     <string name="login_email">Correo</string>
     <string name="login_password">Contraseña</string>
     <string name="login_forgot_pass">¿Olvidaste tu contraseña?</string>
-    <string name="login_enter">Log in</string>
+    <string name="login_enter">Iniciar sesión</string>
     <string name="login_no_account">¿No tiene una cuenta?</string>
     <string name="login_register">Crea una cuenta</string>
     <string name="login_app_version">V %s</string>
@@ -242,7 +242,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="logout_msg">¿Desea cerrar sesión y volver al Login?</string>
+    <string name="logout_msg">¿Desea cerrar sesión y volver al inicio de sesión?</string>
 
     <!--    My Cars-->
     <string name="car_marca">Marca</string>
