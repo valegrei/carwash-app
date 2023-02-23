@@ -14,4 +14,6 @@ interface ServicioDao {
     @Insert(onConflict = REPLACE)
     suspend fun guardarServicios(servicio: List<Servicio>)
 
+    @Query("DELETE FROM servicios")
+    fun limpiar()
 }

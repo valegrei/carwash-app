@@ -53,6 +53,15 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun horarioDao(): HorarioDao
     abstract fun vehiculoDao(): VehiculoDao
 
+    fun limpiarTodo(){
+        usuarioDao().limpiar()
+        anuncioDao().limpiar()
+        parametroDao().limpiar()
+        servicioDao().limpiar()
+        horarioDao().limpiar()
+        direccionDao().limpiar()
+        vehiculoDao().limpiar()
+    }
     companion object {
         @Volatile
         private var INSTANCE: AppDataBase? = null

@@ -24,4 +24,7 @@ interface HorarioDao {
 
     @Delete
     suspend fun eliminarHorarioConfig(horarioConfig: HorarioConfig)
+
+    @Query("DELETE FROM horario_config")
+    fun limpiar()
 }

@@ -36,7 +36,10 @@ class MainCliActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainCliBinding
     private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(SesionData(this))
+        MainViewModelFactory(
+            SesionData(this),
+            appDataBase = (application as CarwashApplication).database
+        )
     }
     private val anuncionsViewModel: AnunciosViewModel by viewModels {
         AnunciosViewModelFactory((application as CarwashApplication).database.anuncioDao())

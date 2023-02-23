@@ -175,6 +175,7 @@ class SearchLocalFragment : Fragment(), MenuProvider, SearchView.OnQueryTextList
             val markerOp = MarkerOptions()
                 .position(LatLng(it.latitud?.toDouble()!!, it.longitud?.toDouble()!!))
                 .title(it.distrib?.razonSocial)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
             val marker = mMap.addMarker(markerOp)
             map[marker!!] = it
         }

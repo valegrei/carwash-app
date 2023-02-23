@@ -16,4 +16,6 @@ interface ParametroDao {
     @Insert(onConflict = REPLACE)
     suspend fun guardarParametros(parametros: List<Parametro>)
 
+    @Query("DELETE FROM parametro")
+    fun limpiar()
 }

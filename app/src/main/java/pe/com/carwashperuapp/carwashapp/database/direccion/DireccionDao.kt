@@ -16,4 +16,7 @@ interface DireccionDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun guardarDirecciones(servicio: List<Direccion>)
+
+    @Query("DELETE FROM direccion")
+    fun limpiar()
 }

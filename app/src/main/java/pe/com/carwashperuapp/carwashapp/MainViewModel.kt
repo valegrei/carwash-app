@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import pe.com.carwashperuapp.carwashapp.database.AppDataBase
 import pe.com.carwashperuapp.carwashapp.database.SesionData
 import pe.com.carwashperuapp.carwashapp.database.sesion.Sesion
 import pe.com.carwashperuapp.carwashapp.database.usuario.TipoDocumento
@@ -21,7 +22,10 @@ enum class SesionStatus { NORMAL, CLOSED }
 enum class EditStatus { LOADING, SUCCESS, ERROR, NORMAL }
 enum class AddFotoStatus { LAUNCH, NORMAL }
 
-class MainViewModel(private val sesionData: SesionData) : ViewModel() {
+class MainViewModel(
+    private val sesionData: SesionData,
+    private val appDataBase: AppDataBase? = null
+) : ViewModel() {
     private val TAG = MainViewModel::class.simpleName
     private var _sesionStatus = MutableLiveData<SesionStatus>()
     val sesionStatus: LiveData<SesionStatus> = _sesionStatus
@@ -73,7 +77,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         cargarSesion()
     }
 
-    fun mostrarBanner(): Boolean{
+    fun mostrarBanner(): Boolean {
         return sesion.value?.usuario?.idTipoUsuario == TipoUsuario.DISTR.id
     }
 
@@ -115,7 +119,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         nroCel1.value = sesion.value?.usuario?.nroCel1!!
         nroCel2.value = sesion.value?.usuario?.nroCel2!!
         acercaDe.value = sesion.value?.usuario?.acercaDe
-        _ternaFoto.value = EstrEditFoto(sesion.value?.usuario?.getURLFoto(),null,null,false)
+        _ternaFoto.value = EstrEditFoto(sesion.value?.usuario?.getURLFoto(), null, null, false)
     }
 
     fun validar(): Boolean {
@@ -238,6 +242,7 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
         sesionData.clearLastSincroDirecciones()
         sesionData.clearLastSincroHorarioConfigs()
         sesionData.clearLastSincroVehiculos()
+        appDataBase?.limpiarTodo()
         _sesionStatus.value = SesionStatus.CLOSED
     }
 
@@ -288,12 +293,13 @@ class MainViewModel(private val sesionData: SesionData) : ViewModel() {
 }
 
 class MainViewModelFactory(
-    private val sesionData: SesionData
+    private val sesionData: SesionData,
+    private val appDataBase: AppDataBase? = null
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return MainViewModel(sesionData) as T
+            return MainViewModel(sesionData,appDataBase) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

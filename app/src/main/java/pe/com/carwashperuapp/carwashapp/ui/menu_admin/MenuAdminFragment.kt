@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.MainViewModel
 import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
 import pe.com.carwashperuapp.carwashapp.R
@@ -19,7 +19,10 @@ class MenuAdminFragment : Fragment() {
     private var _binding: FragmentMenuAdminBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels {
-        MainViewModelFactory(SesionData(requireContext()))
+        MainViewModelFactory(
+            SesionData(requireContext()),
+            appDataBase = (requireActivity().application as CarwashApplication).database
+        )
     }
 
     override fun onCreateView(
@@ -52,6 +55,7 @@ class MenuAdminFragment : Fragment() {
     fun goToSettings() {
         findNavController().navigate(R.id.action_navigation_menu_to_navigation_settings)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

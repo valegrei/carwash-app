@@ -19,4 +19,6 @@ interface VehiculoDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun guardarVehiculos(servicio: List<Vehiculo>)
+    @Query("DELETE FROM vehiculos")
+    fun limpiar()
 }

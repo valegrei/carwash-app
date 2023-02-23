@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import pe.com.carwashperuapp.carwashapp.CarwashApplication
 import pe.com.carwashperuapp.carwashapp.MainViewModel
 import pe.com.carwashperuapp.carwashapp.MainViewModelFactory
 import pe.com.carwashperuapp.carwashapp.R
@@ -20,7 +21,10 @@ class MenuDistribFragment : Fragment() {
     private var _binding: FragmentMenuDistribBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels {
-        MainViewModelFactory(SesionData(requireContext()))
+        MainViewModelFactory(
+            SesionData(requireContext()),
+            appDataBase = (requireActivity().application as CarwashApplication).database
+        )
     }
 
     override fun onCreateView(

@@ -22,4 +22,6 @@ interface UsuarioDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun guardarUsuario(usuario: Usuario)
+    @Query("DELETE FROM usuario")
+    fun limpiar()
 }
