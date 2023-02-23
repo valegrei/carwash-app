@@ -101,7 +101,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginHorizontal="@dimen/large_margin"
                 android:layout_marginVertical="@dimen/small_margin"
-                android:onClick="@{()->viewModel.cerrarSesion()}"
+                android:onClick="@{()->fragment.mostrarCerrarSesion()}"
                 android:text="@string/menu_logout"
                 android:theme="@style/ThemeOverlay.CarwashApp.Button"
                 app:layout_constraintBottom_toBottomOf="parent"

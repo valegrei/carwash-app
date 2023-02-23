@@ -67,17 +67,18 @@ class ScheduleDetailFragment : Fragment(), MenuProvider {
             val adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
-                arrayOf("1","2","3","4","5")
+                arrayOf("1", "2", "3", "4", "5")
             )
             binding.acNroAtenciones.setAdapter(adapter)
             locales.observe(viewLifecycleOwner) {
                 binding.acLocal.setText(local.value?.toString())
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_dropdown_item,
-                    it
+                binding.acLocal.setAdapter(
+                    ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_dropdown_item,
+                        it
+                    )
                 )
-                binding.acLocal.setAdapter(adapter)
             }
             status.observe(viewLifecycleOwner) {
                 when (it) {

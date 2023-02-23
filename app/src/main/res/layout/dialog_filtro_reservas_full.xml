@@ -8,6 +8,7 @@
             type="pe.com.carwashperuapp.carwashapp.ui.reserve_list_admin.DialogFiltroReservas" />
     </data>
     <LinearLayout
+        android:background="@color/bg_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

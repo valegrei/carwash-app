@@ -15,6 +15,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
+        android:background="@color/bg_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

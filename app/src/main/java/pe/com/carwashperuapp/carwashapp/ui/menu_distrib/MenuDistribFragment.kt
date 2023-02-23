@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -64,5 +65,17 @@ class MenuDistribFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun mostrarCerrarSesion() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.menu_logout)
+            .setMessage(R.string.logout_msg)
+            .setCancelable(true)
+            .setPositiveButton(R.string.ok) { _, _ ->
+                mainViewModel.cerrarSesion()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 }
