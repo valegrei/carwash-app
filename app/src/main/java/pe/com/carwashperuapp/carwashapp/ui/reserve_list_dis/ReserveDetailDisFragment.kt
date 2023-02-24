@@ -124,9 +124,10 @@ class ReserveDetailDisFragment : Fragment(), MenuProvider {
     }
 
     private fun seMuestraBoton(): Boolean {
-        val fechaHora = formatoFechaLimaDB(Date().time)
-        val fechaHorario = viewModel.selectedReserva.value?.fecha!!
-        return fechaHorario >= fechaHora
+//        val fechaHora = formatoFechaLimaDB(Date().time)
+//        val fechaHorario = viewModel.selectedReserva.value?.fecha!!
+//        return fechaHorario >= fechaHora
+        return true
     }
 
     private fun ocultarBoton() {
