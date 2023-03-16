@@ -10,7 +10,7 @@
     <string name="login_enter">Iniciar sesión</string>
     <string name="login_no_account">¿No tiene una cuenta?</string>
     <string name="login_register">Crea una cuenta</string>
-    <string name="login_app_version">V %s</string>
+    <string name="login_app_version">v%s</string>
     <string name="login_act_dist_title">Activación Pendiente</string>
     <string name="login_act_dist_msg">Registro enviado.\nSe le informará cuando el administrador apruebe su registro.</string>
     <string name="accept">Aceptar</string>
@@ -21,7 +21,7 @@
     <string name="register_email">Correo*</string>
     <string name="register_password">Contraseña*</string>
     <string name="register_repeat_password">Repita contraseña*</string>
-    <string name="register_check_dis">Registrarse como distribuidor</string>
+    <string name="register_check_dis">Registrarse como carwash</string>
     <string name="register_next">Registrar</string>
     <string name="register_razon_social">Nombres / Razon Social*</string>
     <string name="register_ruc">DNI / CEXT / RUC*</string>

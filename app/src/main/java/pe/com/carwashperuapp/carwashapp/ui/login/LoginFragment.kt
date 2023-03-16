@@ -33,6 +33,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        shoVersion()
         binding.apply {
             loginFragment = this@LoginFragment
             viewModel = loginViewModel
@@ -117,5 +118,10 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun shoVersion(){
+        val versionName = BuildConfig.VERSION_NAME
+        binding.tvVersion.text = getString(R.string.login_app_version,versionName)
     }
 }
